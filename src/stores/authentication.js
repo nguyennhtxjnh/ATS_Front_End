@@ -44,7 +44,7 @@ export default {
         LOGIN({commit}, user) {
             return new Promise((resolve, reject) => {
                 commit('REQUEST');
-                axios({url: 'http://localhost:8080/login', data: user, method: 'POST'})
+                axios({url: 'http://localhost:8080/account/login', data: user, method: 'POST'})
                     .then(response => {
                         const token = response.data.token;
                         localStorage.setItem('token', token);

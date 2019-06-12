@@ -2,6 +2,8 @@
   <div id="app">
 <!--    <img src="./assets/logo.png">-->
     <router-view/>
+
+    <notifications group="foo" position="bottom right"/>
   </div>
 </template>
 

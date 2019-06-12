@@ -80,6 +80,8 @@
         <span style="margin-right: 5px">&copy; 2019 by FPTU</span>
       </v-layout>
     </v-footer>
+
+
   </v-app>
 </template>
 
@@ -88,6 +90,8 @@
     name: 'DashBoardLayout',
 
       data: () => ({
+
+
         items: [
           { title: 'Click Me' },
           { title: 'Click Me' },

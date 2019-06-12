@@ -28,6 +28,12 @@ export default new Router({
       component: LoginPage
     }
     ,
+    {
+      path: '/profile',
+      name: 'login',
+      component: LoginPage
+    }
+    ,
     // {
     //   path: '/detail/:id',
     //   component: Detail

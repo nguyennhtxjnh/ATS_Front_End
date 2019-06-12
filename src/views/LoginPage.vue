@@ -6,7 +6,7 @@
 
 <script>
   import DashBoardLayout from '../layouts/DashBoardLayout'
-  import Login from '../components/login/Login'
+  import Login from '../components/JobSeekeer/login/Login'
   export default {
     name: 'LoginPage',
     components: {Login, DashBoardLayout}
