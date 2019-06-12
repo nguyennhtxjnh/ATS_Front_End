@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios'
 
 export default {
     namespaced: true,
@@ -49,7 +49,6 @@ export default {
                         const token = response.data.token;
                         localStorage.setItem('token', token);
                         commit('SUCCESS', token);
-                        console.log('login success');
                         resolve(response);
                     })
                     .catch(error => {
@@ -61,7 +60,6 @@ export default {
         },
         LOGOUT({commit}) {
             return new Promise((resolve) => {
-                var username = this.state.AUTHENTICATION_STORE.username;
                 commit('LOGOUT');
                 localStorage.removeItem('token');
                 resolve()
