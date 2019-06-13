@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <v-app>
   <!--    ToolBar-->
   <template>
@@ -117,9 +117,7 @@
 <script>
   export default {
     name: 'DashBoardLayout',
-
     data: function(){
-
       return {
         icons: [
           'mdi-facebook',
@@ -178,28 +176,14 @@
             link: '/',
           }
         ],
-
-      }
-    },
-    name: 'DashBoardLayout',
-
-      data: () => ({
-
-
         items: [
           { title: 'Click Me' },
           { title: 'Click Me' },
           { title: 'Click Me' },
           { title: 'Click Me 2' }
-          ]
-      }),
-    methods: {
-
-    },
-    computed : {
-
+        ]
+      }
     }
-
   }
 </script>
 

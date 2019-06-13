@@ -77,7 +77,7 @@
               <v-layout row wrap>
                 <v-spacer/>
                 <template v-for="company in companys">
-                <v-flex md2 xs12 class="pa-3 ma-1" style="background-color: white">
+                <v-flex md2 xs12 class="pa-3 ma-1" style="background-color: white" :key="company">
                   <v-flex md12 xs12>
                     <v-img  :src="images.main"
                             height="100%"></v-img>
@@ -112,7 +112,7 @@
         <h1>Việc làm nổi bật hôm nay</h1>
         <v-layout wrap md12 xs12>
           <template v-for="job in jobs">
-            <v-flex md5 xs12 style="background-color: white" class="ma-3 pa-2">
+            <v-flex md5 xs12 style="background-color: white" class="ma-3 pa-2" :key="job">
               <v-layout row wrap>
                 <v-flex md4>
                   <v-img  :src="images.main"
@@ -146,16 +146,15 @@
 </template>
 
 <script>
-    import DashBoardLayout from "../../layouts/DashBoardLayout";
     export default {
         name: "JobSeekerMainScreen",
-      components: {DashBoardLayout},
       data : ()=>{ return {
         images : {'main' : require('@/assets/jsmain1.jpg')},
         industries : [ { id: "1", name: "Foo" }, { id: "2", name: "Bar" }, { id: "3", name: "Baka" }, { id: "4", name: "Pig" }, ],
         jobs : [0,1,2,3,4,5,6,7],
-        companys : [0,1,2,3,4],
+        companys : [8,9,10,11,12],
         icon : 'mdi-coin',
+        select: [],
       }
     }}
 </script>

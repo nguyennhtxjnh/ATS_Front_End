@@ -1,13 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import DashBoardLayout from '../layouts/DashBoardLayout'
 import SignUpPage from '../views/SignUpPage'
-import Detail from '../views/Detail'
 import LoginPage from '../views/LoginPage'
 import DashBoardLayout from "../layouts/DashBoardLayout";
 import JobSeekerMainScreenPage from "../views/JobSeekerMainScreenPage";
 import EmployerMainScreenPage from "../views/EmployerMainScreenPage";
+import JobSeekerDashBoardPage from '../views/JobSeekerDashBoardPage'
 
 Vue.use(Router)
 
@@ -31,7 +29,7 @@ export default new Router({
     },
     {
       path: '/employer-main-screen',
-      name: 'Trang chu',
+      name: 'Trang chu 2',
       component: EmployerMainScreenPage
     }
     ,
@@ -39,6 +37,12 @@ export default new Router({
       path: '/dang-nhap',
       name: 'login',
       component: LoginPage
+    }
+    ,
+    {
+      path: '/profile/:id',
+      name: 'jobseekerdashboard',
+      component: JobSeekerDashBoardPage
     }
     ,
     // {
