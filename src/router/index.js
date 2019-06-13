@@ -1,5 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import HelloWorld from '@/components/HelloWorld'
+import SignUpPage from '../views/SignUpPage'
+import Detail from '../views/Detail'
+import LoginPage from '../views/LoginPage'
 import DashBoardLayout from "../layouts/DashBoardLayout";
 import JobSeekerMainScreenPage from "../views/JobSeekerMainScreenPage";
 import EmployerMainScreenPage from "../views/EmployerMainScreenPage";
@@ -10,8 +14,14 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'DashBoardLayout',
+      name: 'Dash Board',
       component: DashBoardLayout
+    }
+    ,
+    {
+      path: '/dang-ki',
+      name: 'Sign up',
+      component: SignUpPage
     },
     {
       path: '/jobseeker-main-screen',
@@ -23,5 +33,23 @@ export default new Router({
       name: 'Trang chu',
       component: EmployerMainScreenPage
     }
+    ,
+    {
+      path: '/dang-nhap',
+      name: 'login',
+      component: LoginPage
+    }
+    ,
+    {
+      path: '/profile',
+      name: 'login',
+      component: LoginPage
+    }
+    ,
+    // {
+    //   path: '/detail/:id',
+    //   component: Detail
+    // }
+
   ]
 })

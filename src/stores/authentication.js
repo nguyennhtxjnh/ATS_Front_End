@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios'
 
 export default {
     namespaced: true,
@@ -44,12 +44,11 @@ export default {
         LOGIN({commit}, user) {
             return new Promise((resolve, reject) => {
                 commit('REQUEST');
-                axios({url: 'http://localhost:8080/login', data: user, method: 'POST'})
+                axios({url: 'http://localhost:8080/account/login', data: user, method: 'POST'})
                     .then(response => {
                         const token = response.data.token;
                         localStorage.setItem('token', token);
                         commit('SUCCESS', token);
-                        console.log('login success');
                         resolve(response);
                     })
                     .catch(error => {
@@ -61,7 +60,6 @@ export default {
         },
         LOGOUT({commit}) {
             return new Promise((resolve) => {
-                var username = this.state.AUTHENTICATION_STORE.username;
                 commit('LOGOUT');
                 localStorage.removeItem('token');
                 resolve()
