@@ -1,29 +1,30 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import SignUpPage from '../views/SignUpPage'
-import LoginPage from '../views/LoginPage'
+import SignUpPage from '../views/JobSeekerSignUpPage'
+import LoginPage from '../views/JobSeekerLoginPage'
 import DashBoardLayout from "../layouts/DashBoardLayout";
 import JobSeekerMainScreenPage from "../views/JobSeekerMainScreenPage";
 import EmployerMainScreenPage from "../views/EmployerMainScreenPage";
 import JobSeekerDashBoardPage from '../views/JobSeekerDashBoardPage'
+import EmployerCreateJobPage from '../views/EmployerCreateJobPage'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
-    {
-      path: '/',
-      name: 'DashBoardLayout',
-      component: DashBoardLayout
-    }
-    ,
+    // {
+    //   path: '/',
+    //   name: 'DashBoardLayout',
+    //   component: JobSeekerDashBoardLayout
+    // }
+    // ,
     {
       path: '/dang-ki',
       name: 'Sign up',
       component: SignUpPage
     },
     {
-      path: '/jobseeker-main-screen',
+      path: '/',
       name: 'Trang chu',
       component: JobSeekerMainScreenPage
     },
@@ -40,9 +41,15 @@ export default new Router({
     }
     ,
     {
-      path: '/profile/:id',
+      path: '/profile',
       name: 'jobseekerdashboard',
       component: JobSeekerDashBoardPage
+    }
+    ,
+    {
+      path: '/dang-tin-tuyen-dung',
+      name: 'employercreatejob',
+      component: EmployerCreateJobPage
     }
     ,
     // {

@@ -55,9 +55,6 @@
                   </v-flex>
                 </v-layout>
               </v-container>
-              <v-alert v-model="alert" dismissible transition="scale-transition">
-                Đăng kí thất bại
-              </v-alert>
             </v-card-text>
             <v-card-actions class="justify-center">
               <v-btn color="error" style="width: 30%">Đăng Nhập Với Google <v-icon right dark>mail</v-icon></v-btn>
@@ -86,7 +83,6 @@
     name: 'SignUp',
     data: function () {
       return {
-        alert: false,
         formData: {
           email : "",
           password  : "",
@@ -96,7 +92,6 @@
           cityid : 1,
         },
 
-        dialog: false,
         repassword: '',
         rules: {
           required: value => !!value || 'Không được để trống ô này.',
