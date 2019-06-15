@@ -117,8 +117,9 @@
                           v-on="on"
                         ></v-text-field>
                       </template>
-                      <v-date-picker v-model="date" no-title @input="menu2 = false"
+                      <v-date-picker v-model="formData.endDateForApply" no-title @input="menu2 = false"
                                      :min="new Date().toISOString().substr(0, 10)"
+
                       ></v-date-picker>
                     </v-menu>
                   </v-flex>
@@ -190,7 +191,6 @@
     name: 'CreateJob',
     data: function () {
       return {
-
         date: new Date().toISOString().substr(0, 10),
         menu2: false,
 
@@ -227,7 +227,7 @@
             'undo', 'redo'],
         },
         rules: {
-          noMinus: value => value >= 0 || 'Lương Không Được Phêp Nhỏ Hơn 0',
+          noMinus: value => value >= 0 || 'Lương Không Được Nhỏ Hơn 0',
           required: value => !!value || 'Không được để trống ô này.',
           counter: value => value.length <= 40 || 'Tối Đa 40 Kí Tự',
           cemail: value => {

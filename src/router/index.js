@@ -7,6 +7,7 @@ import JobSeekerMainScreenPage from "../views/JobSeekerMainScreenPage";
 import EmployerMainScreenPage from "../views/EmployerMainScreenPage";
 import JobSeekerDashBoardPage from '../views/JobSeekerDashBoardPage'
 import EmployerCreateJobPage from '../views/EmployerCreateJobPage'
+import EmployerJobDetailPage from '../views/EmployerJobDetailPage'
 
 Vue.use(Router)
 
@@ -50,6 +51,12 @@ export default new Router({
       path: '/dang-tin-tuyen-dung',
       name: 'employercreatejob',
       component: EmployerCreateJobPage
+    }
+    ,
+    {
+      path: '/viec-lam',
+      name: 'employerjobdetail',
+      component: EmployerJobDetailPage
     }
     ,
     // {

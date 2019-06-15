@@ -3,7 +3,7 @@
 <!--    <img src="./assets/logo.png">-->
     <router-view/>
 
-    <notifications group="foo" position="bottom right"/>
+    <notifications group="foo"  position="bottom right"/>
   </div>
 </template>
 

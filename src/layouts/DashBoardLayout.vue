@@ -2,7 +2,7 @@
   <v-app>
   <!--    ToolBar-->
   <template>
-    <v-toolbar fixed dark>
+    <v-toolbar fixed dark v-if="$vuetify.breakpoint.mdAndUp">
 
       <v-toolbar-title class="white--text">Job Board</v-toolbar-title>
 
@@ -30,21 +30,55 @@
         Đăng Kí
       </v-btn>
 
-      <v-menu bottom left>
+      <v-menu offset-y>
         <template v-slot:activator="{ on }">
           <v-btn
             dark
-            icon
             v-on="on"
+            fab
           >
-            <v-icon>more_vert</v-icon>
+            <v-icon dark>list</v-icon>
           </v-btn>
         </template>
-
         <v-list>
           <v-list-tile
-            v-for="(item, i) in items"
-            :key="i"
+            v-for="(item, index) in items"
+            :key="index"
+            @click=""
+          >
+            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+
+      <v-btn style="height: 100%" color="primary" >
+        Nhà Tuyển Dụng
+      </v-btn>
+
+    </v-toolbar>
+    <v-toolbar fixed dark v-if="$vuetify.breakpoint.mdAndDown">
+
+      <v-toolbar-title class="white--text">ABC</v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
+
+
+
+      <v-menu offset-y>
+        <template v-slot:activator="{ on }">
+          <v-btn
+            dark
+            v-on="on"
+            fab
+          >
+            <v-icon dark>list</v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-tile
+            v-for="(item, index) in items"
+            :key="index"
             @click=""
           >
             <v-list-tile-title>{{ item.title }}</v-list-tile-title>
