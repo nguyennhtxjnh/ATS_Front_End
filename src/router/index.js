@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
 import SignUpPage from '../views/SignUpPage'
-import Detail from '../views/Detail'
 import LoginPage from '../views/LoginPage'
 import DashBoardLayout from "../layouts/DashBoardLayout";
 import JobSeekerMainScreenPage from "../views/JobSeekerMainScreenPage";
 import EmployerMainScreenPage from "../views/EmployerMainScreenPage";
+import JobSeekerDashBoardPage from '../views/JobSeekerDashBoardPage'
+import JobSeekerCreateCV from "../views/JobSeekerCreateCV";
 
 Vue.use(Router)
 
@@ -14,7 +14,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Dash Board',
+      name: 'DashBoardLayout',
       component: DashBoardLayout
     }
     ,
@@ -41,11 +41,15 @@ export default new Router({
     }
     ,
     {
-      path: '/profile',
-      name: 'login',
-      component: LoginPage
+      path: '/profile/:id',
+      name: 'jobseekerdashboard',
+      component: JobSeekerDashBoardPage
     }
-    ,
+    ,   {
+      path: '/createCV',
+      name: 'Tạo CV',
+      component: JobSeekerCreateCV
+    }
     // {
     //   path: '/detail/:id',
     //   component: Detail
