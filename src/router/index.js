@@ -6,6 +6,7 @@ import DashBoardLayout from "../layouts/DashBoardLayout";
 import JobSeekerMainScreenPage from "../views/JobSeekerMainScreenPage";
 import EmployerMainScreenPage from "../views/EmployerMainScreenPage";
 import JobSeekerDashBoardPage from '../views/JobSeekerDashBoardPage'
+import JobSeekerCreateCV from "../views/JobSeekerCreateCV";
 
 Vue.use(Router)
 
@@ -29,7 +30,7 @@ export default new Router({
     },
     {
       path: '/employer-main-screen',
-      name: 'Trang chu 2',
+      name: 'Trang chu',
       component: EmployerMainScreenPage
     }
     ,
@@ -44,7 +45,11 @@ export default new Router({
       name: 'jobseekerdashboard',
       component: JobSeekerDashBoardPage
     }
-    ,
+    ,   {
+      path: '/createCV',
+      name: 'Tạo CV',
+      component: JobSeekerCreateCV
+    }
     // {
     //   path: '/detail/:id',
     //   component: Detail
