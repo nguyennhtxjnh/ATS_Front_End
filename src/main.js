@@ -9,6 +9,7 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import axios from 'axios';
 import moment from 'moment';
 import Notificaton from 'vue-notification';
+import CKEditor from '@ckeditor/ckeditor5-vue';
 
 Vue.use(Vuetify, {
   iconfont: 'mdi'
@@ -16,6 +17,7 @@ Vue.use(Vuetify, {
 Vue.config.productionTip = false;
 Vue.prototype.moment = moment;
 Vue.use(Notificaton);
+Vue.use(CKEditor);
 
 axios.interceptors.request.use(
   (config) => {
