@@ -8,7 +8,7 @@
             <v-flex md12 xs12>
               <h2> Thông tin</h2>
             </v-flex><!-- end thông tin-->
-            <v-flex md4 xs4>
+            <v-flex md4 xs12>
               <v-flex md12 xs12>
               <img :src="imageUrl" height="150" v-if="imageUrl"  @click='pickFile'/>
               <v-text-field  style="display: none" label="Select Image" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
@@ -24,42 +24,56 @@
                 <h3> Chọn ảnh đại diện</h3>
               </v-flex>
             </v-flex>
-            <v-flex md4 xs4>
+            <v-flex md4 xs12>
               <v-flex md12 xs12 sm6>
 <!--                họ-->
                 <v-layout row >
                   <v-icon color="orange darken-2" >mdi-account-circle-outline</v-icon>
                   <v-text-field
+                    v-model="info.lastName"
                     label="Họ "
                   ></v-text-field>
                 </v-layout>
 <!--                chức danh-->
                 <v-layout row >
-                  <v-icon color="orange darken-2" >mdi-account-card-details-outline</v-icon>
+                  <v-icon color="orange darken-2" >mdi-map-marker</v-icon>
                   <v-text-field
-                    label="Chức danh "
+                    v-model="info.address"
+                    label="Địa chỉ "
                   ></v-text-field>
                 </v-layout>
               </v-flex>
             </v-flex>
-            <v-flex md4 xs4>
-<!--              họ-->
-              <v-layout row >
+            <v-flex md4 xs12>
+<!--              tên-->
+              <v-layout row>
                 <v-icon color="orange darken-2" >mdi-account-circle-outline</v-icon>
                 <v-text-field
+                  v-model="info.firstName"
                   label="Tên "
                 ></v-text-field>
               </v-layout>
               <v-layout row>
-                <v-select
-                  :items="ranks"
-                  label="Cấp bặc hiện tại"
-                ></v-select>
+                <v-layout row>
+                  <v-icon color="orange darken-2" >mdi-account-circle-outline</v-icon>
+                  <v-autocomplete
+                    v-model="industryid"
+                    :items="industries"
+                    item-text="Name"
+                    item-value="id"
+                    label="Tỉnh/ Thành phố"
+                    persistent-hint
+                    return-object
+                    single-line
+                  ></v-autocomplete>
+
+                </v-layout>
               </v-layout>
 <!--              số năm kinh nghiệm-->
               <v-layout row >
                 <v-icon color="orange darken-2" >mdi-briefcase-account-outline</v-icon>
                 <v-text-field
+                  v-model="info.yearExperience"
                   label="Số năm kinh nghiệm "
                 ></v-text-field>
               </v-layout>
@@ -71,37 +85,56 @@
                   <v-layout row>
                     <v-icon color="orange darken-2" >mdi-email-search-outline</v-icon>
                     <v-text-field
+                      v-model="info.email"
                       label="Email "
                     ></v-text-field>
                   </v-layout>
 <!--                  ngày sinh-->
                   <v-layout row>
                     <v-icon color="orange darken-2" >mdi-calendar-month-outline</v-icon>
-                    <v-text-field
-                      type="date"
-                      label="Ngày sinh "
-                    ></v-text-field>
+                    <v-menu
+                      v-model="menu2"
+                      :close-on-content-click="false"
+                      :nudge-right="40"
+                      lazy
+                      transition="scale-transition"
+                      offset-y
+                      full-width
+                      min-width="290px"
+                    >
+                      <template v-slot:activator="{ on }">
+                        <v-text-field
+                          v-model="info.dob"
+                          label="ngày sinh"
+                          readonly
+                          v-on="on"
+                          required
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker v-model="info.dob" @input="menu2 = false"></v-date-picker>
+                    </v-menu>
                   </v-layout>
 
                 </v-flex>
 
                 <v-flex md6 xs12>
                   <!--                số điện thoại-->
-                  <v-layout row>
-                  <v-icon color="orange darken-2" >mdi-phone</v-icon>
-                  <v-text-field
-                    label="Số điện thoại "
-                  ></v-text-field>
-                  </v-layout>
-<!--               quốc gia   -->
+<!--                  <v-layout row>-->
+<!--                  <v-icon color="orange darken-2" >mdi-phone</v-icon>-->
+<!--                  <v-text-field-->
+<!--                    -->
+<!--                    label="Số điện thoại "-->
+<!--                  ></v-text-field>-->
+<!--                  </v-layout>-->
+<!--               thành phố   -->
                   <v-layout row>
                     <v-icon color="orange darken-2" >mdi-account-circle-outline</v-icon>
                     <v-autocomplete
-                      v-model="selectedCoutry"
-                      :items="countries"
-                      item-text="name"
-                      item-value="name"
-                      label="Quốc tịch"
+                      v-model="cityid"
+                      :items="cities"
+                      item-text="FullName"
+                      item-value="id"
+                      label="Tỉnh/ Thành phố"
                       persistent-hint
                       return-object
                       single-line
@@ -116,45 +149,61 @@
 
               <v-layout row>
                 <v-flex md12 xs12>
-                  <v-icon color="orange darken-2" style="float: left">mdi-account-circle-outline</v-icon>
+                  <v-icon color="orange darken-2" class="pr-2" style="float: left">mdi-account-circle-outline</v-icon>
                   <h4 style="float: left">Giới tính</h4>
                   <v-container fluid align="left">
-                    <v-radio-group v-model="sex" :mandatory="false" >
-                      <v-radio label="Nữ" value="nữ"></v-radio>
-                      <v-radio label="Nam" value="nam"></v-radio>
-                      <v-radio label="Khác" value="khác"></v-radio>
+                    <v-radio-group v-model="info.gender" :mandatory="false" >
+                      <v-radio label="Nữ" value="1"></v-radio>
+                      <v-radio label="Nam" value="2"></v-radio>
+                      <v-radio label="Khác" value="3"></v-radio>
                     </v-radio-group>
                   </v-container>
                 </v-flex>
-
-
-
-
               </v-layout>
             </v-flex>
             <v-flex md12 xs12>
-              <v-layout row>
-              <v-flex md6 xs12>
-                <v-layout row>
-                  <v-icon color="orange darken-2" >mdi-account-circle-outline</v-icon>
-                  <v-autocomplete
-                    v-model="selectedCoutry"
-                    :items="countries"
+              <v-layout row wrap>
+                <!--Lương-->
+                <v-flex class="pa-1" md6 xs12>
+                  <v-icon color="orange darken-2" class="pr-2" style="float: left">mdi-currency-usd</v-icon>
+                  <v-select
+                    :items="salaryChoose"
+                    v-model="select"
                     item-text="name"
-                    item-value="name"
-                    label="Tỉnh/ Thành phố"
-                    persistent-hint
-                    return-object
-                    single-line
-                  ></v-autocomplete>
+                    item-value="id"
+                    label="Lương"
+                  ></v-select>
+                </v-flex>
 
-                </v-layout>
-              </v-flex>
-              <v-flex md6 xs12>
+                <v-flex md6 xs12 v-if="select === 'Thỏa Thuận'">
+                </v-flex>
 
-              </v-flex>
+                <v-flex md3 xs12 v-if="select === 'Trong Khoảng' || select === 'Từ'">
+                  <v-text-field class="ma-2" name="from" label="Từ" type="number" min="0"
+                                v-model="info.salaryFrom"
+                                :rules="[rules.noMinus]"
+                  ></v-text-field>
+                </v-flex>
+
+                <v-flex md3 xs12 v-if="select === 'Trong Khoảng' || select === 'Đến'">
+                  <v-text-field class="ma-2" name="to" label="Đến" type="number" min="0"
+                                v-model="info.salaryTo"
+                                :rules="[rules.noMinus]"
+                  ></v-text-field>
+                </v-flex>
+                <!--Hết Lương-->
               </v-layout>
             </v-flex>
+<!--            <v-flex md12 xs12>-->
+<!--              <v-layout row>-->
+<!--              <v-flex md6 xs12>-->
+
+<!--              </v-flex>-->
+<!--              <v-flex md6 xs12>-->
+
+<!--              </v-flex>-->
+<!--              </v-layout>-->
+<!--            </v-flex>-->
           </v-layout><!--end row bự-->
         </v-container>
       </v-card>
@@ -168,6 +217,7 @@
           </v-flex>
           <v-flex md12 xs12>
             <v-textarea
+              v-model="info.description"
               name="input-7-1"
               label="Mô tả ngắn gọn thông tin hồ sơ và mục tiêu nghề nghiệp của bạn"
               value=""
@@ -178,283 +228,98 @@
         </v-container>
       </v-card>
 <!-- học vấn-->
-      <v-card style="background-color: white" class="mt-5">
-        <v-container>
-          <v-layout row wrap>
-            <v-flex md12 xs12>
-              <h2 style="float: left">Học vấn</h2>
-            </v-flex>
-            <v-flex md12 xs12>
-              <v-dialog v-model="dialog" persistent max-width="800px">
-                <template
-                  v-slot:activator="{ on }">
-                  <v-btn color="primary" dark v-on="on">Thêm mục</v-btn>
-                </template>
-                <v-card>
-                  <v-card-text>
-                    <v-container>
-                      <span class="headline" >Học Vấn</span>
-                      <v-layout row wrap>
-                        <v-flex md12 xs12>
-                          <v-text-field
-                            label="Trường *"
-                            placeholder="Trường học"
-                          ></v-text-field>
 
-                        </v-flex>
-                        <v-flex md12 xs12>
-                          <v-text-field
-                            label="Chuyên ngành *"
-                            placeholder="Công nghệ phần mềm"
-                          ></v-text-field>
-
-                        </v-flex>
-                        <v-flex md12 xs12>
-                          <h4>Thời gian*</h4>
-                          <v-checkbox label="Tôi đang học ở đây"></v-checkbox>
-                          <v-layout row>
-                            <v-flex md6 xs12>
-                              <v-text-field
-                                label="Bắt đầu"
-                                type="date"
-                              ></v-text-field>
-                            </v-flex>
-                            <v-flex md6 xs12>
-                              <v-text-field
-                                label="Kết thúc"
-                                type="date"
-                              ></v-text-field>
-                            </v-flex>
-                          </v-layout>
-                        </v-flex>
-                        <v-flex md12 xs12>
-                          <v-textarea
-                            label="Mô tả chi tiết"
-                            placeholder="Mô tả chi tiết quá trình học của bạn để nhà tuyển dụng có thể hiểu bạn hơn"
-                          ></v-textarea>
-
-                        </v-flex>
-                      </v-layout>
-                    </v-container>
-                  </v-card-text>
-
-                  <v-card-actions >
-                    <v-spacer/>
-                    <v-btn color="blue darken-1" flat @click="dialog = false">thoát</v-btn>
-                    <v-btn color="blue darken-1" flat @click="dialog = false">Cập nhật</v-btn>
-                    <v-spacer/>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-card>
+      <EducationComponent :educations = "info.educations"></EducationComponent>
 <!--Kinh nghiệm-->
-      <v-card style="background-color: white" class="mt-5">
-        <v-container>
-          <v-layout row wrap>
-            <v-flex md12 xs12>
-              <h2 style="float: left">Kinh nghiệm</h2>
-            </v-flex>
-            <v-flex md12 xs12>
-              <v-dialog v-model="dialog" persistent max-width="800px">
-                <template
-                  v-slot:activator="{ on }">
-                  <v-btn color="primary" dark v-on="on">Thêm mục</v-btn>
-                </template>
-                <v-card>
-                  <v-card-text>
-                    <v-container>
-                      <span class="headline" >Kinh nghiệm</span>
-                      <v-layout row wrap>
-                        <v-flex md12 xs12>
-                          <v-text-field
-                            label="Công ty *"
-                            placeholder="Tên công ty"
-                          ></v-text-field>
-
-                        </v-flex>
-                        <v-flex md12 xs12>
-                          <v-text-field
-                            label="Chức vụ *"
-                            placeholder="Nhân viên, quản lý,.."
-                          ></v-text-field>
-
-                        </v-flex>
-                        <v-flex md12 xs12>
-                          <h4>Thời gian*</h4>
-                          <v-checkbox label="Tôi đang làm việc ở đây"></v-checkbox>
-                          <v-layout row>
-                            <v-flex md6 xs12>
-                              <v-text-field
-                                label="Bắt đầu"
-                                type="date"
-                              ></v-text-field>
-                            </v-flex>
-                            <v-flex md6 xs12>
-                              <v-text-field
-                                label="Kết thúc"
-                                type="date"
-                              ></v-text-field>
-                            </v-flex>
-                          </v-layout>
-                        </v-flex>
-                        <v-flex md12 xs12>
-                          <v-textarea
-                            label="Mô tả chi tiết"
-                            placeholder="Mô tả chi tiết công việc, những gì đạt dduocj trong quá trình làm việc"
-                          ></v-textarea>
-
-                        </v-flex>
-                      </v-layout>
-                    </v-container>
-                  </v-card-text>
-
-                  <v-card-actions >
-                    <v-spacer/>
-                    <v-btn color="blue darken-1" flat @click="dialog = false">thoát</v-btn>
-                    <v-btn color="blue darken-1" flat @click="dialog = false">Cập nhật</v-btn>
-                    <v-spacer/>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-card>
-<!-- Chứng chr-->
-      <v-card style="background-color: white" class="mt-5">
-        <v-container>
-          <v-layout row wrap>
-            <v-flex md12 xs12>
-              <h2 style="float: left">Chứng chỉ</h2>
-            </v-flex>
-            <v-flex md12 xs12>
-              <v-dialog v-model="dialog" persistent max-width="800px">
-                <template
-                  v-slot:activator="{ on }">
-                  <v-btn color="primary" dark v-on="on">Thêm mục</v-btn>
-                </template>
-                <v-card>
-                  <v-card-text>
-                    <v-container>
-                      <span class="headline" >Chứng chỉ</span>
-                      <v-layout row wrap>
-                        <v-flex md12 xs12>
-                          <v-text-field
-                            label="Chứng chỉ *"
-                            placeholder="Tên chứng chỉ"
-                          ></v-text-field>
-
-                        </v-flex>
-
-                      </v-layout>
-                    </v-container>
-                  </v-card-text>
-
-                  <v-card-actions >
-                    <v-spacer/>
-                    <v-btn color="blue darken-1" flat @click="dialog = false">thoát</v-btn>
-                    <v-btn color="blue darken-1" flat @click="dialog = false">Cập nhật</v-btn>
-                    <v-spacer/>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-card>
+      <WorkExperienceComponent :workexperiences = "info.workexperiences"></WorkExperienceComponent>
+<!-- Chứng chỉ-->
+      <CertificationComponent :certifications="info.certifications"></CertificationComponent>
 <!--Hoạt động xã hội-->
-      <v-card style="background-color: white" class="mt-5">
-        <v-container>
-          <v-layout row wrap>
-            <v-flex md12 xs12>
-              <h2 style="float: left">Hoạt động xã hội</h2>
-            </v-flex>
-            <v-flex md12 xs12>
-              <v-dialog v-model="dialog" persistent max-width="800px">
-                <template
-                  v-slot:activator="{ on }">
-                  <v-btn color="primary" dark v-on="on">Open Dialog</v-btn>
-                </template>
-                <v-card>
-                  <v-card-text>
-                    <v-container>
-                      <span class="headline" >Hoạt động xã hội</span>
-                      <v-layout row wrap>
-                        <v-flex md12 xs12>
-                          <v-text-field
-                            label="Hoạt động *"
-                            placeholder="Tên hoạt động"
-                          ></v-text-field>
+      <SocialActivitiesComponent :socialactivities="info.socialactivities" ></SocialActivitiesComponent>
 
-                        </v-flex>
+      <ProjectorProductWorkedComponent :projectorproductworkeds="info.projectorproductworkeds"></ProjectorProductWorkedComponent>
 
-                        <v-flex md12 xs12>
-                          <v-textarea
-                            label="Mô tả chi tiết"
-                            placeholder="Mô tả chi tiết quá trình tham gia hoạt động xã hội"
-                          ></v-textarea>
-
-                        </v-flex>
-                      </v-layout>
-                    </v-container>
-                  </v-card-text>
-
-                  <v-card-actions >
-                    <v-spacer/>
-                    <v-btn color="blue darken-1" flat @click="dialog = false">thoát</v-btn>
-                    <v-btn color="blue darken-1" flat @click="dialog = false">Cập nhật</v-btn>
-                    <v-spacer/>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-card>
 <!--Kỹ năng-->
-      <v-card style="background-color: white" class="mt-5">
-        <v-container grid-list-md>
-          <v-layout row wrap>
-            <v-flex md12 xs12>
-              <h2 style="float: left">Kỹ năng </h2>
-            </v-flex>
-            <v-flex md12 xs12>
+    <SkillInCVComponent></SkillInCVComponent>
 
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-card>
-
-
+      {{info}}
+      <v-btn color="blue darken-1" flat @click="create">Tạo CV</v-btn>
 
     </v-container>
 </template>
 
 <script>
   import axios from 'axios';
+  import EducationComponent from "./EducationComponent";
+  import WorkExperienceComponent from "./WorkExperienceComponent";
+  import CertificationComponent from "./CertificationComponent";
+  import SocialActivitiesComponent from "./SocialActivitiesComponent";
+  import SkillInCVComponent from "./SkillInCVComponent";
+  import ProjectorProductWorkedComponent from "./ProjectorProductWorkedComponent";
     export default {
         name: "CreateCV",
-      data: () => ( {
+      components: {
+        ProjectorProductWorkedComponent,
+        EducationComponent,
+        SkillInCVComponent,
+        SocialActivitiesComponent, CertificationComponent, WorkExperienceComponent},
+      data:  function ()  {
+        return {
         title: "Image Upload",
         dialog: false,
         imageName: '',
-        imageUrl: require('@/assets/avatar-default-icon.png'),
         imageFile: '',
-        ranks : ['1','2','3','4'],
-        countries: [],
-        selectedCoutry: '',
-        sex: 'nữ'
+        imageUrl:require('@/assets/avatar-default-icon.png'),
+        industries : ['1','2','3','4'],
+        cities: [],
+          industries:[],
+        menu2: false,
+        salaryChoose: ['Thỏa Thuận', 'Từ', 'Đến', 'Trong Khoảng'],
+        select: 'Thỏa Thuận',
+        info: {
+          title:'Test Cai moi ne',
+          userid:'1',
+          img : '',
+          email: '',
+          firstName:'',
+          lastName: '',
+          gender:'',
+          dob: new Date().toISOString().substr(0, 10),
+          cityid: '1',
+          address:'',
+          industryid:'',
+          description:'',
+          yearExperience:'',
+          salaryFrom:'',
+          salaryTo:'',
+          status:'',
+          createdDate: new Date().toISOString().substr(0, 10),
+          lastModify:'',
+          isActive:'',
+          certifications:[],
+          educations: [],
+          socialactivities:[],
+          workexperiences:[],
+          projectorproductworkeds:[],
+          skillincvs:[],
+        },rules: {
+            noMinus: value => value >= 0 || 'Lương Không Được Nhỏ Hơn 0',
+            required: value => !!value || 'Không được để trống ô này.',
+            counter: value => value.length <= 40 || 'Tối Đa 40 Kí Tự',
+            cemail: value => {
+              const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+              return pattern.test(value) || 'Địa chỉ email không phù hợp.'
+            }
+          },
 
+      }},
 
-      }),
 
       methods: {
         pickFile () {
           this.$refs.image.click ()
-        },onFilePicked (e) {
+        },
+        onFilePicked (e) {
           const files = e.target.files
           if(files[0] !== undefined) {
             this.imageName = files[0].name
@@ -473,12 +338,40 @@
             this.imageUrl = require('@/assets/avatar-default-icon.png')
           }
         },
+        create(){
+          const url = ''
+          const method = 'POST'
+          const data = this.info
+          axios({url, method, data})
+            .then(response => {
+              if (response.data.success == true) {
+                this.$notify({
+                  group: 'foo',
+                  type: 'success',
+                  title: 'Thành Công',
+                  text: 'Đăng Tin Thành Công!'
+                })
+              }
+            })
+            .catch(error => {
+              console.log(error)
+              this.$notify({
+                group: 'foo',
+                type: 'error',
+                title: 'Thất Bại',
+                text: 'Đã Xảy Ra Lỗi!'
+              })
+            })
+            .finally(() => {
 
+            })
+        },
       },
      mounted () {
+
         axios
           .get('https://restcountries.eu/rest/v1/all')
-          .then(response => (this.countries = response.data))
+          .then(response => (this.cities = response.data.cities, this.industries = response.data.industries))
       }
 
     }
