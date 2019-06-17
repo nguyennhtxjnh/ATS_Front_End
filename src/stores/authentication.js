@@ -5,8 +5,8 @@ export default {
     state: {
         status: '',
         token: localStorage.getItem('token') || '',
-        username: '',
-        role: '',
+        email: '',
+        roleId: '',
     },
     mutations: {
         REQUEST(state) {
@@ -22,23 +22,24 @@ export default {
         LOGOUT(state) {
             state.status = '';
             state.token = '';
-            state.username = '';
-            state.role = '';
+            state.email = '';
+            state.roleId = '';
         },
-        INIT(state, {username, role}) {
+        INIT(state, {email, roleId}) {
             state.status = 'success';
-            state.username = username;
-            state.role = role;
+            state.email = email;
+            state.roleId = roleId;
         }
     },
     getters: {
         isLoggedIn: state => !!state.token,
-        isInit: state => !!state.username && !!state.role,
-        // isAdmin: state => state.role === 'ADMIN',
-        // isManager: state => state.role === 'MANAGER',
-        // isStaff: state => state.role === 'STAFF',
-        // isArchivist: state => state.role === 'ARCHIVIST',npm
-        username: state => state.username
+        isInit: state => !!state.email && !!state.roleId,
+        // isAdmin: state => state.roleId === 'ADMIN',
+        // isManager: state => state.roleId === 'MANAGER',
+        // isStaff: state => state.roleId === 'STAFF',
+        // isArchivist: state => state.roleId === 'ARCHIVIST',npm
+        email: state => state.email,
+        roleId: state => state.roleId,
     },
     actions: {
         LOGIN({commit}, user) {
@@ -51,6 +52,7 @@ export default {
                         console.log(response);
                         localStorage.setItem('token', token);
                         commit('SUCCESS', token);
+                        console.log('log success ');
                         resolve(response);
                     })
                     .catch(error => {
@@ -68,9 +70,21 @@ export default {
             })
         },
         INIT({commit}) {
-            return new Promise((resolve, reject) => {
-                commit('REQUEST');
-            })
+          return new Promise((resolve, reject) => {
+            commit('REQUEST');
+            axios({url: 'http://localhost:8080/user/checkLogin', method: 'POST'})
+              .then(response => {
+                const email = response.data.dto.email;
+                const roleId = response.data.dto.roleId;
+                console.log(email, roleId);
+                commit('INIT',{email, roleId});
+                resolve(response);
+              })
+              .catch(error => {
+                commit('ERROR');
+                reject(error);
+              })
+          })
         }
     }
 };

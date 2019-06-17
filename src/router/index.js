@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '../store.js'
 import SignUpPage from '../views/JobSeekerSignUpPage'
 import LoginPage from '../views/JobSeekerLoginPage'
-import DashBoardLayout from "../layouts/DashBoardLayout";
 import JobSeekerMainScreenPage from "../views/JobSeekerMainScreenPage";
 import EmployerMainScreenPage from "../views/EmployerMainScreenPage";
 import JobSeekerDashBoardPage from '../views/JobSeekerDashBoardPage'
@@ -11,7 +11,7 @@ import EmployerJobDetailPage from '../views/EmployerJobDetailPage'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     // {
     //   path: '/',
@@ -66,3 +66,39 @@ export default new Router({
 
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.path === '/dang-nhap' || to.path === '/dang-ki') {
+    if (store.getters['AUTHENTICATION_STORE/isLoggedIn']) {
+      store.dispatch('AUTHENTICATION_STORE/INIT')
+        .then(() => next('/'))
+        .catch(error => {
+            if (error.response) {
+              console.log(error.response.data)
+            } else {
+              console.log(error)
+            }
+            next('/dang-nhap')
+          }
+        );
+      return;
+    }
+    next();
+    return;
+  }
+  if (!store.getters['AUTHENTICATION_STORE/isLoggedIn']) {
+    next('/dang-nhap');
+    return;
+  }
+  if (!store.getters['AUTHENTICATION_STORE/isInit']) {
+    store.dispatch('AUTHENTICATION_STORE/INIT')
+      .then(() => next())
+      .catch(() => next('/dang-nhap'));
+    return;
+  }
+  next();
+});
+
+export default router;
+
+

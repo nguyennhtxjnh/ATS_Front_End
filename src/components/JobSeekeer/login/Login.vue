@@ -71,8 +71,12 @@
             .then(() => {
 
                 this.$store.dispatch('AUTHENTICATION_STORE/INIT')
-                .then(() => this.$router.push('/'))
-                .catch(() => {this.$router.push('/dang-nhap')});
+                .then(() => {
+                  this.$router.push('/');
+                })
+                .catch((error) => {
+                  this.$router.push('/dang-nhap');
+                });
 
             })
             .catch(() => {

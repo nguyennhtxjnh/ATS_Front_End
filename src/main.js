@@ -21,9 +21,10 @@ Vue.use(CKEditor);
 
 axios.interceptors.request.use(
   (config) => {
+    console.log(config);
     let token = localStorage.getItem('token');
     if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
+      config.headers['accessToken'] = `${token}`;
     }
     return config;
   },

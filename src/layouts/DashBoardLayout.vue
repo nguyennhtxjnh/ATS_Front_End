@@ -10,46 +10,53 @@
       <!--        <v-flex xs 4>-->
       <!--            <span @click="test">fasfa</span>-->
       <!--        </v-flex>-->
-      <v-btn icon>
-        <v-icon>search</v-icon>
-      </v-btn>
+<!--      <v-btn icon>-->
+<!--        <v-icon>search</v-icon>-->
+<!--      </v-btn>-->
 
-      <v-btn icon>
-        <v-icon>apps</v-icon>
-      </v-btn>
+<!--      <v-btn icon>-->
+<!--        <v-icon>apps</v-icon>-->
+<!--      </v-btn>-->
 
-      <v-btn icon>
-        <v-icon>refresh</v-icon>
-      </v-btn>
+<!--      <v-btn icon>-->
+<!--        <v-icon>refresh</v-icon>-->
+<!--      </v-btn>-->
 
-      <v-btn style="height: 100%" @click="$router.push('/dang-nhap')">
+      <v-btn style="height: 100%" @click="$router.push('/dang-nhap')" v-if="roleId !== 1">
         Đăng Nhập
       </v-btn>
-      <Span>|</Span>
-      <v-btn style="height: 100%" @click="$router.push('/dang-ki')">
+      <Span  v-if="roleId !== 1">|</Span>
+      <v-btn style="height: 100%" @click="$router.push('/dang-ki')" v-if="roleId !== 1">
         Đăng Kí
       </v-btn>
 
-      <v-menu offset-y>
-        <template v-slot:activator="{ on }">
-          <v-btn
-            dark
-            v-on="on"
-            fab
-          >
-            <v-icon dark>list</v-icon>
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-tile
-            v-for="(item, index) in items"
-            :key="index"
-            @click=""
-          >
-            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-          </v-list-tile>
-        </v-list>
+      <v-menu
+        offset-y
+        style="height: 100%"
+        content-class="dropdown-menu"
+        transition="slide-y-transition">
+        <v-btn
+          style="height: 100%"
+          slot="activator"
+
+        >
+          <v-icon left>mdi-account</v-icon>
+          {{ email }}
+        </v-btn>
+        <v-card>
+          <v-list dense>
+            <v-list-tile
+              v-for="notification in notifications"
+              :key="notification"
+            >
+              <v-list-tile-title
+                v-text="notification"
+              />
+            </v-list-tile>
+          </v-list>
+        </v-card>
       </v-menu>
+
 
       <v-btn style="height: 100%" color="primary" >
         Nhà Tuyển Dụng
@@ -149,10 +156,16 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex';
   export default {
     name: 'DashBoardLayout',
     data: function(){
       return {
+        notifications: [
+          'Thông tin',
+          'Đăng Xuất',
+
+        ],
         icons: [
           'mdi-facebook',
           'mdi-twitter',
@@ -210,13 +223,19 @@
             link: '/',
           }
         ],
-        items: [
-          { title: 'Click Me' },
-          { title: 'Click Me' },
-          { title: 'Click Me' },
-          { title: 'Click Me 2' }
-        ]
+
       }
+    },
+    methods: {
+      clickMe(index){
+        alert(index)
+      },
+    },
+    computed: {
+      ...mapGetters('AUTHENTICATION_STORE',{
+          email : 'email',
+          roleId: 'roleId',
+      })
     }
   }
 </script>

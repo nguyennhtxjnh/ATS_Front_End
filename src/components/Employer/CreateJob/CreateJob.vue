@@ -44,23 +44,64 @@
                                   v-model="formData.vacancyName"
                                   :rules="[rules.required]"></v-text-field>
                   </v-flex>
-                  <!--                  Nơi Làm Việc-->
+
+                  <!--Loại Hình-->
                   <v-flex class="pa-1" md6 xs12>
                     <v-autocomplete
-                      prepend-icon="mdi-map-marker"
+                      prepend-icon="mdi-format-list-bulleted-type"
                       :items="salaryChoose"
                       item-text="name"
                       item-value="id"
-                      label="Nơi Làm Việc"
+                      label="Loại Hình Làm Việc"
+                      @input="resetSalary"
+                    ></v-autocomplete>
+                  </v-flex>
+                  <!-- Hết Loại Hình-->
+<!--                  Số lượng-->
+                  <v-flex md6 xs12>
+                    <v-text-field class="ma-2" prepend-icon="mdi-account-plus" name="Name" label="Số Lượng Cần Tuyển"
+                                  type="number"
+                                  v-model="formData.vacancyName"
+                                  :rules="[rules.required]"></v-text-field>
+                  </v-flex>
+                  <!--hết số lượng-->
+
+                  <!-- Nơi Làm Việc-->
+<!--                  <v-flex class="pa-1" md6 xs12>-->
+<!--                    <v-autocomplete-->
+<!--                      prepend-icon="mdi-map-marker"-->
+<!--                      :items="salaryChoose"-->
+<!--                      item-text="name"-->
+<!--                      item-value="id"-->
+<!--                      label="Nơi Làm Việc"-->
+<!--                    ></v-autocomplete>-->
+<!--                  </v-flex>-->
+
+                  <v-flex class="pa-1" md6 xs12>
+                    <v-autocomplete
+                      prepend-icon="mdi-account-star"
+                      :items="salaryChoose"
+                      item-text="name"
+                      item-value="id"
+                      label="Kĩ Năng"
                     ></v-autocomplete>
                   </v-flex>
                   <!--  Hết Nơi Làm Việc-->
+
                   <!--  Kinh Nghiệm-->
                   <v-flex md6 xs12>
-                    <v-text-field class="ma-2" prepend-icon="mdi-calendar-clock" name="experience" label="Kinh Nghiệm"
-                                  type="text"
-                                  v-model="formData.yearExperience"
-                                  :rules="[rules.required]"></v-text-field>
+                    <v-autocomplete
+                      prepend-icon="mdi-calendar-clock"
+                      :items="skillYear"
+                      v-model="formData.yearExperience"
+                      item-text="name"
+                      item-value="id"
+                      label="Kinh Nghiệm"
+                    ></v-autocomplete>
+<!--                    <v-text-field class="ma-2" prepend-icon="mdi-calendar-clock" name="experience" label="Kinh Nghiệm"-->
+<!--                                  type="text"-->
+<!--                                  v-model="formData.yearExperience"-->
+<!--                                  :rules="[rules.required]"></v-text-field>-->
                   </v-flex>
                   <!--  Hết Kinh Nghiệm-->
                   <!--Lương-->
@@ -68,24 +109,24 @@
                     <v-select
                       prepend-icon="mdi-currency-usd"
                       :items="salaryChoose"
-                      v-model="select"
+                      v-model="selectedSalary"
                       item-text="name"
                       item-value="id"
                       label="Lương"
                     ></v-select>
                   </v-flex>
 
-                  <v-flex md6 xs12 v-if="select === 'Thỏa Thuận'">
+                  <v-flex md6 xs12 v-if="selectedSalary === 'Thỏa Thuận'">
                   </v-flex>
 
-                  <v-flex md3 xs12 v-if="select === 'Trong Khoảng' || select === 'Từ'">
+                  <v-flex md3 xs12 v-if="selectedSalary === 'Trong Khoảng' || selectedSalary === 'Từ'">
                     <v-text-field class="ma-2" name="from" label="Từ" type="number" min="0"
                                   v-model="formData.salaryFrom"
                                   :rules="[rules.noMinus]"
                     ></v-text-field>
                   </v-flex>
 
-                  <v-flex md3 xs12 v-if="select === 'Trong Khoảng' || select === 'Đến'">
+                  <v-flex md3 xs12 v-if="selectedSalary === 'Trong Khoảng' || selectedSalary === 'Đến'">
                     <v-text-field class="ma-2" name="to" label="Đến" type="number" min="0"
                                   v-model="formData.salaryTo"
                                   :rules="[rules.noMinus]"
@@ -93,36 +134,36 @@
                   </v-flex>
                   <!--Hết Lương-->
                   <!--Hết Hạn-->
-                  <v-flex md12 xs12 class="pa-2">
-                    <v-menu
-                      v-model="menu2"
-                      :close-on-content-click="false"
-                      :nudge-right="40"
-                      lazy
-                      transition="scale-transition"
-                      offset-y
-                      full-width
-                      max-width="290px"
-                      min-width="290px"
-                    >
-                      <template v-slot:activator="{ on }">
-                        <v-text-field
-                          v-model="date"
-                          label="Ngày Hết Hạn Tuyển Dụng"
-                          hint="YYYY/MM/DD format"
-                          persistent-hint
-                          prepend-icon="event"
-                          readonly
+<!--                  <v-flex md12 xs12 class="pa-2">-->
+<!--                    <v-menu-->
+<!--                      v-model="menu2"-->
+<!--                      :close-on-content-click="false"-->
+<!--                      :nudge-right="40"-->
+<!--                      lazy-->
+<!--                      transition="scale-transition"-->
+<!--                      offset-y-->
+<!--                      full-width-->
+<!--                      max-width="290px"-->
+<!--                      min-width="290px"-->
+<!--                    >-->
+<!--                      <template v-slot:activator="{ on }">-->
+<!--                        <v-text-field-->
+<!--                          v-model="date"-->
+<!--                          label="Ngày Hết Hạn Tuyển Dụng"-->
+<!--                          hint="YYYY/MM/DD format"-->
+<!--                          persistent-hint-->
+<!--                          prepend-icon="event"-->
+<!--                          readonly-->
 
-                          v-on="on"
-                        ></v-text-field>
-                      </template>
-                      <v-date-picker v-model="formData.endDateForApply" no-title @input="menu2 = false"
-                                     :min="new Date().toISOString().substr(0, 10)"
+<!--                          v-on="on"-->
+<!--                        ></v-text-field>-->
+<!--                      </template>-->
+<!--                      <v-date-picker v-model="formData.endDateForApply" no-title @input="menu2 = false"-->
+<!--                                     :min="new Date().toISOString().substr(0, 10)"-->
 
-                      ></v-date-picker>
-                    </v-menu>
-                  </v-flex>
+<!--                      ></v-date-picker>-->
+<!--                    </v-menu>-->
+<!--                  </v-flex>-->
                   <!--Hết Hết Hạn-->
 
                   <v-flex md12 xs12 class="pa-2 mt-5">
@@ -195,7 +236,8 @@
         menu2: false,
 
         salaryChoose: ['Thỏa Thuận', 'Từ', 'Đến', 'Trong Khoảng'],
-        select: 'Thỏa Thuận',
+        selectedSalary: 'Thỏa Thuận',
+        skillYear: ['1', '2', '3', '4', '5'],
 
         formData: {
           userid: '5',
