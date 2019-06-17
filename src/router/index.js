@@ -6,6 +6,8 @@ import DashBoardLayout from "../layouts/DashBoardLayout";
 import JobSeekerMainScreenPage from "../views/JobSeekerMainScreenPage";
 import EmployerMainScreenPage from "../views/EmployerMainScreenPage";
 import JobSeekerDashBoardPage from '../views/JobSeekerDashBoardPage'
+import EmployerCreateJobPage from '../views/EmployerCreateJobPage'
+import EmployerJobDetailPage from '../views/EmployerJobDetailPage'
 import JobSeekerCreateCV from "../views/JobSeekerCreateCV";
 
 Vue.use(Router)
@@ -50,6 +52,13 @@ export default new Router({
       name: 'Tạo CV',
       component: JobSeekerCreateCV
     }
+    ,
+    {
+      path: '/viec-lam',
+      name: 'employerjobdetail',
+      component: EmployerJobDetailPage
+    }
+    ,
     // {
     //   path: '/detail/:id',
     //   component: Detail

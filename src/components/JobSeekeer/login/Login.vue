@@ -44,8 +44,8 @@
     name: 'Login',
     data: function () {
       return {
-        loginEmail: '',
-        loginPassword: '',
+        loginEmail: "",
+        loginPassword: "",
         rules: {
           required: value => !!value || 'Không được để trống ô này.',
           counter: value => value.length <= 40 || 'Tối Đa 40 Kí Tự',
@@ -65,15 +65,14 @@
     methods: {
       login: function () {
         if(this.$refs.form.validate()){
-          const username = this.loginEmail;
+          const email = this.loginEmail;
           const password = this.loginPassword;
-          this.$store.dispatch('AUTHENTICATION_STORE/LOGIN', {username, password})
+          this.$store.dispatch('AUTHENTICATION_STORE/LOGIN', {email, password})
             .then(() => {
 
-              this.$store.dispatch('AUTHENTICATION_STORE/INIT')
+                this.$store.dispatch('AUTHENTICATION_STORE/INIT')
                 .then(() => this.$router.push('/'))
-                .catch(() => this.$router.push('/login'));
-
+                .catch(() => {this.$router.push('/dang-nhap')});
 
             })
             .catch(() => {
@@ -81,8 +80,8 @@
                 group: 'foo',
                 type: 'error',
                 title: 'Thất bại',
-                // text: 'Tên đăng nhập hoặc mật khẩu không đúng!'
-                text: 'Đã Xảy Ra Lỗi'
+                text: 'Tên đăng nhập hoặc mật khẩu không đúng!'
+                // text: 'Đã Xảy Ra Lỗi'
               });
             });
         }
