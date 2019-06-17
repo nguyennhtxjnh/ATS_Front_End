@@ -3,9 +3,7 @@
   <!--    ToolBar-->
   <template>
     <v-toolbar fixed dark v-if="$vuetify.breakpoint.mdAndUp">
-
-      <v-toolbar-title class="white--text">Job Board</v-toolbar-title>
-
+      <v-toolbar-title @click="$router.push('/')" class="white--text" >Job Board</v-toolbar-title>
       <v-spacer></v-spacer>
       <!--        <v-flex xs 4>-->
       <!--            <span @click="test">fasfa</span>-->
@@ -30,7 +28,7 @@
         Đăng Kí
       </v-btn>
 
-      <v-menu
+      <v-menu  v-if="roleId === 1"
         offset-y
         style="height: 100%"
         content-class="dropdown-menu"
@@ -41,17 +39,21 @@
 
         >
           <v-icon left>mdi-account</v-icon>
-          {{ email }}
+          {{ fullName }}
         </v-btn>
         <v-card>
           <v-list dense>
             <v-list-tile
               v-for="notification in notifications"
               :key="notification"
+              class="hoverCSS"
             >
+
               <v-list-tile-title
+                @click="notificationClick(notification)"
                 v-text="notification"
               />
+
             </v-list-tile>
           </v-list>
         </v-card>
@@ -227,19 +229,31 @@
       }
     },
     methods: {
-      clickMe(index){
-        alert(index)
+      notificationClick(notification){
+        if (notification === 'Thông Tin'){
+          alert(notification);
+        }
+        if (notification === 'Đăng Xuất') {
+          this.$store.dispatch('AUTHENTICATION_STORE/LOGOUT')
+            .then(() => {
+              this.$router.push('/dang-nhap');
+            });
+        }
       },
     },
     computed: {
       ...mapGetters('AUTHENTICATION_STORE',{
           email : 'email',
           roleId: 'roleId',
+          fullName: 'fullName',
       })
     }
   }
 </script>
 
 <style scoped>
-
+  .hoverCSS:hover{
+    background-color: cornflowerblue;
+    cursor: pointer;
+  }
 </style>

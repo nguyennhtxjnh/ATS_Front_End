@@ -92,7 +92,6 @@
     name: 'JobDetail',
     data: function () {
       return {
-
         tab: null,
         items: [
           'Thông Tin', 'Công Ty', 'Việc Làm Khác Từ Công Ty', 'Khóa Học Phù Hợp'
@@ -104,6 +103,10 @@
 
       }
     },
+    methods(){
+
+    },
+
   }
 
 

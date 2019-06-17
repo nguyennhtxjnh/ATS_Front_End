@@ -7,6 +7,7 @@ export default {
         token: localStorage.getItem('token') || '',
         email: '',
         roleId: '',
+        fullName: '',
     },
     mutations: {
         REQUEST(state) {
@@ -24,11 +25,13 @@ export default {
             state.token = '';
             state.email = '';
             state.roleId = '';
+          state.fullName = '';
         },
-        INIT(state, {email, roleId}) {
+        INIT(state, {email, roleId, fullName}) {
             state.status = 'success';
             state.email = email;
             state.roleId = roleId;
+            state.fullName = fullName;
         }
     },
     getters: {
@@ -40,6 +43,7 @@ export default {
         // isArchivist: state => state.roleId === 'ARCHIVIST',npm
         email: state => state.email,
         roleId: state => state.roleId,
+        fullName: state => state.fullName,
     },
     actions: {
         LOGIN({commit}, user) {
@@ -72,12 +76,28 @@ export default {
         INIT({commit}) {
           return new Promise((resolve, reject) => {
             commit('REQUEST');
+            axios.interceptors.request.use(
+              (config) => {
+                console.log(config);
+                let token = localStorage.getItem('token');
+                if (token) {
+                  config.headers['accessToken'] = `${token}`;
+                }
+                else {
+                  config.headers['accessToken'] = "";
+                }
+                return config;
+              },
+              (error) => {
+                return Promise.reject(error);
+              }
+            );
             axios({url: 'http://localhost:8080/user/checkLogin', method: 'POST'})
               .then(response => {
                 const email = response.data.dto.email;
                 const roleId = response.data.dto.roleId;
-                console.log(email, roleId);
-                commit('INIT',{email, roleId});
+                const fullName = response.data.dto.fullname;
+                commit('INIT',{email, roleId, fullName});
                 resolve(response);
               })
               .catch(error => {

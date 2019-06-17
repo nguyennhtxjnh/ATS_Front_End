@@ -8,6 +8,7 @@ import EmployerMainScreenPage from "../views/EmployerMainScreenPage";
 import JobSeekerDashBoardPage from '../views/JobSeekerDashBoardPage'
 import EmployerCreateJobPage from '../views/EmployerCreateJobPage'
 import EmployerJobDetailPage from '../views/EmployerJobDetailPage'
+import axios from 'axios'
 
 Vue.use(Router)
 
@@ -68,32 +69,48 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.path === '/dang-nhap' || to.path === '/dang-ki') {
-    if (store.getters['AUTHENTICATION_STORE/isLoggedIn']) {
-      store.dispatch('AUTHENTICATION_STORE/INIT')
-        .then(() => next('/'))
-        .catch(error => {
-            if (error.response) {
-              console.log(error.response.data)
-            } else {
-              console.log(error)
-            }
-            next('/dang-nhap')
-          }
-        );
-      return;
-    }
+  if (store.getters['AUTHENTICATION_STORE/isLoggedIn']) {
+    store.dispatch('AUTHENTICATION_STORE/INIT')
+      .then(() => next())
+      .catch(() => next());
     next();
     return;
   }
-  if (!store.getters['AUTHENTICATION_STORE/isLoggedIn']) {
-    next('/dang-nhap');
+  if (to.path === '/dang-nhap' || to.path === '/dang-ki') {
+    // if (store.getters['AUTHENTICATION_STORE/isLoggedIn']) {
+    //   store.dispatch('AUTHENTICATION_STORE/INIT')
+    //     .then(() => next('/'))
+    //     .catch(error => {
+    //         if (error.response) {
+    //           console.log(error.response.data)
+    //         } else {
+    //           console.log(error)
+    //         }
+    //         next('/dang-nhap')
+    //       }
+    //     );
+    //   return;
+    // }
+    next();
     return;
   }
-  if (!store.getters['AUTHENTICATION_STORE/isInit']) {
-    store.dispatch('AUTHENTICATION_STORE/INIT')
-      .then(() => next())
-      .catch(() => next('/dang-nhap'));
+  if (to.path === '/dang-tin-tuyen-dung') {
+    // if (!store.getters['AUTHENTICATION_STORE/isLoggedIn']) {
+    //   store.dispatch('AUTHENTICATION_STORE/INIT')
+    //     .then(() => next())
+    //     .catch(error => {
+    //         if (error.response) {
+    //           console.log(error.response.data)
+    //         } else {
+    //           console.log(error)
+    //         }
+    //         next('/dang-nhap')
+    //       }
+    //     );
+    //   return;
+    // }
+    // next();
+    next('/dang-nhap');
     return;
   }
   next();

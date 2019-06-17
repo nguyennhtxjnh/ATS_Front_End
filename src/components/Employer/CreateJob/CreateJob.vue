@@ -29,12 +29,12 @@
 
                   <v-flex class="pa-1" md6 xs12>
                     <v-autocomplete
+                      v-model="formData.joblevelid"
                       prepend-icon="mdi-account"
-                      :items="salaryChoose"
-                      item-text="name"
+                      :items="jobLevelAPI"
+                      item-text="jobLevelName"
                       item-value="id"
                       label="Cấp Bậc"
-                      @input="resetSalary"
                     ></v-autocomplete>
                   </v-flex>
 
@@ -94,7 +94,7 @@
                       prepend-icon="mdi-calendar-clock"
                       :items="skillYear"
                       v-model="formData.yearExperience"
-                      item-text="name"
+                      item-text="yearName"
                       item-value="id"
                       label="Kinh Nghiệm"
                     ></v-autocomplete>
@@ -237,9 +237,11 @@
 
         salaryChoose: ['Thỏa Thuận', 'Từ', 'Đến', 'Trong Khoảng'],
         selectedSalary: 'Thỏa Thuận',
-        skillYear: ['1', '2', '3', '4', '5'],
+        skillYear: [{id : 1, yearName : "1 năm"}, {id : 2, yearName : "2 năm"}, {id : 3, yearName : "3 năm"}, {id : 4, yearName : "4 năm"}, {id : 5, yearName : "5 năm"},],
+        jobLevelAPI: [],
 
-        formData: {
+        formData:{
+
           userid: '5',
           companyid: '1',
           cityid: '1',
@@ -334,11 +336,42 @@
           editor.ui.view.editable.element
         )
       },
+      getInitData(){
+        const url = 'http://localhost:8080/joblevel/';
+        const method = 'GET';
+        Axios({url, method})
+          .then(response => {
+            console.log(response);
+            if (response.data.success == true) {
+              this.jobLevelAPI = response.data.dto;
+            } else {
+              this.$notify({
+                group: 'foo',
+                type: 'error',
+                title: 'Thất Bại',
+                text: 'Lấy Cấp Bậc!'
+              })
+            }
+
+          })
+          .catch(error => {
+            console.log(error)
+            this.$notify({
+              group: 'foo',
+              type: 'error',
+              title: 'Thất Bại',
+              text: 'Đã Xảy Ra Lỗi!'
+            })
+          })
+          .finally(() => {
+
+          })
+      },
     },
     mounted () {
       this.$nextTick(() => {
-        //gan gia tri vao select
-      })
+        this.getInitData();
+      });
     },
     computed: {}
   }
