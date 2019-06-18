@@ -2,15 +2,17 @@
   <v-card style="background-color: white" class="mt-5">
     <v-container>
       <v-layout row wrap>
+<!--        title-->
         <v-flex md12 xs12>
           <h2 style="float: left">Học vấn</h2>
         </v-flex>
+<!--        mở dialog-->
         <v-flex md12 xs12>
           <v-dialog v-model="dialog" persistent max-width="800px">
 
             <template
               v-slot:activator="{ on }">
-              <v-btn color="primary" dark v-on="on">
+              <v-btn color="orange" dark v-on="on">
                 <v-flex v-if="btnsubmit === false">
                   Thêm mục
                 </v-flex>
@@ -32,28 +34,26 @@
                         v-model="newEducation.schoolname"
                         label="Trường *"
                         placeholder="Trường học"
-                        required
+                        :rules="[() => newEducation.schoolname.length > 0 ||'Không được để trống']"
                       ></v-text-field>
 
                     </v-flex>
                     <v-flex md12 xs12>
                       <v-select
-                        :items="schooltype"
-                        v-model="newEducation.st"
+                        :items="st"
+                        v-model="newEducation.schooltype"
                         item-text="name"
                         item-value="i"
-                        return-object
                         label="Trình độ học vấn"
-                        required
+                        :rules="[() => newEducation.schooltype != '' ||'Không được để trống']"
                       ></v-select>
                     </v-flex>
-                    <v-flex v-if="newEducation.st !== null">
-                      <v-flex md12 xs12 v-if=" newEducation.st.i !== 4">
+                    <v-flex v-if="newEducation.schooltype !== null">
+                      <v-flex md12 xs12 v-if=" newEducation.schooltype.i !== 4">
                         <v-text-field
                           v-model="newEducation.major"
-                          label="Chuyên ngành *"
+                          label="Chuyên ngành "
                           placeholder="Công nghệ phần mềm"
-                          required
                         ></v-text-field>
                       </v-flex>
                     </v-flex>
@@ -80,7 +80,6 @@
                                 prepend-icon="event"
                                 readonly
                                 v-on="on"
-                                required
                               ></v-text-field>
                             </template>
                             <v-date-picker v-model="newEducation.starttime" @input="menu1 = false"></v-date-picker>
@@ -133,30 +132,50 @@
             </v-card>
           </v-dialog>
         </v-flex>
+<!--        kết thúc dialog-->
+<!--        hiện kết quả-->
         <v-flex md12 xs12 v-if="btnsubmit === true">
           <v-container align="center">
-            <template v-for="education in educations">
-            <v-card>
+            <template v-for="(education,index) in educations">
+            <v-card style="background-color: #ffffbc" class="pa-3 ma-2">
               <v-layout row wrap>
                 <v-spacer/>
               <v-flex md2 xs2>
-                <v-icon color="orange darken-2">mdi-home-city-outline</v-icon>
+                <v-icon color="orange darken-2" style="height: auto;width: auto">mdi-home-city-outline</v-icon>
               </v-flex>
               <v-flex md4 xs8>
                 <v-layout row wrap>
                   <v-flex md12 xs12 >
-                    <h3 style="float: left">{{education.schoolname}}</h3>
+                    <h4 style="float: left"> {{education.schoolname}}</h4>
 
                   </v-flex>
-                  <v-flex md12 xs12>
-                    <h3 style="float: left">{{education.starttime}} - {{education.endtime}}</h3>
+                  <v-flex md12 xs12 >
+                    <template v-for="(schooltypeitem, index) in st">
+                    <h3 style="float: left" v-if="schooltypeitem.i === education.schooltype">Trình độ: {{schooltypeitem.name}}</h3>
+                    </template>
                   </v-flex>
                   <v-flex md12 xs12>
-                    <h3 style="float: left">{{education.des}}</h3>
+                    <h3 style="float: left">Thời gian học tập: {{education.starttime}} - {{education.endtime}}</h3>
+                  </v-flex>
+                  <v-flex md12 xs12>
+                    <h3 style="float: left" v-if="education.description != ''">Mô tả {{education.description}}</h3>
                   </v-flex>
                 </v-layout>
               </v-flex>
                 <v-spacer/>
+                <v-flex md4 xs4>
+                  <v-btn  style="height: auto"
+                          dark
+                          icon @click="edit(education, index)">
+                  <v-icon color="orange darken-2" >mdi-update</v-icon>
+                  </v-btn>
+                  <v-btn  style="height: auto"
+                          dark
+                          icon
+                          @click="remove(index)">
+                  <v-icon color="orange darken-2"  >mdi-delete</v-icon>
+                  </v-btn>
+                </v-flex>
               </v-layout>
             </v-card>
 
@@ -165,6 +184,7 @@
 
 
         </v-flex>
+<!--        kết thúc hiện kết quả-->
       </v-layout>
     </v-container>
   </v-card>
@@ -173,6 +193,7 @@
 <script>
   export default {
     name: "EducationComponent",
+
     props: {
       educations: Array,
     },
@@ -182,23 +203,30 @@
       menu2: false,
       checkbox1: false,
       btnsubmit: false,
-
-      schooltype: [{i: 1, name: "Đại học"}, {i: 2, name: "Cao Đẳng"}, {i: 3, name: "Trung cấp"}, {
+      education: {
+        schoolname: '',
+        major: '',
+        schooltype: null,
+        description: '',
+        starttime: new Date().toISOString().substr(0, 10),
+        endtime: new Date().toISOString().substr(0, 10),
+      },
+      st: [{i: 1, name: "Đại học"}, {i: 2, name: "Cao Đẳng"}, {i: 3, name: "Trung cấp"}, {
         i: 4, name: "Trung học phổ thông"
       },],
       newEducation: {
         schoolname: '',
         major: '',
-        st: null,
-        des: '',
+        schooltype: null,
+        description: '',
         starttime: new Date().toISOString().substr(0, 10),
         endtime: new Date().toISOString().substr(0, 10),
       },
       defaultEducation: {
         schoolname: '',
         major: '',
-        st: null,
-        des: '',
+        schooltype: null,
+        description: '',
         starttime: new Date().toISOString().substr(0, 10),
         endtime: new Date().toISOString().substr(0, 10),
       },
@@ -206,18 +234,41 @@
     methods: {
       update() {
         console.log(this.educations);
+        if(this.newEducation.schoolname != ""){
         this.btnsubmit = true;
         this.dialog = false;
         if (this.checkbox1 == true) {
           this.newEducation.endtime = " hiện tại"
         }
         this.educations.push(Object.assign({},this.newEducation));
-        Object.assign(this.newEducation,this.defaultEducation);
+        Object.assign(this.newEducation,this.defaultEducation);}
+      },
+      remove(position){
+        this.educations.splice(position, 1 );
+        if(this.educations.length === 0){
+          this.btnsubmit = false;
+        }
+        console.log('delete')
+      },
+      edit(education,position){
+
+        Object.assign(this.newEducation,education);
+        this.educations.splice(position, 1 );
+        this.dialog = true;
+        if(this.educations.length === 0){
+          this.btnsubmit = false;
+        }
+        console.log('edit')
       }
-    }
+    },
+
   }
 </script>
 
 <style scoped>
+  h1,h2,h3,h4,h5 {
+    font-family: "Times New Roman";
+
+  }
 
 </style>

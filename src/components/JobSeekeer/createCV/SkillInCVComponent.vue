@@ -18,8 +18,10 @@
                   <v-layout row wrap>
                     <v-flex md12 xs12>
                       <v-text-field
+                        v-model="skillName"
                         label="Kỹ năng *"
                         placeholder="Tên kỹ năng"
+                        :rules="[() => skillName.length > 0 ||'Không được để trống']"
                       ></v-text-field>
 
                     </v-flex>
@@ -72,11 +74,15 @@
         name: "SkillInCVComponent",
       data: () => ( {
         dialog3: false,
-        rating: 4.5
+        rating: 4.5,
+        skillName:''
       }),
     }
 </script>
 
 <style scoped>
+  h1,h2,h3,h4,h5 {
+    font-family: "Times New Roman";
 
+  }
 </style>

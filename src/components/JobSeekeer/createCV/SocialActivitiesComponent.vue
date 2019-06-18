@@ -21,6 +21,8 @@
                         v-model="newSocialActivities.name"
                         label="Hoạt động *"
                         placeholder="Tên hoạt động"
+                        :rules="[() => newSocialActivities.name.length > 0 ||'Không được để trống']"
+
                       ></v-text-field>
 
                     </v-flex>
@@ -111,5 +113,8 @@
 </script>
 
 <style scoped>
+  h1,h2,h3,h4,h5 {
+    font-family: "Times New Roman";
 
+  }
 </style>

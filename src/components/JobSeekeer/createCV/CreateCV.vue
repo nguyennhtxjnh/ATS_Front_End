@@ -1,5 +1,6 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-    <v-container >
+    <v-card style="background-color: #efebeb" >
+      <v-container>
 <!--      thông tin người dùng-->
       <v-card style="background-color: white">
 <!--        profile-->
@@ -30,16 +31,27 @@
                 <v-layout row >
                   <v-icon color="orange darken-2" >mdi-account-circle-outline</v-icon>
                   <v-text-field
+                    :rules="[() => info.lastName.length > 0 ||'Không được để trống']"
                     v-model="info.lastName"
-                    label="Họ "
+                    label="Họ* "
                   ></v-text-field>
                 </v-layout>
-<!--                chức danh-->
-                <v-layout row >
-                  <v-icon color="orange darken-2" >mdi-map-marker</v-icon>
+<!--                email-->
+                <v-layout row>
+                  <v-icon color="orange darken-2" >mdi-email-search-outline</v-icon>
                   <v-text-field
-                    v-model="info.address"
-                    label="Địa chỉ "
+                    :rules="[() => info.email.length > 0 ||'Không được để trống']"
+                    v-model="info.email"
+                    label="Email* "
+                  ></v-text-field>
+                </v-layout>
+<!--                số điện thoại-->
+                <v-layout row>
+                  <v-icon color="orange darken-2" >mdi-phone</v-icon>
+                  <v-text-field
+                    v-model="info.telephone"
+                    :rules="[() => info.telephone.length > 0 ||'Không được để trống']"
+                    label="Số điện thoại* "
                   ></v-text-field>
                 </v-layout>
               </v-flex>
@@ -50,45 +62,49 @@
                 <v-icon color="orange darken-2" >mdi-account-circle-outline</v-icon>
                 <v-text-field
                   v-model="info.firstName"
-                  label="Tên "
+                  :rules="[() => info.firstName.length > 0 ||'Không được để trống']"
+                  label="Tên* "
                 ></v-text-field>
               </v-layout>
-              <v-layout row>
+<!--              nghề nghiệp-->
                 <v-layout row>
                   <v-icon color="orange darken-2" >mdi-account-circle-outline</v-icon>
                   <v-autocomplete
-                    v-model="industryid"
+                    v-model="info.industryid"
                     :items="industries"
-                    item-text="Name"
+                    :rules="[() => info.industryid.length > 0 ||'Không được để trống']"
+                    item-text="name"
                     item-value="id"
-                    label="Tỉnh/ Thành phố"
+                    label="Nghề nghiệp*"
                     persistent-hint
                     return-object
                     single-line
                   ></v-autocomplete>
 
                 </v-layout>
-              </v-layout>
 <!--              số năm kinh nghiệm-->
               <v-layout row >
                 <v-icon color="orange darken-2" >mdi-briefcase-account-outline</v-icon>
                 <v-text-field
+                  :rules="[() => info.yearExperience.length > 0 ||'Không được để trống']"
                   v-model="info.yearExperience"
-                  label="Số năm kinh nghiệm "
+                  label="Số năm kinh nghiệm* "
                 ></v-text-field>
               </v-layout>
             </v-flex>
             <v-flex md12 xs12>
               <v-layout row wrap>
                 <v-flex md6 xs12>
-<!--                  email-->
-                  <v-layout row>
-                    <v-icon color="orange darken-2" >mdi-email-search-outline</v-icon>
+<!--                  dịa chỉ-->
+                  <v-layout row >
+                    <v-icon color="orange darken-2" >mdi-map-marker</v-icon>
                     <v-text-field
-                      v-model="info.email"
-                      label="Email "
+                      v-model="info.address"
+                      :rules="[() => info.address.length > 0 ||'Không được để trống']"
+                      label="Địa chỉ *"
                     ></v-text-field>
                   </v-layout>
+
 <!--                  ngày sinh-->
                   <v-layout row>
                     <v-icon color="orange darken-2" >mdi-calendar-month-outline</v-icon>
@@ -105,7 +121,7 @@
                       <template v-slot:activator="{ on }">
                         <v-text-field
                           v-model="info.dob"
-                          label="ngày sinh"
+                          label="Ngày sinh"
                           readonly
                           v-on="on"
                           required
@@ -118,21 +134,14 @@
                 </v-flex>
 
                 <v-flex md6 xs12>
-                  <!--                số điện thoại-->
-<!--                  <v-layout row>-->
-<!--                  <v-icon color="orange darken-2" >mdi-phone</v-icon>-->
-<!--                  <v-text-field-->
-<!--                    -->
-<!--                    label="Số điện thoại "-->
-<!--                  ></v-text-field>-->
-<!--                  </v-layout>-->
+
 <!--               thành phố   -->
                   <v-layout row>
                     <v-icon color="orange darken-2" >mdi-account-circle-outline</v-icon>
                     <v-autocomplete
-                      v-model="cityid"
+                      v-model="info.cityid"
                       :items="cities"
-                      item-text="FullName"
+                      item-text="fullName"
                       item-value="id"
                       label="Tỉnh/ Thành phố"
                       persistent-hint
@@ -141,25 +150,37 @@
                     ></v-autocomplete>
 
                   </v-layout>
+<!--                  giới tính-->
+                  <v-layout row>
+                      <v-icon color="orange darken-2" class="pr-2" style="float: left">mdi-account-circle-outline</v-icon>
+                        <v-select
+                          v-bind:items="genders"
+                          v-model="info.gender"
+                          :rules="[() => info.gender.length > 0 ||'Không được để trống']"
+                          item-text="name"
+                          item-value="id"
+                          label="Giới tính"
+                        ></v-select>
+                  </v-layout>
                 </v-flex>
 
               </v-layout>
             </v-flex>
             <v-flex md12 xs12>
 
-              <v-layout row>
-                <v-flex md12 xs12>
-                  <v-icon color="orange darken-2" class="pr-2" style="float: left">mdi-account-circle-outline</v-icon>
-                  <h4 style="float: left">Giới tính</h4>
-                  <v-container fluid align="left">
-                    <v-radio-group v-model="info.gender" :mandatory="false" >
-                      <v-radio label="Nữ" value="1"></v-radio>
-                      <v-radio label="Nam" value="2"></v-radio>
-                      <v-radio label="Khác" value="3"></v-radio>
-                    </v-radio-group>
-                  </v-container>
-                </v-flex>
-              </v-layout>
+<!--              <v-layout row>-->
+<!--                <v-flex md12 xs12>-->
+<!--                  <v-icon color="orange darken-2" class="pr-2" style="float: left">mdi-account-circle-outline</v-icon>-->
+<!--                  <h4 style="float: left">Giới tính</h4>-->
+<!--                  <v-container fluid align="left">-->
+<!--                    <v-radio-group v-model="info.gender" :mandatory="false" >-->
+<!--                      <v-radio label="Nữ" value="1"></v-radio>-->
+<!--                      <v-radio label="Nam" value="2"></v-radio>-->
+<!--                      <v-radio label="Khác" value="3"></v-radio>-->
+<!--                    </v-radio-group>-->
+<!--                  </v-container>-->
+<!--                </v-flex>-->
+<!--              </v-layout>-->
             </v-flex>
             <v-flex md12 xs12>
               <v-layout row wrap>
@@ -194,26 +215,17 @@
                 <!--Hết Lương-->
               </v-layout>
             </v-flex>
-<!--            <v-flex md12 xs12>-->
-<!--              <v-layout row>-->
-<!--              <v-flex md6 xs12>-->
 
-<!--              </v-flex>-->
-<!--              <v-flex md6 xs12>-->
-
-<!--              </v-flex>-->
-<!--              </v-layout>-->
-<!--            </v-flex>-->
           </v-layout><!--end row bự-->
         </v-container>
       </v-card>
       <!--        end profile-->
-<!--      thông tin chung-->
+<!--      Mục tiêu nghề nghiệp-->
       <v-card style="background-color: white" class="mt-5">
         <v-container>
         <v-layout row wrap>
           <v-flex md12 xs12>
-            <h2>Thông tin chung</h2>
+            <h2>Mục tiêu nghề nghiệp</h2>
           </v-flex>
           <v-flex md12 xs12>
             <v-textarea
@@ -236,7 +248,7 @@
       <CertificationComponent :certifications="info.certifications"></CertificationComponent>
 <!--Hoạt động xã hội-->
       <SocialActivitiesComponent :socialactivities="info.socialactivities" ></SocialActivitiesComponent>
-
+<!--dự án-->
       <ProjectorProductWorkedComponent :projectorproductworkeds="info.projectorproductworkeds"></ProjectorProductWorkedComponent>
 
 <!--Kỹ năng-->
@@ -244,8 +256,8 @@
 
       {{info}}
       <v-btn color="blue darken-1" flat @click="create">Tạo CV</v-btn>
-
-    </v-container>
+      </v-container>
+    </v-card>
 </template>
 
 <script>
@@ -270,14 +282,15 @@
         imageName: '',
         imageFile: '',
         imageUrl:require('@/assets/avatar-default-icon.png'),
-        industries : ['1','2','3','4'],
         cities: [],
           industries:[],
         menu2: false,
         salaryChoose: ['Thỏa Thuận', 'Từ', 'Đến', 'Trong Khoảng'],
-        select: 'Thỏa Thuận',
+        select: 'Trong Khoảng',
+          genders:[{ id: "1", name: "Nữ" }, { id: "2", name: "Nam" }, { id: "3", name: "Khác" }],
         info: {
           title:'Test Cai moi ne',
+          telephone:'',
           userid:'1',
           img : '',
           email: '',
@@ -378,6 +391,10 @@
 </script>
 
 <style scoped>
+  h1,h2,h3,h4,h5 {
+    font-family: "Times New Roman";
+
+  }
 .v-text-field {
   padding: 15px;
 }

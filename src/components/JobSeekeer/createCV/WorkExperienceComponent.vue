@@ -21,6 +21,8 @@
                         label="Công ty *"
                         v-model="newWorkExperience.companyName"
                         placeholder="Tên công ty"
+                        :rules="[() => newWorkExperience.companyName.length > 0 ||'Không được để trống']"
+
                       ></v-text-field>
 
                     </v-flex>
@@ -29,6 +31,8 @@
                         v-model="newWorkExperience.vacancyName"
                         label="Chức vụ *"
                         placeholder="Nhân viên, quản lý,.."
+                        :rules="[() => newWorkExperience.vacancyName.length > 0 ||'Không được để trống']"
+
                       ></v-text-field>
 
                     </v-flex>
@@ -189,5 +193,8 @@
 </script>
 
 <style scoped>
+  h1,h2,h3,h4,h5 {
+    font-family: "Times New Roman";
 
+  }
 </style>

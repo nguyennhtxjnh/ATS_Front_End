@@ -18,6 +18,7 @@
                   <v-layout row wrap>
                     <v-flex md12 xs12>
                       <v-text-field
+                        :rules="[() => newCertifications.certificationName.length > 0 ||'Không được để trống']"
                         v-model="newCertifications.certificationName"
                         label="Chứng chỉ *"
                         placeholder="Tên chứng chỉ"
@@ -99,5 +100,8 @@
 </script>
 
 <style scoped>
+  h1,h2,h3,h4,h5 {
+    font-family: "Times New Roman";
 
+  }
 </style>

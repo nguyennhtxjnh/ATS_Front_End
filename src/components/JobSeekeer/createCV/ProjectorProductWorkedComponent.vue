@@ -18,9 +18,19 @@
                   <v-layout row wrap>
                     <v-flex md12 xs12>
                       <v-text-field
+                        label="Tên dự án*"
+                        v-model="newProjectorProduct.productName"
+                        :rules="[() => newProjectorProduct.productName.length > 0 ||'Không được để trống']"
+                        placeholder="Tên dự án"
+                      ></v-text-field>
+
+                    </v-flex>
+                    <v-flex md12 xs12>
+                      <v-text-field
                         label="Kỹ năng/ công nghệ *"
                         v-model="newProjectorProduct.skillUsed"
                         placeholder="Java, C#, VueJs,.."
+                        :rules="[() => newProjectorProduct.skillUsed.length > 0 ||'Không được để trống']"
                       ></v-text-field>
 
                     </v-flex>
@@ -161,6 +171,7 @@
         menu2: false,
         checkbox1: false,
         newProjectorProduct: {
+          productName:'',
           skillUsed: '',
           vacancyName: '',
           description: '',
@@ -168,6 +179,7 @@
           endtime: new Date().toISOString().substr(0, 10),
         },
         defaultProjectorProduct: {
+          productName:'',
           skillUsed: '',
           vacancyName: '',
           description: '',
@@ -189,5 +201,8 @@
 </script>
 
 <style scoped>
+  h1,h2,h3,h4,h5 {
+    font-family: "Times New Roman";
 
+  }
 </style>
