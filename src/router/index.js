@@ -9,6 +9,8 @@ import JobSeekerDashBoardPage from '../views/JobSeekerDashBoardPage'
 import EmployerCreateJobPage from '../views/EmployerCreateJobPage'
 import EmployerJobDetailPage from '../views/EmployerJobDetailPage'
 import axios from 'axios'
+import EmployerSignUpPage from '../views/EmployerSignUpPage'
+import EmployerLoginPage from '../views/EmployerLoginPage'
 
 Vue.use(Router)
 
@@ -43,7 +45,7 @@ const router = new Router({
     }
     ,
     {
-      path: '/profile',
+      path: '/thong-tin',
       name: 'jobseekerdashboard',
       component: JobSeekerDashBoardPage
     }
@@ -58,6 +60,18 @@ const router = new Router({
       path: '/viec-lam',
       name: 'employerjobdetail',
       component: EmployerJobDetailPage
+    }
+    ,
+    {
+      path: '/tuyen-dung-dang-ki',
+      name: 'employer dang ki',
+      component: EmployerSignUpPage
+    }
+    ,
+    {
+      path: '/tuyen-dung-dang-nhap',
+      name: 'employer dang nhap',
+      component: EmployerLoginPage
     }
     ,
     // {

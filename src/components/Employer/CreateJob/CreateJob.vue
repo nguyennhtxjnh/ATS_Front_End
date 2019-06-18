@@ -35,6 +35,7 @@
                       item-text="jobLevelName"
                       item-value="id"
                       label="Cấp Bậc"
+                      :rules="[rules.required]"
                     ></v-autocomplete>
                   </v-flex>
 
@@ -49,20 +50,18 @@
                   <v-flex class="pa-1" md6 xs12>
                     <v-autocomplete
                       prepend-icon="mdi-format-list-bulleted-type"
-                      :items="salaryChoose"
-                      item-text="name"
-                      item-value="id"
+                      :items="workingType"
+                      v-model="formData.workingType"
                       label="Loại Hình Làm Việc"
-                      @input="resetSalary"
+                      :rules="[rules.required]"
                     ></v-autocomplete>
                   </v-flex>
                   <!-- Hết Loại Hình-->
 <!--                  Số lượng-->
                   <v-flex md6 xs12>
                     <v-text-field class="ma-2" prepend-icon="mdi-account-plus" name="Name" label="Số Lượng Cần Tuyển"
-                                  type="number"
-                                  v-model="formData.vacancyName"
-                                  :rules="[rules.required]"></v-text-field>
+                                  type="number" v-model="formData.numbeOfRecruitment"
+                                  :rules="[rules.required, rules.noMinus, rules.maxRecruit]"></v-text-field>
                   </v-flex>
                   <!--hết số lượng-->
 
@@ -84,6 +83,7 @@
                       item-text="name"
                       item-value="id"
                       label="Kĩ Năng"
+
                     ></v-autocomplete>
                   </v-flex>
                   <!--  Hết Nơi Làm Việc-->
@@ -97,11 +97,9 @@
                       item-text="yearName"
                       item-value="id"
                       label="Kinh Nghiệm"
+                      :rules="[rules.required]"
                     ></v-autocomplete>
-<!--                    <v-text-field class="ma-2" prepend-icon="mdi-calendar-clock" name="experience" label="Kinh Nghiệm"-->
-<!--                                  type="text"-->
-<!--                                  v-model="formData.yearExperience"-->
-<!--                                  :rules="[rules.required]"></v-text-field>-->
+
                   </v-flex>
                   <!--  Hết Kinh Nghiệm-->
                   <!--Lương-->
@@ -123,6 +121,7 @@
                     <v-text-field class="ma-2" name="from" label="Từ" type="number" min="0"
                                   v-model="formData.salaryFrom"
                                   :rules="[rules.noMinus]"
+
                     ></v-text-field>
                   </v-flex>
 
@@ -167,18 +166,19 @@
                   <!--Hết Hết Hạn-->
 
                   <v-flex md12 xs12 class="pa-2 mt-5">
-                    <h3>Mô tả công việc</h3>
+                    <h3>Mô tả công việc <span class="red--text">*</span></h3>
                     <v-label>Mô tả công việc phải làm dựa theo vị trí ứng tuyển</v-label>
                     <ckeditor :editor="editor"
                               @ready="onEditorReady"
                               v-model="formData.jobDescription"
                               :config="editorConfig"
+
                               style="border-style: solid; border-color: #ccc; border-width: 1px; height: 250px"
                     ></ckeditor>
                   </v-flex>
 
                   <v-flex md12 xs12 class="pa-2 mt-5">
-                    <h3>Yêu cầu ứng viên</h3>
+                    <h3>Yêu cầu ứng viên <span class="red--text">*</span></h3>
                     <v-label>Các kỹ năng chuyên môn của ứng viên để đáp ứng nhu cầu công việc, các kỹ năng được ưu tiên
                       của ứng viên... vv
                     </v-label>
@@ -186,12 +186,13 @@
                               @ready="onEditorReady"
                               v-model="formData.additionalRequest"
                               :config="editorConfig"
+
                               style="border-style: solid; border-color: #ccc; border-width: 1px; height: 250px"
                     ></ckeditor>
                   </v-flex>
 
                   <v-flex md12 xs12 class="pa-2 mt-5">
-                    <h3>Quyền lợi ứng viên</h3>
+                    <h3>Quyền lợi ứng viên <span class="red--text">*</span></h3>
                     <v-label>Các quyền lợi ứng viên được hưởng khi được nhận vào công ty như chế độ đào tạo, bảo hiểm,
                       nghỉ mát, hoa hồng.. vv
                     </v-label>
@@ -199,6 +200,7 @@
                               @ready="onEditorReady"
                               v-model="formData.candidateBenefits"
                               :config="editorConfig"
+
                               style="border-style: solid; border-color: #ccc; border-width: 1px; height: 250px"
                     ></ckeditor>
                   </v-flex>
@@ -239,6 +241,7 @@
         selectedSalary: 'Thỏa Thuận',
         skillYear: [{id : 1, yearName : "1 năm"}, {id : 2, yearName : "2 năm"}, {id : 3, yearName : "3 năm"}, {id : 4, yearName : "4 năm"}, {id : 5, yearName : "5 năm"},],
         jobLevelAPI: [],
+        workingType: ['Toàn Thời Gian', 'Bán Thời Gian', 'Thực Tập'],
 
         formData:{
 
@@ -256,7 +259,9 @@
           endDateForApply: '',
           jobDescription: '',
           additionalRequest: '',
-          candidateBenefits: ''
+          candidateBenefits: '',
+          workingType: '',
+          numbeOfRecruitment: '',
         },
         editor: DecoupledEditor,
         editorConfig: {
@@ -272,6 +277,7 @@
         },
         rules: {
           noMinus: value => value >= 0 || 'Lương Không Được Nhỏ Hơn 0',
+          maxRecruit: value => value <= 20 || 'Số Lượng Tuyển Tối Đa 20 Người',
           required: value => !!value || 'Không được để trống ô này.',
           counter: value => value.length <= 40 || 'Tối Đa 40 Kí Tự',
           cemail: value => {
@@ -291,6 +297,33 @@
               type: 'warn',
               title: 'Chú ý',
               text: 'Khoảng Lương Không Hợp Lệ!'
+            })
+            return
+          }
+          if (this.formData.jobDescription === ""){
+            this.$notify({
+              group: 'foo',
+              type: 'warn',
+              title: 'Chú ý',
+              text: 'Mô tả công việc không được để trống!'
+            })
+            return
+          }
+          if (this.formData.candidateBenefits === ""){
+            this.$notify({
+              group: 'foo',
+              type: 'warn',
+              title: 'Chú ý',
+              text: 'Quyền lợi ứng viên không được để trống!'
+            })
+            return
+          }
+          if (this.formData.additionalRequest === ""){
+            this.$notify({
+              group: 'foo',
+              type: 'warn',
+              title: 'Chú ý',
+              text: 'Yêu cầu ứng viên không được để trống!'
             })
             return
           }

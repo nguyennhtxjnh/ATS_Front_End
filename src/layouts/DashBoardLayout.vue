@@ -3,7 +3,7 @@
   <!--    ToolBar-->
   <template>
     <v-toolbar fixed dark v-if="$vuetify.breakpoint.mdAndUp">
-      <v-toolbar-title @click="$router.push('/')" class="white--text" >Job Board</v-toolbar-title>
+      <v-toolbar-title @click="$router.push('/')" class="white--text hoverCSSTitle" >Job Board</v-toolbar-title>
       <v-spacer></v-spacer>
       <!--        <v-flex xs 4>-->
       <!--            <span @click="test">fasfa</span>-->
@@ -20,15 +20,15 @@
 <!--        <v-icon>refresh</v-icon>-->
 <!--      </v-btn>-->
 
-      <v-btn style="height: 100%" @click="$router.push('/dang-nhap')" v-if="roleId !== 1">
+      <v-btn style="height: 100%" @click="$router.push('/dang-nhap')" v-if="roleId !== 1 && roleId !== 2">
         Đăng Nhập
       </v-btn>
       <Span  v-if="roleId !== 1">|</Span>
-      <v-btn style="height: 100%" @click="$router.push('/dang-ki')" v-if="roleId !== 1">
+      <v-btn style="height: 100%" @click="$router.push('/dang-ki')" v-if="roleId !== 1 && roleId !== 2">
         Đăng Kí
       </v-btn>
 
-      <v-menu  v-if="roleId === 1"
+      <v-menu  v-if="roleId === 1 || roleId === 2"
         offset-y
         style="height: 100%"
         content-class="dropdown-menu"
@@ -164,7 +164,7 @@
     data: function(){
       return {
         notifications: [
-          'Thông tin',
+          'Thông Tin',
           'Đăng Xuất',
 
         ],
@@ -231,7 +231,7 @@
     methods: {
       notificationClick(notification){
         if (notification === 'Thông Tin'){
-          alert(notification);
+          this.$router.push('/thong-tin');
         }
         if (notification === 'Đăng Xuất') {
           this.$store.dispatch('AUTHENTICATION_STORE/LOGOUT')
@@ -254,6 +254,9 @@
 <style scoped>
   .hoverCSS:hover{
     background-color: cornflowerblue;
+    cursor: pointer;
+  }
+  .hoverCSSTitle:hover{
     cursor: pointer;
   }
 </style>
