@@ -5,11 +5,12 @@
         <v-flex md12 xs12>
           <h2 style="float: left">Dự án</h2>
         </v-flex>
+<!--        hiện dialog-->
         <v-flex md12 xs12>
           <v-dialog v-model="dialog1" persistent max-width="800px">
             <template
               v-slot:activator="{ on }">
-              <v-btn color="primary" dark v-on="on">Thêm mục</v-btn>
+              <v-btn color="orange" dark v-on="on">Thêm mục</v-btn>
             </template>
             <v-card>
               <v-card-text>
@@ -116,36 +117,56 @@
             </v-card>
           </v-dialog>
         </v-flex>
+<!--        hiển thị kết quả-->
         <v-flex md12 xs12 v-if="btnSubmit === true">
           <v-container align="center">
-            <template v-for="projectorproductworked in projectorproductworkeds">
-              <v-card>
+            <template v-for="(projectorproductworked,index) in projectorproductworkeds">
+              <v-container>
                 <v-layout row wrap>
                   <v-spacer/>
+<!--                  icon-->
                   <v-flex md2 xs2>
                     <v-icon color="orange darken-2">mdi-home-city-outline</v-icon>
                   </v-flex>
+<!--                  kết quả-->
                   <v-flex md4 xs8>
                     <v-layout row wrap>
                       <v-flex md12 xs12 >
-                        <h3 style="float: left">{{projectorproductworked.skillUsed}}</h3>
+                        <h2 style="float: left">{{projectorproductworked.productName}}</h2>
                       </v-flex>
                       <v-flex md12 xs12 >
-                        <h3 style="float: left">{{projectorproductworked.vacancyName}}</h3>
+                        <span style="float: left">kĩ năng: {{projectorproductworked.skillUsed}}</span>
                       </v-flex>
                       <v-flex md12 xs12 >
-                        <h3 style="float: left">{{projectorproductworked.starttime}} - {{projectorproductworked.endtime}}</h3>
+                        <span style="float: left">Chức vụ: {{projectorproductworked.vacancyName}}</span>
                       </v-flex>
                       <v-flex md12 xs12 >
-                        <h3 style="float: left">{{projectorproductworked.description}}</h3>
+                        <span style="float: left">Thời gian: {{projectorproductworked.starttime}} - {{projectorproductworked.endtime}}</span>
+                      </v-flex>
+                      <v-flex md12 xs12 >
+                        <span style="float: left" v-if="projectorproductworked.description != ''">Mô tả: {{projectorproductworked.description}}</span>
                       </v-flex>
 
                     </v-layout>
                   </v-flex>
                   <v-spacer/>
+<!--                  icon edit remove-->
+                  <v-flex md4 xs2>
+                    <v-btn  style="height: auto"
+                            dark
+                            icon @click="edit(projectorproductworked, index)">
+                      <v-icon color="orange darken-2" >mdi-update</v-icon>
+                    </v-btn>
+                    <v-btn  style="height: auto"
+                            dark
+                            icon
+                            @click="remove(index)">
+                      <v-icon color="orange darken-2"  >mdi-delete</v-icon>
+                    </v-btn>
+                  </v-flex>
                 </v-layout>
-              </v-card>
-
+              </v-container>
+            <v-divider v-if="index != (projectorproductworkeds.length-1)"></v-divider>
             </template>
           </v-container>
 
@@ -194,14 +215,31 @@
           this.projectorproductworkeds.push(Object.assign({},this.newProjectorProduct));
           Object.assign(this.newProjectorProduct,this.defaultProjectorProduct);
 
+        }, remove(position){
+          this.projectorproductworkeds.splice(position, 1 );
+          if(this.projectorproductworkeds.length === 0){
+            this.btnsubmit = false;
+          }
+          console.log('delete')
+        },
+        edit(projectorProduct,position){
+
+          Object.assign(this.newProjectorProduct,projectorProduct);
+          this.projectorproductworkeds.splice(position, 1 );
+          this.dialog1 = true;
+          if(this.projectorproductworkeds.length === 0){
+            this.btnSubmit = false;
+          }
+          console.log('edit')
         }
-      }
+      },
+
 
     }
 </script>
 
 <style scoped>
-  h1,h2,h3,h4,h5 {
+  h1,h2,h3,h4,h5,span {
     font-family: "Times New Roman";
 
   }

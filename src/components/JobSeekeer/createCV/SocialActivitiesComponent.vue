@@ -5,11 +5,12 @@
         <v-flex md12 xs12>
           <h2 style="float: left">Hoạt động xã hội</h2>
         </v-flex>
+<!--        hiện dialog-->
         <v-flex md12 xs12>
           <v-dialog v-model="dialog4" persistent max-width="800px">
             <template
               v-slot:activator="{ on }">
-              <v-btn color="primary" dark v-on="on">Thêm mục</v-btn>
+              <v-btn color="orange" dark v-on="on">Thêm mục</v-btn>
             </template>
             <v-card>
               <v-card-text>
@@ -48,10 +49,11 @@
             </v-card>
           </v-dialog>
         </v-flex>
+<!--      hiện kết quả-->
         <v-flex md12 xs12 v-if="btnSubmit === true">
           <v-container align="center">
-            <template v-for="socialactivity in socialactivities">
-              <v-card>
+            <template v-for="(socialactivity,index) in socialactivities">
+              <v-container>
                 <v-layout row wrap>
                   <v-spacer/>
                   <v-flex md2 xs2>
@@ -60,18 +62,32 @@
                   <v-flex md4 xs8>
                     <v-layout row wrap>
                       <v-flex md12 xs12 >
-                        <h3 style="float: left">{{socialactivity.name}}</h3>
+                        <h2 style="float: left">{{socialactivity.name}}</h2>
                       </v-flex>
                       <v-flex md12 xs12 >
-                        <h3 style="float: left">{{socialactivity.description}}</h3>
+                        <span style="float: left">{{socialactivity.description}}</span>
                       </v-flex>
 
                     </v-layout>
                   </v-flex>
                   <v-spacer/>
+                  <!--                  icon edit remove-->
+                  <v-flex md4 xs2>
+                    <v-btn  style="height: auto"
+                            dark
+                            icon @click="edit(socialactivity, index)">
+                      <v-icon color="orange darken-2" >mdi-update</v-icon>
+                    </v-btn>
+                    <v-btn  style="height: auto"
+                            dark
+                            icon
+                            @click="remove(index)">
+                      <v-icon color="orange darken-2"  >mdi-delete</v-icon>
+                    </v-btn>
+                  </v-flex>
                 </v-layout>
-              </v-card>
-
+              </v-container>
+              <v-divider v-if="index != (socialactivities.length-1)"></v-divider>
             </template>
           </v-container>
 
@@ -102,18 +118,35 @@
       }),
       methods: {
         update() {
-          this.dialog4 = false;
-          this.btnSubmit = true;
-          this.socialactivities.push(Object.assign({},this.newSocialActivities));
-          Object.assign(this.newSocialActivities,this.defaultSocialActivities);
+          if(this.newSocialActivities.name != ""){
+            this.dialog4 = false;
+            this.btnSubmit = true;
+            this.socialactivities.push(Object.assign({},this.newSocialActivities));
+            Object.assign(this.newSocialActivities,this.defaultSocialActivities);
+          }
+        }, remove(position){
+          this.socialactivities.splice(position, 1 );
+          if(this.socialactivities.length === 0){
+            this.btnsubmit = false;
+          }
+          console.log('delete')
+        },
+        edit(socialactivity,position){
 
+          Object.assign(this.newSocialActivities,socialactivity);
+          this.socialactivities.splice(position, 1 );
+          this.dialog4 = true;
+          if(this.socialactivities.length === 0){
+            this.btnSubmit = false;
+          }
+          console.log('edit')
         }
       }
     }
 </script>
 
 <style scoped>
-  h1,h2,h3,h4,h5 {
+  h1,h2,h3,h4,h5,span {
     font-family: "Times New Roman";
 
   }

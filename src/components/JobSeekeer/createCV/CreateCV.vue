@@ -7,7 +7,12 @@
         <v-container>
           <v-layout row wrap>
             <v-flex md12 xs12>
-              <h2> Thông tin</h2>
+              <h2>  <v-text-field
+                v-model="info.title"
+                label="Tiêu đề CV"
+                placeholder="Tiêu đề CV"
+                solo
+              ></v-text-field></h2>
             </v-flex><!-- end thông tin-->
             <v-flex md4 xs12>
               <v-flex md12 xs12>
@@ -240,19 +245,20 @@
         </v-container>
       </v-card>
 <!-- học vấn-->
-
       <EducationComponent :educations = "info.educations"></EducationComponent>
 <!--Kinh nghiệm-->
       <WorkExperienceComponent :workexperiences = "info.workexperiences"></WorkExperienceComponent>
-<!-- Chứng chỉ-->
+
+        <!--Kỹ năng-->
+        <SkillInCVComponent></SkillInCVComponent>
+
+        <!--dự án-->
+        <ProjectorProductWorkedComponent :projectorproductworkeds="info.projectorproductworkeds"></ProjectorProductWorkedComponent>
+
+        <!-- Chứng chỉ-->
       <CertificationComponent :certifications="info.certifications"></CertificationComponent>
 <!--Hoạt động xã hội-->
       <SocialActivitiesComponent :socialactivities="info.socialactivities" ></SocialActivitiesComponent>
-<!--dự án-->
-      <ProjectorProductWorkedComponent :projectorproductworkeds="info.projectorproductworkeds"></ProjectorProductWorkedComponent>
-
-<!--Kỹ năng-->
-    <SkillInCVComponent></SkillInCVComponent>
 
       {{info}}
       <v-btn color="blue darken-1" flat @click="create">Tạo CV</v-btn>
@@ -289,7 +295,7 @@
         select: 'Trong Khoảng',
           genders:[{ id: "1", name: "Nữ" }, { id: "2", name: "Nam" }, { id: "3", name: "Khác" }],
         info: {
-          title:'Test Cai moi ne',
+          title:'',
           telephone:'',
           userid:'1',
           img : '',

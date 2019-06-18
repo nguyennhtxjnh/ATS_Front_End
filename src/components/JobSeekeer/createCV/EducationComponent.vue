@@ -113,7 +113,7 @@
                     </v-flex>
                     <v-flex md12 xs12>
                       <v-textarea
-                        v-model="newEducation.des"
+                        v-model="newEducation.description"
                         label="Mô tả chi tiết"
                         placeholder="Mô tả chi tiết quá trình học của bạn để nhà tuyển dụng có thể hiểu bạn hơn"
                       ></v-textarea>
@@ -137,33 +137,33 @@
         <v-flex md12 xs12 v-if="btnsubmit === true">
           <v-container align="center">
             <template v-for="(education,index) in educations">
-            <v-card style="background-color: #ffffbc" class="pa-3 ma-2">
+            <v-container style="background-color: white" class="pa-3 mb-3">
               <v-layout row wrap>
                 <v-spacer/>
               <v-flex md2 xs2>
-                <v-icon color="orange darken-2" style="height: auto;width: auto">mdi-home-city-outline</v-icon>
+                <v-icon color="orange darken-2" size="40px">mdi-home-city-outline</v-icon>
               </v-flex>
               <v-flex md4 xs8>
                 <v-layout row wrap>
                   <v-flex md12 xs12 >
-                    <h4 style="float: left"> {{education.schoolname}}</h4>
+                    <h2 style="float: left"> {{education.schoolname}}</h2>
 
                   </v-flex>
                   <v-flex md12 xs12 >
                     <template v-for="(schooltypeitem, index) in st">
-                    <h3 style="float: left" v-if="schooltypeitem.i === education.schooltype">Trình độ: {{schooltypeitem.name}}</h3>
+                    <span style="float: left" v-if="schooltypeitem.i === education.schooltype">Trình độ: {{schooltypeitem.name}}</span>
                     </template>
                   </v-flex>
                   <v-flex md12 xs12>
-                    <h3 style="float: left">Thời gian học tập: {{education.starttime}} - {{education.endtime}}</h3>
+                    <span style="float: left">Thời gian học tập: {{education.starttime}} - {{education.endtime}}</span>
                   </v-flex>
                   <v-flex md12 xs12>
-                    <h3 style="float: left" v-if="education.description != ''">Mô tả {{education.description}}</h3>
+                    <span style="float: left" v-if="education.description != ''">Mô tả:  {{education.description}}</span>
                   </v-flex>
                 </v-layout>
               </v-flex>
                 <v-spacer/>
-                <v-flex md4 xs4>
+                <v-flex md4 xs2>
                   <v-btn  style="height: auto"
                           dark
                           icon @click="edit(education, index)">
@@ -177,7 +177,8 @@
                   </v-btn>
                 </v-flex>
               </v-layout>
-            </v-card>
+            </v-container>
+              <v-divider v-if="index != (educations.length-1)"></v-divider>
 
             </template>
 </v-container>
@@ -266,7 +267,7 @@
 </script>
 
 <style scoped>
-  h1,h2,h3,h4,h5 {
+  h1,h2,h3,h4,h5,span {
     font-family: "Times New Roman";
 
   }

@@ -9,7 +9,7 @@
           <v-dialog v-model="dialog2" persistent max-width="800px">
             <template
               v-slot:activator="{ on }">
-              <v-btn color="primary" dark v-on="on">Thêm mục</v-btn>
+              <v-btn color="orange" dark v-on="on">Thêm mục</v-btn>
             </template>
             <v-card>
               <v-card-text>
@@ -41,8 +41,8 @@
         </v-flex>
         <v-flex md12 xs12 v-if="btnSubmit === true">
           <v-container align="center">
-            <template v-for="certification in certifications">
-              <v-card>
+            <template v-for="(certification,index) in certifications">
+              <v-container>
                 <v-layout row wrap>
                   <v-spacer/>
                   <v-flex md2 xs2>
@@ -51,15 +51,29 @@
                   <v-flex md4 xs8>
                     <v-layout row wrap>
                       <v-flex md12 xs12 >
-                        <h3 style="float: left">{{certification.certificationName}}</h3>
+                        <h2 style="float: left">{{certification.certificationName}}</h2>
 
                       </v-flex>
 
                     </v-layout>
                   </v-flex>
                   <v-spacer/>
+                  <v-flex md4 xs2>
+                    <v-btn  style="height: auto"
+                            dark
+                            icon @click="edit(certification, index)">
+                      <v-icon color="orange darken-2" >mdi-update</v-icon>
+                    </v-btn>
+                    <v-btn  style="height: auto"
+                            dark
+                            icon
+                            @click="remove(index)">
+                      <v-icon color="orange darken-2"  >mdi-delete</v-icon>
+                    </v-btn>
+                  </v-flex>
                 </v-layout>
-              </v-card>
+              </v-container>
+              <v-divider v-if="index != (certifications.length-1)"></v-divider>
 
             </template>
           </v-container>
@@ -89,12 +103,30 @@
       }),
       methods: {
         update() {
-        this.dialog2 = false;
-        this.btnSubmit = true;
-        this.certifications.push(Object.assign({},this.newCertifications));
-        Object.assign(this.newCertifications,this.defaultCertifications);
+          if(this.newCertifications.certificationName != "") {
+            this.dialog2 = false;
+            this.btnSubmit = true;
+            this.certifications.push(Object.assign({}, this.newCertifications));
+            Object.assign(this.newCertifications, this.defaultCertifications);
+          }
+      },
+        remove(position){
+          this.certifications.splice(position, 1 );
+          if(this.certifications.length === 0){
+            this.btnSubmit = false;
+          }
+          console.log('delete')
+        },
+        edit(certification,position){
 
-      }
+          Object.assign(this.newCertifications,certification);
+          this.certifications.splice(position, 1 );
+          this.dialog2 = true;
+          if(this.certifications.length === 0){
+            this.btnSubmit = false;
+          }
+          console.log('edit')
+        }
         }
     }
 </script>
