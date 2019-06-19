@@ -8,6 +8,8 @@ import EmployerMainScreenPage from "../views/EmployerMainScreenPage";
 import JobSeekerDashBoardPage from '../views/JobSeekerDashBoardPage'
 import EmployerJobDetailPage from '../views/EmployerJobDetailPage'
 import JobSeekerCreateCV from "../views/JobSeekerCreateCV";
+import JobSeekerManageCVPage from "../views/JobSeekerManageCVPage";
+import DetailCVPage from "../views/DetailCVPage";
 
 Vue.use(Router)
 
@@ -25,13 +27,13 @@ export default new Router({
       component: SignUpPage
     },
     {
-      path: '/jobseeker-main-screen',
-      name: 'Trang chu',
+      path: '/trang-chu-nguoi-tim-viec',
+      name: 'jobseekermainscreen',
       component: JobSeekerMainScreenPage
     },
     {
-      path: '/employer-main-screen',
-      name: 'Trang chu',
+      path: '/trang-chu-nha-tuyen-dung',
+      name: 'employermainscreen',
       component: EmployerMainScreenPage
     }
     ,
@@ -47,8 +49,8 @@ export default new Router({
       component: JobSeekerDashBoardPage
     }
     ,   {
-      path: '/createCV',
-      name: 'Tạo CV',
+      path: '/tao-CV',
+      name: 'jobseekercreateCV',
       component: JobSeekerCreateCV
     }
     ,
@@ -58,6 +60,16 @@ export default new Router({
       component: EmployerJobDetailPage
     }
     ,
+    {
+      path: '/quan-li-CV',
+      name: 'manageCV',
+      component: JobSeekerManageCVPage
+    },
+    {
+      path: '/xem-CV',
+      name: 'detailCV',
+      component: DetailCVPage
+    }
     // {
     //   path: '/detail/:id',
     //   component: Detail

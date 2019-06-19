@@ -114,8 +114,8 @@
           <div class=" orange--text headline">
             Công Cụ
           </div>
-          <v-list v-for="item in menu2" :key="item.link">
-            <v-list-tile  v-html="item.display" :to="item.link">
+          <v-list v-for="item1 in menu2" :key="item1.link">
+            <v-list-tile  v-html="item1.display" :to="item1.link">
             </v-list-tile>
           </v-list>
         </v-flex>
