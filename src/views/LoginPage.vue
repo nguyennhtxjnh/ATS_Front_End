@@ -1,15 +1,15 @@
 <template>
   <DashBoardLayout>
-    <SignUp></SignUp>
+    <Login></Login>
   </DashBoardLayout>
 </template>
 
 <script>
   import DashBoardLayout from '../layouts/DashBoardLayout'
-  import SignUp from '../components/JobSeekeer/signup/SignUp'
+  import Login from '../components/JobSeekeer/login/Login'
   export default {
-    name: 'JobSeekerSignUpPage',
-    components: {SignUp, DashBoardLayout}
+    name: 'LoginPage',
+    components: {Login, DashBoardLayout}
   }
 </script>
 

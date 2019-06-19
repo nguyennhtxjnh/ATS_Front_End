@@ -3,14 +3,17 @@ import Router from 'vue-router'
 import store from '../store.js'
 import SignUpPage from '../views/JobSeekerSignUpPage'
 import LoginPage from '../views/JobSeekerLoginPage'
+import SignUpPage from '../views/SignUpPage'
+import LoginPage from '../views/LoginPage'
+import DashBoardLayout from "../layouts/DashBoardLayout";
 import JobSeekerMainScreenPage from "../views/JobSeekerMainScreenPage";
 import EmployerMainScreenPage from "../views/EmployerMainScreenPage";
 import JobSeekerDashBoardPage from '../views/JobSeekerDashBoardPage'
-import EmployerCreateJobPage from '../views/EmployerCreateJobPage'
 import EmployerJobDetailPage from '../views/EmployerJobDetailPage'
 import axios from 'axios'
 import EmployerSignUpPage from '../views/EmployerSignUpPage'
 import EmployerLoginPage from '../views/EmployerLoginPage'
+import JobSeekerCreateCV from "../views/JobSeekerCreateCV";
 
 Vue.use(Router)
 

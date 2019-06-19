@@ -103,9 +103,9 @@
   </template>
   <!--    End ToolBar-->
   <v-content>
-    <v-container fluid>
+    <div>
       <slot></slot>
-    </v-container>
+    </div>
   </v-content>
   <v-footer dark color="primary"
             height="auto" red>

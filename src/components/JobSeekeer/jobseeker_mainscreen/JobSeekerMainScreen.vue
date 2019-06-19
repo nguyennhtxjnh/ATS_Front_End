@@ -1,6 +1,7 @@
 <template>
 
   <v-card>
+<!--    image top-->
     <v-img
       :src="images.main"
       height="400px"
@@ -16,9 +17,9 @@
                         prominent
                         height="auto"
                         class="pt-4  pb-4"
-                        align-center>
+                        >
 
-          <v-flex md12  black--text title >
+          <v-flex md12  black--text title  >
            <h3>Tìm công việc phù hợp</h3>
           </v-flex>
             <v-flex md12 class="pr-0 mr-0">
@@ -65,6 +66,7 @@
 
       </v-layout>
     </v-img>
+<!--    5 cong ty hàng đầu-->
     <v-card style="background-color: #efebeb">
       <v-container align-center>
         <v-layout row wrap>
@@ -95,23 +97,105 @@
         </v-layout>
       </v-container>
     </v-card>
+<!--    ngôn ngữ-->
     <v-card style="background-color: white">
         <v-container align-center>
           <v-layout row wrap >
             <v-flex md12 xs12 >
-              <h1 align="center">Các Ngôn Ngữ Được Yêu Thích Nhất</h1>
+              <h1 align="center">Các Kênh Việc Làm Của Chúng Tôi</h1>
             </v-flex>
             <v-flex md12 xs12>
-              abc
+              <v-layout row wrap>
+                <v-flex md4 class="pa-3 industryimg">
+                  <v-img  :src="images.main" height="100%"
+                          gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
+                          class=""
+                  >
+                    <v-container align-center class="miđdle">
+                      <v-layout row wrap>
+                        <v-flex md12 xs12 style="height: auto">
+                          <v-btn
+                            style="height: auto"
+                            dark
+                            icon
+                          >
+                            <v-icon size="100px" class="miđdle">mdi-account-group</v-icon>
+                          </v-btn>
+                        </v-flex>
+                        <v-flex md12 xs12 white--text>
+                          <h2 >Việc làm cấp quản lý</h2>
+                        </v-flex>
+                        <v-flex md12 xs12 >
+                          <v-btn color="orange" style="color: white"><h4>Tìm ứng viên</h4></v-btn>
+                        </v-flex>
+                      </v-layout>
+
+
+                    </v-container>
+                  </v-img>
+                </v-flex>
+                <v-flex md4 class="pa-3">
+                  <v-img  :src="images.main" height="100%"     gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)">
+                    <v-container align-center>
+                      <v-layout row wrap>
+                        <v-flex md12 xs12 style="height: auto">
+                          <v-btn
+                            style="height: auto"
+                            dark
+                            icon
+                          >
+                            <v-icon size="100px">mdi-code-tags</v-icon>
+                          </v-btn>
+                        </v-flex>
+                        <v-flex md12 xs12 white--text>
+                          <h2 >Việc làm ngành IT</h2>
+                        </v-flex>
+                        <v-flex md12 xs12 >
+                          <v-btn color="orange" style="color: white"><h4>Tìm ứng viên</h4></v-btn>
+                        </v-flex>
+                      </v-layout>
+
+
+                    </v-container>
+                  </v-img>
+                </v-flex>
+                <v-flex md4 class="pa-3">
+                  <v-img  :src="images.main" height="100%"     gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)">
+                    <v-container align-center>
+                      <v-layout row wrap>
+                        <v-flex md12 xs12 style="height: auto">
+                          <v-btn
+                            style="height: auto"
+                            dark
+                            icon
+                          >
+                            <v-icon size="100px">mdi-school</v-icon>
+                          </v-btn>
+                        </v-flex>
+                        <v-flex md12 xs12 white--text>
+                          <h2 >Mới tốt nghiệp</h2>
+                        </v-flex>
+                        <v-flex md12 xs12 >
+                          <v-btn color="orange" style="color: white"><h4>Tìm ứng viên</h4></v-btn>
+                        </v-flex>
+                      </v-layout>
+
+
+                    </v-container>
+                  </v-img>
+                </v-flex>
+              </v-layout>
+
             </v-flex>
           </v-layout>
         </v-container>
       </v-card>
+<!--    8 công việc đăng gần nhất-->
     <v-card style="background-color:#efebeb">
-      <v-container md12 xs12>
+      <v-container md12 xs12 align-center>
         <h1>Việc làm nổi bật hôm nay</h1>
         <v-layout wrap md12 xs12>
-          <template v-for="job in jobs">
+          <template v-for="job in info">
             <v-flex md5 xs12 style="background-color: white" class="ma-3 pa-2" :key="job">
               <v-layout row wrap>
                 <v-flex md4>
@@ -121,15 +205,15 @@
                 <v-flex md1/>
                 <v-flex md7>
                   <h3 align-left>
-                    .Net Fresher
+                    {{job.title}}
                   </h3>
                   <h5 align-lef>
-                    Công ty TNHH CMC GLOBAL - Hà Nội
+                    {{job.companyName}} - {{job.cityName}}
                   </h5>
                   <v-flex align-left>
                     <h4>  <v-btn icon>
                       <v-icon color="orange darken-2" >mdi-coin</v-icon>
-                    </v-btn>10 - 20triệu</h4>
+                    </v-btn>{{job.salaryTo}} - {{job.salaryFrom}} triệu</h4>
                   </v-flex>
                 </v-flex>
               </v-layout>
@@ -139,6 +223,7 @@
         </v-layout>
       </v-container>
     </v-card>
+
   </v-card>
 
 
@@ -146,6 +231,7 @@
 </template>
 
 <script>
+  import axios from 'axios';
     export default {
         name: "JobSeekerMainScreen",
       data : ()=>{ return {
@@ -154,13 +240,25 @@
         jobs : [0,1,2,3,4,5,6,7],
         companys : [8,9,10,11,12],
         icon : 'mdi-coin',
-        select: [],
+        info : null
       }
-    }}
+    }
+    ,
+      mounted () {
+        axios
+          .get('http://10.82.139.57:8080/job/getTop8')
+          .then(response => (this.info = response.data))
+      }
+    }
 </script>
 
 <style scoped>
-
+.industryimg :hover{
+  opacity: 0.3;
+}
+.miđdle :hover{
+  opacity: 1;
+}
   .v-menu__content{
     left : 0px !important;
     top : 105%!important;
