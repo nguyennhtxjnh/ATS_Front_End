@@ -268,34 +268,35 @@
         </v-flex>
         <v-spacer/>
         <v-flex md4 xs12 class="pl-2">
-          <v-card style="background-color: white">
-            <v-container>
-              <v-layout row wrap>
-                <v-flex md12 xs12>
-                  <v-layout row wrap>
-                    <v-flex md2 xs2>
-                      <v-switch v-model="info.isActive" >
-                      </v-switch>
-                    </v-flex>
-                    <v-flex md8 xs10>
-                      <v-flex v-if="info.isActive">
-                        Trạng thái tìm việc bật
-                      </v-flex>
-                      <v-flex v-if="!info.isActive">
-                        Trạng thái tìm việc tắt
-                      </v-flex>
-                    </v-flex>
-                    <v-spacer/>
+          <ProfileBasicComponent></ProfileBasicComponent>
+<!--          <v-card style="background-color: white">-->
+<!--            <v-container>-->
+<!--              <v-layout row wrap>-->
+<!--                <v-flex md12 xs12>-->
+<!--                  <v-layout row wrap>-->
+<!--                    <v-flex md2 xs2>-->
+<!--                      <v-switch v-model="info.isActive" >-->
+<!--                      </v-switch>-->
+<!--                    </v-flex>-->
+<!--                    <v-flex md8 xs10>-->
+<!--                      <v-flex v-if="info.isActive">-->
+<!--                        Trạng thái tìm việc bật-->
+<!--                      </v-flex>-->
+<!--                      <v-flex v-if="!info.isActive">-->
+<!--                        Trạng thái tìm việc tắt-->
+<!--                      </v-flex>-->
+<!--                    </v-flex>-->
+<!--                    <v-spacer/>-->
 
 
 
 
-                  </v-layout>
+<!--                  </v-layout>-->
 
-                </v-flex>
-              </v-layout>
-            </v-container>
-          </v-card>
+<!--                </v-flex>-->
+<!--              </v-layout>-->
+<!--            </v-container>-->
+<!--          </v-card>-->
         </v-flex>
       </v-layout>
 
@@ -314,10 +315,12 @@
   import SocialActivitiesComponent from "./SocialActivitiesComponent";
   import SkillInCVComponent from "./SkillInCVComponent";
   import ProjectorProductWorkedComponent from "./ProjectorProductWorkedComponent";
+  import ProfileBasicComponent from "../manageCV/ProfileBasicComponent";
 
   export default {
     name: "CreateCV",
     components: {
+      ProfileBasicComponent,
       ProjectorProductWorkedComponent,
       EducationComponent,
       SkillInCVComponent,

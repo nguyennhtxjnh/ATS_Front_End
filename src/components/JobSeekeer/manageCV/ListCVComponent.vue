@@ -26,9 +26,9 @@
                 </v-layout></v-flex>
 <!--              link cv-->
               <v-flex md12 xs12 sm12 >
-                <v-flex  xs12 style="border: 1px #2c3e50; border-style: dotted" class="py-2 ma-2">
-                  <span >
-                  https://i.topcv.vn/nguyenhuynhthaonguyen?cvid={{cv.id}}</span></v-flex>
+                <v-flex  xs12 style="border: 1px #2c3e50; border-style: dotted" class="py-2 ma-2 text-truncate">
+                  `https://i.topcv.vn/nguyenhuynhthaonguyen?cvid={{cv.id}}`
+                </v-flex>
               </v-flex>
 <!--              button -->
               <v-flex md12 xs12>
