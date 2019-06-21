@@ -69,7 +69,9 @@ export default new Router({
       path: '/xem-CV',
       name: 'detailCV',
       component: DetailCVPage
-    }
+
+    },
+    { path: '*', component: DetailCVPage }
     // {
     //   path: '/detail/:id',
     //   component: Detail

@@ -252,7 +252,6 @@
         console.log('delete')
       },
       edit(education,position){
-
         Object.assign(this.newEducation,education);
         this.educations.splice(position, 1 );
         this.dialog = true;

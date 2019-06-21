@@ -269,40 +269,17 @@
         <v-spacer/>
         <v-flex md4 xs12 class="pl-2">
           <ProfileBasicComponent></ProfileBasicComponent>
-<!--          <v-card style="background-color: white">-->
-<!--            <v-container>-->
-<!--              <v-layout row wrap>-->
-<!--                <v-flex md12 xs12>-->
-<!--                  <v-layout row wrap>-->
-<!--                    <v-flex md2 xs2>-->
-<!--                      <v-switch v-model="info.isActive" >-->
-<!--                      </v-switch>-->
-<!--                    </v-flex>-->
-<!--                    <v-flex md8 xs10>-->
-<!--                      <v-flex v-if="info.isActive">-->
-<!--                        Trạng thái tìm việc bật-->
-<!--                      </v-flex>-->
-<!--                      <v-flex v-if="!info.isActive">-->
-<!--                        Trạng thái tìm việc tắt-->
-<!--                      </v-flex>-->
-<!--                    </v-flex>-->
-<!--                    <v-spacer/>-->
-
-
-
-
-<!--                  </v-layout>-->
-
-<!--                </v-flex>-->
-<!--              </v-layout>-->
-<!--            </v-container>-->
-<!--          </v-card>-->
         </v-flex>
       </v-layout>
 
 
-      {{info}}
+
+<!--      {{info}}-->
+      <router-link to="/quan-li-CV" tag="button">
       <v-btn color="blue darken-1" flat @click="create">Tạo CV</v-btn>
+      </router-link>
+      <v-btn color="blue darken-1" flat @click="down">Download PDF</v-btn>
+      <PDFCVComponent :info="info" v-if="btnDown === true" @focus="loadpdf"></PDFCVComponent>
     </v-container>
   </v-card>
 </template>
@@ -316,18 +293,21 @@
   import SkillInCVComponent from "./SkillInCVComponent";
   import ProjectorProductWorkedComponent from "./ProjectorProductWorkedComponent";
   import ProfileBasicComponent from "../manageCV/ProfileBasicComponent";
+  import PDFCVComponent from "./PDFCVComponent";
+  import jsPDF from 'jspdf'
 
   export default {
     name: "CreateCV",
     components: {
+      PDFCVComponent,
       ProfileBasicComponent,
       ProjectorProductWorkedComponent,
       EducationComponent,
       SkillInCVComponent,
       SocialActivitiesComponent, CertificationComponent, WorkExperienceComponent
     },
-    data: function () {
-      return {
+     data: () => ( {
+        btnDown: false,
         title: "Image Upload",
         dialog: false,
         imageName: '',
@@ -366,7 +346,8 @@
           workexperiences: [],
           projectorproductworkeds: [],
           skillincvs: [],
-        }, rules: {
+        },
+       rules: {
           noMinus: value => value >= 0 || 'Lương Không Được Nhỏ Hơn 0',
           required: value => !!value || 'Không được để trống ô này.',
           counter: value => value.length <= 40 || 'Tối Đa 40 Kí Tự',
@@ -374,10 +355,8 @@
             const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
             return pattern.test(value) || 'Địa chỉ email không phù hợp.'
           }
-        },
+        },}),
 
-      }
-    },
 
 
     methods: {
@@ -430,9 +409,21 @@
           .finally(() => {
 
           })
-      },
+      },down(){
+        if(this.btnDown === false){
+          this.btnDown = true;
+        }
+
+
+      },loadpdf(){
+        if(this.btnDown === true){
+          this.btnDown = false;
+        }
+      }
     },
     mounted() {
+
+
 
       axios
         .get('https://restcountries.eu/rest/v1/all')
