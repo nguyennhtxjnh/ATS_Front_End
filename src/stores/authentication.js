@@ -66,6 +66,25 @@ export default {
                     })
             })
         },
+        LOGINGOOGLE({commit}, user) {
+          return new Promise((resolve, reject) => {
+            commit('REQUEST');
+            axios({url: 'http://localhost:8080/user/loginGoogle', data: user, method: 'POST'})
+              .then(response => {
+                const token = response.data.dto.accessToken;
+                console.log(response);
+                localStorage.setItem('token', token);
+                commit('SUCCESS', token);
+                console.log('log success ');
+                resolve(response);
+              })
+              .catch(error => {
+                commit('ERROR');
+                localStorage.removeItem('token');
+                reject(error);
+              })
+          })
+        },
         LOGOUT({commit}) {
             return new Promise((resolve) => {
                 commit('LOGOUT');

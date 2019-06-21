@@ -20,15 +20,15 @@
 <!--        <v-icon>refresh</v-icon>-->
 <!--      </v-btn>-->
 
-      <v-btn style="height: 100%" @click="$router.push('/dang-nhap')" v-if="roleId !== 1 && roleId !== 2">
+      <v-btn style="height: 100%" flat @click="$router.push('/dang-nhap')" v-if="roleId !== 1">
         Đăng Nhập
       </v-btn>
       <Span  v-if="roleId !== 1">|</Span>
-      <v-btn style="height: 100%" @click="$router.push('/dang-ki')" v-if="roleId !== 1 && roleId !== 2">
+      <v-btn style="height: 100%" flat @click="$router.push('/dang-ki')" v-if="roleId !== 1">
         Đăng Kí
       </v-btn>
 
-      <v-menu  v-if="roleId === 1 || roleId === 2"
+      <v-menu  v-if="roleId === 1"
         offset-y
         style="height: 100%"
         content-class="dropdown-menu"
@@ -36,31 +36,30 @@
         <v-btn
           style="height: 100%"
           slot="activator"
-
+          flat
         >
           <v-icon left>mdi-account</v-icon>
           {{ fullName }}
         </v-btn>
-        <v-card>
-          <v-list dense>
+        <v-card class="pa-0">
+          <v-list dense class="pa-0">
             <v-list-tile
               v-for="notification in notifications"
-              :key="notification"
-              class="hoverCSS"
+              :key="notification.title"
+              class="hoverCSS pa-0"
             >
-
-              <v-list-tile-title
+              <v-icon color="black" class="pr-2">{{notification.icon}}</v-icon>
+              <v-list-tile-action
                 @click="notificationClick(notification)"
-                v-text="notification"
+                v-text="notification.title"
               />
-
             </v-list-tile>
           </v-list>
         </v-card>
       </v-menu>
 
 
-      <v-btn style="height: 100%" color="primary" >
+      <v-btn style="height: 100%" color="primary" @click="$router.push('/employer-main-screen')">
         Nhà Tuyển Dụng
       </v-btn>
 
@@ -103,9 +102,9 @@
   </template>
   <!--    End ToolBar-->
   <v-content>
-    <div>
+    <v-container fluid>
       <slot></slot>
-    </div>
+    </v-container>
   </v-content>
   <v-footer dark color="primary"
             height="auto" red>
@@ -164,9 +163,14 @@
     data: function(){
       return {
         notifications: [
-          'Thông Tin',
-          'Đăng Xuất',
-
+          {
+            icon: 'mdi-account',
+            title: 'Thông Tin',
+          },
+          {
+            icon: 'mdi-logout-variant',
+            title: 'Đăng Xuất',
+          }
         ],
         icons: [
           'mdi-facebook',
@@ -253,7 +257,8 @@
 
 <style scoped>
   .hoverCSS:hover{
-    background-color: cornflowerblue;
+    background-color: orange;
+    color: white !important;
     cursor: pointer;
   }
   .hoverCSSTitle:hover{

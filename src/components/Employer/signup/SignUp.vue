@@ -62,7 +62,7 @@
 
                   <v-flex xs12 >
                     <v-combobox class="ma-2"
-                      prepend-icon="mdi-account"
+                      prepend-icon="mdi-domain"
                       v-model="select"
                       :items="cbCompany"
                       label="Công Ty"
@@ -74,7 +74,7 @@
                     <v-autocomplete class="ma-2"
                       :rules="[rules.required]"
                       v-model="formData.joblevelid"
-                      prepend-icon="mdi-account"
+                      prepend-icon="mdi-account-badge-horizontal"
                       :items="jobLevelAPI"
                       item-text="jobLevelName"
                       item-value="id"
@@ -94,7 +94,7 @@
                     <v-autocomplete class="ma-2"
                                     :rules="[rules.required]"
                                     v-model="formData.joblevelid"
-                                    prepend-icon="mdi-account"
+                                    prepend-icon="mdi-map-marker-radius"
                                     :items="jobLevelAPI"
                                     item-text="jobLevelName"
                                     item-value="id"
