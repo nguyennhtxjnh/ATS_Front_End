@@ -29,10 +29,11 @@
                       <v-flex d-flex xs12 fill-height>
 
                       </v-flex>
-
                     </v-layout>
+
                   </v-flex>
                 </v-layout>
+
               </v-flex>
               <v-layout xs12 sm6 md3 child-flex text-xs-center>
                 <v-flex md12  class="align-center">

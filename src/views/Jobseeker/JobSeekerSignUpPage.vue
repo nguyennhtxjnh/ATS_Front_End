@@ -5,10 +5,10 @@
 </template>
 
 <script>
-  import DashBoardLayout from '../layouts/DashBoardLayout'
-  import SignUp from '../components/JobSeekeer/signup/SignUp'
+  import DashBoardLayout from '../../layouts/DashBoardLayout'
+  import SignUp from '../../components/JobSeekeer/signup/SignUp'
   export default {
-    name: 'SignUpPage',
+    name: 'JobSeekerSignUpPage',
     components: {SignUp, DashBoardLayout}
   }
 </script>

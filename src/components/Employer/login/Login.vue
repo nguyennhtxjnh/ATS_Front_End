@@ -14,11 +14,8 @@
               <v-text-field class="ma-2" prepend-icon="person" name="Email" label="Email" maxlength="40" v-model="loginEmail" type="text" :rules="[rules.required, rules.counter, rules.email]"></v-text-field>
               <v-text-field class="ma-2" prepend-icon="lock" name="Password" label="Mật Khẩu" maxlength="40" v-model="loginPassword" type="password" :rules="[rules.required, rules.counter]"></v-text-field>
             </v-card-text>
-            <v-card-actions>
-              <v-btn color="error" style="width: 100%">Gmail</v-btn>
-            </v-card-actions>
             <v-card-text >
-              <p class="text-sm-left">Chưa có tài khoản đăng nhập? tạo ngay</p>
+              <p class="text-sm-left">Chưa có tài khoản đăng nhập? <a @click="$router.push('/tuyen-dung-dang-ky')"> Tạo ngay.</a></p>
             </v-card-text>
 
 

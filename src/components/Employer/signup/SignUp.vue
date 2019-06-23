@@ -4,7 +4,7 @@
       <v-flex xs12 sm12 md8>
         <v-card style="border-style: solid; border-color: #ccc; border-width: 1px;" class="elevation-0 border_all">
           <v-toolbar dark color="warning">
-            <v-toolbar-title>Đăng Kí Tuyển Dụng</v-toolbar-title>
+            <v-toolbar-title>Đăng Ký Tuyển Dụng</v-toolbar-title>
             <v-spacer></v-spacer>
 
           </v-toolbar>
@@ -62,7 +62,7 @@
 
                   <v-flex xs12 >
                     <v-combobox class="ma-2"
-                      prepend-icon="mdi-account"
+                      prepend-icon="mdi-domain"
                       v-model="select"
                       :items="cbCompany"
                       label="Công Ty"
@@ -74,7 +74,7 @@
                     <v-autocomplete class="ma-2"
                       :rules="[rules.required]"
                       v-model="formData.joblevelid"
-                      prepend-icon="mdi-account"
+                      prepend-icon="mdi-account-badge-horizontal"
                       :items="jobLevelAPI"
                       item-text="jobLevelName"
                       item-value="id"
@@ -94,7 +94,7 @@
                     <v-autocomplete class="ma-2"
                                     :rules="[rules.required]"
                                     v-model="formData.joblevelid"
-                                    prepend-icon="mdi-account"
+                                    prepend-icon="mdi-map-marker-radius"
                                     :items="jobLevelAPI"
                                     item-text="jobLevelName"
                                     item-value="id"
@@ -217,7 +217,7 @@
           .then(response => {
             console.log(response);
             if (response.data.success == true) {
-              this.jobLevelAPI = response.data.dto;
+              this.jobLevelAPI = response.data.data;
             } else {
               this.$notify({
                 group: 'foo',

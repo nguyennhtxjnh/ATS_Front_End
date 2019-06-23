@@ -2,33 +2,19 @@
   <v-app>
   <!--    ToolBar-->
   <template>
-    <v-toolbar fixed dark v-if="$vuetify.breakpoint.mdAndUp">
-      <v-toolbar-title @click="$router.push('/')" class="white--text hoverCSSTitle" >Job Board</v-toolbar-title>
+    <v-toolbar fixed color="orange" v-if="$vuetify.breakpoint.mdAndUp">
+      <v-toolbar-title @click="$router.push('/')" class="white--text hoverCSSTitle" >ATS</v-toolbar-title>
       <v-spacer></v-spacer>
-      <!--        <v-flex xs 4>-->
-      <!--            <span @click="test">fasfa</span>-->
-      <!--        </v-flex>-->
-<!--      <v-btn icon>-->
-<!--        <v-icon>search</v-icon>-->
-<!--      </v-btn>-->
 
-<!--      <v-btn icon>-->
-<!--        <v-icon>apps</v-icon>-->
-<!--      </v-btn>-->
-
-<!--      <v-btn icon>-->
-<!--        <v-icon>refresh</v-icon>-->
-<!--      </v-btn>-->
-
-      <v-btn style="height: 100%" @click="$router.push('/dang-nhap')" v-if="roleId !== 1 && roleId !== 2">
+      <v-btn style="height: 100%" color="white" flat @click="$router.push('/dang-nhap')" v-if="roleId !== 1">
         Đăng Nhập
       </v-btn>
-      <Span  v-if="roleId !== 1">|</Span>
-      <v-btn style="height: 100%" @click="$router.push('/dang-ki')" v-if="roleId !== 1 && roleId !== 2">
+      <Span  v-if="roleId !== 1" style="color: white !important;">|</Span>
+      <v-btn style="height: 100%" color="white" flat @click="$router.push('/dang-ky')" v-if="roleId !== 1">
         Đăng Kí
       </v-btn>
 
-      <v-menu  v-if="roleId === 1 || roleId === 2"
+      <v-menu  v-if="roleId === 1"
         offset-y
         style="height: 100%"
         content-class="dropdown-menu"
@@ -36,66 +22,77 @@
         <v-btn
           style="height: 100%"
           slot="activator"
-
+          flat
+          color="white"
         >
-          <v-icon left>mdi-account</v-icon>
+          <v-icon left color="white">mdi-account</v-icon>
           {{ fullName }}
         </v-btn>
-        <v-card>
-          <v-list dense>
+        <v-card class="pa-0">
+          <v-list dense class="pt-2 pr-0 pl-0 pb-2">
             <v-list-tile
               v-for="notification in notifications"
-              :key="notification"
-              class="hoverCSS"
+              :key="notification.title"
+              class="hoverCSS pa-2 "
+              @click="notificationClick(notification)"
             >
-
-              <v-list-tile-title
-                @click="notificationClick(notification)"
-                v-text="notification"
+              <v-icon color="black" class="pr-2">{{notification.icon}}</v-icon>
+              <v-list-tile-action
+                v-text="notification.title"
               />
-
             </v-list-tile>
           </v-list>
         </v-card>
       </v-menu>
 
-
-      <v-btn style="height: 100%" color="primary" >
+      <v-btn style="height: 100%" color="primary" @click="$router.push('/employer-main-screen')">
         Nhà Tuyển Dụng
       </v-btn>
-
     </v-toolbar>
-    <v-toolbar fixed dark v-if="$vuetify.breakpoint.mdAndDown">
-
-      <v-toolbar-title class="white--text">ABC</v-toolbar-title>
-
+    <v-toolbar fixed  color="orange" v-if="$vuetify.breakpoint.mdAndDown">
+      <v-toolbar-title @click="$router.push('/')" class="white--text hoverCSSTitle">ATS</v-toolbar-title>
       <v-spacer></v-spacer>
 
+      <v-btn style="height: 100%" class="pa-0" color="white" flat @click="$router.push('/dang-nhap')" v-if="roleId !== 1">
+        <v-icon left color="white" class="pl-3">mdi-login</v-icon>
+      </v-btn>
+      <Span  v-if="roleId !== 1" style="color: white !important;">|</Span>
+      <v-btn style="height: 100%" color="white" flat @click="$router.push('/dang-ky')" v-if="roleId !== 1">
+        <v-icon left color="white" class="pl-3">mdi-pencil-plus</v-icon>
+      </v-btn>
 
-
-
-      <v-menu offset-y>
-        <template v-slot:activator="{ on }">
-          <v-btn
-            dark
-            v-on="on"
-            fab
-          >
-            <v-icon dark>list</v-icon>
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-tile
-            v-for="(item, index) in items"
-            :key="index"
-            @click=""
-          >
-            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-          </v-list-tile>
-        </v-list>
+      <v-menu  v-if="roleId === 1"
+               offset-y
+               style="height: 100%"
+               content-class="dropdown-menu"
+               transition="slide-y-transition">
+        <v-btn
+          style="height: 100%"
+          slot="activator"
+          flat
+          color="white"
+        >
+          <v-icon left color="white" class="pl-3">mdi-account</v-icon>
+        </v-btn>
+        <v-card class="pa-0">
+          <p class="pt-3 pl-3 pr-3" ><b> {{ fullName }} </b></p>
+          <v-list dense class="pt-0 pr-0 pl-0 pb-2">
+            <v-list-tile
+              v-for="notification in notifications"
+              :key="notification.title"
+              class="hoverCSS pa-2 "
+              @click="notificationClick(notification)"
+            >
+              <v-icon color="black" class="pr-2">{{notification.icon}}</v-icon>
+              <v-list-tile-action
+                v-text="notification.title"
+              />
+            </v-list-tile>
+          </v-list>
+        </v-card>
       </v-menu>
 
-      <v-btn style="height: 100%" color="primary" >
+      <v-btn style="height: 100%" color="primary" @click="$router.push('/employer-main-screen')">
         Nhà Tuyển Dụng
       </v-btn>
 
@@ -103,9 +100,9 @@
   </template>
   <!--    End ToolBar-->
   <v-content>
-    <div>
+    <v-container fluid>
       <slot></slot>
-    </div>
+    </v-container>
   </v-content>
   <v-footer dark color="primary"
             height="auto" red>
@@ -164,9 +161,34 @@
     data: function(){
       return {
         notifications: [
-          'Thông Tin',
-          'Đăng Xuất',
-
+          {
+            icon: 'mdi-account',
+            title: 'Thông Tin',
+          },
+          {
+            icon: 'mdi-logout-variant',
+            title: 'Đăng Xuất',
+          }
+        ],
+        notificationsSmall: [
+          {
+            icon: 'mdi-account',
+            title: 'Thông Tin',
+          },
+          {
+            icon: 'mdi-logout-variant',
+            title: 'Đăng Xuất',
+          }
+        ],
+        menuListSmall: [
+          {
+            icon: 'mdi-login-variant',
+            title: 'Đăng Nhập',
+          },
+          {
+            icon: 'mdi-pencil-plus',
+            title: 'Đăng Ký',
+          }
         ],
         icons: [
           'mdi-facebook',
@@ -230,10 +252,10 @@
     },
     methods: {
       notificationClick(notification){
-        if (notification === 'Thông Tin'){
+        if (notification.title === 'Thông Tin'){
           this.$router.push('/thong-tin');
         }
-        if (notification === 'Đăng Xuất') {
+        if (notification.title === 'Đăng Xuất') {
           this.$store.dispatch('AUTHENTICATION_STORE/LOGOUT')
             .then(() => {
               this.$router.push('/dang-nhap');
@@ -253,9 +275,11 @@
 
 <style scoped>
   .hoverCSS:hover{
-    background-color: cornflowerblue;
+    background-color: orange;
+    color: white !important;
     cursor: pointer;
   }
+
   .hoverCSSTitle:hover{
     cursor: pointer;
   }

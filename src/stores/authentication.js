@@ -52,7 +52,7 @@ export default {
                 axios({url: 'http://localhost:8080/user/login', data: user, method: 'POST'})
                     .then(response => {
 
-                        const token = response.data.dto.accessToken;
+                        const token = response.data.data.accessToken;
                         console.log(response);
                         localStorage.setItem('token', token);
                         commit('SUCCESS', token);
@@ -65,6 +65,25 @@ export default {
                         reject(error);
                     })
             })
+        },
+        LOGINGOOGLE({commit}, user) {
+          return new Promise((resolve, reject) => {
+            commit('REQUEST');
+            axios({url: 'http://localhost:8080/user/loginGoogle', data: user, method: 'POST'})
+              .then(response => {
+                const token = response.data.data.accessToken;
+                console.log(response);
+                localStorage.setItem('token', token);
+                commit('SUCCESS', token);
+                console.log('log success ');
+                resolve(response);
+              })
+              .catch(error => {
+                commit('ERROR');
+                localStorage.removeItem('token');
+                reject(error);
+              })
+          })
         },
         LOGOUT({commit}) {
             return new Promise((resolve) => {
@@ -94,9 +113,9 @@ export default {
             );
             axios({url: 'http://localhost:8080/user/checkLogin', method: 'POST'})
               .then(response => {
-                const email = response.data.dto.email;
-                const roleId = response.data.dto.roleId;
-                const fullName = response.data.dto.fullname;
+                const email = response.data.data.email;
+                const roleId = response.data.data.roleId;
+                const fullName = response.data.data.fullname;
                 commit('INIT',{email, roleId, fullName});
                 resolve(response);
               })

@@ -5,8 +5,8 @@
 </template>
 
 <script>
-    import DashBoardLayout from "../layouts/DashBoardLayout";
-    import JobSeekerMainScreen from "../components/JobSeekeer/jobseeker_mainscreen/JobSeekerMainScreen";
+    import DashBoardLayout from "../../layouts/DashBoardLayout";
+    import JobSeekerMainScreen from "../../components/jobseeker_mainscreen/JobSeekerMainScreen";
     export default {
         name: "JobSeekerMainScreenPage",
       components: {JobSeekerMainScreen, DashBoardLayout}
