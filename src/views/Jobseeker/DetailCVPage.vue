@@ -5,8 +5,8 @@
 </template>
 
 <script>
-    import DashBoardLayout from "../layouts/DashBoardLayout";
-    import DetailCV from "../components/JobSeekeer/detailCV/DetailCV";
+    import DashBoardLayout from "../../layouts/DashBoardLayout";
+    import DetailCV from "../../components/JobSeekeer/detailCV/DetailCV";
     export default {
         name: "DetailCVPage",
       components: {DetailCV, DashBoardLayout}

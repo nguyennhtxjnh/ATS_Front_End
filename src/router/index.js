@@ -1,23 +1,18 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '../store.js'
-import SignUpPage from '../views/SignUpPage'
-import LoginPage from '../views/LoginPage'
-import JobSeekerMainScreenPage from "../views/JobSeekerMainScreenPage";
-import EmployerMainScreenPage from "../views/EmployerMainScreenPage";
-import JobSeekerDashBoardPage from '../views/JobSeekerDashBoardPage'
-import EmployerJobDetailPage from '../views/EmployerJobDetailPage'
-import axios from 'axios'
-import EmployerSignUpPage from '../views/EmployerSignUpPage'
-import EmployerLoginPage from '../views/EmployerLoginPage'
-import JobSeekerCreateCV from "../views/JobSeekerCreateCV";
-import JobSeekerManageCVPage from "../views/JobSeekerManageCVPage";
-import DetailCVPage from "../views/DetailCVPage";
+import JobSeekerManageCVPage from "../views/Jobseeker/JobSeekerManageCVPage";
+import DetailCVPage from "../views/Jobseeker/DetailCVPage";
 import EmployerSignUpPage from '../views/Employer/EmployerSignUpPage'
 import EmployerLoginPage from '../views/Employer/EmployerLoginPage'
-import JobSeekerSignUpPage from '../views/Jobseeker/JobSeekerSignUpPage'
-import JobSeekerLoginPage from '../views/Jobseeker/JobSeekerLoginPage'
-import SearchJobResultPage from '../views/Jobseeker/SearchJobResultPage'
+import JobSeekerLoginPage from "../views/Jobseeker/JobSeekerLoginPage";
+import JobSeekerSignUpPage from "../views/Jobseeker/JobSeekerSignUpPage";
+import JobSeekerMainScreenPage from "../views/Jobseeker/JobSeekerMainScreenPage";
+import EmployerMainScreenPage from "../views/Employer/EmployerMainScreenPage";
+import JobSeekerDashBoardPage from "../views/Jobseeker/JobSeekerDashBoardPage";
+import EmployerCreateJobPage from "../views/Employer/EmployerCreateJobPage";
+import EmployerJobDetailPage from "../views/Employer/EmployerJobDetailPage";
+
 
 Vue.use(Router)
 
@@ -32,23 +27,23 @@ const router = new Router({
     {
       path: '/dang-ki',
       name: 'Sign up',
-      component: SignUpPage
+      component: JobSeekerSignUpPage
     },
     {
       path: '/',
-      name: 'Trang chu',
+      name: 'JobSeekerMainScreen',
       component: JobSeekerMainScreenPage
     },
     {
-      path: '/employer-main-screen',
-      name: 'Trang chu 2',
+      path: '/trang-chu-nguoi-tim-viec',
+      name: 'employer-main-screen',
       component: EmployerMainScreenPage
     }
     ,
     {
       path: '/dang-nhap',
       name: 'login',
-      component: LoginPage
+      component: JobSeekerLoginPage
     }
     ,
     {
@@ -80,8 +75,6 @@ const router = new Router({
       component: DetailCVPage
 
     },
-    { path: '*',
-      component: DetailCVPage },
     {
       path: '/tuyen-dung-dang-ky',
       name: 'employer dang ki',
