@@ -127,7 +127,7 @@
         }, remove(position){
           this.socialactivities.splice(position, 1 );
           if(this.socialactivities.length === 0){
-            this.btnsubmit = false;
+            this.btnSubmit = false;
           }
           console.log('delete')
         },

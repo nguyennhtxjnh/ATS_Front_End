@@ -10,6 +10,9 @@ import EmployerJobDetailPage from '../views/EmployerJobDetailPage'
 import axios from 'axios'
 import EmployerSignUpPage from '../views/EmployerSignUpPage'
 import EmployerLoginPage from '../views/EmployerLoginPage'
+import JobSeekerCreateCV from "../views/JobSeekerCreateCV";
+import JobSeekerManageCVPage from "../views/JobSeekerManageCVPage";
+import DetailCVPage from "../views/DetailCVPage";
 
 Vue.use(Router)
 
@@ -32,8 +35,8 @@ const router = new Router({
       component: JobSeekerMainScreenPage
     },
     {
-      path: '/employer-main-screen',
-      name: 'Trang chu 2',
+      path: '/trang-chu-nha-tuyen-dung',
+      name: 'employermainscreen',
       component: EmployerMainScreenPage
     }
     ,
@@ -48,6 +51,10 @@ const router = new Router({
       name: 'jobseekerdashboard',
       component: JobSeekerDashBoardPage
     }
+    ,   {
+      path: '/tao-CV',
+      name: 'jobseekercreateCV',
+      component: JobSeekerCreateCV}
     ,
     {
       path: '/dang-tin-tuyen-dung',
@@ -61,6 +68,18 @@ const router = new Router({
       component: EmployerJobDetailPage
     }
     ,
+    {
+      path: '/quan-li-CV',
+      name: 'manageCV',
+      component: JobSeekerManageCVPage
+    },
+    {
+      path: '/xem-CV',
+      name: 'detailCV',
+      component: DetailCVPage
+
+    },
+    { path: '*', component: DetailCVPage }
     {
       path: '/tuyen-dung-dang-ki',
       name: 'employer dang ki',
