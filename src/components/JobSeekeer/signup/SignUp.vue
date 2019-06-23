@@ -4,8 +4,8 @@
 
       <v-flex xs12 sm12 md8>
         <v-card style="border-style: solid; border-color: #ccc; border-width: 1px;" class="elevation-0 border_all">
-          <v-toolbar dark color="primary">
-            <v-toolbar-title>Đăng Kí</v-toolbar-title>
+          <v-toolbar dark color="orange">
+            <v-toolbar-title>Đăng Ký</v-toolbar-title>
             <v-spacer></v-spacer>
 
           </v-toolbar>
@@ -51,7 +51,7 @@
             <v-card-actions class="justify-center mb-4">
               <div class="text-xs-center">
                 <v-spacer></v-spacer>
-                <v-btn color="primary" type="submit">Đăng Kí</v-btn>
+                <v-btn color="orange" style="color: white !important;" type="submit">Đăng Ký</v-btn>
               </div>
             </v-card-actions>
           </v-form>
@@ -167,7 +167,7 @@
               this.$store.dispatch('AUTHENTICATION_STORE/INIT')
                 .then(() => {
                   googleUser.disconnect()
-                  this.$router.push('/thong-tin')
+                  this.$router.push('/')
                 })
                 .catch((error) => {
                   this.$router.push('/dang-nhap')

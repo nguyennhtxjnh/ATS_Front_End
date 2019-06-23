@@ -69,7 +69,7 @@
                       <v-flex d-flex xs12 md2>
                         <v-img src="https://picsum.photos/510/300?random" contain aspect-ratio="1.6"></v-img>
                       </v-flex>
-                      <v-flex d-flex xs12 md6>
+                      <v-flex d-flex xs12 md7 >
 
                         <v-layout row wrap class="pa-0 ma-0" >
 
@@ -96,10 +96,10 @@
                         </v-layout>
 
                       </v-flex>
-                      <v-layout xs12 md3 child-flex text-xs-center>
+                      <v-layout xs12 md2 child-flex text-xs-center>
                         <v-flex md12  class="align-center">
                           <v-flex >
-                            <v-btn @click="favoriteBtn" :outline="favorite" color="error"><v-icon dark>favorite</v-icon>Lưu Việc Làm</v-btn>
+                            <v-btn @click="favoriteBtn" :outline="favorite" color="error"><v-icon dark>favorite</v-icon>{{textBtnFav.text}}</v-btn>
                           </v-flex>
                         </v-flex>
                       </v-layout>
@@ -359,6 +359,10 @@
         selectSkill: '',
         selectJob: '',
         selectLocation: '',
+
+        textBtnFav: {
+          text: 'Lưu Việc Làm'
+        },
       }
     },
     methods: {
@@ -376,6 +380,7 @@
     },
       favoriteBtn(){
         this.favorite = !this.favorite;
+        this.textBtnFav.text = this.favorite ? 'Lưu Việc Làm' : 'Đã Lưu';
       },
       searchClick(){
         console.log(this.selectSkill + ", " + this.selectJob + ", " + this.selectLocation);

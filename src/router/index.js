@@ -24,7 +24,7 @@ const router = new Router({
     // }
     // ,
     {
-      path: '/dang-ki',
+      path: '/dang-ky',
       name: 'Sign up',
       component: JobSeekerSignUpPage
     },
@@ -64,7 +64,7 @@ const router = new Router({
     }
     ,
     {
-      path: '/tuyen-dung-dang-ki',
+      path: '/tuyen-dung-dang-ky',
       name: 'employer dang ki',
       component: EmployerSignUpPage
     }
@@ -90,7 +90,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.path === '/dang-nhap' || to.path === '/dang-ki') {
+  if (to.path === '/dang-nhap' || to.path === '/dang-ky') {
     if (store.getters['AUTHENTICATION_STORE/isLoggedIn']) {
       store.dispatch('AUTHENTICATION_STORE/INIT')
         .then(() => next('/'))
@@ -111,7 +111,11 @@ router.beforeEach((to, from, next) => {
     if (store.getters['AUTHENTICATION_STORE/isLoggedIn']) {
       store.dispatch('AUTHENTICATION_STORE/INIT')
         .then(() => next())
-        .catch(() => next());
+        .catch(() => {
+          next();
+          return;
+        }
+          );
       next();
       return;
     }

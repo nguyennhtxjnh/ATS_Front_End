@@ -4,7 +4,7 @@
 
       <v-flex xs12 sm8 md4>
         <v-card style="border-style: solid; border-color: #ccc; border-width: 1px;" class="elevation-0 border_all">
-          <v-toolbar dark color="primary">
+          <v-toolbar dark color="orange">
             <v-toolbar-title>Đăng Nhập</v-toolbar-title>
             <v-spacer></v-spacer>
 
@@ -33,7 +33,7 @@
             <!--            <v-btn color="error" style="width: 100%">Gmail</v-btn>-->
             <!--          </v-card-actions>-->
             <v-card-text>
-              <p class="text-sm-left">Chưa có tài khoản đăng nhập?<a @click="$router.push('/dang-ki')"> Tạo ngay.</a>
+              <p class="text-sm-left">Chưa có tài khoản đăng nhập?<a @click="$router.push('/dang-ky')"> Tạo ngay.</a>
               </p>
             </v-card-text>
 
@@ -41,7 +41,7 @@
             <v-card-actions class="justify-center mb-4">
               <div class="text-xs-center">
                 <v-spacer></v-spacer>
-                <v-btn type="submit" color="primary" :loading="loading">Đăng nhập</v-btn>
+                <v-btn type="submit" color="orange" style="color: white !important;" :loading="loading">Đăng nhập</v-btn>
               </div>
             </v-card-actions>
           </v-form>
@@ -137,7 +137,7 @@
                   this.$store.dispatch('AUTHENTICATION_STORE/INIT')
                     .then(() => {
                       googleUser.disconnect()
-                      this.$router.push('/thong-tin')
+                      this.$router.push('/')
                     })
                     .catch((error) => {
                       this.$router.push('/dang-nhap')

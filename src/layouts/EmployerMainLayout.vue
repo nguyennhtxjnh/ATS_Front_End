@@ -24,8 +24,8 @@
           Đăng Nhập
         </v-btn>
         <Span  v-if="roleId !== 1">|</Span>
-        <v-btn style="height: 100%" flat  class="orange white--text" @click="$router.push('/tuyen-dung-dang-ki')" v-if="roleId !== 2">
-          Đăng Kí
+        <v-btn style="height: 100%" flat  class="orange white--text" @click="$router.push('/tuyen-dung-dang-ky')" v-if="roleId !== 2">
+          Đăng Ký
         </v-btn>
 
         <v-menu  v-if="roleId === 2"

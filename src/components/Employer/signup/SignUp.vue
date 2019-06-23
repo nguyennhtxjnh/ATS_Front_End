@@ -4,7 +4,7 @@
       <v-flex xs12 sm12 md8>
         <v-card style="border-style: solid; border-color: #ccc; border-width: 1px;" class="elevation-0 border_all">
           <v-toolbar dark color="warning">
-            <v-toolbar-title>Đăng Kí Tuyển Dụng</v-toolbar-title>
+            <v-toolbar-title>Đăng Ký Tuyển Dụng</v-toolbar-title>
             <v-spacer></v-spacer>
 
           </v-toolbar>
@@ -217,7 +217,7 @@
           .then(response => {
             console.log(response);
             if (response.data.success == true) {
-              this.jobLevelAPI = response.data.dto;
+              this.jobLevelAPI = response.data.data;
             } else {
               this.$notify({
                 group: 'foo',
