@@ -1,36 +1,38 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '../store.js'
-import JobSeekerMainScreenPage from "../views/Jobseeker/JobSeekerMainScreenPage";
-import EmployerMainScreenPage from "../views/Employer/EmployerMainScreenPage";
-import JobSeekerDashBoardPage from '../views/Jobseeker/JobSeekerDashBoardPage'
-import EmployerCreateJobPage from '../views/Employer/EmployerCreateJobPage'
-import EmployerJobDetailPage from '../views/Employer/EmployerJobDetailPage'
-import axios from 'axios'
+import JobSeekerManageCVPage from "../views/Jobseeker/JobSeekerManageCVPage";
+import DetailCVPage from "../views/Jobseeker/DetailCVPage";
 import EmployerSignUpPage from '../views/Employer/EmployerSignUpPage'
 import EmployerLoginPage from '../views/Employer/EmployerLoginPage'
-import JobSeekerSignUpPage from '../views/Jobseeker/JobSeekerSignUpPage'
-import JobSeekerLoginPage from '../views/Jobseeker/JobSeekerLoginPage'
 import SearchJobResultPage from '../views/Jobseeker/SearchJobResultPage'
 import EmployerDashBoardPage from '../views/Employer/EmployerDashBoardPage'
+import JobSeekerLoginPage from "../views/Jobseeker/JobSeekerLoginPage";
+import JobSeekerSignUpPage from "../views/Jobseeker/JobSeekerSignUpPage";
+import JobSeekerMainScreenPage from "../views/Jobseeker/JobSeekerMainScreenPage";
+import EmployerMainScreenPage from "../views/Employer/EmployerMainScreenPage";
+import JobSeekerDashBoardPage from "../views/Jobseeker/JobSeekerDashBoardPage";
+import EmployerCreateJobPage from "../views/Employer/EmployerCreateJobPage";
+import EmployerJobDetailPage from "../views/Employer/EmployerJobDetailPage";
+
 
 Vue.use(Router)
 
 const router = new Router({
   routes: [
     {
-      path: '/dang-ky',
+      path: '/dang-ki',
       name: 'Sign up',
       component: JobSeekerSignUpPage
     },
     {
       path: '/',
-      name: 'Trang chu',
+      name: 'JobSeekerMainScreen',
       component: JobSeekerMainScreenPage
     },
     {
-      path: '/employer-main-screen',
-      name: 'Trang chu 2',
+      path: '/trang-chu-nguoi-tim-viec',
+      name: 'employer-main-screen',
       component: EmployerMainScreenPage
     }
     ,
@@ -58,6 +60,17 @@ const router = new Router({
       component: EmployerJobDetailPage
     }
     ,
+    {
+      path: '/quan-li-CV',
+      name: 'manageCV',
+      component: JobSeekerManageCVPage
+    },
+    {
+      path: '/xem-CV',
+      name: 'detailCV',
+      component: DetailCVPage
+
+    },
     {
       path: '/tuyen-dung-dang-ky',
       name: 'employer dang ki',
@@ -91,56 +104,50 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.path === '/dang-nhap' || to.path === '/dang-ky') {
-    if (store.getters['AUTHENTICATION_STORE/isLoggedIn']) {
-      store.dispatch('AUTHENTICATION_STORE/INIT')
-        .then(() => next('/'))
-        .catch(error => {
-            if (error.response) {
-              console.log(error.response.data)
-            } else {
-              console.log(error)
-            }
-            next('/dang-nhap')
-          }
-        );
-      return;
-    }
+  if (store.getters['AUTHENTICATION_STORE/isLoggedIn']) {
+    store.dispatch('AUTHENTICATION_STORE/INIT')
+      .then(() => next())
+      .catch(() => next());
     next();
     return;
-  } else {
-    if (store.getters['AUTHENTICATION_STORE/isLoggedIn']) {
-      store.dispatch('AUTHENTICATION_STORE/INIT')
-        .then(() => next())
-        .catch(() => {
-          next();
-          return;
-        }
-          );
-      next();
-      return;
-    }
   }
-
-  // if (to.path === '/dang-tin-tuyen-dung') {
-  //   if (!store.getters['AUTHENTICATION_STORE/isLoggedIn']) {
-  //     store.dispatch('AUTHENTICATION_STORE/INIT')
-  //       .then(() => next())
-  //       .catch(error => {
-  //           if (error.response) {
-  //             console.log(error.response.data)
-  //           } else {
-  //             console.log(error)
-  //           }
-  //           next('/dang-nhap')
-  //         }
-  //       );
-  //     return;
-  //   }
-  //   next();
-  //   next('/dang-nhap');
-  //   return;
-  // }
+  if (to.path === '/dang-nhap' || to.path === '/dang-ki') {
+    // if (store.getters['AUTHENTICATION_STORE/isLoggedIn']) {
+    //   store.dispatch('AUTHENTICATION_STORE/INIT')
+    //     .then(() => next('/'))
+    //     .catch(error => {
+    //         if (error.response) {
+    //           console.log(error.response.data)
+    //         } else {
+    //           console.log(error)
+    //         }
+    //         next('/dang-nhap')
+    //       }
+    //     );
+    //   return;
+    // }
+    next();
+    return;
+  }
+  if (to.path === '/dang-tin-tuyen-dung') {
+    // if (!store.getters['AUTHENTICATION_STORE/isLoggedIn']) {
+    //   store.dispatch('AUTHENTICATION_STORE/INIT')
+    //     .then(() => next())
+    //     .catch(error => {
+    //         if (error.response) {
+    //           console.log(error.response.data)
+    //         } else {
+    //           console.log(error)
+    //         }
+    //         next('/dang-nhap')
+    //       }
+    //     );
+    //   return;
+    // }
+    // next();
+    next('/dang-nhap');
+    return;
+  }
   next();
 });
 

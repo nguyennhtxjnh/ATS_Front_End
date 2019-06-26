@@ -4,7 +4,7 @@
 </template>
 
 <script>
-  import DashBoardLayout from '../layouts/DashBoardLayout'
+  import DashBoardLayout from '../../layouts/DashBoardLayout'
   export default {
     name: 'Detail',
     components: {DashBoardLayout},
