@@ -76,7 +76,7 @@
                       v-model="formData.joblevelid"
                       prepend-icon="mdi-account-badge-horizontal"
                       :items="jobLevelAPI"
-                      item-text="jobLevelName"
+                      item-text="joblevelName"
                       item-value="id"
                       label="Vị Trí Công Tác"
 
@@ -96,7 +96,7 @@
                                     v-model="formData.joblevelid"
                                     prepend-icon="mdi-map-marker-radius"
                                     :items="jobLevelAPI"
-                                    item-text="jobLevelName"
+                                    item-text="joblevelName"
                                     item-value="id"
                                     label="Nơi Làm Việc"
                                     hint="Chọn Tĩnh, Thành Phố"
@@ -217,6 +217,7 @@
           .then(response => {
             console.log(response);
             if (response.data.success == true) {
+              console.log(response)
               this.jobLevelAPI = response.data.data;
             } else {
               this.$notify({

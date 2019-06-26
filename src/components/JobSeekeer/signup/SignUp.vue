@@ -35,13 +35,13 @@
                   </v-flex>
                   <v-flex md6 xs12>
                     <v-text-field class="ma-2" prepend-icon="lock" name="Password" label="Mật Khẩu" type="password"
-                                  v-model="formData.password" maxlength="40"
-                                  :rules="[rules.required, rules.counter]"></v-text-field>
+                                  v-model="formData.password" maxlength="25" hint="Từ 8 đến 25 kí tự" persistent-hint
+                                  :rules="[rules.required, rules.counter1, rules.min]"></v-text-field>
                   </v-flex>
                   <v-flex md6 xs12>
                     <v-text-field class="ma-2" prepend-icon="lock" name="Password" label="Nhập Lại Mật Khẩu"
-                                  v-model="repassword" type="password" maxlength="40"
-                                  :rules="[rules.required, rules.counter]"></v-text-field>
+                                  v-model="repassword" type="password" maxlength="25" hint="Từ 8 đến 25 kí tự" persistent-hint
+                                  :rules="[rules.required, rules.counter1, rules.min]"></v-text-field>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -83,11 +83,18 @@
         rules: {
           required: value => !!value || 'Không được để trống ô này.',
           counter: value => value.length <= 40 || 'Tối Đa 40 Kí Tự',
+          counter1: value => value.length <= 25 || 'Tối Đa 25 Kí Tự',
+          min: v => v.length >= 8 || 'Ít Nhất 8 Kí Tự',
           cemail: value => {
             const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
             return pattern.test(value) || 'Địa chỉ email không phù hợp.'
           }
         },
+
+        googleSignInParams: {
+          client_id: '207353401176-sh8upbbscp26amm6umchu0lhac30unug.apps.googleusercontent.com'
+        },
+
       }
     },
     methods: {
@@ -138,61 +145,60 @@
             })
           }
         }
-      }
-    },
-    async onSignInSuccess (googleUser) {
-      // `googleUser` is the GoogleUser object that represents the just-signed-in user.
-      // See https://developers.google.com/identity/sign-in/web/reference#users
-      const profile = googleUser.getBasicProfile() // etc etc
-      console.log(profile.U3 + ", " + profile.ig)
+      },
+      async onSignInSuccess (googleUser) {
+        // `googleUser` is the GoogleUser object that represents the just-signed-in user.
+        // See https://developers.google.com/identity/sign-in/web/reference#users
+        const profile = googleUser.getBasicProfile() // etc etc
 
-      const password = "";
-      const email = profile.U3;
-      const fullname = profile.ig;
-      const url = 'http://localhost:8080/user/registrationGoogle'
-      const method = 'POST'
-      const data = {
-        email : email,
-        password  : "",
-        fullname  : fullname,
-        roleId  : 1,
-        jobLevelID :1,
-        cityid : 1,
-        status: "new",
-      }
-      await Axios({url, method, data})
-        .then(response => {
-          this.$store.dispatch('AUTHENTICATION_STORE/LOGINGOOGLE', {email, password})
-            .then(() => {
-              this.$store.dispatch('AUTHENTICATION_STORE/INIT')
-                .then(() => {
-                  googleUser.disconnect()
-                  this.$router.push('/')
-                })
-                .catch((error) => {
-                  this.$router.push('/dang-nhap')
-                })
-            })
-            .catch(error => {
-              console.log(error);
-            })
-        })
-        .catch(error => {
-          console.log(error)
-          this.$notify({
-            group: 'foo',
-            type: 'error',
-            title: 'Thất Bại',
-            text: 'Đã Xảy Ra Lỗi!'
+        const password = "";
+        const email = profile.U3;
+        const fullname = profile.ig;
+        const url = 'http://localhost:8080/user/registrationGoogle'
+        const method = 'POST'
+        const data = {
+          email : email,
+          password  : "",
+          fullname  : fullname,
+          roleId  : 1,
+          jobLevelID :1,
+          cityid : 1,
+          status: "new",
+        }
+        await Axios({url, method, data})
+          .then(response => {
+            this.$store.dispatch('AUTHENTICATION_STORE/LOGINGOOGLE', {email, password})
+              .then(() => {
+                this.$store.dispatch('AUTHENTICATION_STORE/INIT')
+                  .then(() => {
+                    googleUser.disconnect()
+                    this.$router.push('/')
+                  })
+                  .catch((error) => {
+                    this.$router.push('/dang-nhap')
+                  })
+              })
+              .catch(error => {
+                console.log(error);
+              })
           })
-        })
+          .catch(error => {
+            console.log(error)
+            this.$notify({
+              group: 'foo',
+              type: 'error',
+              title: 'Thất Bại',
+              text: 'Đã Xảy Ra Lỗi!'
+            })
+          })
 
 
 
-    },
-    onSignInError (error) {
-      // `error` contains any error occurred.
-      console.log('OH NOES', error)
+      },
+      onSignInError (error) {
+        // `error` contains any error occurred.
+        console.log('OH NOES', error)
+      },
     },
     computed: {}
   }
