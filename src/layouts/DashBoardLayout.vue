@@ -11,7 +11,7 @@
       </v-btn>
       <Span  v-if="roleId !== 1" style="color: white !important;">|</Span>
       <v-btn style="height: 100%" color="white" flat @click="$router.push('/dang-ky')" v-if="roleId !== 1">
-        Đăng Kí
+        Đăng Ký
       </v-btn>
 
       <v-menu  v-if="roleId === 1"
@@ -45,7 +45,7 @@
         </v-card>
       </v-menu>
 
-      <v-btn style="height: 100%" color="primary" @click="$router.push('/employer-main-screen')">
+      <v-btn style="height: 100%" color="primary" @click="$router.push('/trang-chu-tuyen-dung')">
         Nhà Tuyển Dụng
       </v-btn>
     </v-toolbar>
@@ -92,7 +92,7 @@
         </v-card>
       </v-menu>
 
-      <v-btn style="height: 100%" color="primary" @click="$router.push('/employer-main-screen')">
+      <v-btn style="height: 100%" color="primary" @click="$router.push('/trang-chu-tuyen-dung')">
         Nhà Tuyển Dụng
       </v-btn>
 
@@ -251,12 +251,13 @@
       }
     },
     methods: {
+
       notificationClick(notification){
         if (notification.title === 'Thông Tin'){
           this.$router.push('/thong-tin');
         }
         if (notification.title === 'Đăng Xuất') {
-          this.$store.dispatch('AUTHENTICATION_STORE/LOGOUT')
+          this.$store.dispatch('AUTHENTICATION_STORE/LOGOUT1')
             .then(() => {
               this.$router.push('/dang-nhap');
             });
@@ -265,12 +266,14 @@
     },
     computed: {
       ...mapGetters('AUTHENTICATION_STORE',{
-          email : 'email',
-          roleId: 'roleId',
-          fullName: 'fullName',
-      })
-    }
+          email : 'email1',
+          roleId: 'roleId1',
+          fullName: 'fullName1',
+      }),
+    },
+
   }
+
 </script>
 
 <style scoped>

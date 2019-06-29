@@ -21,7 +21,7 @@ Vue.use(Router)
 const router = new Router({
   routes: [
     {
-      path: '/dang-ki',
+      path: '/dang-ky',
       name: 'Sign up',
       component: JobSeekerSignUpPage
     },
@@ -31,7 +31,7 @@ const router = new Router({
       component: JobSeekerMainScreenPage
     },
     {
-      path: '/trang-chu-nguoi-tim-viec',
+      path: '/trang-chu-tuyen-dung',
       name: 'employer-main-screen',
       component: EmployerMainScreenPage
     }
@@ -104,31 +104,66 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (store.getters['AUTHENTICATION_STORE/isLoggedIn']) {
-    store.dispatch('AUTHENTICATION_STORE/INIT')
+
+  if (store.getters['AUTHENTICATION_STORE/isLoggedIn1']) {
+    store.dispatch('AUTHENTICATION_STORE/INIT1')
       .then(() => next())
       .catch(() => next());
     next();
-    return;
+  } else {
+
+    if (to.path === '/dang-nhap' || to.path === '/dang-ki') {
+      if (store.getters['AUTHENTICATION_STORE/isLoggedIn1']) {
+        store.dispatch('AUTHENTICATION_STORE/INIT1')
+          .then(() => next('/'))
+          .catch(error => {
+              if (error.response) {
+                console.log(error.response.data)
+              } else {
+                console.log(error)
+              }
+              next('/dang-nhap')
+            }
+          );
+        return;
+      }
+      next();
+      return;
+    }
+
   }
-  if (to.path === '/dang-nhap' || to.path === '/dang-ki') {
-    // if (store.getters['AUTHENTICATION_STORE/isLoggedIn']) {
-    //   store.dispatch('AUTHENTICATION_STORE/INIT')
-    //     .then(() => next('/'))
-    //     .catch(error => {
-    //         if (error.response) {
-    //           console.log(error.response.data)
-    //         } else {
-    //           console.log(error)
-    //         }
-    //         next('/dang-nhap')
-    //       }
-    //     );
-    //   return;
-    // }
+
+
+
+  if (store.getters['AUTHENTICATION_STORE/isLoggedIn2']) {
+    store.dispatch('AUTHENTICATION_STORE/INIT2')
+      .then(() => next())
+      .catch(() => next());
     next();
-    return;
+  } else {
+
+    if (to.path === '/tuyen-dung-dang-ky' || to.path === '/tuyen-dung-dang-nhap') {
+      console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+      if (store.getters['AUTHENTICATION_STORE/isLoggedIn2']) {
+        store.dispatch('AUTHENTICATION_STORE/INIT2')
+          .then(() => next('/trang-chu-tuyen-dung'))
+          .catch(error => {
+              if (error.response) {
+                console.log(error.response.data)
+              } else {
+                console.log(error)
+              }
+              next('/tuyen-dung-dang-nhap')
+            }
+          );
+        return;
+      }
+      next();
+      return;
+    }
+
   }
+
   if (to.path === '/dang-tin-tuyen-dung') {
     // if (!store.getters['AUTHENTICATION_STORE/isLoggedIn']) {
     //   store.dispatch('AUTHENTICATION_STORE/INIT')

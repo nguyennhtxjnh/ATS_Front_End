@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <v-container fluid fill-height>
     <v-layout align-center justify-center>
       <v-flex xs12 sm12 md8>
@@ -44,15 +44,15 @@
 
                   <v-flex  xs12>
                     <v-text-field class="ma-2" prepend-icon="phone" name="phone" label="Số Điện Thoại Cá Nhân" type="number"
-                                  v-model="formData.fullname"
+                                  v-model="formData.telephoneNumber"
                                   :rules="[rules.required, rules.counter]"></v-text-field>
                   </v-flex>
 
                   <v-flex  xs12 >
                     <v-select class="ma-2"
                       prepend-icon="mdi-account"
-                      :items="gender"
-                      v-model="selectedGender"
+                      :items="chooseGender"
+                      v-model="formData.gender"
                       item-text="name"
                       item-value="id"
                       label="Giới Tính"
@@ -61,22 +61,50 @@
                   </v-flex>
 
                   <v-flex xs12 >
-                    <v-combobox class="ma-2"
-                      prepend-icon="mdi-domain"
-                      v-model="select"
-                      :items="cbCompany"
-                      label="Công Ty"
-                      :rules="[rules.required]"
-                    ></v-combobox>
+
+<!--                      <v-combobox class="ma-2"-->
+<!--                        v-model="selectedCompany"-->
+<!--                        :items="CompanyAPI"-->
+<!--                        :rules="[rules.required]"-->
+<!--                        item-text="nameCompany"-->
+<!--                        item-id="id"-->
+<!--                        prepend-icon="mdi-domain"-->
+<!--                        :search-input.sync="search"-->
+<!--                        hide-selected-->
+<!--                        label="Công Ty"-->
+<!--                        small-chips-->
+<!--                      >-->
+<!--                        <template v-slot:no-data>-->
+<!--                          <v-list-tile>-->
+<!--                            <v-list-tile-content>-->
+<!--                              <v-list-tile-title>-->
+<!--                                Không tìm thấy công ty phù hợp "<strong>{{ search }}</strong>". Nhấn <kbd>enter</kbd> để tạo mới công ty-->
+<!--                              </v-list-tile-title>-->
+<!--                            </v-list-tile-content>-->
+<!--                          </v-list-tile>-->
+<!--                        </template>-->
+<!--                      </v-combobox>-->
+
+                    <v-autocomplete class="ma-2"
+                                    :rules="[rules.required]"
+                                    v-model="selectedCompany"
+                                    prepend-icon="mdi-domain"
+                                    :items="CompanyAPI"
+                                    item-text="nameCompany"
+                                    item-value="id"
+                                    label="Công Ty"
+
+                    ></v-autocomplete>
+
                   </v-flex>
 
                   <v-flex xs12 >
                     <v-autocomplete class="ma-2"
                       :rules="[rules.required]"
-                      v-model="formData.joblevelid"
+                      v-model="formData.jobLevelID"
                       prepend-icon="mdi-account-badge-horizontal"
-                      :items="jobLevelAPI"
-                      item-text="joblevelName"
+                      :items="LevelAPI"
+                      item-text="jobLevelName"
                       item-value="id"
                       label="Vị Trí Công Tác"
 
@@ -93,10 +121,10 @@
                   <v-flex xs12>
                     <v-autocomplete class="ma-2"
                                     :rules="[rules.required]"
-                                    v-model="formData.joblevelid"
+                                    v-model="formData.cityid"
                                     prepend-icon="mdi-map-marker-radius"
-                                    :items="jobLevelAPI"
-                                    item-text="joblevelName"
+                                    :items="CityAPI"
+                                    item-text="fullName"
                                     item-value="id"
                                     label="Nơi Làm Việc"
                                     hint="Chọn Tĩnh, Thành Phố"
@@ -105,7 +133,7 @@
                     ></v-autocomplete>
                   </v-flex>
 
-
+                  <v-btn color="warning" @click="testCompany">Tét Com</v-btn>
 
                 </v-layout>
               </v-container>
@@ -134,19 +162,25 @@
     name: 'SignUp',
     data: function () {
       return {
-        gender:['Nam', 'Nữ'],
-        selectedGender: 'Nam',
+        chooseGender:['Nam', 'Nữ'],
+        selectedCompany: null,
+        search: null,
 
-        cbCompany: ['ABC', '123', 'CT'],
-        jobLevelAPI: [],
+        LevelAPI: [],
+        CityAPI: [],
+        CompanyAPI: [],
+        tmpCompany: [],
 
         formData: {
           email : "",
           password  : "",
           fullname  : "",
-          roleId  : 1,
-          jobLevelID :1,
-          cityid : 1,
+          roleId  : 2,
+          cityid : "",
+          telephoneNumber: '',
+          gender: "",
+          jobLevelID : "",
+          vacancyName: "",
         },
         repassword: '',
 
@@ -162,6 +196,23 @@
       }
     },
     methods: {
+      testCompany(){
+
+        // this.CompanyAPI.forEach((itemX) =>{
+        //   this.tmpCompany.push(itemX.id)
+        //   this.tmpCompany = [...new Set(this.tmpCompany)];
+        // })
+        //
+        // if(!this.tmpCompany.includes(this.selectedCompany.id)){
+        //   this.selectedCompany.id = -1
+        // }
+
+        // if(this.selectedCompany === null){
+        //   this.selectedCompany = -1
+        // }
+
+        console.log(this.selectedCompany);
+      },
       register () {
         if (this.$refs.form.validate()) {
           if (this.formData.password === this.repassword) {
@@ -177,7 +228,7 @@
                     title: 'Thành Công',
                     text: 'Tạo Tài Khoản Thành Công!'
                   })
-                  this.$router.push('/dang-nhap')
+                  this.$router.push('/tuyen-dung-dang-nhap')
                 } else {
                   this.$notify({
                     group: 'foo',
@@ -211,20 +262,27 @@
         }
       },
       getInitData(){
-        const url = 'http://localhost:8080/joblevel/';
+        const url = 'http://localhost:8080/user/getRegisterEmployerComponent';
         const method = 'GET';
         Axios({url, method})
           .then(response => {
             console.log(response);
             if (response.data.success == true) {
               console.log(response)
-              this.jobLevelAPI = response.data.data;
+              this.LevelAPI = response.data.data.level;
+              this.CityAPI = response.data.data.city;
+              this.CompanyAPI.push({
+                id : -1,
+                nameCompany : "Khác"
+              })
+              this.CompanyAPI = this.CompanyAPI.concat(response.data.data.company);
+
             } else {
               this.$notify({
                 group: 'foo',
                 type: 'error',
                 title: 'Thất Bại',
-                text: 'Lấy Cấp Bậc!'
+                text: 'Lấy Component Thất Bại!'
               })
             }
 
@@ -248,6 +306,7 @@
         this.getInitData();
       });
     },
+
   }
 </script>
 

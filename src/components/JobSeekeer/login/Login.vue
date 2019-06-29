@@ -87,10 +87,10 @@
         if (this.$refs.form.validate()) {
           const email = this.loginEmail
           const password = this.loginPassword
-          this.$store.dispatch('AUTHENTICATION_STORE/LOGIN', {email, password})
+          this.$store.dispatch('AUTHENTICATION_STORE/LOGIN1', {email, password})
             .then(() => {
 
-              this.$store.dispatch('AUTHENTICATION_STORE/INIT')
+              this.$store.dispatch('AUTHENTICATION_STORE/INIT1')
                 .then(() => {
                   this.$router.push('/')
                 })
@@ -134,7 +134,7 @@
           .then(response => {
               this.$store.dispatch('AUTHENTICATION_STORE/LOGINGOOGLE', {email, password})
                 .then(() => {
-                  this.$store.dispatch('AUTHENTICATION_STORE/INIT')
+                  this.$store.dispatch('AUTHENTICATION_STORE/INIT1')
                     .then(() => {
                       googleUser.disconnect()
                       this.$router.push('/')
