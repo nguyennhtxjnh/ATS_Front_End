@@ -14,6 +14,7 @@ import EmployerMainScreenPage from "../views/Employer/EmployerMainScreenPage";
 import JobSeekerDashBoardPage from "../views/Jobseeker/JobSeekerDashBoardPage";
 import EmployerCreateJobPage from "../views/Employer/EmployerCreateJobPage";
 import EmployerJobDetailPage from "../views/Employer/EmployerJobDetailPage";
+import EmployerCreateCompanyPage from '../views/Employer/EmployerCreateCompanyPage'
 
 
 Vue.use(Router)
@@ -95,6 +96,12 @@ const router = new Router({
       component: EmployerDashBoardPage
     }
     ,
+    {
+      path: '/tao-cong-ty',
+      name: 'employer create company',
+      component: EmployerCreateCompanyPage
+    }
+    ,
     // {
     //   path: '/detail/:id',
     //   component: Detail
@@ -165,23 +172,23 @@ router.beforeEach((to, from, next) => {
   }
 
   if (to.path === '/dang-tin-tuyen-dung') {
-    // if (!store.getters['AUTHENTICATION_STORE/isLoggedIn']) {
-    //   store.dispatch('AUTHENTICATION_STORE/INIT')
-    //     .then(() => next())
-    //     .catch(error => {
-    //         if (error.response) {
-    //           console.log(error.response.data)
-    //         } else {
-    //           console.log(error)
-    //         }
-    //         next('/dang-nhap')
-    //       }
-    //     );
-    //   return;
-    // }
+    if (!store.getters['AUTHENTICATION_STORE/isLoggedIn2']) {
+      store.dispatch('AUTHENTICATION_STORE/INIT2')
+        .then(() => next())
+        .catch(error => {
+            if (error.response) {
+              console.log(error.response.data)
+            } else {
+              console.log(error)
+            }
+            next('/tuyen-dung-dang-nhap')
+          }
+        );
+      return;
+    }
     // next();
-    next('/dang-nhap');
-    return;
+    // next('/dang-nhap');
+    // return;
   }
   next();
 });

@@ -272,7 +272,7 @@
       return {
         tab: null,
 
-        title: "Image Upload",
+
         imageName: '',
         imageUrl: '',
         imageFile: '',

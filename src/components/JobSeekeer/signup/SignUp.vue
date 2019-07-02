@@ -98,13 +98,34 @@
       }
     },
     methods: {
-      register () {
+      login: function (email , password) {
+          this.$store.dispatch('AUTHENTICATION_STORE/LOGIN1', {email, password})
+            .then(() => {
+              this.$store.dispatch('AUTHENTICATION_STORE/INIT1')
+                .then(() => {
+                  this.$router.push('/thong-tin')
+                })
+                .catch((error) => {
+                  this.$router.push('/dang-nhap');
+                });
+            })
+            .catch(() => {
+              this.$notify({
+                group: 'foo',
+                type: 'error',
+                title: 'Thất bại',
+                text: 'Tên đăng nhập hoặc mật khẩu không đúng!'
+                // text: 'Đã Xảy Ra Lỗi'
+              });
+            });
+      },
+      async register () {
         if (this.$refs.form.validate()) {
           if (this.formData.password === this.repassword) {
             const url = 'http://localhost:8080/user/registration'
             const method = 'POST'
             const data = this.formData
-            Axios({url, method, data})
+            await Axios({url, method, data})
               .then(response => {
                 if (response.data.success == true) {
                   this.$notify({
@@ -113,7 +134,7 @@
                     title: 'Thành Công',
                     text: 'Tạo Tài Khoản Thành Công!'
                   })
-                  this.$router.push('/dang-nhap')
+                  this.login(this.formData.email , this.formData.password);
                 } else {
                   this.$notify({
                     group: 'foo',

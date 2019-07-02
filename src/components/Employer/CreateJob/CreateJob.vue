@@ -270,6 +270,7 @@
   import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document'
   import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/vi'
   import Axios from 'axios'
+  import {mapGetters} from 'vuex'
 
   export default {
     name: 'CreateJob',
@@ -307,8 +308,12 @@
 
         listSkill: [],
 
+        formDataCompany: {
+          userId: '',
+        },
+
         formData: {
-          userid: '5',
+          userid: '',
           companyid: '2',
           cityid: '1',
 
@@ -360,7 +365,8 @@
     },
     methods: {
       testPost(){
-        console.log(this.formDataSkill.listSkill);
+        this.formDataCompany.userId = this.userId2;
+        console.log(this.formDataCompany);
       },
       addSkill () {
         if(this.selectedSkill === null){
@@ -391,7 +397,7 @@
         this.tmpSkill.splice(index,1);
         console.log(this.listSkill);
       },
-      async submitjob () {
+      submitjob () {
         if (this.$refs.form.validate()) {
           if (this.formData.salaryFrom > this.formData.salaryTo && this.formData.salaryTo !== 0) {
             this.$notify({
@@ -430,33 +436,9 @@
             return
           }
 
-          const url = 'http://localhost:8080/job/create';
-          const method = 'POST';
-          const data = this.formData;
-          let config = {
-            headers: {
-              accessToken: localStorage.getItem('token2')
-            }
-          }
-
-          await Axios({url, method, data, config})
-            .then(response => {
-              if (response.data.success == true) {
-                this.submitSkill(response.data.data)
-              }
-            })
-            .catch(error => {
-              console.log(error)
-              this.$notify({
-                group: 'foo',
-                type: 'error',
-                title: 'Thất Bại',
-                text: 'Đã Xảy Ra Lỗi!'
-              })
-            })
-            .finally(() => {
-
-            })
+          this.formDataCompany.userId = this.userId2;
+          this.formData.userid = this.userId2;
+          this.getCompany();
 
         }
       },
@@ -483,6 +465,7 @@
                 title: 'Thành Công',
                 text: 'Đăng Tin Thành Công!'
               })
+              this.$router.push('/trang-chu-tuyen-dung');
             }
           })
           .catch(error => {
@@ -511,7 +494,6 @@
         const method = 'GET'
         Axios({url, method})
           .then(response => {
-            console.log(response)
             if (response.data.success == true) {
               this.jobLevelAPI = response.data.data.level
               this.skillChoose = response.data.data.skillname
@@ -538,13 +520,80 @@
 
           })
       },
+      getCompany(){
+        const url = 'http://localhost:8080/employercompany/getCompanyId'
+        const method = 'POST'
+        const data = this.formDataCompany
+          Axios({url, method, data})
+          .then(async response => {
+            if (response.data.success == true) {
+              this.formData.companyid = response.data.data;
+
+              const url = 'http://localhost:8080/job/create';
+              const method = 'POST';
+              const data = this.formData;
+              let config = {
+                headers: {
+                  accessToken: localStorage.getItem('token2')
+                }
+              }
+
+              await Axios({url, method, data, config})
+                .then(response => {
+                  if (response.data.success == true) {
+                    this.submitSkill(response.data.data)
+                  }
+                })
+                .catch(error => {
+                  console.log(error)
+                  this.$notify({
+                    group: 'foo',
+                    type: 'error',
+                    title: 'Thất Bại',
+                    text: 'Đã Xảy Ra Lỗi!'
+                  })
+                })
+                .finally(() => {
+
+                })
+
+            } else {
+              this.$notify({
+                group: 'foo',
+                type: 'error',
+                title: 'Thất Bại',
+                text: 'Lấy Company!'
+              })
+            }
+          })
+          .catch(error => {
+            console.log(error)
+            this.$notify({
+              group: 'foo',
+              type: 'error',
+              title: 'Thất Bại',
+              text: 'Đã Xảy Ra Lỗi!'
+            })
+          })
+          .finally(() => {
+
+          })
+      },
+
     },
     mounted () {
-      this.$nextTick(() => {
+      this.$nextTick( () => {
         this.getInitData()
       })
     },
-    computed: {}
+    computed: {
+      ...mapGetters('AUTHENTICATION_STORE',{
+        email : 'email2',
+        roleId: 'roleId2',
+        fullName: 'fullName2',
+        userId2: 'userId2'
+      }),
+    }
   }
 
 </script>
