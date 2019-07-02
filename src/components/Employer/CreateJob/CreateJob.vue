@@ -15,8 +15,8 @@
                 <v-layout fill-height wrap>
 
                   <v-flex md12 xs12>
-                    <v-text-field class="ma-2" prepend-icon="mdi-lead-pencil" name="title" label="Tiêu Đề" type="text"
-                                  v-model="formData.title"
+                    <v-text-field class="ma-2" prepend-icon="mdi-account-badge" name="title" label="Chức Danh Tuyển Dụng" type="text"
+                                  v-model="formData.vacancyName"
                                   :rules="[rules.required]"></v-text-field>
                   </v-flex>
 
@@ -27,28 +27,30 @@
                                   :rules="[rules.required]"></v-text-field>
                   </v-flex>
 
-                  <v-flex class="pa-1" md6 xs12>
+                  <v-flex  xs12>
                     <v-autocomplete
+                      class="ma-2"
                       v-model="formData.joblevelid"
                       prepend-icon="mdi-account"
                       :items="jobLevelAPI"
-                      item-text="joblevelName"
+                      item-text="jobLevelName"
                       item-value="id"
                       label="Cấp Bậc"
                       :rules="[rules.required]"
                     ></v-autocomplete>
                   </v-flex>
 
-                  <v-flex md6 xs12>
-                    <v-text-field class="ma-2" prepend-icon="mdi-account-badge" name="Name" label="Chức Danh Cụ Thể"
-                                  type="text"
-                                  v-model="formData.vacancyName"
-                                  :rules="[rules.required]"></v-text-field>
-                  </v-flex>
+<!--                  <v-flex md6 xs12>-->
+<!--                    <v-text-field class="ma-2" prepend-icon="mdi-account-badge" name="Name" label="Chức Danh Cụ Thể"-->
+<!--                                  type="text"-->
+<!--                                  v-model="formData.vacancyName"-->
+<!--                                  :rules="[rules.required]"></v-text-field>-->
+<!--                  </v-flex>-->
 
                   <!--Loại Hình-->
-                  <v-flex class="pa-1" md6 xs12>
+                  <v-flex  md6 xs12>
                     <v-autocomplete
+                      class="ma-2"
                       prepend-icon="mdi-format-list-bulleted-type"
                       :items="workingType"
                       v-model="formData.workingType"
@@ -82,6 +84,7 @@
                   <!--  Kinh Nghiệm-->
                   <v-flex md12 xs12>
                     <v-autocomplete
+                      class="ma-2"
                       prepend-icon="mdi-calendar-clock"
                       :items="skillYear"
                       v-model="formData.yearExperience"
@@ -94,14 +97,16 @@
                   </v-flex>
                   <!--  Hết Kinh Nghiệm-->
                   <!--Lương-->
-                  <v-flex class="pa-1" md6 xs12>
+                  <v-flex md6 xs12>
                     <v-select
+                      class="ma-2"
                       prepend-icon="mdi-currency-usd"
                       :items="salaryChoose"
                       v-model="selectedSalary"
                       item-text="name"
                       item-value="id"
                       label="Lương"
+                      v-on:change="resetSalary"
                     ></v-select>
                   </v-flex>
 
@@ -196,54 +201,57 @@
                     ></ckeditor>
                   </v-flex>
 
+                  <!--                  ki nang-->
                   <v-flex class="pa-1" md6 xs12>
                     <v-autocomplete
                       prepend-icon="mdi-account-star"
                       :items="skillChoose"
                       v-model="selectedSkill"
-                      item-text="skillMaster"
+                      item-text="skillName"
                       item-value="id"
                       return-object
                       label="Kĩ Năng"
+                      :rules="[rules.required]"
                     ></v-autocomplete>
                   </v-flex>
                   <v-flex class="pa-1" md6 xs12>
                     <v-btn color="orange" style="color: white !important;" @click="addSkill">Thêm Kĩ Năng</v-btn>
                   </v-flex>
-                  <template v-for="(skill,index) in formData.listSkill">
-                    <v-flex class="pa-1" md4 xs12>
+                  <template v-for="(skill,index) in formDataSkill.listSkill">
+                    <v-flex class="pa-1" md5 xs12>
                       <v-autocomplete
-                        prepend-icon="mdi-account-star"
                         :items="skillChoose"
                         v-model="skill.id"
-                        item-text="skillMaster"
+                        item-text="skillName"
                         item-value="id"
                         label="Kĩ Năng"
+                        :rules="[rules.required]"
                         readonly
+                        outline
                       ></v-autocomplete>
                     </v-flex>
-                    <v-flex class="pa-1" md4 xs12>
+                    <v-flex class="pa-1" md5 xs12>
                       <v-autocomplete
-                        prepend-icon="mdi-account-star"
+                        prepend-icon="mdi-star"
                         :items="skillRating"
                         v-model="skill.skillLevel"
                         item-text="name"
                         item-value="id"
                         label="Đánh Giá"
+                        :rules="[rules.required]"
                       ></v-autocomplete>
                     </v-flex>
-                    <v-flex class="pa-1" md4 xs12>
-                      <v-btn color="error" @click="removeSkill(index)">Xóa</v-btn>
+                    <v-flex class="pa-1" md2 xs12>
+                      <v-btn color="error" @click="removeSkill(index)"><v-icon>mdi-trash-can-outline</v-icon></v-btn>
                     </v-flex>
                   </template>
+<!--                  <v-flex class="pa-1" md2 xs12>-->
+<!--                    <v-btn color="error" @click="testPost()">test</v-btn>-->
+<!--                  </v-flex>-->
                 </v-layout>
               </v-container>
 
             </v-card-text>
-<!--            <v-flex class="pa-1" md4 xs12>-->
-<!--              <v-btn color="error" @click="testPost()">Test</v-btn>-->
-<!--            </v-flex>-->
-
             <v-card-actions class="justify-center mb-4">
               <div class="text-xs-center">
                 <v-spacer></v-spacer>
@@ -281,34 +289,30 @@
         jobLevelAPI: [],
         workingType: ['Toàn Thời Gian', 'Bán Thời Gian', 'Thực Tập'],
         skillChoose: [
-          {
-            id: 1,
-            skillMaster: 'Java',
-            skillLevel: 0,
-          }, {
-            id: 2,
-            skillMaster: 'C#',
-            skillLevel: 0,
-          }, {
-            id: 3,
-            skillMaster: 'Vue',
-            skillLevel: 0,
-          }
+          // {
+          //   id: 1,
+          //   skillMaster: 'Java',
+          // }, {
+          //   id: 2,
+          //   skillMaster: 'C#',
+          // }, {
+          //   id: 3,
+          //   skillMaster: 'Vue',
+          //
+          // }
         ],
         selectedSkill: null,
         skillRating: [1, 2, 3, 4, 5],
 
+
+        listSkill: [],
+
         formData: {
           userid: '5',
-          companyid: '1',
+          companyid: '2',
           cityid: '1',
 
-          listSkill: [
-            // {
-            //   skillMaster: '',
-            //   skillLevel: 0,
-            // }
-          ],
+
           title: '',
           address: '',
           joblevelid: '',
@@ -323,6 +327,12 @@
           workingType: '',
           numbeOfRecruitment: '',
         },
+
+        formDataSkill:{
+          jobId: '',
+          listSkill:[]
+        },
+
         editor: DecoupledEditor,
         editorConfig: {
           uiColor: '#9AB8F3',
@@ -350,30 +360,38 @@
     },
     methods: {
       testPost(){
-        console.log(this.formData.listSkill);
+        console.log(this.formDataSkill.listSkill);
       },
       addSkill () {
-        if(this.formData.listSkill.length === 0){
-          this.formData.listSkill.push(Object.assign({}, this.selectedSkill))
+        if(this.selectedSkill === null){
+          this.$notify({
+            group: 'foo',
+            type: 'warn',
+            title: 'Chú ý',
+            text: 'Kĩ năng không được để trống!'
+          })
+          return;
         }
-        if(this.formData.listSkill.length !== 0) {
-          this.formData.listSkill.forEach((itemX) =>{
+        if(this.formDataSkill.listSkill.length === 0){
+          this.formDataSkill.listSkill.push(Object.assign({}, this.selectedSkill))
+        }
+        if(this.formDataSkill.listSkill.length !== 0) {
+          this.formDataSkill.listSkill.forEach((itemX) =>{
             this.tmpSkill.push(itemX.id)
             this.tmpSkill = [...new Set(this.tmpSkill)];
           })
         }
         if(!this.tmpSkill.includes(this.selectedSkill.id)){
-          this.formData.listSkill.push(Object.assign({}, this.selectedSkill))
+          this.formDataSkill.listSkill.push(Object.assign({}, this.selectedSkill))
         }
       },
       removeSkill(index){
         console.log(index);
-        this.formData.listSkill.splice(index,1);
+        this.listSkill.splice(index,1);
         this.tmpSkill.splice(index,1);
-        console.log(this.formData.listSkill);
+        console.log(this.listSkill);
       },
-      submitjob () {
-        console.log(this.formData.listSkill)
+      async submitjob () {
         if (this.$refs.form.validate()) {
           if (this.formData.salaryFrom > this.formData.salaryTo && this.formData.salaryTo !== 0) {
             this.$notify({
@@ -412,18 +430,19 @@
             return
           }
 
-          const url = 'http://localhost:8080/job/create'
-          const method = 'POST'
-          const data = this.formData
-          Axios({url, method, data})
+          const url = 'http://localhost:8080/job/create';
+          const method = 'POST';
+          const data = this.formData;
+          let config = {
+            headers: {
+              accessToken: localStorage.getItem('token2')
+            }
+          }
+
+          await Axios({url, method, data, config})
             .then(response => {
               if (response.data.success == true) {
-                this.$notify({
-                  group: 'foo',
-                  type: 'success',
-                  title: 'Thành Công',
-                  text: 'Đăng Tin Thành Công!'
-                })
+                this.submitSkill(response.data.data)
               }
             })
             .catch(error => {
@@ -441,6 +460,41 @@
 
         }
       },
+      async submitSkill (jobid){
+        for(let i = 0; i < this.formDataSkill.listSkill.length; i++){
+          this.formDataSkill.listSkill[i].skillMasterId = this.formDataSkill.listSkill[i]['id'];
+          delete this.formDataSkill.listSkill[i].id;
+          delete this.formDataSkill.listSkill[i].skillName;
+        }
+        this.formDataSkill.jobId = jobid;
+
+        const url = 'http://localhost:8080/skillneedforjob/addNewSkill'
+        const data = this.formDataSkill
+        const method = 'POST'
+
+        console.log(this.formDataSkill)
+
+        await Axios({url, method, data})
+          .then(response => {
+            if (response.data.success == true) {
+              this.$notify({
+                group: 'foo',
+                type: 'success',
+                title: 'Thành Công',
+                text: 'Đăng Tin Thành Công!'
+              })
+            }
+          })
+          .catch(error => {
+            console.log(error)
+            this.$notify({
+              group: 'foo',
+              type: 'error',
+              title: 'Thất Bại',
+              text: 'Đã Xảy Ra Lỗi!'
+            })
+          })
+      },
       resetSalary () {
         this.formData.salaryFrom = 0
         this.formData.salaryTo = 0
@@ -453,13 +507,14 @@
         )
       },
       getInitData () {
-        const url = 'http://localhost:8080/joblevel/'
+        const url = 'http://localhost:8080/job/getJobComponent'
         const method = 'GET'
         Axios({url, method})
           .then(response => {
             console.log(response)
             if (response.data.success == true) {
-              this.jobLevelAPI = response.data.data
+              this.jobLevelAPI = response.data.data.level
+              this.skillChoose = response.data.data.skillname
             } else {
               this.$notify({
                 group: 'foo',

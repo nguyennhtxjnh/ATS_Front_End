@@ -64,15 +64,15 @@
         if(this.$refs.form.validate()){
           const email = this.loginEmail;
           const password = this.loginPassword;
-          this.$store.dispatch('AUTHENTICATION_STORE/LOGIN', {email, password})
+          this.$store.dispatch('AUTHENTICATION_STORE/LOGIN2', {email, password})
             .then(() => {
 
-              this.$store.dispatch('AUTHENTICATION_STORE/INIT')
+              this.$store.dispatch('AUTHENTICATION_STORE/INIT2')
                 .then(() => {
-                  this.$router.push('/');
+                  this.$router.push('/trang-chu-tuyen-dung');
                 })
                 .catch((error) => {
-                  this.$router.push('/dang-nhap');
+                  this.$router.push('/tuyen-dung-dang-nhap');
                 });
 
             })

@@ -184,7 +184,7 @@
 
       }
     },
-    methods(){
+    methods: {
 
     },
 
