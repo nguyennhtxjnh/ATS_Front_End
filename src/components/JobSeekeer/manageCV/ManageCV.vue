@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-layout row wrap>
-      <v-flex md7 xs12 class="pr-3 pt-3">
+      <v-flex md12 xs12 class="pr-3 pt-3">
         <v-flex md12 xs12>
           <v-layout row wrap>
             <v-flex md5 xs5>
@@ -21,9 +21,7 @@
 
         </v-flex>
       <v-spacer/>
-      <v-flex md5 xs12 class="pr-3 pt-3">
-        <ProfileBasicComponent></ProfileBasicComponent>
-      </v-flex>
+
     </v-layout>
   </v-container>
 </template>

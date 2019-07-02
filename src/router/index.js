@@ -12,6 +12,7 @@ import EmployerMainScreenPage from "../views/Employer/EmployerMainScreenPage";
 import JobSeekerDashBoardPage from "../views/Jobseeker/JobSeekerDashBoardPage";
 import EmployerCreateJobPage from "../views/Employer/EmployerCreateJobPage";
 import EmployerJobDetailPage from "../views/Employer/EmployerJobDetailPage";
+import JobSeekerCreateCV from "../views/Jobseeker/JobSeekerCreateCV";
 
 
 Vue.use(Router)
@@ -62,6 +63,12 @@ const router = new Router({
       path: '/viec-lam',
       name: 'employerjobdetail',
       component: EmployerJobDetailPage
+    }
+    ,
+    {
+      path: '/tao-CV',
+      name: 'createCV',
+      component: JobSeekerCreateCV
     }
     ,
     {

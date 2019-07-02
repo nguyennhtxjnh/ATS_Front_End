@@ -2,11 +2,11 @@
   <v-card style="background-color: white" class="mt-5">
     <v-container>
       <v-layout row wrap>
-<!--        title-->
+        <!--        title-->
         <v-flex md12 xs12>
           <h2 style="float: left">Học vấn</h2>
         </v-flex>
-<!--        mở dialog-->
+        <!--        mở dialog-->
         <v-flex md12 xs12>
           <v-dialog v-model="dialog" persistent max-width="800px">
 
@@ -132,60 +132,62 @@
             </v-card>
           </v-dialog>
         </v-flex>
-<!--        kết thúc dialog-->
-<!--        hiện kết quả-->
+        <!--        kết thúc dialog-->
+        <!--        hiện kết quả-->
         <v-flex md12 xs12 v-if="btnsubmit === true">
           <v-container align="center">
             <template v-for="(education,index) in educations">
-            <v-container style="background-color: white" class="pa-3 mb-3">
-              <v-layout row wrap>
-                <v-spacer/>
-              <v-flex md2 xs2>
-                <v-icon color="orange darken-2" size="40px">mdi-home-city-outline</v-icon>
-              </v-flex>
-              <v-flex md4 xs8>
+              <v-container style="background-color: white" class="pa-3 mb-3">
                 <v-layout row wrap>
-                  <v-flex md12 xs12 >
-                    <h2 style="float: left"> {{education.schoolname}}</h2>
+                  <v-spacer/>
+                  <v-flex md2 xs2>
+                    <v-icon color="orange darken-2" size="40px">mdi-home-city-outline</v-icon>
+                  </v-flex>
+                  <v-flex md4 xs8>
+                    <v-layout row wrap>
+                      <v-flex md12 xs12>
+                        <h2 style="float: left"> {{education.schoolname}}</h2>
 
+                      </v-flex>
+                      <v-flex md12 xs12>
+                        <template v-for="(schooltypeitem, index) in st">
+                          <span style="float: left" v-if="schooltypeitem.i === education.schooltype">Trình độ: {{schooltypeitem.name}}</span>
+                        </template>
+                      </v-flex>
+                      <v-flex md12 xs12>
+                        <span
+                          style="float: left">Thời gian học tập: {{education.starttime}} - {{education.endtime}}</span>
+                      </v-flex>
+                      <v-flex md12 xs12>
+                        <span style="float: left"
+                              v-if="education.description != ''">Mô tả:  {{education.description}}</span>
+                      </v-flex>
+                    </v-layout>
                   </v-flex>
-                  <v-flex md12 xs12 >
-                    <template v-for="(schooltypeitem, index) in st">
-                    <span style="float: left" v-if="schooltypeitem.i === education.schooltype">Trình độ: {{schooltypeitem.name}}</span>
-                    </template>
-                  </v-flex>
-                  <v-flex md12 xs12>
-                    <span style="float: left">Thời gian học tập: {{education.starttime}} - {{education.endtime}}</span>
-                  </v-flex>
-                  <v-flex md12 xs12>
-                    <span style="float: left" v-if="education.description != ''">Mô tả:  {{education.description}}</span>
+                  <v-spacer/>
+                  <v-flex md4 xs2>
+                    <v-btn style="height: auto"
+                           dark
+                           icon @click="edit(education, index)">
+                      <v-icon color="orange darken-2">mdi-pencil</v-icon>
+                    </v-btn>
+                    <v-btn style="height: auto"
+                           dark
+                           icon
+                           @click="remove(index)">
+                      <v-icon color="orange darken-2">mdi-delete</v-icon>
+                    </v-btn>
                   </v-flex>
                 </v-layout>
-              </v-flex>
-                <v-spacer/>
-                <v-flex md4 xs2>
-                  <v-btn  style="height: auto"
-                          dark
-                          icon @click="edit(education, index)">
-                  <v-icon color="orange darken-2" >mdi-update</v-icon>
-                  </v-btn>
-                  <v-btn  style="height: auto"
-                          dark
-                          icon
-                          @click="remove(index)">
-                  <v-icon color="orange darken-2"  >mdi-delete</v-icon>
-                  </v-btn>
-                </v-flex>
-              </v-layout>
-            </v-container>
+              </v-container>
               <v-divider v-if="index != (educations.length-1)"></v-divider>
 
             </template>
-</v-container>
+          </v-container>
 
 
         </v-flex>
-<!--        kết thúc hiện kết quả-->
+        <!--        kết thúc hiện kết quả-->
       </v-layout>
     </v-container>
   </v-card>
@@ -199,9 +201,11 @@
       educations: Array,
     },
     data: () => ({
+      position: '',
       dialog: false,
       menu1: false,
       menu2: false,
+      editB: false,
       checkbox1: false,
       btnsubmit: false,
       education: {
@@ -234,30 +238,70 @@
     }),
     methods: {
       update() {
-        console.log(this.educations);
-        if(this.newEducation.schoolname != ""){
-        this.btnsubmit = true;
-        this.dialog = false;
-        if (this.checkbox1 == true) {
-          this.newEducation.endtime = " hiện tại"
+
+
+        if (this.newEducation.schoolname != "") {
+          var check = false;
+          var e;
+
+          for (e in  this.educations) {
+            var tmp = this.educations[e].schoolname;
+            if (tmp === this.newEducation.schoolname) {
+
+              if(this.editB){
+                if(this.educations[this.position].schoolname !== this.newEducation.schoolname){
+                  alert("Trường đã tồn tại");
+                  check = true;
+                }else {
+                  check = false;
+                }
+              }else {
+                alert("Trường đã tồn tại");
+                check = true;
+              }
+            }
+          }
+
+
+          if (check == false) {
+            if (this.editB === true) {
+              console.log(this.position);
+              this.btnsubmit = true;
+              this.dialog = false;
+              Object.assign(this.educations[this.position], this.newEducation);
+              Object.assign(this.newEducation, this.defaultEducation);
+              this.editB = false;
+              this.position = "";
+
+            }else {
+            this.btnsubmit = true;
+            this.dialog = false;
+            if (this.checkbox1 == true) {
+              this.newEducation.endtime = " hiện tại"
+            }
+            this.educations.push(Object.assign({}, this.newEducation));
+            Object.assign(this.newEducation, this.defaultEducation);
+          }}}
+         else {
+          alert("Hãy nhập thông tin cần thiết.");
         }
-        this.educations.push(Object.assign({},this.newEducation));
-        Object.assign(this.newEducation,this.defaultEducation);}
       },
-      remove(position){
-        this.educations.splice(position, 1 );
-        if(this.educations.length === 0){
+      remove(position) {
+        this.educations.splice(position, 1);
+        if (this.educations.length === 0) {
           this.btnsubmit = false;
         }
         console.log('delete')
       },
-      edit(education,position){
-        Object.assign(this.newEducation,education);
-        this.educations.splice(position, 1 );
+      edit(education, position) {
+        Object.assign(this.newEducation, education);
+        this.position = position;
         this.dialog = true;
-        if(this.educations.length === 0){
+        this.editB = true;
+        if (this.educations.length === 0) {
           this.btnsubmit = false;
         }
+
         console.log('edit')
       }
     },
@@ -266,7 +310,7 @@
 </script>
 
 <style scoped>
-  h1,h2,h3,h4,h5,span {
+  h1, h2, h3, h4, h5, span {
     font-family: "Times New Roman";
 
   }

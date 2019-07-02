@@ -18,7 +18,7 @@
             </v-flex><!-- end thông tin-->
             <v-flex md4 xs12>
               <v-flex md12 xs12>
-                <img :src="imageUrl" height="150" v-if="imageUrl" @click='pickFile'/>
+                <img :src="imageUrl" height="200" width="200" v-if="imageUrl" @click='pickFile'/>
                 <v-text-field style="display: none" label="Select Image" @click='pickFile' v-model='imageName'
                               prepend-icon='attach_file'></v-text-field>
                 <input
@@ -39,7 +39,7 @@
                 <v-layout row>
                   <v-icon color="orange darken-2">mdi-account-circle-outline</v-icon>
                   <v-text-field
-                    :rules="[() => info.lastName.length > 0 ||'Không được để trống']"
+                    :rules="[rules.required(info.lastName)]"
                     v-model="info.lastName"
                     label="Họ* "
                   ></v-text-field>
@@ -48,7 +48,7 @@
                 <v-layout row>
                   <v-icon color="orange darken-2">mdi-email-search-outline</v-icon>
                   <v-text-field
-                    :rules="[() => info.email.length > 0 ||'Không được để trống']"
+                    :rule="[rules.email(info.email)]"
                     v-model="info.email"
                     label="Email* "
                   ></v-text-field>
@@ -58,7 +58,7 @@
                   <v-icon color="orange darken-2">mdi-phone</v-icon>
                   <v-text-field
                     v-model="info.telephone"
-                    :rules="[() => info.telephone.length > 0 ||'Không được để trống']"
+                    :rules="[rules.telephone(info.telephone)]"
                     label="Số điện thoại* "
                   ></v-text-field>
                 </v-layout>
@@ -70,7 +70,7 @@
                 <v-icon color="orange darken-2">mdi-account-circle-outline</v-icon>
                 <v-text-field
                   v-model="info.firstName"
-                  :rules="[() => info.firstName.length > 0 ||'Không được để trống']"
+                  :rules="[rules.required(info.firstName)]"
                   label="Tên* "
                 ></v-text-field>
               </v-layout>
@@ -268,7 +268,7 @@
         </v-flex>
         <v-spacer/>
         <v-flex md4 xs12 class="pl-2">
-          <ProfileBasicComponent></ProfileBasicComponent>
+
         </v-flex>
       </v-layout>
 
@@ -278,8 +278,6 @@
       <router-link to="/quan-li-CV" tag="button">
       <v-btn color="blue darken-1" flat @click="create">Tạo CV</v-btn>
       </router-link>
-      <v-btn color="blue darken-1" flat @click="down">Download PDF</v-btn>
-      <PDFCVComponent :info="info" v-if="btnDown === true" @focus="loadpdf"></PDFCVComponent>
     </v-container>
   </v-card>
 </template>
@@ -293,13 +291,16 @@
   import SkillInCVComponent from "./SkillInCVComponent";
   import ProjectorProductWorkedComponent from "./ProjectorProductWorkedComponent";
   import ProfileBasicComponent from "../manageCV/ProfileBasicComponent";
-  import PDFCVComponent from "./PDFCVComponent";
-  import jsPDF from 'jspdf'
+  import Vue from 'vue';
+  import VeeValidate from 'vee-validate';
+
+  Vue.use(VeeValidate);
+
 
   export default {
     name: "CreateCV",
     components: {
-      PDFCVComponent,
+
       ProfileBasicComponent,
       ProjectorProductWorkedComponent,
       EducationComponent,
@@ -351,8 +352,12 @@
           noMinus: value => value >= 0 || 'Lương Không Được Nhỏ Hơn 0',
           required: value => !!value || 'Không được để trống ô này.',
           counter: value => value.length <= 40 || 'Tối Đa 40 Kí Tự',
-          cemail: value => {
-            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+         telephone: value => {
+           const pattern = /^[0-9]{10,12}$/
+            return pattern.test(value)|| 'Phải dùng 10 tới 12 chữ số'
+         },
+          email: value => {
+            const pattern = /^[\w-]+@([\w-]+\.)+[\w-]+$/
             return pattern.test(value) || 'Địa chỉ email không phù hợp.'
           }
         },}),
