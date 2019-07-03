@@ -46,9 +46,7 @@
               <div>
                 <p  class="cyan--text display-3 font-weight-light">0</p>
                 <h3 class="headline mb-0">VIỆC LÀM CỦA TÔI</h3>
-
               </div>
-
             </v-card-title>
             <v-card-actions class="justify-center align-center" >
               <v-flex md4 class="text-md-center"><v-btn color="success" small fab >0</v-btn><v-divider></v-divider><a class="black--text hoverCSSa">Đang xử lý</a></v-flex>

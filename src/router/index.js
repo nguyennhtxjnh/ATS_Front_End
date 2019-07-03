@@ -15,6 +15,7 @@ import JobSeekerDashBoardPage from "../views/Jobseeker/JobSeekerDashBoardPage";
 import EmployerCreateJobPage from "../views/Employer/EmployerCreateJobPage";
 import EmployerJobDetailPage from "../views/Employer/EmployerJobDetailPage";
 import JobSeekerCreateCV from "../views/Jobseeker/JobSeekerCreateCV";
+import EmployerSearchCVPage from "../views/Employer/EmployerSearchCVPage";
 
 
 Vue.use(Router)
@@ -100,6 +101,11 @@ const router = new Router({
       path: '/tuyen-dung-thong-tin',
       name: 'employer profile',
       component: EmployerDashBoardPage
+    },
+    {
+      path: '/tim-CV',
+      name: 'searchCV',
+      component: EmployerSearchCVPage
     }
     ,
     // {

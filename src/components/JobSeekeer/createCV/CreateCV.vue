@@ -160,7 +160,7 @@
                   </v-layout>
                   <!--                  giới tính-->
                   <v-layout row>
-                    <v-icon color="orange darken-2" class="pr-2" style="float: left">mdi-account-circle-outline</v-icon>
+                    <v-icon color="orange darken-2" class="pr-2" style="float: left">mdi-gender-male-female</v-icon>
                     <v-select
                       v-bind:items="genders"
                       v-model="info.gender"
