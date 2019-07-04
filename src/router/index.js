@@ -16,6 +16,7 @@ import EmployerCreateJobPage from "../views/Employer/EmployerCreateJobPage";
 import EmployerJobDetailPage from "../views/Employer/EmployerJobDetailPage";
 import JobSeekerCreateCV from "../views/Jobseeker/JobSeekerCreateCV";
 import EmployerSearchCVPage from "../views/Employer/EmployerSearchCVPage";
+import SuggestionCVPage from "../views/Employer/SuggestionCVPage";
 
 
 Vue.use(Router)
@@ -107,7 +108,11 @@ const router = new Router({
       name: 'searchCV',
       component: EmployerSearchCVPage
     }
-    ,
+    ,{
+      path: '/goi-y-CV',
+      name: 'suggestionCV',
+      component: SuggestionCVPage
+    }
     // {
     //   path: '/detail/:id',
     //   component: Detail
