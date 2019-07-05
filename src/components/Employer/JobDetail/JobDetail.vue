@@ -1,7 +1,7 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <v-container fluid fill-height >
     <v-layout align-center justify-center >
-      <v-flex xs12 sm12 md10>
+      <v-flex xs12 sm12 md10 >
           <!--header title-->
           <v-container class=" mb-3" fluid grid-list-md style="background-color: #efebeb">
             <v-layout row wrap>

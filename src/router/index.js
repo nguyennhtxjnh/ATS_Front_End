@@ -15,6 +15,7 @@ import JobSeekerDashBoardPage from "../views/Jobseeker/JobSeekerDashBoardPage";
 import EmployerCreateJobPage from "../views/Employer/EmployerCreateJobPage";
 import EmployerJobDetailPage from "../views/Employer/EmployerJobDetailPage";
 import EmployerCreateCompanyPage from '../views/Employer/EmployerCreateCompanyPage'
+import JobSeekerViewJobDetailPage from '../views/Jobseeker/JobSeekerViewJobDetailPage'
 
 
 Vue.use(Router)
@@ -100,6 +101,12 @@ const router = new Router({
       path: '/tao-cong-ty',
       name: 'employer create company',
       component: EmployerCreateCompanyPage
+    }
+    ,
+    {
+      path: '/thong-tin-cong-viec',
+      name: 'job seeker view job',
+      component: JobSeekerViewJobDetailPage
     }
     ,
     // {
