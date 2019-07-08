@@ -104,7 +104,7 @@ const router = new Router({
     }
     ,
     {
-      path: '/thong-tin-cong-viec',
+      path: '/thong-tin-cong-viec/:id',
       name: 'job seeker view job',
       component: JobSeekerViewJobDetailPage
     }

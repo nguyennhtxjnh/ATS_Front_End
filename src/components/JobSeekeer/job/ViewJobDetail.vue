@@ -52,7 +52,7 @@
         <!--end header title-->
 
         <!--        tab-->
-        <template >
+        <template  >
           <v-tabs
             color="cyan"
             dark
@@ -68,7 +68,7 @@
               {{ item }}
             </v-tab>
 
-            <v-tabs-items>
+            <v-tabs-items :id="id" @refresh="testId" >
               <v-tab-item
                 v-for="item in items"
                 :key="item"
@@ -149,11 +149,7 @@
                   </v-card-text>
                   <!--                  End Việc Làm Khác Từ Công Ty-->
 
-                  <!--                  Khóa Học Phù Hợp-->
-                  <v-card-text v-if="item === 'Khóa Học Phù Hợp'">
-                    cdddddddddddd
-                  </v-card-text>
-                  <!--                  End Khóa Học Phù Hợp-->
+
 
                   <!--end card content-->
                 </v-card>
@@ -175,17 +171,31 @@
       return {
         tab: null,
         items: [
-          'Thông Tin', 'Công Ty', 'Việc Làm Khác Từ Công Ty', 'Khóa Học Phù Hợp'
+          'Thông Tin', 'Công Ty', 'Việc Làm Khác Từ Công Ty',
         ],
-
       }
     },
+    props: {
+      id: Number,
+    },
     methods: {
-
+      testId(){
+        console.log(this.id);
+      }
+    },
+    mounted() {
+      this.$nextTick(() => {
+        this.testId();
+      })
     },
   }
 </script>
 
 <style scoped>
-
+  .not-active {
+    pointer-events: none;
+    cursor: default;
+    text-decoration: none;
+    color: black;
+  }
 </style>
