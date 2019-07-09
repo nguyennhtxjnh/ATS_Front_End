@@ -14,6 +14,10 @@ import EmployerMainScreenPage from "../views/Employer/EmployerMainScreenPage";
 import JobSeekerDashBoardPage from "../views/Jobseeker/JobSeekerDashBoardPage";
 import EmployerCreateJobPage from "../views/Employer/EmployerCreateJobPage";
 import EmployerJobDetailPage from "../views/Employer/EmployerJobDetailPage";
+import JobSeekerCreateCV from "../views/Jobseeker/JobSeekerCreateCV";
+import EmployerSearchCVPage from "../views/Employer/EmployerSearchCVPage";
+import SuggestionCVPage from "../views/Employer/SuggestionCVPage";
+import UpdateCVPage from "../views/Jobseeker/UpdateCVPage";
 import EmployerCreateCompanyPage from '../views/Employer/EmployerCreateCompanyPage'
 import JobSeekerViewJobDetailPage from '../views/Jobseeker/JobSeekerViewJobDetailPage'
 
@@ -63,14 +67,26 @@ const router = new Router({
     }
     ,
     {
+      path: '/tao-CV',
+      name: 'createCV',
+      component: JobSeekerCreateCV
+    }
+    ,
+    {
       path: '/quan-li-CV',
       name: 'manageCV',
       component: JobSeekerManageCVPage
     },
     {
-      path: '/xem-CV',
+      path: '/xem-CV/:cvid',
       name: 'detailCV',
       component: DetailCVPage
+
+    },
+    {
+      path: '/cap-nhat-CV/:cvid',
+      name: 'updateCV',
+      component: UpdateCVPage
 
     },
     {
@@ -95,6 +111,16 @@ const router = new Router({
       path: '/tuyen-dung-thong-tin',
       name: 'employer profile',
       component: EmployerDashBoardPage
+    },
+    {
+      path: '/tim-CV',
+      name: 'searchCV',
+      component: EmployerSearchCVPage
+    }
+    ,{
+      path: '/goi-y-CV',
+      name: 'suggestionCV',
+      component: SuggestionCVPage
     }
     ,
     {

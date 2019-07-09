@@ -304,7 +304,18 @@
 
         console.log('edit')
       }
-    },
+    },  mounted() {
+      console.log(this.educationsById);
+      if(this.educationsById.length >0){
+        this.btnsubmit = true;
+        for(var edu in this.educationsById){
+          var stime = new Date(this.educationsById[edu].startTime);
+          this.info.educationsById[edu].startTime = stime.toISOString().substr(0, 10);
+          var etime = new Date(this.educationsById[edu].endtime);
+          this.info.educationsById[edu].endtime = etime.toISOString().substr(0, 10);
+        }
+      }
+    }
 
   }
 </script>
