@@ -54,7 +54,7 @@
 <!--        Search Result-->
         <v-flex xs8 class="mt-2">
           <v-data-table
-            :items="departments"
+            :items="job"
             :loading="loading"
             :pagination.sync="pagination"
             :no-data-text="'Không có dữ liệu'"
@@ -158,7 +158,7 @@
           {text: 'Thao tác', sortable: false},
         ],
         pagination: {},
-        departments: [],
+        job: [],
 
         selectSkill: '',
         selectJob: '',
@@ -171,11 +171,11 @@
     },
     methods: {
 
-      getDepartments() {
+      getjob() {
       //   this.loading = true;
-      //   Axios.get(`http://localhost:8080/departments`)
+      //   Axios.get(`http://localhost:8080/job`)
       //     .then(response => {
-      //       this.departments = response.data.content;
+      //       this.job = response.data.content;
       //     })
       //     .catch(console.error)
       //     .finally(() => {
@@ -196,7 +196,7 @@
           this.loading = true;
           Axios.get(`http://localhost:8080/job/search?search=` + this.selectSkill)
             .then(response => {
-              this.departments = response.data.data;
+              this.job = response.data.data;
             })
             .catch(console.error)
             .finally(() => {
@@ -216,7 +216,7 @@
     },
     watch: {
       pagination() {
-        this.getDepartments();
+        this.getjob();
       }
     },
 

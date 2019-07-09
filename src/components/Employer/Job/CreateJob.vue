@@ -16,7 +16,7 @@
 
                   <v-flex md12 xs12>
                     <v-text-field class="ma-2" prepend-icon="mdi-account-badge" name="title" label="Chức Danh Tuyển Dụng" type="text"
-                                  v-model="formData.vacancyName"
+                                  v-model="formData.title"
                                   :rules="[rules.required]"></v-text-field>
                   </v-flex>
 
@@ -30,7 +30,7 @@
                   <v-flex  xs12>
                     <v-autocomplete
                       class="ma-2"
-                      v-model="formData.joblevelid"
+                      v-model="formData.joblevelId"
                       prepend-icon="mdi-account"
                       :items="jobLevelAPI"
                       item-text="jobLevelName"
@@ -313,14 +313,14 @@
         },
 
         formData: {
-          userid: '',
-          companyid: '2',
-          cityid: '1',
+          userId: '',
+          companyId: '',
+          cityId: 1,
 
 
           title: '',
           address: '',
-          joblevelid: '',
+          joblevelId: '',
           vacancyName: '',
           salaryFrom: 0,
           salaryTo: 0,
@@ -393,20 +393,17 @@
       },
       removeSkill(index){
         console.log(index);
-        this.listSkill.splice(index,1);
+        this.formDataSkill.listSkill.splice(index,1);
         this.tmpSkill.splice(index,1);
         console.log(this.listSkill);
       },
       submitjob () {
         if (this.$refs.form.validate()) {
-          if (this.formData.salaryFrom > this.formData.salaryTo && this.formData.salaryTo !== 0) {
-            this.$notify({
-              group: 'foo',
-              type: 'warn',
-              title: 'Chú ý',
-              text: 'Khoảng Lương Không Hợp Lệ!'
-            })
-            return
+          if (this.formData.salaryTo < this.formData.salaryFrom && this.formData.salaryFrom !== 0) {
+            let tmp = null;
+            tmp = this.formData.salaryFrom;
+            this.formData.salaryFrom = this.formData.salaryTo;
+            this.formData.salaryTo = tmp;
           }
           if (this.formData.jobDescription === '') {
             this.$notify({
@@ -437,7 +434,7 @@
           }
 
           this.formDataCompany.userId = this.userId2;
-          this.formData.userid = this.userId2;
+          this.formData.userId = this.userId2;
           this.getCompany();
 
         }
@@ -527,11 +524,12 @@
           Axios({url, method, data})
           .then(async response => {
             if (response.data.success == true) {
-              this.formData.companyid = response.data.data;
+              this.formData.companyId = response.data.data;
 
               const url = 'http://localhost:8080/job/create';
               const method = 'POST';
               const data = this.formData;
+              console.log(data)
               let config = {
                 headers: {
                   accessToken: localStorage.getItem('token2')
