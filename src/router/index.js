@@ -17,6 +17,7 @@ import EmployerJobDetailPage from "../views/Employer/EmployerJobDetailPage";
 import JobSeekerCreateCV from "../views/Jobseeker/JobSeekerCreateCV";
 import EmployerSearchCVPage from "../views/Employer/EmployerSearchCVPage";
 import SuggestionCVPage from "../views/Employer/SuggestionCVPage";
+import UpdateCVPage from "../views/Jobseeker/UpdateCVPage";
 
 
 Vue.use(Router)
@@ -75,9 +76,15 @@ const router = new Router({
       component: JobSeekerManageCVPage
     },
     {
-      path: '/xem-CV',
+      path: '/xem-CV/:cvid',
       name: 'detailCV',
       component: DetailCVPage
+
+    },
+    {
+      path: '/cap-nhat-CV/:cvid',
+      name: 'updateCV',
+      component: UpdateCVPage
 
     },
     {

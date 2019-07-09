@@ -92,7 +92,6 @@
               <v-layout row>
                 <v-icon color="orange darken-2">mdi-briefcase-account-outline</v-icon>
                 <v-text-field
-                  :rules="[() => info.yearExperience.length > 0 ||'Không được để trống']"
                   v-model="info.yearExperience"
                   label="Số năm kinh nghiệm* "
                 ></v-text-field>
@@ -106,7 +105,7 @@
                     <v-icon color="orange darken-2">mdi-map-marker</v-icon>
                     <v-text-field
                       v-model="info.address"
-                      :rules="[() => info.address.length > 0 ||'Không được để trống']"
+                      :rules="[]"
                       label="Địa chỉ *"
                     ></v-text-field>
                   </v-layout>
@@ -161,7 +160,6 @@
                     <v-select
                       v-bind:items="genders"
                       v-model="info.gender"
-                      :rules="[() => info.gender.length > 0 ||'Không được để trống']"
                       item-text="name"
                       item-value="id"
                       label="Giới tính"
@@ -271,13 +269,12 @@
       <v-layout row wrap>
         <v-spacer/>
         <v-flex md2 xs12>
-          <router-link to="/thong-tin">
-            <v-btn  color="orange" dark @click="create">Tạo CV</v-btn>
-          </router-link>
-
+          <v-btn  color="orange" dark @click="update">Update CV</v-btn>
         </v-flex>
         <v-spacer/>
       </v-layout>
+
+
     </v-container>
   </v-card>
 </template>
@@ -298,16 +295,17 @@
 
 
   export default {
-    name: "CreateCV",
+    name: "UpdateCV",
     components: {
-
       ProfileBasicComponent,
       ProjectorProductWorkedComponent,
       EducationComponent,
       SkillInCVComponent,
       SocialActivitiesComponent, CertificationComponent, WorkExperienceComponent
     },
-     data: () => ( {
+    data : function () {
+      return{
+       cvid: this.$route.params.cvid,
        base64: '',
        imageA:'',
        file: '',
@@ -354,7 +352,7 @@
        rules: {
           noMinus: value => value >= 0 || 'Lương Không Được Nhỏ Hơn 0',
           required: value => !!value || 'Không được để trống ô này.',
-          counter: value => value.length <= 40 || 'Tối Đa 40 Kí Tự',
+          // counter: value => value.length <= 40 || 'Tối Đa 40 Kí Tự',
          telephone: value => {
            const pattern = /^[0-9]{10,12}$/
             return pattern.test(value)|| 'Phải dùng 10 tới 12 chữ số'
@@ -363,7 +361,8 @@
             const pattern = /^[\w-]+@([\w-]+\.)+[\w-]+$/
             return pattern.test(value) || 'Địa chỉ email không phù hợp.'
           }
-        },}),
+        },
+      }},
 
 
 
@@ -391,7 +390,7 @@
         }
 
       },
-      create() {
+      update() {
 
 //         let image = new Image()
 //
@@ -450,7 +449,8 @@
         // this.info.img = formData;
         // console.log(this.info);
 
-      },down(){
+      },
+      down(){
         if(this.btnDown === false){
           this.btnDown = true;
         }
@@ -479,6 +479,22 @@
       //       // Object.assign(this.imageUrl, 'data:image/jpeg;base64,' + btoa(imageDataUrl));
       //     }
       //   });
+      console.log(this.cvid)
+      axios
+        .get('http://localhost:1122/cv/getOne/'+this.cvid+'/0')
+        .then(response => {
+            this.info = response.data.data;
+            console.log(this.info);
+            if(this.info.img !== null){
+              this.imageUrl = this.info.img;
+            }
+          var date = new Date(this.info.dob);
+          // var tmp = date.getDate() +"/" + (date.getMonth()+1)+"/"+date.getFullYear();
+          // this.cvs[cv].createdDate = tmp;
+          this.info.dob = date.toISOString().substr(0, 10);
+          }
+
+        )
       axios
         .get('http://localhost:1122/city/getAllCity')
         .then(response => (

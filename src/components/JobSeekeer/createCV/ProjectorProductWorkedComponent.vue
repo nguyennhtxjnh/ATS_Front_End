@@ -69,14 +69,14 @@
                           >
                             <template v-slot:activator="{ on }">
                               <v-text-field
-                                v-model="projectorproductworkeds.starttime"
+                                v-model="projectorproductworkeds.startTime"
                                 label="Bắt đầu"
                                 prepend-icon="event"
                                 readonly
                                 v-on="on"
                               ></v-text-field>
                             </template>
-                            <v-date-picker v-model="projectorproductworkeds.starttime" @input="menu1 = false"></v-date-picker>
+                            <v-date-picker v-model="projectorproductworkeds.startTime" @input="menu1 = false"></v-date-picker>
                           </v-menu>
                         </v-flex>
                         <v-flex md6 xs12 v-if="checkbox1 === false">
@@ -92,14 +92,14 @@
                           >
                             <template v-slot:activator="{ on }">
                               <v-text-field
-                                v-model="projectorproductworkeds.endtime"
+                                v-model="projectorproductworkeds.endTime"
                                 label="Kết thúc"
                                 prepend-icon="event"
                                 readonly
                                 v-on="on"
                               ></v-text-field>
                             </template>
-                            <v-date-picker v-model="projectorproductworkeds.endtime" @input="menu2 = false"></v-date-picker>
+                            <v-date-picker v-model="projectorproductworkeds.endTime" @input="menu2 = false"></v-date-picker>
                           </v-menu>
                         </v-flex>
                       </v-layout>
@@ -150,7 +150,7 @@
                         <span style="float: left">Chức vụ: {{projectorproductworked.vacancyName}}</span>
                       </v-flex>
                       <v-flex md12 xs12 >
-                        <span style="float: left">Thời gian: {{projectorproductworked.starttime}} - {{projectorproductworked.endtime}}</span>
+                        <span style="float: left">Thời gian: {{projectorproductworked.startTime}} - {{projectorproductworked.endTime}}</span>
                       </v-flex>
                       <v-flex md12 xs12 >
                         <span style="float: left" v-if="projectorproductworked.description != ''">Mô tả: {{projectorproductworked.description}}</span>
@@ -193,6 +193,8 @@
       projectorproductworkeds: Array,
     },
     data: () => ( {
+      position:'',
+      editB: false,
       btnSubmit: false,
       dialog1: false,
       date: new Date().toISOString().substr(0, 10),
@@ -205,24 +207,69 @@
         skillUsed: '',
         vacancyName: '',
         description: '',
-        starttime: new Date().toISOString().substr(0, 10),
-        endtime: new Date().toISOString().substr(0, 10),
+        startTime: new Date().toISOString().substr(0, 10),
+        endTime: new Date().toISOString().substr(0, 10),
       },
       defaultProjectorProduct: {
         productName:'',
         skillUsed: '',
         vacancyName: '',
         description: '',
-        starttime: new Date().toISOString().substr(0, 10),
-        endtime: new Date().toISOString().substr(0, 10),
+        startTime: new Date().toISOString().substr(0, 10),
+        endTime: new Date().toISOString().substr(0, 10),
       },
     }),
     methods: {
       update() {
-        this.dialog1 = false;
-        this.btnSubmit = true;
-        this.projectorproductworkeds.push(Object.assign({},this.newProjectorProduct));
-        Object.assign(this.newProjectorProduct,this.defaultProjectorProduct);
+        if (this.newProjectorProduct.schoolName != "") {
+          var check = false;
+          var e;
+
+          for (e in  this.projectorproductworkeds) {
+            var tmp = this.projectorproductworkeds[e].productName;
+            if (tmp === this.newProjectorProduct.productName) {
+
+              if(this.editB){
+                if(this.projectorproductworkeds[this.position].productName !== this.newProjectorProduct.productName){
+                  alert("Dự án đã tồn tại");
+                  check = true;
+                }else {
+                  check = false;
+                }
+              }else {
+                alert("Dự án đã tồn tại");
+                check = true;
+              }
+            }
+          }
+
+
+          if (check == false) {
+            if (this.editB === true) {
+              console.log(this.position);
+              this.btnSubmit = true;
+              this.dialog1 = false;
+              Object.assign(this.projectorproductworkeds[this.position], this.newProjectorProduct);
+              Object.assign(this.newProjectorProduct, this.defaultProjectorProduct);
+              this.editB = false;
+              this.position = "";
+
+            }else {
+              this.btnSubmit = true;
+              this.dialog1 = false;
+              if (this.checkbox1 == true) {
+                this.newProjectorProduct.endtime = " hiện tại"
+              }
+              this.projectorproductworkeds.push(Object.assign({}, this.newProjectorProduct));
+              Object.assign(this.newProjectorProduct, this.defaultProjectorProduct);
+            }}}
+        else {
+          alert("Hãy nhập thông tin cần thiết.");
+        }
+        // this.dialog1 = false;
+        // this.btnSubmit = true;
+        // this.projectorproductworkeds.push(Object.assign({},this.newProjectorProduct));
+        // Object.assign(this.newProjectorProduct,this.defaultProjectorProduct);
 
       }, remove(position){
         this.projectorproductworkeds.splice(position, 1 );
@@ -233,10 +280,11 @@
       },
       edit(projectorProduct,position){
 
-        Object.assign(this.newProjectorProduct,projectorProduct);
-        this.projectorproductworkeds.splice(position, 1 );
+        Object.assign(this.newProjectorProduct, projectorProduct);
+        this.position = position;
         this.dialog1 = true;
-        if(this.projectorproductworkeds.length === 0){
+        this.editB = true;
+        if (this.projectorproductworkeds.length === 0) {
           this.btnSubmit = false;
         }
         console.log('edit')

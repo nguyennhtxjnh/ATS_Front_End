@@ -23,22 +23,7 @@
                   <v-btn flat color="orange" class="v-btn--outline">Cập Nhật Hồ Sơ</v-btn>
                 </v-card-actions>
               </v-card>
-              <v-card class="pa-3 mt-2">
-                <v-layout row wrap>
-                  <v-flex md12 sm12 xs12>
-                    <v-switch v-model="isActive" class="pl-3">
-                      <template v-slot:label>
-                        <div v-if="isActive"> Trạng thái tìm việc<strong class="primary--text"> BẬT</strong></div>
-                        <div v-if="!isActive"> Trạng thái tìm việc <strong class="primary--text"> TẮT</strong></div>
-                      </template>
-                    </v-switch>
-                  </v-flex>
-                  <v-flex md12 sm12 xs12>
-                    <span>Bật tìm việc để nhận được nhiều cơ hội việc làm tốt nhất</span>
-                  </v-flex>
-
-                </v-layout>
-              </v-card>
+              
             </v-flex>
           </v-layout>
         </template>
