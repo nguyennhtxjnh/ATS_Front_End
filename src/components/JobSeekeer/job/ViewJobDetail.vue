@@ -18,22 +18,23 @@
                 <v-flex d-flex class="pa-0 ma-0" md12>
                   <v-layout row wrap class="pa-0 ma-0">
                     <v-flex d-flex xs12>
-                      <a>{{jobFull.company.nameCompany}}</a>
+                      <span> <b>Công ty:</b> {{jobFull.company.nameCompany}}</span>
                     </v-flex>
                     <v-flex d-flex xs12 v-if="jobFull.salaryTo === 0 && jobFull.salaryFrom > 0">
-                      <span>Mức lương từ <b>{{jobFull.salaryFrom}}đ</b> trở lên</span>
+                      <span> <b>Mức lương: </b> từ {{jobFull.salaryFrom}}đ trở lên</span>
                     </v-flex>
                     <v-flex d-flex xs12 v-if="jobFull.salaryFrom === 0 && jobFull.salaryTo > 0">
-                      <span>Mức lương lên đến <b>{{jobFull.salaryTo}}đ</b></span>
+                      <span> <b>Mức lương:</b> lên đến {{jobFull.salaryTo}}đ</span>
                     </v-flex>
                     <v-flex d-flex xs12 v-if="jobFull.salaryTo > 0 && jobFull.salaryFrom > 0">
-                      <span>Mức lương từ <b>{{jobFull.salaryFrom}}đ</b> đến <b>{{jobFull.salaryTo}}đ</b></span>
+                      <span> <b>Mức lương:</b> từ {{jobFull.salaryFrom}}đ đến {{jobFull.salaryTo}}đ</span>
                     </v-flex>
                     <v-flex d-flex xs12 v-if="jobFull.salaryTo === 0 && jobFull.salaryFrom === 0">
-                      <span>Mức lương <b>thương lượng</b></span>
+                      <span><b>Mức lương:</b> thương lượng</span>
                     </v-flex>
                     <v-flex d-flex xs12>
-                      <span>View will stay here</span>  <span>Expired Date Here</span>
+<!--                      <span>View will stay here</span> -->
+                      <span><b>Ngày hết hạn nộp:</b> {{jobFull.endDateForApply}}</span>
                     </v-flex>
                     <v-flex d-flex xs12 fill-height>
 
@@ -108,6 +109,7 @@
                                 <v-card flat>
                                   <v-card-text >
                                     <div style="border: 1px solid rgba(0,185,242,.5);" class="pa-3">
+
                                       <v-text-field class="not-active"
                                                     label="Ngày Đăng Tuyển"
                                                     v-model="jobFull.createdDate"
@@ -117,22 +119,22 @@
                                       ></v-text-field>
                                       <v-text-field class="not-active"
                                                     label="Cấp Bậc"
-                                                    value="Nhân viên"
-                                                    prepend-icon="mdi-calendar-clock"
+                                                    v-model="jobFull.joblevelName"
+                                                    prepend-icon="mdi-account "
                                                     readonly
                                                     color="none"
                                       ></v-text-field>
                                       <v-text-field class="not-active"
                                                     label="Ngành Nghề"
                                                     value="Giáo dục/Đào tạo"
-                                                    prepend-icon="mdi-calendar-clock"
+                                                    prepend-icon="mdi-domain"
                                                     readonly
                                                     color="none"
                                       ></v-text-field>
                                       <v-text-field class="not-active"
                                                     label="Kĩ năng yêu cầu"
                                                     v-model="jobFull.listSkillName"
-                                                    prepend-icon="mdi-calendar-clock"
+                                                    prepend-icon="mdi-account-star"
                                                     readonly
                                                     color="none"
                                       ></v-text-field>
@@ -174,14 +176,14 @@
                                       <v-text-field class="not-active"
                                                     label="Địa điểm"
                                                     v-model="jobFull.company.address"
-                                                    prepend-icon="mdi-calendar-clock"
+                                                    prepend-icon="mdi-map-marker"
                                                     readonly
                                                     color="none"
                                       ></v-text-field>
                                       <v-text-field class="not-active"
                                                     label="Số điện thoại liên hệ"
                                                     v-model="jobFull.company.telephoneNumber"
-                                                    prepend-icon="mdi-calendar-clock"
+                                                    prepend-icon="mdi-phone"
                                                     readonly
                                                     color="none"
                                       ></v-text-field>
@@ -227,8 +229,17 @@
                                               <v-flex d-flex xs12>
                                                 <a style="color: black !important;">{{item.companyName}}</a>
                                               </v-flex>
-                                              <v-flex d-flex xs12>
-                                                <span style="color: black !important;">Salary Will Stay Here {{item.cityName}}</span>
+                                              <v-flex d-flex xs12 v-if="item.salaryTo === 0 && item.salaryFrom > 0">
+                                                <span> <b>Mức lương: </b> từ {{item.salaryFrom}}đ trở lên</span>
+                                              </v-flex>
+                                              <v-flex d-flex xs12 v-if="item.salaryFrom === 0 && item.salaryTo > 0">
+                                                <span> <b>Mức lương:</b> lên đến {{item.salaryTo}}đ</span>
+                                              </v-flex>
+                                              <v-flex d-flex xs12 v-if="item.salaryTo > 0 && item.salaryFrom > 0">
+                                                <span> <b>Mức lương:</b> từ {{item.salaryFrom}}đ đến {{item.salaryTo}}đ</span>
+                                              </v-flex>
+                                              <v-flex d-flex xs12 v-if="item.salaryTo === 0 && item.salaryFrom === 0">
+                                                <span><b>Mức lương:</b> thương lượng</span>
                                               </v-flex>
                                               <v-flex d-flex xs12 fill-height>
 
@@ -303,13 +314,29 @@
         Axios.get(`http://localhost:8080/job/getJobDetail?id=${+this.id}`)
           .then(response => {
             this.jobFull = response.data.data;
+            this.jobFull.createdDate = this.moment(this.jobFull.createdDate).format('DD-MM-YYYY');
+            this.jobFull.endDateForApply = this.moment(this.jobFull.endDateForApply).format('DD-MM-YYYY');
             console.log(this.jobFull);
           })
           .catch(console.error)
           .finally(() => {
             this.loading = false;
           })
-      }
+      },
+      formatDate(unix) {
+        const date = new Date(unix * 1000); // convert to milliseconds
+        const year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+
+        // Check if day or month is only 1 digit
+        // this because Moment.js works with 0 leading values
+        if (day.toString().length !== 2) day = `0${day}`;
+        if (month.toString().length !== 2) month = `0${month}`;
+
+        return `${year}-${month}-${day}`;
+      },
+
     },
     mounted() {
       this.$nextTick(() => {

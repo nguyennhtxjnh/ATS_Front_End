@@ -6,7 +6,7 @@ import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
 import '@mdi/font/css/materialdesignicons.css';
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
-// import moment from 'moment';
+import moment from 'moment';
 import Notificaton from 'vue-notification';
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import GSignInButton from 'vue-google-signin-button'
