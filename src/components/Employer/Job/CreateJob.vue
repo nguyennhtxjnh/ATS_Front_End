@@ -27,6 +27,18 @@
                                   :rules="[rules.required]"></v-text-field>
                   </v-flex>
 
+                  <!--                   Nơi Làm Việc-->
+                  <v-flex class="pa-1" xs12>
+                    <v-autocomplete
+                      prepend-icon="mdi-map-marker"
+                      :items="cityAPI"
+                      item-text="fullName"
+                      item-value="id"
+                      label="Chọn Tĩnh/Thành Phố"
+                    ></v-autocomplete>
+                  </v-flex>
+                  <!--                    Hết Nơi Làm Việc-->
+
                   <v-flex  xs12>
                     <v-autocomplete
                       class="ma-2"
@@ -67,19 +79,7 @@
                   </v-flex>
                   <!--hết số lượng-->
 
-                  <!-- Nơi Làm Việc-->
-                  <!--                  <v-flex class="pa-1" md6 xs12>-->
-                  <!--                    <v-autocomplete-->
-                  <!--                      prepend-icon="mdi-map-marker"-->
-                  <!--                      :items="salaryChoose"-->
-                  <!--                      item-text="name"-->
-                  <!--                      item-value="id"-->
-                  <!--                      label="Nơi Làm Việc"-->
-                  <!--                    ></v-autocomplete>-->
-                  <!--                  </v-flex>-->
 
-
-                  <!--  Hết Nơi Làm Việc-->
 
                   <!--  Kinh Nghiệm-->
                   <v-flex md12 xs12>
@@ -288,20 +288,9 @@
           yearName: '4 năm'
         }, {id: 5, yearName: '5 năm'},],
         jobLevelAPI: [],
+        cityAPI: [],
         workingType: ['Toàn Thời Gian', 'Bán Thời Gian', 'Thực Tập'],
-        skillChoose: [
-          // {
-          //   id: 1,
-          //   skillMaster: 'Java',
-          // }, {
-          //   id: 2,
-          //   skillMaster: 'C#',
-          // }, {
-          //   id: 3,
-          //   skillMaster: 'Vue',
-          //
-          // }
-        ],
+        skillChoose: [],
         selectedSkill: null,
         skillRating: [1, 2, 3, 4, 5],
 
@@ -493,6 +482,7 @@
           .then(response => {
             if (response.data.success == true) {
               this.jobLevelAPI = response.data.data.level
+              this.cityAPI = response.data.data.city
               this.skillChoose = response.data.data.skillname
             } else {
               this.$notify({
