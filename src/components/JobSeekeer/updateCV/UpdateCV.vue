@@ -288,10 +288,7 @@
   import SkillInCVComponent from "./SkillInCVComponent";
   import ProjectorProductWorkedComponent from "./ProjectorProductWorkedComponent";
   import ProfileBasicComponent from "../manageCV/ProfileBasicComponent";
-  import Vue from 'vue';
-  import VeeValidate from 'vee-validate';
 
-  Vue.use(VeeValidate);
 
 
   export default {
