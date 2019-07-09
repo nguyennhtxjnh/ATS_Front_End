@@ -15,7 +15,7 @@
                 <v-layout fill-height wrap>
 
                   <v-flex md12 xs12>
-                    <v-text-field class="ma-2" prepend-icon="mdi-lead-pencil" name="title" label="Tiêu Đề" type="text"
+                    <v-text-field class="ma-2" prepend-icon="mdi-account-badge" name="title" label="Chức Danh Tuyển Dụng" type="text"
                                   v-model="formData.title"
                                   :rules="[rules.required]"></v-text-field>
                   </v-flex>
@@ -27,28 +27,30 @@
                                   :rules="[rules.required]"></v-text-field>
                   </v-flex>
 
-                  <v-flex class="pa-1" md6 xs12>
+                  <v-flex  xs12>
                     <v-autocomplete
-                      v-model="formData.joblevelid"
+                      class="ma-2"
+                      v-model="formData.joblevelId"
                       prepend-icon="mdi-account"
                       :items="jobLevelAPI"
-                      item-text="joblevelName"
+                      item-text="jobLevelName"
                       item-value="id"
                       label="Cấp Bậc"
                       :rules="[rules.required]"
                     ></v-autocomplete>
                   </v-flex>
 
-                  <v-flex md6 xs12>
-                    <v-text-field class="ma-2" prepend-icon="mdi-account-badge" name="Name" label="Chức Danh Cụ Thể"
-                                  type="text"
-                                  v-model="formData.vacancyName"
-                                  :rules="[rules.required]"></v-text-field>
-                  </v-flex>
+<!--                  <v-flex md6 xs12>-->
+<!--                    <v-text-field class="ma-2" prepend-icon="mdi-account-badge" name="Name" label="Chức Danh Cụ Thể"-->
+<!--                                  type="text"-->
+<!--                                  v-model="formData.vacancyName"-->
+<!--                                  :rules="[rules.required]"></v-text-field>-->
+<!--                  </v-flex>-->
 
                   <!--Loại Hình-->
-                  <v-flex class="pa-1" md6 xs12>
+                  <v-flex  md6 xs12>
                     <v-autocomplete
+                      class="ma-2"
                       prepend-icon="mdi-format-list-bulleted-type"
                       :items="workingType"
                       v-model="formData.workingType"
@@ -82,6 +84,7 @@
                   <!--  Kinh Nghiệm-->
                   <v-flex md12 xs12>
                     <v-autocomplete
+                      class="ma-2"
                       prepend-icon="mdi-calendar-clock"
                       :items="skillYear"
                       v-model="formData.yearExperience"
@@ -94,14 +97,16 @@
                   </v-flex>
                   <!--  Hết Kinh Nghiệm-->
                   <!--Lương-->
-                  <v-flex class="pa-1" md6 xs12>
+                  <v-flex md6 xs12>
                     <v-select
+                      class="ma-2"
                       prepend-icon="mdi-currency-usd"
                       :items="salaryChoose"
                       v-model="selectedSalary"
                       item-text="name"
                       item-value="id"
                       label="Lương"
+                      v-on:change="resetSalary"
                     ></v-select>
                   </v-flex>
 
@@ -196,54 +201,57 @@
                     ></ckeditor>
                   </v-flex>
 
+                  <!--                  ki nang-->
                   <v-flex class="pa-1" md6 xs12>
                     <v-autocomplete
                       prepend-icon="mdi-account-star"
                       :items="skillChoose"
                       v-model="selectedSkill"
-                      item-text="skillMaster"
+                      item-text="skillName"
                       item-value="id"
                       return-object
                       label="Kĩ Năng"
+                      :rules="[rules.required]"
                     ></v-autocomplete>
                   </v-flex>
                   <v-flex class="pa-1" md6 xs12>
                     <v-btn color="orange" style="color: white !important;" @click="addSkill">Thêm Kĩ Năng</v-btn>
                   </v-flex>
-                  <template v-for="(skill,index) in formData.listSkill">
-                    <v-flex class="pa-1" md4 xs12>
+                  <template v-for="(skill,index) in formDataSkill.listSkill">
+                    <v-flex class="pa-1" md5 xs12>
                       <v-autocomplete
-                        prepend-icon="mdi-account-star"
                         :items="skillChoose"
                         v-model="skill.id"
-                        item-text="skillMaster"
+                        item-text="skillName"
                         item-value="id"
                         label="Kĩ Năng"
+                        :rules="[rules.required]"
                         readonly
+                        outline
                       ></v-autocomplete>
                     </v-flex>
-                    <v-flex class="pa-1" md4 xs12>
+                    <v-flex class="pa-1" md5 xs12>
                       <v-autocomplete
-                        prepend-icon="mdi-account-star"
+                        prepend-icon="mdi-star"
                         :items="skillRating"
                         v-model="skill.skillLevel"
                         item-text="name"
                         item-value="id"
                         label="Đánh Giá"
+                        :rules="[rules.required]"
                       ></v-autocomplete>
                     </v-flex>
-                    <v-flex class="pa-1" md4 xs12>
-                      <v-btn color="error" @click="removeSkill(index)">Xóa</v-btn>
+                    <v-flex class="pa-1" md2 xs12>
+                      <v-btn color="error" @click="removeSkill(index)"><v-icon>mdi-trash-can-outline</v-icon></v-btn>
                     </v-flex>
                   </template>
+<!--                  <v-flex class="pa-1" md2 xs12>-->
+<!--                    <v-btn color="error" @click="testPost()">test</v-btn>-->
+<!--                  </v-flex>-->
                 </v-layout>
               </v-container>
 
             </v-card-text>
-<!--            <v-flex class="pa-1" md4 xs12>-->
-<!--              <v-btn color="error" @click="testPost()">Test</v-btn>-->
-<!--            </v-flex>-->
-
             <v-card-actions class="justify-center mb-4">
               <div class="text-xs-center">
                 <v-spacer></v-spacer>
@@ -262,6 +270,7 @@
   import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document'
   import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/vi'
   import Axios from 'axios'
+  import {mapGetters} from 'vuex'
 
   export default {
     name: 'CreateJob',
@@ -281,37 +290,37 @@
         jobLevelAPI: [],
         workingType: ['Toàn Thời Gian', 'Bán Thời Gian', 'Thực Tập'],
         skillChoose: [
-          {
-            id: 1,
-            skillMaster: 'Java',
-            skillLevel: 0,
-          }, {
-            id: 2,
-            skillMaster: 'C#',
-            skillLevel: 0,
-          }, {
-            id: 3,
-            skillMaster: 'Vue',
-            skillLevel: 0,
-          }
+          // {
+          //   id: 1,
+          //   skillMaster: 'Java',
+          // }, {
+          //   id: 2,
+          //   skillMaster: 'C#',
+          // }, {
+          //   id: 3,
+          //   skillMaster: 'Vue',
+          //
+          // }
         ],
         selectedSkill: null,
         skillRating: [1, 2, 3, 4, 5],
 
-        formData: {
-          userid: '5',
-          companyid: '1',
-          cityid: '1',
 
-          listSkill: [
-            // {
-            //   skillMaster: '',
-            //   skillLevel: 0,
-            // }
-          ],
+        listSkill: [],
+
+        formDataCompany: {
+          userId: '',
+        },
+
+        formData: {
+          userId: '',
+          companyId: '',
+          cityId: 1,
+
+
           title: '',
           address: '',
-          joblevelid: '',
+          joblevelId: '',
           vacancyName: '',
           salaryFrom: 0,
           salaryTo: 0,
@@ -323,6 +332,12 @@
           workingType: '',
           numbeOfRecruitment: '',
         },
+
+        formDataSkill:{
+          jobId: '',
+          listSkill:[]
+        },
+
         editor: DecoupledEditor,
         editorConfig: {
           uiColor: '#9AB8F3',
@@ -350,39 +365,45 @@
     },
     methods: {
       testPost(){
-        console.log(this.formData.listSkill);
+        this.formDataCompany.userId = this.userId2;
+        console.log(this.formDataCompany);
       },
       addSkill () {
-        if(this.formData.listSkill.length === 0){
-          this.formData.listSkill.push(Object.assign({}, this.selectedSkill))
+        if(this.selectedSkill === null){
+          this.$notify({
+            group: 'foo',
+            type: 'warn',
+            title: 'Chú ý',
+            text: 'Kĩ năng không được để trống!'
+          })
+          return;
         }
-        if(this.formData.listSkill.length !== 0) {
-          this.formData.listSkill.forEach((itemX) =>{
+        if(this.formDataSkill.listSkill.length === 0){
+          this.formDataSkill.listSkill.push(Object.assign({}, this.selectedSkill))
+        }
+        if(this.formDataSkill.listSkill.length !== 0) {
+          this.formDataSkill.listSkill.forEach((itemX) =>{
             this.tmpSkill.push(itemX.id)
             this.tmpSkill = [...new Set(this.tmpSkill)];
           })
         }
         if(!this.tmpSkill.includes(this.selectedSkill.id)){
-          this.formData.listSkill.push(Object.assign({}, this.selectedSkill))
+          this.formDataSkill.listSkill.push(Object.assign({}, this.selectedSkill))
         }
       },
       removeSkill(index){
         console.log(index);
-        this.formData.listSkill.splice(index,1);
+        this.formDataSkill.listSkill.splice(index,1);
         this.tmpSkill.splice(index,1);
-        console.log(this.formData.listSkill);
+        console.log(this.listSkill);
       },
       submitjob () {
-        console.log(this.formData.listSkill)
         if (this.$refs.form.validate()) {
-          if (this.formData.salaryFrom > this.formData.salaryTo && this.formData.salaryTo !== 0) {
-            this.$notify({
-              group: 'foo',
-              type: 'warn',
-              title: 'Chú ý',
-              text: 'Khoảng Lương Không Hợp Lệ!'
-            })
-            return
+          if (this.formData.salaryTo < this.formData.salaryFrom && this.formData.salaryFrom !== 0) {
+            let tmp = null;
+            tmp = this.formData.salaryFrom;
+            this.formData.salaryFrom = this.formData.salaryTo;
+            this.formData.salaryTo = tmp;
           }
           if (this.formData.jobDescription === '') {
             this.$notify({
@@ -412,34 +433,47 @@
             return
           }
 
-          const url = 'http://localhost:8080/job/create'
-          const method = 'POST'
-          const data = this.formData
-          Axios({url, method, data})
-            .then(response => {
-              if (response.data.success == true) {
-                this.$notify({
-                  group: 'foo',
-                  type: 'success',
-                  title: 'Thành Công',
-                  text: 'Đăng Tin Thành Công!'
-                })
-              }
-            })
-            .catch(error => {
-              console.log(error)
-              this.$notify({
-                group: 'foo',
-                type: 'error',
-                title: 'Thất Bại',
-                text: 'Đã Xảy Ra Lỗi!'
-              })
-            })
-            .finally(() => {
-
-            })
+          this.formDataCompany.userId = this.userId2;
+          this.formData.userId = this.userId2;
+          this.getCompany();
 
         }
+      },
+      async submitSkill (jobid){
+        for(let i = 0; i < this.formDataSkill.listSkill.length; i++){
+          this.formDataSkill.listSkill[i].skillMasterId = this.formDataSkill.listSkill[i]['id'];
+          delete this.formDataSkill.listSkill[i].id;
+          delete this.formDataSkill.listSkill[i].skillName;
+        }
+        this.formDataSkill.jobId = jobid;
+
+        const url = 'http://localhost:8080/skillneedforjob/addNewSkill'
+        const data = this.formDataSkill
+        const method = 'POST'
+
+        console.log(this.formDataSkill)
+
+        await Axios({url, method, data})
+          .then(response => {
+            if (response.data.success == true) {
+              this.$notify({
+                group: 'foo',
+                type: 'success',
+                title: 'Thành Công',
+                text: 'Đăng Tin Thành Công!'
+              })
+              this.$router.push('/trang-chu-tuyen-dung');
+            }
+          })
+          .catch(error => {
+            console.log(error)
+            this.$notify({
+              group: 'foo',
+              type: 'error',
+              title: 'Thất Bại',
+              text: 'Đã Xảy Ra Lỗi!'
+            })
+          })
       },
       resetSalary () {
         this.formData.salaryFrom = 0
@@ -453,13 +487,13 @@
         )
       },
       getInitData () {
-        const url = 'http://localhost:8080/joblevel/'
+        const url = 'http://localhost:8080/job/getJobComponent'
         const method = 'GET'
         Axios({url, method})
           .then(response => {
-            console.log(response)
             if (response.data.success == true) {
-              this.jobLevelAPI = response.data.data
+              this.jobLevelAPI = response.data.data.level
+              this.skillChoose = response.data.data.skillname
             } else {
               this.$notify({
                 group: 'foo',
@@ -483,13 +517,81 @@
 
           })
       },
+      getCompany(){
+        const url = 'http://localhost:8080/employercompany/getCompanyId'
+        const method = 'POST'
+        const data = this.formDataCompany
+          Axios({url, method, data})
+          .then(async response => {
+            if (response.data.success == true) {
+              this.formData.companyId = response.data.data;
+
+              const url = 'http://localhost:8080/job/create';
+              const method = 'POST';
+              const data = this.formData;
+              console.log(data)
+              let config = {
+                headers: {
+                  accessToken: localStorage.getItem('token2')
+                }
+              }
+
+              await Axios({url, method, data, config})
+                .then(response => {
+                  if (response.data.success == true) {
+                    this.submitSkill(response.data.data)
+                  }
+                })
+                .catch(error => {
+                  console.log(error)
+                  this.$notify({
+                    group: 'foo',
+                    type: 'error',
+                    title: 'Thất Bại',
+                    text: 'Đã Xảy Ra Lỗi!'
+                  })
+                })
+                .finally(() => {
+
+                })
+
+            } else {
+              this.$notify({
+                group: 'foo',
+                type: 'error',
+                title: 'Thất Bại',
+                text: 'Lấy Company!'
+              })
+            }
+          })
+          .catch(error => {
+            console.log(error)
+            this.$notify({
+              group: 'foo',
+              type: 'error',
+              title: 'Thất Bại',
+              text: 'Đã Xảy Ra Lỗi!'
+            })
+          })
+          .finally(() => {
+
+          })
+      },
+
     },
     mounted () {
-      this.$nextTick(() => {
+      this.$nextTick( () => {
         this.getInitData()
       })
     },
-    computed: {}
+    computed: {
+      ...mapGetters('AUTHENTICATION_STORE',{
+        email : 'email2',
+        roleId: 'roleId2',
+        fullName: 'fullName2',
+        userId2: 'userId2'
+      }),
+    }
   }
 
 </script>

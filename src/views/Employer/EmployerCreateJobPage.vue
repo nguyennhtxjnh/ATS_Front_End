@@ -6,7 +6,7 @@
 
 <script>
   import DashBoardLayout from '../../layouts/DashBoardLayout'
-  import CreateJob from '../../components/Employer/CreateJob/CreateJob'
+  import CreateJob from '../../components/Employer/Job/CreateJob'
   import EmployerMainLayout from '../../layouts/EmployerMainLayout'
   export default {
     name: 'JobSeekerLoginPage',

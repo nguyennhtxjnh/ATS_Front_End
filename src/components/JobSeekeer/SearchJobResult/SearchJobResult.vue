@@ -12,6 +12,13 @@
                   hide-details
                   v-model="selectSkill"
                 ></v-text-field>
+<!--                <v-combobox-->
+<!--                  v-model="selectSkill"-->
+<!--                  :items="items"-->
+<!--                  outline-->
+<!--                  single-line-->
+<!--                  label="Nhập chức danh, vị trí, kỹ năng..."-->
+<!--                ></v-combobox>-->
                 </v-flex >
               <v-flex md3 xs12 class="white ma-2" style="border-radius: 4px; height: 59px">
                 <v-autocomplete
@@ -47,7 +54,7 @@
 <!--        Search Result-->
         <v-flex xs8 class="mt-2">
           <v-data-table
-            :items="departments"
+            :items="job"
             :loading="loading"
             :pagination.sync="pagination"
             :no-data-text="'Không có dữ liệu'"
@@ -62,8 +69,8 @@
 <!--            </template>-->
 
             <template #items="{item}" >
-              <td class="hoverClass pl-0">
-                <v-flex xs12>
+              <td class="hoverClass pl-0" >
+                <v-flex xs12 @click="$router.push(`/thong-tin-cong-viec/${item.id}`)">
                   <v-container fluid grid-list-md class="pa-0">
                     <v-layout row wrap >
                       <v-flex d-flex xs12 md2>
@@ -74,15 +81,15 @@
                         <v-layout row wrap class="pa-0 ma-0" >
 
                           <v-flex d-flex class="pa-0 mt-2" xs12>
-                            <h1 class="titleResult">{{item.name}}</h1>
+                            <h1 class="titleResult">{{item.title}}</h1>
                           </v-flex>
                           <v-flex d-flex class="pa-0 ma-0">
                             <v-layout row wrap class="pa-0 ma-0">
                               <v-flex d-flex xs12>
-                                <a style="color: black !important;">Company Will Stay Here</a>
+                                <a style="color: black !important;">{{item.companyName}}</a>
                               </v-flex>
                               <v-flex d-flex xs12>
-                                <span style="color: black !important;">Salary Will Stay Here</span>
+                                <span style="color: black !important;">Salary Will Stay Here {{item.cityName}}</span>
                               </v-flex>
                               <v-flex d-flex xs12>
                                 <span style="color: black !important;">View will stay here</span>  <span style="color: black !important;">Expired Date Here</span>
@@ -126,6 +133,13 @@
     name: 'SearchJobResult',
     data : ()=> {
       return {
+        items: [
+          'Programming',
+          'Design',
+          'Vue',
+          'Vuetify'
+        ],
+
         cbCompany: ['ABC', '123', 'CT'],
         images: {'main': require('@/assets/jsmain1.jpg')},
         industries: [{id: "1", name: "Foo"}, {id: "2", name: "Bar"}, {id: "3", name: "Baka"}, {id: "4", name: "Pig"},],
@@ -144,217 +158,7 @@
           {text: 'Thao tác', sortable: false},
         ],
         pagination: {},
-        departments: [
-          {
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: '1%',
-
-        },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-            iron: '1%'
-          },
-          {
-            name: 'Eclair',
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-            iron: '7%'
-          },
-          {
-            name: 'Cupcake',
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3,
-            iron: '8%'
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9,
-            iron: '16%'
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0,
-            iron: '0%'
-          },
-          {
-            name: 'Lollipop',
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0,
-            iron: '2%'
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5,
-            iron: '45%'
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            iron: '22%'
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-            iron: '6%'
-          }
-          ,
-          {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            iron: '22%'
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-            iron: '6%'
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            iron: '22%'
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-            iron: '6%'
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            iron: '22%'
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-            iron: '6%'
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            iron: '22%'
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-            iron: '6%'
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            iron: '22%'
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-            iron: '6%'
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            iron: '22%'
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-            iron: '6%'
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            iron: '22%'
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-            iron: '6%'
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            iron: '22%'
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-            iron: '6%'
-          }],
+        job: [],
 
         selectSkill: '',
         selectJob: '',
@@ -366,24 +170,40 @@
       }
     },
     methods: {
-      getDepartments() {
+
+      getjob() {
       //   this.loading = true;
-      //   Axios.get(`http://localhost:8080/departments`)
+      //   Axios.get(`http://localhost:8080/job`)
       //     .then(response => {
-      //       this.departments = response.data.content;
+      //       this.job = response.data.content;
       //     })
       //     .catch(console.error)
       //     .finally(() => {
       //       this.loading = false;
       //     })
       // },
-    },
+      },
       favoriteBtn(){
         this.favorite = !this.favorite;
         this.textBtnFav.text = this.favorite ? 'Lưu Việc Làm' : 'Đã Lưu';
       },
       searchClick(){
+        sessionStorage.setItem("skill", this.selectSkill);
+        sessionStorage.setItem("job", this.selectJob);
+        sessionStorage.setItem("location", this.selectLocation);
         console.log(this.selectSkill + ", " + this.selectJob + ", " + this.selectLocation);
+
+          this.loading = true;
+          Axios.get(`http://localhost:8080/job/search?search=` + this.selectSkill)
+            .then(response => {
+              this.job = response.data.data;
+            })
+            .catch(console.error)
+            .finally(() => {
+              this.loading = false;
+            })
+
+
       }
     },
     mounted() {
@@ -396,7 +216,7 @@
     },
     watch: {
       pagination() {
-        this.getDepartments();
+        this.getjob();
       }
     },
 
