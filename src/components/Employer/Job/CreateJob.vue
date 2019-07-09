@@ -16,7 +16,7 @@
 
                   <v-flex md12 xs12>
                     <v-text-field class="ma-2" prepend-icon="mdi-account-badge" name="title" label="Chức Danh Tuyển Dụng" type="text"
-                                  v-model="formData.vacancyName"
+                                  v-model="formData.title"
                                   :rules="[rules.required]"></v-text-field>
                   </v-flex>
 
@@ -30,7 +30,7 @@
                   <v-flex  xs12>
                     <v-autocomplete
                       class="ma-2"
-                      v-model="formData.joblevelid"
+                      v-model="formData.joblevelId"
                       prepend-icon="mdi-account"
                       :items="jobLevelAPI"
                       item-text="jobLevelName"
@@ -270,6 +270,7 @@
   import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document'
   import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/vi'
   import Axios from 'axios'
+  import {mapGetters} from 'vuex'
 
   export default {
     name: 'CreateJob',
@@ -307,15 +308,19 @@
 
         listSkill: [],
 
+        formDataCompany: {
+          userId: '',
+        },
+
         formData: {
-          userid: '5',
-          companyid: '2',
-          cityid: '1',
+          userId: '',
+          companyId: '',
+          cityId: 1,
 
 
           title: '',
           address: '',
-          joblevelid: '',
+          joblevelId: '',
           vacancyName: '',
           salaryFrom: 0,
           salaryTo: 0,
@@ -360,7 +365,8 @@
     },
     methods: {
       testPost(){
-        console.log(this.formDataSkill.listSkill);
+        this.formDataCompany.userId = this.userId2;
+        console.log(this.formDataCompany);
       },
       addSkill () {
         if(this.selectedSkill === null){
@@ -387,20 +393,17 @@
       },
       removeSkill(index){
         console.log(index);
-        this.listSkill.splice(index,1);
+        this.formDataSkill.listSkill.splice(index,1);
         this.tmpSkill.splice(index,1);
         console.log(this.listSkill);
       },
-      async submitjob () {
+      submitjob () {
         if (this.$refs.form.validate()) {
-          if (this.formData.salaryFrom > this.formData.salaryTo && this.formData.salaryTo !== 0) {
-            this.$notify({
-              group: 'foo',
-              type: 'warn',
-              title: 'Chú ý',
-              text: 'Khoảng Lương Không Hợp Lệ!'
-            })
-            return
+          if (this.formData.salaryTo < this.formData.salaryFrom && this.formData.salaryFrom !== 0) {
+            let tmp = null;
+            tmp = this.formData.salaryFrom;
+            this.formData.salaryFrom = this.formData.salaryTo;
+            this.formData.salaryTo = tmp;
           }
           if (this.formData.jobDescription === '') {
             this.$notify({
@@ -430,33 +433,9 @@
             return
           }
 
-          const url = 'http://localhost:8080/job/create';
-          const method = 'POST';
-          const data = this.formData;
-          let config = {
-            headers: {
-              accessToken: localStorage.getItem('token2')
-            }
-          }
-
-          await Axios({url, method, data, config})
-            .then(response => {
-              if (response.data.success == true) {
-                this.submitSkill(response.data.data)
-              }
-            })
-            .catch(error => {
-              console.log(error)
-              this.$notify({
-                group: 'foo',
-                type: 'error',
-                title: 'Thất Bại',
-                text: 'Đã Xảy Ra Lỗi!'
-              })
-            })
-            .finally(() => {
-
-            })
+          this.formDataCompany.userId = this.userId2;
+          this.formData.userId = this.userId2;
+          this.getCompany();
 
         }
       },
@@ -483,6 +462,7 @@
                 title: 'Thành Công',
                 text: 'Đăng Tin Thành Công!'
               })
+              this.$router.push('/trang-chu-tuyen-dung');
             }
           })
           .catch(error => {
@@ -511,7 +491,6 @@
         const method = 'GET'
         Axios({url, method})
           .then(response => {
-            console.log(response)
             if (response.data.success == true) {
               this.jobLevelAPI = response.data.data.level
               this.skillChoose = response.data.data.skillname
@@ -538,13 +517,81 @@
 
           })
       },
+      getCompany(){
+        const url = 'http://localhost:8080/employercompany/getCompanyId'
+        const method = 'POST'
+        const data = this.formDataCompany
+          Axios({url, method, data})
+          .then(async response => {
+            if (response.data.success == true) {
+              this.formData.companyId = response.data.data;
+
+              const url = 'http://localhost:8080/job/create';
+              const method = 'POST';
+              const data = this.formData;
+              console.log(data)
+              let config = {
+                headers: {
+                  accessToken: localStorage.getItem('token2')
+                }
+              }
+
+              await Axios({url, method, data, config})
+                .then(response => {
+                  if (response.data.success == true) {
+                    this.submitSkill(response.data.data)
+                  }
+                })
+                .catch(error => {
+                  console.log(error)
+                  this.$notify({
+                    group: 'foo',
+                    type: 'error',
+                    title: 'Thất Bại',
+                    text: 'Đã Xảy Ra Lỗi!'
+                  })
+                })
+                .finally(() => {
+
+                })
+
+            } else {
+              this.$notify({
+                group: 'foo',
+                type: 'error',
+                title: 'Thất Bại',
+                text: 'Lấy Company!'
+              })
+            }
+          })
+          .catch(error => {
+            console.log(error)
+            this.$notify({
+              group: 'foo',
+              type: 'error',
+              title: 'Thất Bại',
+              text: 'Đã Xảy Ra Lỗi!'
+            })
+          })
+          .finally(() => {
+
+          })
+      },
+
     },
     mounted () {
-      this.$nextTick(() => {
+      this.$nextTick( () => {
         this.getInitData()
       })
     },
-    computed: {}
+    computed: {
+      ...mapGetters('AUTHENTICATION_STORE',{
+        email : 'email2',
+        roleId: 'roleId2',
+        fullName: 'fullName2',
+        userId2: 'userId2'
+      }),
+    }
   }
 
 </script>

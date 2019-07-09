@@ -18,6 +18,8 @@ import JobSeekerCreateCV from "../views/Jobseeker/JobSeekerCreateCV";
 import EmployerSearchCVPage from "../views/Employer/EmployerSearchCVPage";
 import SuggestionCVPage from "../views/Employer/SuggestionCVPage";
 import UpdateCVPage from "../views/Jobseeker/UpdateCVPage";
+import EmployerCreateCompanyPage from '../views/Employer/EmployerCreateCompanyPage'
+import JobSeekerViewJobDetailPage from '../views/Jobseeker/JobSeekerViewJobDetailPage'
 
 
 Vue.use(Router)
@@ -120,6 +122,19 @@ const router = new Router({
       name: 'suggestionCV',
       component: SuggestionCVPage
     }
+    ,
+    {
+      path: '/tao-cong-ty',
+      name: 'employer create company',
+      component: EmployerCreateCompanyPage
+    }
+    ,
+    {
+      path: '/thong-tin-cong-viec/:id',
+      name: 'job seeker view job',
+      component: JobSeekerViewJobDetailPage
+    }
+    ,
     // {
     //   path: '/detail/:id',
     //   component: Detail
@@ -190,23 +205,23 @@ router.beforeEach((to, from, next) => {
   }
 
   if (to.path === '/dang-tin-tuyen-dung') {
-    // if (!store.getters['AUTHENTICATION_STORE/isLoggedIn']) {
-    //   store.dispatch('AUTHENTICATION_STORE/INIT')
-    //     .then(() => next())
-    //     .catch(error => {
-    //         if (error.response) {
-    //           console.log(error.response.data)
-    //         } else {
-    //           console.log(error)
-    //         }
-    //         next('/dang-nhap')
-    //       }
-    //     );
-    //   return;
-    // }
+    if (!store.getters['AUTHENTICATION_STORE/isLoggedIn2']) {
+      store.dispatch('AUTHENTICATION_STORE/INIT2')
+        .then(() => next())
+        .catch(error => {
+            if (error.response) {
+              console.log(error.response.data)
+            } else {
+              console.log(error)
+            }
+            next('/tuyen-dung-dang-nhap')
+          }
+        );
+      return;
+    }
     // next();
-    next('/dang-nhap');
-    return;
+    // next('/dang-nhap');
+    // return;
   }
   next();
 });

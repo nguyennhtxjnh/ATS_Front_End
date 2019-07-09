@@ -3,7 +3,15 @@
     <!--    ToolBar-->
     <template>
       <v-toolbar fixed class="orange" v-if="$vuetify.breakpoint.mdAndUp">
-        <v-toolbar-title @click="$router.push('/trang-chu-tuyen-dung')" class="white--text hoverCSSTitle" >Nhà Tuyển Dụng</v-toolbar-title>
+        <v-toolbar-title @click="$router.push('/trang-chu-tuyen-dung')" class="white--text hoverCSSTitle pr-5 mr-5" >Nhà Tuyển Dụng</v-toolbar-title>
+        <v-btn style="height: 100%" flat  class="orange white--text text-none"  @click="$router.push('/dang-tin-tuyen-dung')" v-if="roleId === 2">
+          Đăng Tin Tuyển Dụng
+        </v-btn>
+
+        <v-btn style="height: 100%" flat  class="orange white--text text-none" @click="$router.push('/tuyen-dung-dang-nhap')" v-if="roleId !== 2">
+          Đăng Tin Tuyển Dụng
+        </v-btn>
+
         <v-spacer></v-spacer>
         <!--        <v-flex xs 4>-->
         <!--            <span @click="test">fasfa</span>-->
@@ -23,7 +31,7 @@
         <v-btn style="height: 100%" flat  class="orange white--text" @click="$router.push('/tuyen-dung-dang-nhap')" v-if="roleId !== 2">
           Đăng Nhập
         </v-btn>
-        <Span  v-if="roleId !== 2">|</Span>
+        <Span  v-if="roleId !== 2" class="orange white--text">|</Span>
         <v-btn style="height: 100%" flat  class="orange white--text" @click="$router.push('/tuyen-dung-dang-ky')" v-if="roleId !== 2">
           Đăng Ký
         </v-btn>

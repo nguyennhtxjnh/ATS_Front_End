@@ -6,7 +6,7 @@
 
 <script>
   import DashBoardLayout from '../../layouts/DashBoardLayout'
-  import JobDetail from '../../components/Employer/JobDetail/JobDetail'
+  import JobDetail from '../../components/Employer/Job/JobDetail'
   import EmployerMainLayout from '../../layouts/EmployerMainLayout'
   export default {
     name: 'EmployerJobDetailPage',

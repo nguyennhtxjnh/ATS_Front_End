@@ -61,39 +61,15 @@
                   </v-flex>
 
                   <v-flex xs12 >
-
-<!--                      <v-combobox class="ma-2"-->
-<!--                        v-model="selectedCompany"-->
-<!--                        :items="CompanyAPI"-->
-<!--                        :rules="[rules.required]"-->
-<!--                        item-text="nameCompany"-->
-<!--                        item-id="id"-->
-<!--                        prepend-icon="mdi-domain"-->
-<!--                        :search-input.sync="search"-->
-<!--                        hide-selected-->
-<!--                        label="Công Ty"-->
-<!--                        small-chips-->
-<!--                      >-->
-<!--                        <template v-slot:no-data>-->
-<!--                          <v-list-tile>-->
-<!--                            <v-list-tile-content>-->
-<!--                              <v-list-tile-title>-->
-<!--                                Không tìm thấy công ty phù hợp "<strong>{{ search }}</strong>". Nhấn <kbd>enter</kbd> để tạo mới công ty-->
-<!--                              </v-list-tile-title>-->
-<!--                            </v-list-tile-content>-->
-<!--                          </v-list-tile>-->
-<!--                        </template>-->
-<!--                      </v-combobox>-->
-
-                    <v-autocomplete class="ma-2"
-                                    :rules="[rules.required]"
-                                    v-model="selectedCompany"
-                                    prepend-icon="mdi-domain"
-                                    :items="CompanyAPI"
-                                    item-text="nameCompany"
-                                    item-value="id"
-                                    label="Công Ty"
-
+                    <v-autocomplete
+                      class="ma-2"
+                      :rules="[rules.required]"
+                      v-model="formDataCompany.companyId"
+                      prepend-icon="mdi-domain"
+                      :items="CompanyAPI"
+                      item-text="nameCompany"
+                      item-value="id"
+                      label="Công Ty"
                     ></v-autocomplete>
 
                   </v-flex>
@@ -120,20 +96,20 @@
 
                   <v-flex xs12>
                     <v-autocomplete class="ma-2"
-                                    :rules="[rules.required]"
-                                    v-model="formData.cityid"
-                                    prepend-icon="mdi-map-marker-radius"
-                                    :items="CityAPI"
-                                    item-text="fullName"
-                                    item-value="id"
-                                    label="Nơi Làm Việc"
-                                    hint="Chọn Tĩnh, Thành Phố"
-                                    persistent-hint
+                      :rules="[rules.required]"
+                      v-model="formData.cityid"
+                      prepend-icon="mdi-map-marker-radius"
+                      :items="CityAPI"
+                      item-text="fullName"
+                      item-value="id"
+                      label="Nơi Làm Việc"
+                      hint="Chọn Tĩnh, Thành Phố"
+                      persistent-hint
 
                     ></v-autocomplete>
                   </v-flex>
 
-                  <v-btn color="warning" @click="testCompany">Tét Com</v-btn>
+<!--                  <v-btn color="warning" @click="testCompany">Tét Com</v-btn>-->
 
                 </v-layout>
               </v-container>
@@ -163,13 +139,17 @@
     data: function () {
       return {
         chooseGender:['Nam', 'Nữ'],
-        selectedCompany: null,
         search: null,
 
         LevelAPI: [],
         CityAPI: [],
         CompanyAPI: [],
         tmpCompany: [],
+
+        formDataCompany: {
+          companyId: '',
+          userId: '',
+        },
 
         formData: {
           email : "",
@@ -197,29 +177,56 @@
     },
     methods: {
       testCompany(){
-
-        // this.CompanyAPI.forEach((itemX) =>{
-        //   this.tmpCompany.push(itemX.id)
-        //   this.tmpCompany = [...new Set(this.tmpCompany)];
-        // })
-        //
-        // if(!this.tmpCompany.includes(this.selectedCompany.id)){
-        //   this.selectedCompany.id = -1
-        // }
-
-        // if(this.selectedCompany === null){
-        //   this.selectedCompany = -1
-        // }
-
-        console.log(this.selectedCompany);
+        console.log(this.formDataCompany.companyId);
       },
-      register () {
+      addCompany(userId){
+        this.formDataCompany.userId = userId;
+
+        const url = 'http://localhost:8080/employercompany/addNewEmployerCompany'
+        const method = 'POST'
+        const data = this.formDataCompany
+
+        Axios({url, method, data})
+          .then(response => {
+            console.log(response)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      },
+       login: function (email, password, userId) {
+          this.$store.dispatch('AUTHENTICATION_STORE/LOGIN2', {email, password})
+            .then(() => {
+              this.$store.dispatch('AUTHENTICATION_STORE/INIT2')
+                .then(async () => {
+                  if (this.formDataCompany.companyId === -1){
+                    this.$router.push('/tao-cong-ty');
+                  } else {
+                    await this.addCompany(userId);
+                    this.$router.push('/trang-chu-tuyen-dung');
+                  }
+                })
+                .catch((error) => {
+                  this.$router.push('/tuyen-dung-dang-nhap');
+                });
+            })
+            .catch(() => {
+              this.$notify({
+                group: 'foo',
+                type: 'error',
+                title: 'Thất bại',
+                text: 'Tên đăng nhập hoặc mật khẩu không đúng!'
+                // text: 'Đã Xảy Ra Lỗi'
+              });
+            });
+      },
+      async register () {
         if (this.$refs.form.validate()) {
           if (this.formData.password === this.repassword) {
             const url = 'http://localhost:8080/user/registration'
             const method = 'POST'
             const data = this.formData
-            Axios({url, method, data})
+            await Axios({url, method, data})
               .then(response => {
                 if (response.data.success == true) {
                   this.$notify({
@@ -228,7 +235,7 @@
                     title: 'Thành Công',
                     text: 'Tạo Tài Khoản Thành Công!'
                   })
-                  this.$router.push('/tuyen-dung-dang-nhap')
+                  this.login(this.formData.email, this.formData.password, response.data.data);
                 } else {
                   this.$notify({
                     group: 'foo',

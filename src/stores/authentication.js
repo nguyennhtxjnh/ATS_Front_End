@@ -4,12 +4,15 @@ export default {
   namespaced: true,
   state: {
     status: '',
+
     token1: localStorage.getItem('token1') || '',
+    userId1: '',
     email1: '',
     roleId1: '',
     fullName1: '',
 
     token2: localStorage.getItem('token2') || '',
+    userId2: '',
     email2: '',
     roleId2: '',
     fullName2: '',
@@ -31,24 +34,29 @@ export default {
     },
     LOGOUT (state) {
       state.status = ''
+
       state.token1 = ''
+      state.userId1 = ''
       state.email1 = ''
       state.roleId1 = ''
       state.fullName1 = ''
 
       state.token2 = ''
+      state.userId2 = ''
       state.email2 = ''
       state.roleId2 = ''
       state.fullName2 = ''
     },
-    INIT1 (state, {email, roleId, fullName}) {
+    INIT1 (state, {userId ,email, roleId, fullName}) {
       state.status = 'success'
+      state.userId1 = userId
       state.email1 = email
       state.roleId1 = roleId
       state.fullName1 = fullName
     },
-    INIT2 (state, {email, roleId, fullName}) {
+    INIT2 (state, {userId, email, roleId, fullName}) {
       state.status = 'success'
+      state.userId2 = userId
       state.email2 = email
       state.roleId2 = roleId
       state.fullName2 = fullName
@@ -65,10 +73,12 @@ export default {
     // isStaff: state => state.roleId === 'STAFF',
     // isArchivist: state => state.roleId === 'ARCHIVIST',npm
     email1: state => state.email1,
+    userId1 : state => state.userId1,
     roleId1: state => state.roleId1,
     fullName1: state => state.fullName1,
 
     email2: state => state.email2,
+    userId2 : state => state.userId2,
     roleId2: state => state.roleId2,
     fullName2: state => state.fullName2,
   },
@@ -189,7 +199,8 @@ export default {
             const email = response.data.data.email
             const roleId = response.data.data.roleId
             const fullName = response.data.data.fullname
-            commit('INIT1', {email, roleId, fullName})
+            const userId = response.data.data.id
+            commit('INIT1', {userId ,email, roleId, fullName})
             resolve(response)
           })
           .catch(error => {
@@ -237,7 +248,8 @@ export default {
             const email = response.data.data.email
             const roleId = response.data.data.roleId
             const fullName = response.data.data.fullname
-            commit('INIT2', {email, roleId, fullName})
+            const userId = response.data.data.id
+            commit('INIT2', {userId, email, roleId, fullName})
             // console.log(email + "," + roleId + "," + fullName)
             resolve(response)
           })
