@@ -100,9 +100,12 @@
 
 <script>
   import axios from 'axios';
+  import {mapGetters} from 'vuex';
+  import Constants from '@/stores/constant.js'
     export default {
         name: "ListCVComponent",
       data: () => ( {
+        userid:'',
         position:'',
         cvs: '',
         cv:'',
@@ -110,7 +113,7 @@
         removeCV(cv, position) {
 
 
-          axios.post( 'http://localhost:1122/cv/deleteCV/'+cv.id,
+          axios.post( Constants.URL+'/cv/deleteCV/'+cv.id,
           ).then(response => {
             if (response.data.success === true) {
               this.cvs.splice(position, 1);
@@ -137,11 +140,11 @@
       },
         setMainCV(cv){
           console.log(cv.id);
-          axios.get( 'http://localhost:1122/cv/set-main-cv/'+cv.id
+          axios.get( Constants.URL+'/cv/set-main-cv/'+cv.id
           ).then(response => {
             if (response.data.success === true) {
               axios
-                .get('http://localhost:1122/cv/get-list/1')
+                .get(Constants.URL+'/cv/get-list/1')
                 .then(response => {
                   this.cvs = response.data.data;
                   for(var cv in this.cvs){
@@ -177,8 +180,10 @@
         }
       },
       mounted() {
+
+        this.userId = this.userId1;
         axios
-          .get('http://localhost:1122/cv/get-list/1')
+          .get(Constants.URL+'/cv/get-list/'+this.userId)
           .then(response => {
               this.cvs = response.data.data;
               for(var cv in this.cvs){
@@ -191,7 +196,15 @@
             }
             )
 
-      }
+      },
+      computed: {
+        ...mapGetters('AUTHENTICATION_STORE',{
+          email : 'email1',
+          roleId: 'roleId1',
+          fullName: 'fullName1',
+          userId1: 'userId1'
+        }),
+      },
 
     }
 </script>

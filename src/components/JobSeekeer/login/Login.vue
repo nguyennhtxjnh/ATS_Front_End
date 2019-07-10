@@ -55,6 +55,7 @@
 <script>
   import {mapState} from 'vuex'
   import Axios from 'axios'
+  import Constants from '@/stores/constant.js'
 
   export default {
     name: 'Login',
@@ -119,7 +120,7 @@
         const password = "";
         const email = profile.U3;
         const fullname = profile.ig;
-        const url = 'http://localhost:8080/user/registrationGoogle'
+        const url = Constants.URL+'/user/registrationGoogle'
         const method = 'POST'
         const data = {
           email : email,

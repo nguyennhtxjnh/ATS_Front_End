@@ -131,7 +131,7 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
+  import Constants from '@/stores/constant.js'
   import Axios from 'axios'
 
   export default {
@@ -182,7 +182,7 @@
       addCompany(userId){
         this.formDataCompany.userId = userId;
 
-        const url = 'http://localhost:8080/employercompany/addNewEmployerCompany'
+        const url = Constants.URL+'/employercompany/addNewEmployerCompany'
         const method = 'POST'
         const data = this.formDataCompany
 
@@ -223,7 +223,7 @@
       async register () {
         if (this.$refs.form.validate()) {
           if (this.formData.password === this.repassword) {
-            const url = 'http://localhost:8080/user/registration'
+            const url = Constants.URL+'/user/registration'
             const method = 'POST'
             const data = this.formData
             await Axios({url, method, data})
@@ -269,7 +269,7 @@
         }
       },
       getInitData(){
-        const url = 'http://localhost:8080/user/getRegisterEmployerComponent';
+        const url = Constants.URL+'/user/getRegisterEmployerComponent';
         const method = 'GET';
         Axios({url, method})
           .then(response => {

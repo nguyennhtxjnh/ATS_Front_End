@@ -311,7 +311,7 @@
       },
       getJobDetail(){
         this.loading = true;
-        Axios.get(`http://localhost:8080/job/getJobDetail?id=${+this.id}`)
+        Axios.get(Constants.URL+`/job/getJobDetail?id=${+this.id}`)
           .then(response => {
             this.jobFull = response.data.data;
             this.jobFull.createdDate = this.moment(this.jobFull.createdDate).format('DD-MM-YYYY');

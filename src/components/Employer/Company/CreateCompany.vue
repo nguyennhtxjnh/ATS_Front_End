@@ -107,6 +107,7 @@
   import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/vi'
   import {mapGetters} from 'vuex';
   import Axios from 'axios'
+  import Constants from '@/stores/constant.js'
 
   export default {
     name: 'CreateCompany',
@@ -169,7 +170,7 @@
             return
           }
 
-          const url = 'http://localhost:8080/company';
+          const url = Constants.URL+'/company';
           const method = 'POST';
           const data = this.formData;
           let config = {
@@ -227,7 +228,7 @@
         )
       },
       getInitData(){
-        const url = 'http://localhost:8080/user/getRegisterEmployerComponent';
+        const url = Constants.URL+'/user/getRegisterEmployerComponent';
         const method = 'GET';
         Axios({url, method})
           .then(response => {

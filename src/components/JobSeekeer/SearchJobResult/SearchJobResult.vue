@@ -127,6 +127,7 @@
 </template>
 
 <script>
+  import Constants from '@/stores/constant.js'
   import Axios from 'axios'
 
   export default {
@@ -194,7 +195,7 @@
         console.log(this.selectSkill + ", " + this.selectJob + ", " + this.selectLocation);
 
           this.loading = true;
-          Axios.get(`http://localhost:8080/job/search?search=` + this.selectSkill)
+          Axios.get(Constants.URL+`/job/search?search=` + this.selectSkill)
             .then(response => {
               this.job = response.data.data;
             })

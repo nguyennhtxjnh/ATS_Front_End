@@ -271,6 +271,7 @@
   import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/vi'
   import Axios from 'axios'
   import {mapGetters} from 'vuex'
+  import Constants from '@/stores/constant.js'
 
   export default {
     name: 'CreateJob',
@@ -435,6 +436,7 @@
 
           this.formDataCompany.userId = this.userId2;
           this.formData.userId = this.userId2;
+          console.log(this.formData);
           this.getCompany();
 
         }
@@ -447,7 +449,7 @@
         }
         this.formDataSkill.jobId = jobid;
 
-        const url = 'http://localhost:8080/skillneedforjob/addNewSkill'
+        const url = Constants.URL+'/skillneedforjob/addNewSkill'
         const data = this.formDataSkill
         const method = 'POST'
 
@@ -487,7 +489,8 @@
         )
       },
       getInitData () {
-        const url = 'http://localhost:8080/job/getJobComponent'
+        const url = Constants.URL+'/job/getJobComponent'
+        console.log(this.userId2)
         const method = 'GET'
         Axios({url, method})
           .then(response => {
@@ -518,7 +521,7 @@
           })
       },
       getCompany(){
-        const url = 'http://localhost:8080/employercompany/getCompanyId'
+        const url = Constants.URL+'/employercompany/getCompanyId'
         const method = 'POST'
         const data = this.formDataCompany
           Axios({url, method, data})
@@ -526,7 +529,9 @@
             if (response.data.success == true) {
               this.formData.companyId = response.data.data;
 
-              const url = 'http://localhost:8080/job/create';
+              console.log(this.formData);
+
+              const url = Constants.URL+'/job/create';
               const method = 'POST';
               const data = this.formData;
               console.log(data)

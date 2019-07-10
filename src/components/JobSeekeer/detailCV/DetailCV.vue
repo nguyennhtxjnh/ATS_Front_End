@@ -220,6 +220,8 @@
 </template>
 
 <script>
+
+  import Constants from '@/stores/constant.js'
   import axios from 'axios';
     export default {
         name: "DetailCV",
@@ -243,7 +245,7 @@
         //   ))
         // console.log(this.info)
         axios
-          .get('http://localhost:1122/cv/getOne/'+this.cvid+'/0')
+          .get(Constants.URL+'/cv/getOne/'+this.cvid+'/0')
           .then(response => {
               this.info = response.data.data;
               if(this.info.img === null || this.info.img === ""){

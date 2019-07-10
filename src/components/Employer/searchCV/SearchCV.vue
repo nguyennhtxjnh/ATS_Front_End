@@ -138,6 +138,8 @@
 </template>
 
 <script>
+  import axios from 'axios';
+  import Constants from '@/stores/constant.js'
     export default {
         name: "SearchCV",
       data: () => ( {

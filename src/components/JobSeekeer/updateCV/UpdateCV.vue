@@ -288,10 +288,7 @@
   import SkillInCVComponent from "./SkillInCVComponent";
   import ProjectorProductWorkedComponent from "./ProjectorProductWorkedComponent";
   import ProfileBasicComponent from "../manageCV/ProfileBasicComponent";
-  import Vue from 'vue';
-  import VeeValidate from 'vee-validate';
-
-  Vue.use(VeeValidate);
+  import Constants from '@/stores/constant.js'
 
 
   export default {
@@ -431,7 +428,7 @@
 
         this.info.img = this.imageUrl;
         console.log(this.info);
-        axios.post( 'http://localhost:1122/cv/create',
+        axios.post( Constants.URL+'/cv/create',
           this.info
         ).then(function(){
           console.log('SUCCESS!!');
@@ -481,7 +478,7 @@
       //   });
       console.log(this.cvid)
       axios
-        .get('http://localhost:1122/cv/getOne/'+this.cvid+'/0')
+        .get(Constants.URL+'/cv/getOne/'+this.cvid+'/0')
         .then(response => {
             this.info = response.data.data;
             console.log(this.info);
@@ -496,11 +493,11 @@
 
         )
       axios
-        .get('http://localhost:1122/city/getAllCity')
+        .get(Constants.URL+'/city/getAllCity')
         .then(response => (
           this.cities = response.data.data))
       axios
-        .get('http://localhost:1122/industry')
+        .get(Constants.URL+'/industry')
         .then(response => (
           this.industries = response.data))
 

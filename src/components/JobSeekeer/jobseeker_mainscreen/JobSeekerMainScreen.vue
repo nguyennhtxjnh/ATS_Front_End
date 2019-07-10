@@ -233,6 +233,7 @@
 
 <script>
   import axios from 'axios';
+  import Constants from '@/stores/constant.js'
   export default {
     name: "JobSeekerMainScreen",
     data : ()=>{ return {
@@ -247,7 +248,7 @@
     ,
     mounted () {
       axios
-        .get('http://10.82.139.57:8080/job/getTop8')
+        .get(Constants.URL+'/job/getTop8')
         .then(response => (this.info = response.data))
     }
   }

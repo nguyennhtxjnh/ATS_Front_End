@@ -291,11 +291,8 @@
   import SkillInCVComponent from "./SkillInCVComponent";
   import ProjectorProductWorkedComponent from "./ProjectorProductWorkedComponent";
   import ProfileBasicComponent from "../manageCV/ProfileBasicComponent";
-  import Vue from 'vue';
-  import VeeValidate from 'vee-validate';
-
-  Vue.use(VeeValidate);
-
+  import {mapGetters} from 'vuex';
+  import Constants from '@/stores/constant.js'
 
   export default {
     name: "CreateCV",
@@ -326,7 +323,7 @@
         info: {
           title: '',
           telephoneNumber: '',
-          userId: '1',
+          userId: '',
           img: '',
           email: '',
           firstName: '',
@@ -431,8 +428,9 @@
         })
 
         this.info.img = this.imageUrl;
+        this.info.userId = this.userId1;
         console.log(this.info);
-        axios.post( 'http://localhost:1122/cv/create',
+        axios.post( Constants.URL+'/cv/create',
           this.info
         ).then(function(){
           console.log('SUCCESS!!');
@@ -463,32 +461,25 @@
       }
     },
     mounted() {
-
-      // axios.get('http://localhost:1122/test/get', { responseType:"blob" })
-      //   .then(response => {
-      //
-      //     console.log( btoa(response.data));
-      //     var reader = new window.FileReader();
-      //     reader.readAsDataURL(response.data);
-      //     reader.onload = function() {
-      //
-      //       var imageDataUrl = reader.result;
-      //
-      //       document.getElementById('imageAvatar').src=imageDataUrl;
-      //
-      //       // Object.assign(this.imageUrl, 'data:image/jpeg;base64,' + btoa(imageDataUrl));
-      //     }
-      //   });
+      console.log(Constants.URL);
       axios
-        .get('http://localhost:1122/city/getAllCity')
+        .get(Constants.URL+'/city/getAllCity')
         .then(response => (
           this.cities = response.data.data))
       axios
-        .get('http://localhost:1122/industry')
+        .get(Constants.URL+'/industry')
         .then(response => (
           this.industries = response.data))
 
-    }
+    },
+    computed: {
+      ...mapGetters('AUTHENTICATION_STORE',{
+        email : 'email1',
+        roleId: 'roleId1',
+        fullName: 'fullName1',
+        userId1: 'userId1'
+      }),
+    },
 
   }
 </script>
