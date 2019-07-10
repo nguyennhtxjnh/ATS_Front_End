@@ -291,6 +291,8 @@
   import SkillInCVComponent from "./SkillInCVComponent";
   import ProjectorProductWorkedComponent from "./ProjectorProductWorkedComponent";
   import ProfileBasicComponent from "../manageCV/ProfileBasicComponent";
+
+
   import {mapGetters} from 'vuex';
   import Constants from '@/stores/constant.js'
 

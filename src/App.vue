@@ -3,7 +3,7 @@
 <!--    <img src="./assets/logo.png">-->
     <router-view :key="$router.fullPath"/>
 
-    <notifications group="foo"  position="bottom right"/>
+    <notifications  group="foo"  position="bottom right" />
   </div>
 </template>
 
@@ -22,4 +22,7 @@ export default {
   /*color: #2c3e50;*/
   margin-top: 60px;
 }
+
+
 </style>
+

@@ -20,6 +20,7 @@ import SuggestionCVPage from "../views/Employer/SuggestionCVPage";
 import UpdateCVPage from "../views/Jobseeker/UpdateCVPage";
 import EmployerCreateCompanyPage from '../views/Employer/EmployerCreateCompanyPage'
 import JobSeekerViewJobDetailPage from '../views/Jobseeker/JobSeekerViewJobDetailPage'
+import EmployerJobCreateReviewPage from '../views/Employer/EmployerJobCreateReviewPage'
 
 
 Vue.use(Router)
@@ -135,6 +136,12 @@ const router = new Router({
       component: JobSeekerViewJobDetailPage
     }
     ,
+    {
+      path: '/dang-tin-tuyen-dung-thanh-cong',
+      name: 'employer review created job',
+      component: EmployerJobCreateReviewPage
+    }
+    ,
     // {
     //   path: '/detail/:id',
     //   component: Detail
@@ -148,60 +155,56 @@ router.beforeEach((to, from, next) => {
   if (store.getters['AUTHENTICATION_STORE/isLoggedIn1']) {
     store.dispatch('AUTHENTICATION_STORE/INIT1')
       .then(() => next())
-      .catch(() => next());
+      .catch(() => next('/dang-nhap'));
     next();
-  } else {
-
-    if (to.path === '/dang-nhap' || to.path === '/dang-ki') {
-      if (store.getters['AUTHENTICATION_STORE/isLoggedIn1']) {
-        store.dispatch('AUTHENTICATION_STORE/INIT1')
-          .then(() => next('/'))
-          .catch(error => {
-              if (error.response) {
-                console.log(error.response.data)
-              } else {
-                console.log(error)
-              }
-              next('/dang-nhap')
-            }
-          );
-        return;
-      }
-      next();
-      return;
-    }
-
   }
 
+  if (to.path === '/dang-nhap' || to.path === '/dang-ki') {
+    if (store.getters['AUTHENTICATION_STORE/isLoggedIn1']) {
+      store.dispatch('AUTHENTICATION_STORE/INIT1')
+        .then(() => next('/'))
+        .catch(error => {
+            if (error.response) {
+              console.log(error.response.data)
+            } else {
+              console.log(error)
+            }
+            next('/dang-nhap')
+          }
+        );
+      return;
+    }
+    next();
+    return;
+  }
 
+  //--userid2
 
   if (store.getters['AUTHENTICATION_STORE/isLoggedIn2']) {
     store.dispatch('AUTHENTICATION_STORE/INIT2')
       .then(() => next())
-      .catch(() => next());
-    next();
-  } else {
-
-    if (to.path === '/tuyen-dung-dang-ky' || to.path === '/tuyen-dung-dang-nhap') {
-      console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-      if (store.getters['AUTHENTICATION_STORE/isLoggedIn2']) {
-        store.dispatch('AUTHENTICATION_STORE/INIT2')
-          .then(() => next('/trang-chu-tuyen-dung'))
-          .catch(error => {
-              if (error.response) {
-                console.log(error.response.data)
-              } else {
-                console.log(error)
-              }
-              next('/tuyen-dung-dang-nhap')
-            }
-          );
-        return;
-      }
+      .catch(() => next('/tuyen-dung-dang-nhap'));
       next();
+  }
+
+  if (to.path === '/tuyen-dung-dang-ky' || to.path === '/tuyen-dung-dang-nhap') {
+    // console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    if (store.getters['AUTHENTICATION_STORE/isLoggedIn2']) {
+      store.dispatch('AUTHENTICATION_STORE/INIT2')
+        .then(() => next('/trang-chu-tuyen-dung'))
+        .catch(error => {
+            if (error.response) {
+              console.log(error.response.data)
+            } else {
+              console.log(error)
+            }
+            next('/tuyen-dung-dang-nhap')
+          }
+        );
       return;
     }
-
+    next();
+    return;
   }
 
   if (to.path === '/dang-tin-tuyen-dung') {

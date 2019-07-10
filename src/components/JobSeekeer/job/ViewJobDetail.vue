@@ -125,9 +125,9 @@
                                                     color="none"
                                       ></v-text-field>
                                       <v-text-field class="not-active"
-                                                    label="Ngành Nghề"
-                                                    value="Giáo dục/Đào tạo"
-                                                    prepend-icon="mdi-domain"
+                                                    label="Địa chỉ làm việc"
+                                                    v-model="jobFull.address"
+                                                    prepend-icon="mdi-map-marker"
                                                     readonly
                                                     color="none"
                                       ></v-text-field>

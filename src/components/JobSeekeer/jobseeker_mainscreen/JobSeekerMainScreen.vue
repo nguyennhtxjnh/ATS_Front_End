@@ -26,16 +26,24 @@
             <v-flex md12 class="pr-0 mr-0">
               <v-layout row wrap>
                 <v-flex md4 xs12 class="mr-2" >
-                  <v-text-field
-                    label="Nhập chức danh, vị trí, kỹ năng..."
+<!--                  <v-text-field-->
+<!--                    label="Nhập chức danh, vị trí, kỹ năng..."-->
+<!--                    v-model="searchValue"-->
+<!--                    single-line-->
+<!--                  ></v-text-field>-->
+                  <v-combobox
                     single-line
-                  ></v-text-field>
+                    label="Nhập chức danh, vị trí, kỹ năng..."
+                    :items="searchAPI"
+                    :search-input.sync="searchValue"
+                    v-model="searchValue"
+                  ></v-combobox>
                 </v-flex>
 
                 <v-flex md3 xs12 class="mr-2">
                   <v-autocomplete
                     v-bind:items="industries"
-                    v-model="select"
+                    v-model="searchIndustry"
                     item-text="name"
                     item-value="id"
                     return-object
@@ -46,7 +54,7 @@
                 <v-flex md3 xs12  class="mr-2">
                   <v-autocomplete
                     :items="industries"
-                    v-model="select"
+                    v-model="searchCity"
                     item-text="name"
                     item-value="id"
                     return-object
@@ -54,7 +62,7 @@
                   ></v-autocomplete>
                 </v-flex>
                 <v-flex md1 xs12 >
-                  <v-btn color="warning" ><h4>Tìm kiếm</h4></v-btn>
+                  <v-btn color="warning" @click="startSearch"><h4>Tìm kiếm</h4></v-btn>
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -232,7 +240,7 @@
 </template>
 
 <script>
-  import axios from 'axios';
+  import Axios from 'axios'
   import Constants from '@/stores/constant.js'
   export default {
     name: "JobSeekerMainScreen",
@@ -242,14 +250,53 @@
       jobs : [0,1,2,3,4,5,6,7],
       companys : [8,9,10,11,12],
       icon : 'mdi-coin',
-      info : null
+      info : null,
+
+      searchValue: '',
+      searchIndustry: '',
+      searchCity: '',
+      searchAPI: [],
     }
-    }
-    ,
+    },
+    methods: {
+      getComponent(){
+        const url = 'http://localhost:8080/job/getSearchComponent';
+        const method = 'GET';
+        const data = '';
+        let config = {
+          headers: {
+            accessToken: localStorage.getItem('token1')
+          }
+        }
+
+        Axios({url, method, data, config})
+          .then(response => {
+            if (response.data.success == true) {
+              this.searchAPI =  response.data.data;
+              console.log(this.searchAPI)
+
+            }
+          })
+          .catch(console.error)
+          .finally(() => {
+            this.loading = false;
+          })
+      },
+
+      startSearch(){
+        sessionStorage.setItem("skill", this.searchValue);
+        sessionStorage.setItem("job", this.searchIndustry);
+        sessionStorage.setItem("location", this.searchCity);
+        this.$router.push('/tim-kiem');
+      }
+    },
     mounted () {
-      axios
-        .get(Constants.URL+'/job/getTop8')
+      Axios
+        .get('http://10.82.139.57:8080/job/getTop8')
         .then(response => (this.info = response.data))
+      this.$nextTick(() => {
+        this.getComponent();
+      })
     }
   }
 </script>

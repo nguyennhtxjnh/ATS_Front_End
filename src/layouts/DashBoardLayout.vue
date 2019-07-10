@@ -156,10 +156,13 @@
 
 <script>
   import {mapGetters} from 'vuex';
+
+
   export default {
     name: 'DashBoardLayout',
     data: function(){
       return {
+
         notifications: [
           {
             icon: 'mdi-account',
@@ -264,6 +267,7 @@
         }
       },
     },
+
     computed: {
       ...mapGetters('AUTHENTICATION_STORE',{
           email : 'email1',

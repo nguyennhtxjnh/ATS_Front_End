@@ -5,13 +5,13 @@
         <v-flex xs8 >
             <v-layout style="border-radius: 4px; background-color: #00b9f2!important">
               <v-flex md4 xs12 class="white ma-2" style="border-radius: 4px; height: 58px">
-                <v-text-field
-                  outline
-                  label="Nhập chức danh, vị trí, kỹ năng..."
-                  single-line
-                  hide-details
-                  v-model="selectSkill"
-                ></v-text-field>
+<!--                <v-text-field-->
+<!--                  outline-->
+<!--                  label="Nhập chức danh, vị trí, kỹ năng..."-->
+<!--                  single-line-->
+<!--                  hide-details-->
+<!--                  v-model="selectSkill"-->
+<!--                ></v-text-field>-->
 <!--                <v-combobox-->
 <!--                  v-model="selectSkill"-->
 <!--                  :items="items"-->
@@ -19,6 +19,14 @@
 <!--                  single-line-->
 <!--                  label="Nhập chức danh, vị trí, kỹ năng..."-->
 <!--                ></v-combobox>-->
+                    <v-combobox
+                      single-line
+                      outline
+                      label="Nhập chức danh, vị trí, kỹ năng..."
+                      :items="searchAPI"
+                      :search-input.sync="selectSkill"
+                      v-model="selectSkill"
+                    ></v-combobox>
                 </v-flex >
               <v-flex md3 xs12 class="white ma-2" style="border-radius: 4px; height: 59px">
                 <v-autocomplete
@@ -69,37 +77,44 @@
 <!--            </template>-->
 
             <template #items="{item}" >
-              <td class="hoverClass pl-0" >
-                <v-flex xs12 @click="$router.push(`/thong-tin-cong-viec/${item.id}`)">
+              <td class="pl-0" >
+                <v-flex xs12 class="pa-0">
                   <v-container fluid grid-list-md class="pa-0">
-                    <v-layout row wrap >
-                      <v-flex d-flex xs12 md2>
-                        <v-img src="https://picsum.photos/510/300?random" contain aspect-ratio="1.6"></v-img>
-                      </v-flex>
-                      <v-flex d-flex xs12 md7 >
+                    <v-layout row wrap class="pa-0">
+
+                      <v-img class="hoverClass" src="https://cdn-images.threadless.com/threadless-media/artist_shops/shops/vue/products/195796/shirt-1490420513-abd7b25b157f3450ce8c2a09ee51c36e.png?v=3&d=eyJvbmx5X21ldGEiOiBmYWxzZSwgImZvcmNlIjogZmFsc2UsICJvcHMiOiBbWyJ0cmltIiwgW2ZhbHNlLCBmYWxzZV0sIHt9XSwgWyJyZXNpemUiLCBbXSwgeyJ3aWR0aCI6IDk5Ni4wLCAiYWxsb3dfdXAiOiBmYWxzZSwgImhlaWdodCI6IDk5Ni4wfV0sIFsiY2FudmFzX2NlbnRlcmVkIiwgWzEyMDAsIDEyMDBdLCB7ImJhY2tncm91bmQiOiAiZmZmZmZmIn1dLCBbInJlc2l6ZSIsIFs4MDBdLCB7fV0sIFsiY2FudmFzX2NlbnRlcmVkIiwgWzgwMCwgODAwLCAiI2ZmZmZmZiJdLCB7fV0sIFsiZW5jb2RlIiwgWyJqcGciLCA4NV0sIHt9XV19" @click="$router.push(`/thong-tin-cong-viec/${item.id}`)" contain aspect-ratio="1.6"></v-img>
+
+                      <v-flex d-flex xs12 md7 class="pt-0 pb-0 pr-0 pl-3" >
 
                         <v-layout row wrap class="pa-0 ma-0" >
 
                           <v-flex d-flex class="pa-0 mt-2" xs12>
-                            <h1 class="titleResult">{{item.title}}</h1>
+                            <h2 class="hoverClass" style="color: red" @click="$router.push(`/thong-tin-cong-viec/${item.id}`)">{{item.title}}</h2>
                           </v-flex>
-                          <v-flex d-flex class="pa-0 ma-0">
-                            <v-layout row wrap class="pa-0 ma-0">
-                              <v-flex d-flex xs12>
-                                <a style="color: black !important;">{{item.companyName}}</a>
-                              </v-flex>
-                              <v-flex d-flex xs12>
-                                <span style="color: black !important;">Salary Will Stay Here {{item.cityName}}</span>
-                              </v-flex>
-                              <v-flex d-flex xs12>
-                                <span style="color: black !important;">View will stay here</span>  <span style="color: black !important;">Expired Date Here</span>
-                              </v-flex>
-                              <v-flex d-flex xs12 fill-height>
+                          <v-layout row wrap class="pa-0 ma-0">
+                            <v-flex d-flex xs12>
+                              <span> <b>Công ty:</b> {{item.companyName}}</span>
+                            </v-flex>
+                            <v-flex d-flex xs12 v-if="item.salaryTo === 0 && item.salaryFrom > 0">
+                              <span> <b>Mức lương: </b> từ {{item.salaryFrom}}đ trở lên</span>
+                            </v-flex>
+                            <v-flex d-flex xs12 v-if="item.salaryFrom === 0 && item.salaryTo > 0">
+                              <span> <b>Mức lương:</b> lên đến {{item.salaryTo}}đ</span>
+                            </v-flex>
+                            <v-flex d-flex xs12 v-if="item.salaryTo > 0 && item.salaryFrom > 0">
+                              <span> <b>Mức lương:</b> từ {{item.salaryFrom}}đ đến {{item.salaryTo}}đ</span>
+                            </v-flex>
+                            <v-flex d-flex xs12 v-if="item.salaryTo === 0 && item.salaryFrom === 0">
+                              <span><b>Mức lương:</b> thương lượng</span>
+                            </v-flex>
+                            <v-flex d-flex xs12>
+                              <!--                      <span>View will stay here</span> -->
+                              <span><b>Khu vực:</b> {{item.cityName}}</span>
+                            </v-flex>
+                            <v-flex d-flex xs12 fill-height>
 
-                              </v-flex>
-                            </v-layout>
-
-                          </v-flex>
+                            </v-flex>
+                          </v-layout>
                         </v-layout>
 
                       </v-flex>
@@ -164,6 +179,7 @@
         selectSkill: '',
         selectJob: '',
         selectLocation: '',
+        searchAPI: [],
 
         textBtnFav: {
           text: 'Lưu Việc Làm'
@@ -171,6 +187,29 @@
       }
     },
     methods: {
+      getComponent(){
+        const url = 'http://localhost:8080/job/getSearchComponent';
+        const method = 'GET';
+        const data = '';
+        let config = {
+          headers: {
+            accessToken: localStorage.getItem('token1')
+          }
+        }
+
+        Axios({url, method, data, config})
+          .then(response => {
+            if (response.data.success == true) {
+              this.searchAPI =  response.data.data;
+              console.log(this.searchAPI)
+
+            }
+          })
+          .catch(console.error)
+          .finally(() => {
+            this.loading = false;
+          })
+      },
 
       getjob() {
       //   this.loading = true;
@@ -198,6 +237,7 @@
           Axios.get(Constants.URL+`/job/search?search=` + this.selectSkill)
             .then(response => {
               this.job = response.data.data;
+              console.log(this.job)
             })
             .catch(console.error)
             .finally(() => {
@@ -213,6 +253,7 @@
         this.selectJob = sessionStorage.getItem("job");
         this.selectLocation = sessionStorage.getItem("location");
         this.searchClick();
+        this.getComponent();
       })
     },
     watch: {
@@ -229,7 +270,7 @@
 <style scoped>
   .hoverClass:hover, titleResult:hover {
     cursor: pointer;
-    color: orange;
+    color: orange !important;
   }
 
 </style>
