@@ -19,7 +19,7 @@
           <v-card-actions class="justify-center mb-4">
             <div class="text-xs-center">
               <v-spacer></v-spacer>
-              <v-btn color="orange" style="color: white !important;" @click="router.push('/trang-chu-tuyen-dung')">Đến Trang Chủ</v-btn>
+              <v-btn color="orange" style="color: white !important;" @click="$router.push('/trang-chu-tuyen-dung')">Đến Trang Chủ</v-btn>
             </div>
           </v-card-actions>
         </v-card>
