@@ -60,19 +60,19 @@
                     ></v-select>
                   </v-flex>
 
-                  <v-flex xs12 >
-                    <v-autocomplete
-                      class="ma-2"
-                      :rules="[rules.required]"
-                      v-model="formDataCompany.companyId"
-                      prepend-icon="mdi-domain"
-                      :items="CompanyAPI"
-                      item-text="nameCompany"
-                      item-value="id"
-                      label="Công Ty"
-                    ></v-autocomplete>
+<!--                  <v-flex xs12 >-->
+<!--                    <v-autocomplete-->
+<!--                      class="ma-2"-->
+<!--                      :rules="[rules.required]"-->
+<!--                      v-model="formDataCompany.companyId"-->
+<!--                      prepend-icon="mdi-domain"-->
+<!--                      :items="CompanyAPI"-->
+<!--                      item-text="nameCompany"-->
+<!--                      item-value="id"-->
+<!--                      label="Công Ty"-->
+<!--                    ></v-autocomplete>-->
 
-                  </v-flex>
+<!--                  </v-flex>-->
 
                   <v-flex xs12 >
                     <v-autocomplete class="ma-2"
@@ -179,32 +179,33 @@
       testCompany(){
         console.log(this.formDataCompany.companyId);
       },
-      addCompany(userId){
-        this.formDataCompany.userId = userId;
-
-        const url = 'http://localhost:8080/employercompany/addNewEmployerCompany'
-        const method = 'POST'
-        const data = this.formDataCompany
-
-        Axios({url, method, data})
-          .then(response => {
-            console.log(response)
-          })
-          .catch(error => {
-            console.log(error)
-          })
-      },
-       login: function (email, password, userId) {
+      // addCompany(userId){
+      //   this.formDataCompany.userId = userId;
+      //
+      //   const url = 'http://localhost:8080/employercompany/addNewEmployerCompany'
+      //   const method = 'POST'
+      //   const data = this.formDataCompany
+      //
+      //   Axios({url, method, data})
+      //     .then(response => {
+      //       console.log(response)
+      //     })
+      //     .catch(error => {
+      //       console.log(error)
+      //     })
+      // },
+       login: function (email, password) {
           this.$store.dispatch('AUTHENTICATION_STORE/LOGIN2', {email, password})
             .then(() => {
               this.$store.dispatch('AUTHENTICATION_STORE/INIT2')
-                .then(async () => {
-                  if (this.formDataCompany.companyId === -1){
-                    this.$router.push('/tao-cong-ty');
-                  } else {
-                    await this.addCompany(userId);
-                    this.$router.push('/trang-chu-tuyen-dung');
-                  }
+                .then(() => {
+                  // if (this.formDataCompany.companyId === -1){
+                  //   this.$router.push('/tao-cong-ty');
+                  // } else {
+                  //   await this.addCompany(userId);
+                  //   this.$router.push('/trang-chu-tuyen-dung');
+                  // }
+                  this.$router.push('/tao-cong-ty');
                 })
                 .catch((error) => {
                   this.$router.push('/tuyen-dung-dang-nhap');
@@ -227,7 +228,7 @@
             const method = 'POST'
             const data = this.formData
             await Axios({url, method, data})
-              .then(response => {
+              .then( async response => {
                 if (response.data.success == true) {
                   this.$notify({
                     group: 'foo',
@@ -235,7 +236,7 @@
                     title: 'Thành Công',
                     text: 'Tạo Tài Khoản Thành Công!'
                   })
-                  this.login(this.formData.email, this.formData.password, response.data.data);
+                  await this.login(this.formData.email, this.formData.password);
                 } else {
                   this.$notify({
                     group: 'foo',
@@ -278,11 +279,11 @@
               console.log(response)
               this.LevelAPI = response.data.data.level;
               this.CityAPI = response.data.data.city;
-              this.CompanyAPI.push({
-                id : -1,
-                nameCompany : "Khác"
-              })
-              this.CompanyAPI = this.CompanyAPI.concat(response.data.data.company);
+              // this.CompanyAPI.push({
+              //   id : -1,
+              //   nameCompany : "Khác"
+              // })
+              // this.CompanyAPI = this.CompanyAPI.concat(response.data.data.company);
 
             } else {
               this.$notify({
