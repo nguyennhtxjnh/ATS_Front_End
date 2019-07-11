@@ -589,7 +589,7 @@
         )
       },
       async getInitData () {
-        const url = 'http://localhost:8080/job/getJobComponent'
+        const url = 'http://localhost:1122/job/getJobComponent'
         const method = 'GET'
         await Axios({url, method})
           .then(response => {
@@ -774,7 +774,7 @@
         }
         this.formDataSkill.jobId = jobid;
 
-        const url = 'http://localhost:8080/skillneedforjob/addNewSkill'
+        const url = 'http://localhost:1122/skillneedforjob/addNewSkill'
         const data = this.formDataSkill
         const method = 'POST'
 

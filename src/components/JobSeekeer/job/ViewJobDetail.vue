@@ -281,6 +281,7 @@
 </template>
 
 <script>
+  import Constants from '@/stores/constant.js'
   import Axios from 'axios'
   import {mapGetters} from 'vuex';
 

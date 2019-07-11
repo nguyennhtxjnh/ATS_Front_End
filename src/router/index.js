@@ -159,6 +159,25 @@ router.beforeEach((to, from, next) => {
     next();
   }
 
+  // if (to.path === '/') {
+  //   if (store.getters['AUTHENTICATION_STORE/isLoggedIn1']) {
+  //     store.dispatch('AUTHENTICATION_STORE/INIT1')
+  //       .then(() => next('/'))
+  //       .catch(error => {
+  //           if (error.response) {
+  //             console.log(error.response.data)
+  //           } else {
+  //             console.log(error)
+  //           }
+  //           next()
+  //         }
+  //       );
+  //     return;
+  //   }
+  //   next();
+  //   return;
+  // }
+
   if (to.path === '/dang-nhap' || to.path === '/dang-ki') {
     if (store.getters['AUTHENTICATION_STORE/isLoggedIn1']) {
       store.dispatch('AUTHENTICATION_STORE/INIT1')
@@ -186,6 +205,24 @@ router.beforeEach((to, from, next) => {
       .catch(() => next('/tuyen-dung-dang-nhap'));
       next();
   }
+  // if (to.path === '/trang-chu-tuyen-dung') {
+  //   if (store.getters['AUTHENTICATION_STORE/isLoggedIn2']) {
+  //     store.dispatch('AUTHENTICATION_STORE/INIT2')
+  //       .then(() => next('/trang-chu-tuyen-dung'))
+  //       .catch(error => {
+  //           if (error.response) {
+  //             console.log(error.response.data)
+  //           } else {
+  //             console.log(error)
+  //           }
+  //           next()
+  //         }
+  //       );
+  //     return;
+  //   }
+  //   next();
+  //   return;
+  // }
 
   if (to.path === '/tuyen-dung-dang-ky' || to.path === '/tuyen-dung-dang-nhap') {
     // console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
