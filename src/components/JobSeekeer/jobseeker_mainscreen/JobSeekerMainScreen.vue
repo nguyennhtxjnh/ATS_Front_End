@@ -284,7 +284,11 @@
       },
 
       startSearch(){
-        sessionStorage.setItem("skill", this.searchValue);
+        if(this.searchValue === null || this.searchValue === ''){
+          sessionStorage.setItem("skill", '');
+        }else{
+          sessionStorage.setItem("skill", this.searchValue);
+        }
         sessionStorage.setItem("job", this.searchIndustry);
         sessionStorage.setItem("location", this.searchCity);
         this.$router.push('/tim-kiem');

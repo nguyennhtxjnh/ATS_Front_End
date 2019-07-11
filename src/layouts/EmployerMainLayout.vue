@@ -4,13 +4,11 @@
     <template>
       <v-toolbar fixed class="orange" v-if="$vuetify.breakpoint.mdAndUp">
         <v-toolbar-title @click="$router.push('/trang-chu-tuyen-dung')" class="white--text hoverCSSTitle pr-5 mr-5" >Nhà Tuyển Dụng</v-toolbar-title>
-        <v-btn style="height: 100%" flat  class="orange white--text text-none"  @click="$router.push('/dang-tin-tuyen-dung')" v-if="roleId === 2">
+        <v-btn style="height: 100%" flat  class="orange white--text text-none"  @click="checkUser">
           Đăng Tin Tuyển Dụng
         </v-btn>
 
-        <v-btn style="height: 100%" flat  class="orange white--text text-none" @click="$router.push('/tuyen-dung-dang-nhap')" v-if="roleId !== 2">
-          Đăng Tin Tuyển Dụng
-        </v-btn>
+
 
         <v-spacer></v-spacer>
         <!--        <v-flex xs 4>-->
@@ -180,6 +178,8 @@
 
 <script>
   import {mapGetters} from 'vuex';
+  import Axios from 'axios'
+
   export default {
     name: 'EmployerMainLayout',
     data: function(){
@@ -252,9 +252,53 @@
           }
         ],
 
+        formDataCompany: {
+          userId: '',
+        }
       }
     },
     methods: {
+      async getCompany(){
+        const url = 'http://localhost:8080/employercompany/getCompanyId'
+        const method = 'POST'
+        const data = this.formDataCompany
+        console.log(data)
+        await Axios({url, method, data})
+          .then(async response => {
+            if (response.data.success == true) {
+              this.$router.push('/dang-tin-tuyen-dung');
+            } else {
+              this.$notify({
+                group: 'foo',
+                type: 'warn',
+                title: 'Không tìm thấy công ty',
+                text: 'Bạn không nằm trong công ty nào để đăng tin tuyển dụng'
+              })
+              this.$router.push('/tao-cong-ty');
+            }
+          })
+          .catch(error => {
+            console.log(error)
+            this.$notify({
+              group: 'foo',
+              type: 'error',
+              title: 'Thất Bại',
+              text: 'Đã Xảy Ra Lỗi!'
+            })
+          })
+          .finally(() => {
+
+          })
+      },
+      checkUser(){
+        if(this.roleId === 2){
+          this.formDataCompany.userId = this.userId2;
+          this.getCompany();
+        }
+        if (this.roleId !== 2){
+          this.$router.push('/tuyen-dung-dang-nhap');
+        }
+      },
       notificationClick(notification){
         if (notification.title === 'Thông Tin'){
           this.$router.push('/tuyen-dung-thong-tin');
@@ -272,6 +316,7 @@
         email : 'email2',
         roleId: 'roleId2',
         fullName: 'fullName2',
+        userId2: 'userId2',
       })
     }
   }

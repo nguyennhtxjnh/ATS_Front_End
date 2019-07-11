@@ -2,101 +2,145 @@
   <v-container fluid fill-height>
     <v-layout align-center justify-center>
 
-      <v-flex xs12 sm12 md10>
-        <v-card style="border-style: solid; border-color: #ccc; border-width: 1px;" class="elevation-0 border_all">
-          <v-toolbar dark color="orange">
-            <v-toolbar-title>Tạo Mới Công Ty</v-toolbar-title>
-            <v-spacer></v-spacer>
+      <v-flex align-center justify-center md8>
+        <!--chon cong ty da co san-->
+        <v-flex xs12 >
+          <v-card style="border-style: solid; border-color: #ccc; border-width: 1px;" class="elevation-0 border_all">
+            <v-toolbar dark color="orange">
+              <v-toolbar-title>Chọn công ty đã có sẵn</v-toolbar-title>
+              <v-spacer></v-spacer>
 
-          </v-toolbar>
-          <v-form @submit.prevent="submitCompany" ref="form">
-            <v-card-text>
-              <v-container fluid fill-height>
-                <v-layout fill-height wrap>
+            </v-toolbar>
+            <v-form @submit.prevent="chooseCompany" ref="form">
+              <v-card-text>
+                <v-container fluid fill-height>
+                  <v-layout fill-height wrap>
+                      <!--Tên Công Ty -->
+                      <v-flex md12 xs12>
+                        <v-autocomplete
+                          class="ma-2"
+                          autofocus
+                          :rules="[rules.required]"
+                          v-model="formDataCompany.companyId"
+                          prepend-icon="mdi-domain"
+                          :items="CompanyAPI"
+                          item-text="nameCompany"
+                          item-value="id"
+                          label="Công Ty"
+                        ></v-autocomplete>
+                      </v-flex>
+                  </v-layout>
+                </v-container>
 
-                  <v-flex md8 xs12>
-                    <!--Tên Công Ty -->
+              </v-card-text>
+              <v-card-actions class="justify-center mb-4">
+                <div class="text-xs-center">
+                  <v-spacer></v-spacer>
+                  <v-btn color="orange" style="color: white !important;" type="submit">Xác Nhận</v-btn>
+                </div>
+              </v-card-actions>
+            </v-form>
+          </v-card>
+        </v-flex>
+        <v-flex xs12 style="background-color: #cccccc" class="mt-5 mb-5 pt-1"></v-flex>
+        <!--tao cong ty-->
+        <v-flex xs12 >
+          <v-card style="border-style: solid; border-color: #ccc; border-width: 1px;" class="elevation-0 border_all">
+            <v-toolbar dark color="orange">
+              <v-toolbar-title>Tạo Mới Công Ty</v-toolbar-title>
+              <v-spacer></v-spacer>
+
+            </v-toolbar>
+            <v-form @submit.prevent="submitCompany" ref="form">
+              <v-card-text>
+                <v-container fluid fill-height>
+                  <v-layout fill-height wrap>
+
+                    <v-flex md8 xs12>
+                      <!--Tên Công Ty -->
+                      <v-flex md12 xs12>
+                        <v-text-field class="ma-2" prepend-icon="mdi-account-badge" name="title" label="Tên Công Ty" type="text"
+                                      v-model="formData.nameCompany"
+                                      :rules="[rules.required]"></v-text-field>
+                      </v-flex>
+                      <!--City -->
+                      <v-flex md12 xs12>
+                        <v-autocomplete class="ma-2"
+                                        :rules="[rules.required]"
+                                        v-model="formData.cityId"
+                                        prepend-icon="mdi-map-marker-radius"
+                                        :items="CityAPI"
+                                        item-text="fullName"
+                                        item-value="id"
+                                        label="Chọn Tĩnh/Thành Phố"
+                                        persistent-hint
+
+                        ></v-autocomplete>
+                      </v-flex>
+                    </v-flex>
+
+                    <v-flex xs12 md4 class="text-xs-center pr-2">
+                      <img src="https://www.seekpng.com/png/detail/25-257121_icon-big-image-png-camera-icon.png" class="hovePointer" @click='$refs.image.click()' height="150" v-if="!imageUrl"/>
+                      <img :src="imageUrl" height="150" class="hovePointer" v-if="imageUrl" @click='$refs.image.click()'/>
+                      <!--                    <v-text-field label="Chọn Logo Công Ty" @click='$refs.image.click()' v-model='imageName' prepend-icon='attach_file'></v-text-field>-->
+                      <h3>Chọn Logo Công Ty</h3>
+                      <input
+                        type="file"
+                        style="display: none"
+                        ref="image"
+                        accept="mage/jpeg, image/png"
+                        @change="onFilePicked"
+                      >
+                    </v-flex>
+
+                    <!--Address -->
                     <v-flex md12 xs12>
-                      <v-text-field class="ma-2" prepend-icon="mdi-account-badge" name="title" label="Tên Công Ty" type="text"
-                                    v-model="formData.nameCompany"
+                      <v-text-field class="ma-2" prepend-icon="mdi-map-marker-radius" name="location" label="Địa Chỉ Công Ty"
+                                    type="text"
+                                    v-model="formData.address"
                                     :rules="[rules.required]"></v-text-field>
                     </v-flex>
-                    <!--City -->
-                    <v-flex md12 xs12>
-                      <v-autocomplete class="ma-2"
-                                      :rules="[rules.required]"
-                                      v-model="formData.cityid"
-                                      prepend-icon="mdi-map-marker-radius"
-                                      :items="CityAPI"
-                                      item-text="fullName"
-                                      item-value="id"
-                                      label="Chọn Tĩnh/Thành Phố"
-                                      persistent-hint
 
-                      ></v-autocomplete>
+                    <!--Email -->
+                    <v-flex  xs12>
+                      <v-text-field class="ma-2" prepend-icon="mail" name="Email" label="Email Công Ty" v-model="formData.email"
+                                    type="text"
+                                    :rules="[rules.required, rules.cemail]"></v-text-field>
                     </v-flex>
-                  </v-flex>
 
-                  <v-flex xs12 md4 class="text-xs-center pr-2">
-                    <img src="https://www.seekpng.com/png/detail/25-257121_icon-big-image-png-camera-icon.png" class="hovePointer" @click='$refs.image.click()' height="150" v-if="!imageUrl"/>
-                    <img :src="imageUrl" height="150" class="hovePointer" v-if="imageUrl" @click='$refs.image.click()'/>
-<!--                    <v-text-field label="Chọn Logo Công Ty" @click='$refs.image.click()' v-model='imageName' prepend-icon='attach_file'></v-text-field>-->
-                    <h3>Chọn Logo Công Ty</h3>
-                    <input
-                      type="file"
-                      style="display: none"
-                      ref="image"
-                      accept="mage/jpeg, image/png"
-                      @change="onFilePicked"
-                    >
-                  </v-flex>
+                    <!--Phone -->
+                    <v-flex xs12>
+                      <v-text-field class="ma-2" prepend-icon="phone" name="phone" label="Số Điện Thoại Công Ty" type="number"
+                                    v-model="formData.telephoneNumber"
+                                    :rules="[rules.required]"></v-text-field>
+                    </v-flex>
 
-                  <!--Address -->
-                  <v-flex md12 xs12>
-                    <v-text-field class="ma-2" prepend-icon="mdi-map-marker-radius" name="location" label="Địa Chỉ Công Ty"
-                                  type="text"
-                                  v-model="formData.address"
-                                  :rules="[rules.required]"></v-text-field>
-                  </v-flex>
+                    <!-- Thông Tin Công Ty-->
+                    <v-flex xs12 class="ma-2 pt-3">
+                      <h3>Thông Tin Công Ty</h3>
+                      <ckeditor :editor="editor"
+                                @ready="onEditorReady"
+                                v-model="formData.description"
+                                :config="editorConfig"
+                                style="border-style: solid; border-color: #ccc; border-width: 1px; height: 250px"
+                      ></ckeditor>
+                    </v-flex>
 
-                  <!--Email -->
-                  <v-flex  xs12>
-                    <v-text-field class="ma-2" prepend-icon="mail" name="Email" label="Email Công Ty" v-model="formData.email"
-                                  type="text"
-                                  :rules="[rules.required, rules.cemail]"></v-text-field>
-                  </v-flex>
+                  </v-layout>
+                </v-container>
 
-                  <!--Phone -->
-                  <v-flex xs12>
-                    <v-text-field class="ma-2" prepend-icon="phone" name="phone" label="Số Điện Thoại Công Ty" type="number"
-                                  v-model="formData.telephoneNumber"
-                                  :rules="[rules.required]"></v-text-field>
-                  </v-flex>
-
-                  <!-- Thông Tin Công Ty-->
-                  <v-flex xs12 class="ma-2 pt-3">
-                    <h3>Thông Tin Công Ty</h3>
-                    <ckeditor :editor="editor"
-                              @ready="onEditorReady"
-                              v-model="formData.description"
-                              :config="editorConfig"
-                              style="border-style: solid; border-color: #ccc; border-width: 1px; height: 250px"
-                    ></ckeditor>
-                  </v-flex>
-
-                </v-layout>
-              </v-container>
-
-            </v-card-text>
-            <v-card-actions class="justify-center mb-4">
-              <div class="text-xs-center">
-                <v-spacer></v-spacer>
-                <v-btn color="orange" style="color: white !important;" type="submit">Xác Nhận</v-btn>
-              </div>
-            </v-card-actions>
-          </v-form>
-        </v-card>
+              </v-card-text>
+              <v-card-actions class="justify-center mb-4">
+                <div class="text-xs-center">
+                  <v-spacer></v-spacer>
+                  <v-btn color="orange" style="color: white !important;" type="submit">Xác Nhận</v-btn>
+                </div>
+              </v-card-actions>
+            </v-form>
+          </v-card>
+        </v-flex>
       </v-flex>
+
 
     </v-layout>
   </v-container>
@@ -107,7 +151,6 @@
   import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/vi'
   import {mapGetters} from 'vuex';
   import Axios from 'axios'
-  import Constants from '@/stores/constant.js'
 
   export default {
     name: 'CreateCompany',
@@ -116,8 +159,15 @@
         imageName: '',
         imageUrl: '',
         imageFile: '',
+        sizeImg: '',
 
         CityAPI: [],
+        CompanyAPI: [],
+
+        formDataCompany:{
+          companyId: '',
+          userId: '',
+        },
 
         formData: {
               userId: '',
@@ -127,12 +177,11 @@
               address: '',
               telephoneNumber: '',
               email: '',
-              logoImg: '',
+              logoImg: '123',
               description: "",
-              status: "new"
-
-
+              status: "new",
         },
+
 
         editor: DecoupledEditor,
         editorConfig: {
@@ -158,6 +207,27 @@
       }
     },
     methods: {
+
+      chooseCompany(){
+        this.formDataCompany.userId = this.userId2;
+        const url = 'http://localhost:8080/employercompany/addNewEmployerCompany'
+        const method = 'POST'
+        const data = this.formDataCompany
+
+        Axios({url, method, data})
+          .then(response => {
+            this.$notify({
+              group: 'foo',
+              type: 'success',
+              title: 'Thành công',
+              text: 'Thêm công ty thành công!'
+            })
+            this.$router.push('/trang-chu-tuyen-dung')
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      },
       submitCompany() {
         if (this.$refs.form.validate()) {
           if (this.formData.description === '') {
@@ -170,7 +240,10 @@
             return
           }
 
-          const url = Constants.URL+'/company';
+          this.toDataURL(this.imageUrl, function(dataUrl) {})
+
+          this.formData.logoImg = this.imageUrl;
+          const url = 'http://localhost:8080/company';
           const method = 'POST';
           const data = this.formData;
           let config = {
@@ -185,9 +258,10 @@
               this.$notify({
                 group: 'foo',
                 type: 'success',
-                title: 'abc',
-                text: 'abc!'
+                title: 'Thành công',
+                text: 'Tạo công ty thành công!'
               })
+              this.$router.push('/trang-chu-tuyen-dung')
             })
             .catch(error => {
               console.log(error)
@@ -201,12 +275,42 @@
         }
       },
 
+       toDataURL(url, callback) {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function() {
+          const reader = new FileReader();
+          reader.onloadend = function() {
+            callback(reader.result);
+            const tmp = reader.result;
+            this.imageUrl = tmp;
+            console.log(this.imageUrl)
+
+          }
+          reader.readAsDataURL(xhr.response);
+
+
+        };
+        xhr.open('GET', url);
+        xhr.responseType = 'blob';
+        xhr.send();
+      },
+
       onFilePicked (e) {
         const files = e.target.files
         if(files[0] !== undefined) {
           this.imageName = files[0].name
           if(this.imageName.lastIndexOf('.') <= 0) {
             return
+          }
+          if (files.size > 1024 * 1024) {
+            e.preventDefault();
+            this.$notify({
+              group: 'foo',
+              type: 'warn',
+              title: 'Chú ý',
+              text: 'Hình ảnh lớn hơn 1mb!'
+            })
+            return;
           }
           const fr = new FileReader ()
           fr.readAsDataURL(files[0])
@@ -228,13 +332,14 @@
         )
       },
       getInitData(){
-        const url = Constants.URL+'/user/getRegisterEmployerComponent';
+        const url = 'http://localhost:8080/user/getRegisterEmployerComponent';
         const method = 'GET';
         Axios({url, method})
           .then(response => {
             console.log(response);
             if (response.data.success == true) {
               this.CityAPI = response.data.data.city;
+              this.CompanyAPI = response.data.data.company;
             } else {
               this.$notify({
                 group: 'foo',
@@ -261,6 +366,7 @@
     mounted () {
       this.$nextTick(() => {
         this.formData.userId = this.userId2;
+        this.formDataCompany.userId = this.userId2;
         this.getInitData();
       })
     },

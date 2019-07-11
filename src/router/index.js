@@ -155,7 +155,12 @@ router.beforeEach((to, from, next) => {
   if (store.getters['AUTHENTICATION_STORE/isLoggedIn1']) {
     store.dispatch('AUTHENTICATION_STORE/INIT1')
       .then(() => next())
-      .catch(() => next('/dang-nhap'));
+      .catch(() => {
+        store.dispatch('AUTHENTICATION_STORE/LOGOUT1')
+          .then(() => {
+            this.$router.push('/dang-nhap');
+          });
+      });
     next();
   }
 
@@ -202,7 +207,12 @@ router.beforeEach((to, from, next) => {
   if (store.getters['AUTHENTICATION_STORE/isLoggedIn2']) {
     store.dispatch('AUTHENTICATION_STORE/INIT2')
       .then(() => next())
-      .catch(() => next('/tuyen-dung-dang-nhap'));
+      .catch(() => {
+        store.dispatch('AUTHENTICATION_STORE/LOGOUT2')
+          .then(() => {
+            this.$router.push('/tuyen-dung-dang-nhap');
+          });
+      });
       next();
   }
   // if (to.path === '/trang-chu-tuyen-dung') {

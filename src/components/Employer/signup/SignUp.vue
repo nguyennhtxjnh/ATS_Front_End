@@ -227,7 +227,7 @@
             const method = 'POST'
             const data = this.formData
             await Axios({url, method, data})
-              .then(response => {
+              .then( async response => {
                 if (response.data.success == true) {
                   this.$notify({
                     group: 'foo',
@@ -235,7 +235,7 @@
                     title: 'Thành Công',
                     text: 'Tạo Tài Khoản Thành Công!'
                   })
-                  this.login(this.formData.email, this.formData.password, response.data.data);
+                  await this.login(this.formData.email, this.formData.password);
                 } else {
                   this.$notify({
                     group: 'foo',
