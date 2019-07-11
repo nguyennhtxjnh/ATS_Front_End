@@ -31,6 +31,13 @@
 <!--                    v-model="searchValue"-->
 <!--                    single-line-->
 <!--                  ></v-text-field>-->
+<!--                  <v-combobox-->
+<!--                    single-line-->
+<!--                    label="Nhập chức danh, vị trí, kỹ năng..."-->
+<!--                    :items="searchAPI"-->
+<!--                    :search-input.sync="searchValue"-->
+<!--                    v-model="searchValue"-->
+<!--                  ></v-combobox>-->
                   <v-combobox
                     single-line
                     label="Nhập chức danh, vị trí, kỹ năng..."
@@ -41,24 +48,40 @@
                 </v-flex>
 
                 <v-flex md3 xs12 class="mr-2">
+<!--                  <v-autocomplete-->
+<!--                    v-bind:items="industries"-->
+<!--                    v-model="searchIndustry"-->
+<!--                    item-text="name"-->
+<!--                    item-value="id"-->
+<!--                    return-object-->
+<!--                    label="Tất cả các ngành nghề"-->
+<!--                  ></v-autocomplete>-->
                   <v-autocomplete
-                    v-bind:items="industries"
                     v-model="searchIndustry"
+                    :items="industryAPI"
                     item-text="name"
-                    item-value="id"
-                    return-object
+                    item-value="name"
                     label="Tất cả các ngành nghề"
+                    hide-details
                   ></v-autocomplete>
                 </v-flex>
 
                 <v-flex md3 xs12  class="mr-2">
+<!--                  <v-autocomplete-->
+<!--                    :items="industries"-->
+<!--                    v-model="searchCity"-->
+<!--                    item-text="name"-->
+<!--                    item-value="id"-->
+<!--                    return-object-->
+<!--                    label="Tất cả địa điểm"-->
+<!--                  ></v-autocomplete>-->
                   <v-autocomplete
-                    :items="industries"
+                    :items="cityAPI"
                     v-model="searchCity"
-                    item-text="name"
-                    item-value="id"
-                    return-object
+                    item-text="fullName"
+                    item-value="fullName"
                     label="Tất cả địa điểm"
+                    hide-details
                   ></v-autocomplete>
                 </v-flex>
                 <v-flex md1 xs12 >
@@ -256,7 +279,9 @@
       searchIndustry: '',
       searchCity: '',
       searchAPI: [],
-    }
+      cityAPI: [],
+      industryAPI: [],
+      }
     },
     methods: {
       getComponent(){
@@ -272,7 +297,21 @@
         Axios({url, method, data, config})
           .then(response => {
             if (response.data.success == true) {
-              this.searchAPI =  response.data.data;
+              this.cityAPI.push({
+                id: 0,
+                fullName : "Tất cả địa điểm"
+              })
+              this.cityAPI = this.cityAPI.concat(response.data.data.city);
+
+              this.industryAPI.push({
+                id: 0,
+                name : "Tất cả ngành nghề"
+              })
+              this.industryAPI = this.industryAPI.concat(response.data.data.industry);
+
+              this.searchAPI =  response.data.data.all;
+              // this.cityAPI =  response.data.data.city;
+              // this.industryAPI =  response.data.data.industry;
               console.log(this.searchAPI)
 
             }
@@ -289,8 +328,13 @@
         }else{
           sessionStorage.setItem("skill", this.searchValue);
         }
-        sessionStorage.setItem("job", this.searchIndustry);
-        sessionStorage.setItem("location", this.searchCity);
+
+        if(this.searchIndustry === "Tất cả ngành nghề"){ this.searchIndustry = ""}
+        else {sessionStorage.setItem("job", this.searchIndustry);}
+
+        if(this.searchCity === "Tất cả địa điểm"){ this.searchCity = ""}
+        else {sessionStorage.setItem("location", this.searchCity);}
+
         this.$router.push('/tim-kiem');
       }
     },

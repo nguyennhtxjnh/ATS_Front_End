@@ -3,8 +3,9 @@
     <v-layout align-center justify-center>
 
       <v-flex align-center justify-center md8>
+
         <!--chon cong ty da co san-->
-        <v-flex xs12 >
+        <v-flex xs12 id="top">
           <v-card style="border-style: solid; border-color: #ccc; border-width: 1px;" class="elevation-0 border_all">
             <v-toolbar dark color="orange">
               <v-toolbar-title>Chọn công ty đã có sẵn</v-toolbar-title>
@@ -19,7 +20,6 @@
                       <v-flex md12 xs12>
                         <v-autocomplete
                           class="ma-2"
-                          autofocus
                           :rules="[rules.required]"
                           v-model="formDataCompany.companyId"
                           prepend-icon="mdi-domain"
@@ -42,7 +42,9 @@
             </v-form>
           </v-card>
         </v-flex>
-        <v-flex xs12 style="background-color: #cccccc" class="mt-5 mb-5 pt-1"></v-flex>
+        <v-flex xs12 style="border-top-style: dotted; border-color: #b4b4b4;" class="mt-5 mb-5 pt-1" align-center justify-center>
+          <p style="position: relative; bottom: 20px; text-align: center" ><span style="background-color: white; color: #b4b4b4; font-size: 20px" class="pl-2 pr-2"><B>Chọn Hay Tạo Mới</B></span></p>
+        </v-flex>
         <!--tao cong ty-->
         <v-flex xs12 >
           <v-card style="border-style: solid; border-color: #ccc; border-width: 1px;" class="elevation-0 border_all">
@@ -141,7 +143,6 @@
         </v-flex>
       </v-flex>
 
-
     </v-layout>
   </v-container>
 </template>
@@ -177,7 +178,7 @@
               address: '',
               telephoneNumber: '',
               email: '',
-              logoImg: '123',
+              logoImg: '',
               description: "",
               status: "new",
         },
@@ -208,9 +209,30 @@
     },
     methods: {
 
-      chooseCompany(){
+      mapCompany(){
         this.formDataCompany.userId = this.userId2;
         const url = 'http://localhost:8080/employercompany/addNewEmployerCompany'
+        const method = 'POST'
+        const data = this.formDataCompany
+
+        Axios({url, method, data})
+          .then(response => {
+            this.$notify({
+              group: 'foo',
+              type: 'success',
+              title: 'Thành công',
+              text: 'Tạo công ty thành công!'
+            })
+            this.$router.push('/trang-chu-tuyen-dung')
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      },
+
+      chooseCompany(){
+        this.formDataCompany.userId = this.userId2;
+        const url = 'http://localhost:8080/employercompany/addNewEmployerCompanyExistedCompany'
         const method = 'POST'
         const data = this.formDataCompany
 
@@ -228,7 +250,8 @@
             console.log(error)
           })
       },
-      submitCompany() {
+
+      async submitCompany() {
         if (this.$refs.form.validate()) {
           if (this.formData.description === '') {
             this.$notify({
@@ -252,16 +275,11 @@
             }
           }
 
-          Axios({url, method, data, config})
+          await Axios({url, method, data, config})
             .then(response => {
               console.log(response)
-              this.$notify({
-                group: 'foo',
-                type: 'success',
-                title: 'Thành công',
-                text: 'Tạo công ty thành công!'
-              })
-              this.$router.push('/trang-chu-tuyen-dung')
+              this.formDataCompany.companyId = response.data.data
+              this.mapCompany()
             })
             .catch(error => {
               console.log(error)
@@ -302,16 +320,17 @@
           if(this.imageName.lastIndexOf('.') <= 0) {
             return
           }
-          if (files.size > 1024 * 1024) {
+          if (files[0].size > 2 * 1024 * 1024) {
             e.preventDefault();
             this.$notify({
               group: 'foo',
               type: 'warn',
               title: 'Chú ý',
-              text: 'Hình ảnh lớn hơn 1mb!'
+              text: 'Kích thước hình ảnh tối đa 2mb!'
             })
             return;
           }
+          console.log(files[0])
           const fr = new FileReader ()
           fr.readAsDataURL(files[0])
           fr.addEventListener('load', () => {
@@ -362,12 +381,16 @@
 
           })
       },
+      scrollToTop() {
+        window.scrollTo(0,0);
+      }
     },
     mounted () {
       this.$nextTick(() => {
         this.formData.userId = this.userId2;
         this.formDataCompany.userId = this.userId2;
         this.getInitData();
+        this.scrollToTop();
       })
     },
     computed: {

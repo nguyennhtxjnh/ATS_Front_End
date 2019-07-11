@@ -31,21 +31,22 @@
               <v-flex md3 xs12 class="white ma-2" style="border-radius: 4px; height: 59px">
                 <v-autocomplete
                   outline
-                  v-bind:items="industries"
                   v-model="selectJob"
+                  :items="industryAPI"
                   item-text="name"
-                  item-value="id"
+                  item-value="name"
                   label="Tất cả các ngành nghề"
                   hide-details
                 ></v-autocomplete>
+
               </v-flex>
 
               <v-flex md3 xs12  class="white ma-2" style="border-radius: 4px; height: 59px">
                 <v-autocomplete
-                  :items="industries"
+                  :items="cityAPI"
                   v-model="selectLocation"
-                  item-text="name"
-                  item-value="id"
+                  item-text="fullName"
+                  item-value="fullName"
                   outline
                   label="Tất cả địa điểm"
                   hide-details
@@ -81,9 +82,12 @@
                 <v-flex xs12 class="pa-0">
                   <v-container fluid grid-list-md class="pa-0">
                     <v-layout row wrap class="pa-0">
+                      <v-flex md2 style="background-color: white">
+<!--                        <v-img class="hoverClass" src="https://cdn-images.threadless.com/threadless-media/artist_shops/shops/vue/products/195796/shirt-1490420513-abd7b25b157f3450ce8c2a09ee51c36e.png?v=3&d=eyJvbmx5X21ldGEiOiBmYWxzZSwgImZvcmNlIjogZmFsc2UsICJvcHMiOiBbWyJ0cmltIiwgW2ZhbHNlLCBmYWxzZV0sIHt9XSwgWyJyZXNpemUiLCBbXSwgeyJ3aWR0aCI6IDk5Ni4wLCAiYWxsb3dfdXAiOiBmYWxzZSwgImhlaWdodCI6IDk5Ni4wfV0sIFsiY2FudmFzX2NlbnRlcmVkIiwgWzEyMDAsIDEyMDBdLCB7ImJhY2tncm91bmQiOiAiZmZmZmZmIn1dLCBbInJlc2l6ZSIsIFs4MDBdLCB7fV0sIFsiY2FudmFzX2NlbnRlcmVkIiwgWzgwMCwgODAwLCAiI2ZmZmZmZiJdLCB7fV0sIFsiZW5jb2RlIiwgWyJqcGciLCA4NV0sIHt9XV19" @click="$router.push(`/thong-tin-cong-viec/${item.id}`)" contain aspect-ratio="1.4"></v-img>-->
+                        <v-img class="hoverClass" src="https://www.seekpng.com/png/detail/25-257121_icon-big-image-png-camera-icon.png" @click="$router.push(`/thong-tin-cong-viec/${item.id}`)" contain aspect-ratio="1.4"  v-if="!item.companyLogoImg"/>
+                        <v-img class="hoverClass" :src="item.companyLogoImg" @click="$router.push(`/thong-tin-cong-viec/${item.id}`)" contain aspect-ratio="1.4" v-if="item.companyLogoImg"></v-img>
 
-                      <v-img class="hoverClass" src="https://cdn-images.threadless.com/threadless-media/artist_shops/shops/vue/products/195796/shirt-1490420513-abd7b25b157f3450ce8c2a09ee51c36e.png?v=3&d=eyJvbmx5X21ldGEiOiBmYWxzZSwgImZvcmNlIjogZmFsc2UsICJvcHMiOiBbWyJ0cmltIiwgW2ZhbHNlLCBmYWxzZV0sIHt9XSwgWyJyZXNpemUiLCBbXSwgeyJ3aWR0aCI6IDk5Ni4wLCAiYWxsb3dfdXAiOiBmYWxzZSwgImhlaWdodCI6IDk5Ni4wfV0sIFsiY2FudmFzX2NlbnRlcmVkIiwgWzEyMDAsIDEyMDBdLCB7ImJhY2tncm91bmQiOiAiZmZmZmZmIn1dLCBbInJlc2l6ZSIsIFs4MDBdLCB7fV0sIFsiY2FudmFzX2NlbnRlcmVkIiwgWzgwMCwgODAwLCAiI2ZmZmZmZiJdLCB7fV0sIFsiZW5jb2RlIiwgWyJqcGciLCA4NV0sIHt9XV19" @click="$router.push(`/thong-tin-cong-viec/${item.id}`)" contain aspect-ratio="1.6"></v-img>
-
+                      </v-flex>
                       <v-flex d-flex xs12 md7 class="pt-0 pb-0 pr-0 pl-3" >
 
                         <v-layout row wrap class="pa-0 ma-0" >
@@ -118,11 +122,11 @@
                         </v-layout>
 
                       </v-flex>
-                      <v-layout xs12 md2 child-flex text-xs-center>
-                        <v-flex md12  class="align-center">
-                          <v-flex >
+                      <v-layout xs12 md3>
+                        <v-flex md10 class="align-center">
+
                             <v-btn @click="favoriteBtn" :outline="favorite" color="error"><v-icon dark>favorite</v-icon>{{textBtnFav.text}}</v-btn>
-                          </v-flex>
+
                         </v-flex>
                       </v-layout>
                     </v-layout>
@@ -134,6 +138,7 @@
           </v-data-table>
           <div class="text-xs-center pt-2">
             <v-pagination v-model="pagination.page" :length="Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)"></v-pagination>
+<!--                <v-pagination v-model="pagination.page" :length="pages"></v-pagination>-->
           </div>
         </v-flex>
 
@@ -172,13 +177,19 @@
           {text: 'Trạng thái', value: 'available'},
           {text: 'Thao tác', sortable: false},
         ],
-        pagination: {},
+        pagination: {
+          page: 1,
+          rowsPerPage: 5,
+          totalItems: '',
+        },
         job: [],
 
         selectSkill: '',
         selectJob: '',
         selectLocation: '',
         searchAPI: [],
+        cityAPI: [],
+        industryAPI: [],
 
         textBtnFav: {
           text: 'Lưu Việc Làm'
@@ -199,8 +210,22 @@
         Axios({url, method, data, config})
           .then(response => {
             if (response.data.success == true) {
-              this.searchAPI =  response.data.data;
-              console.log(this.searchAPI)
+              this.cityAPI.push({
+                id: 0,
+                fullName : "Tất cả địa điểm"
+              })
+              this.cityAPI = this.cityAPI.concat(response.data.data.city);
+
+              this.industryAPI.push({
+                id: 0,
+                name : "Tất cả ngành nghề"
+              })
+              this.industryAPI = this.industryAPI.concat(response.data.data.industry);
+
+              this.searchAPI =  response.data.data.all;
+              // this.cityAPI =  response.data.data.city;
+              // this.industryAPI =  response.data.data.industry;
+              // console.log(response)
 
             }
           })
@@ -226,17 +251,22 @@
         this.favorite = !this.favorite;
         this.textBtnFav.text = this.favorite ? 'Lưu Việc Làm' : 'Đã Lưu';
       },
-      searchClick(){
-        sessionStorage.setItem("skill", this.selectSkill);
-        sessionStorage.setItem("job", this.selectJob);
-        sessionStorage.setItem("location", this.selectLocation);
+       async searchClick(){
+        if( this.selectSkill === null || this.selectSkill === "null"){ this.selectSkill = ""}
+        if(this.selectJob === "Tất cả ngành nghề"){ this.selectJob = ""}
+        if(this.selectLocation === "Tất cả địa điểm"){ this.selectLocation = ""}
         console.log(this.selectSkill + ", " + this.selectJob + ", " + this.selectLocation);
 
           this.loading = true;
-          Axios.get(`http://localhost:8080/job/search?search=` + this.selectSkill)
+          await Axios.get('http://localhost:8080/job/search?search=' + this.selectSkill + '&city=' + this.selectLocation + '&industry=' + this.selectJob)
             .then(response => {
-              this.job = response.data.data;
-              console.log(this.job)
+              sessionStorage.setItem("skill", this.selectSkill);
+              sessionStorage.setItem("job", this.selectJob);
+              sessionStorage.setItem("location", this.selectLocation);
+
+              this.job = response.data.data.content;
+              this.pagination.totalItems = this.job.length
+              console.log(response)
             })
             .catch(console.error)
             .finally(() => {
@@ -247,20 +277,19 @@
       }
     },
     mounted() {
-      this.$nextTick(() => {
-        this.selectSkill = sessionStorage.getItem("skill");
+       this.$nextTick(() => {
+        this.selectSkill =  sessionStorage.getItem("skill");
         this.selectJob = sessionStorage.getItem("job");
         this.selectLocation = sessionStorage.getItem("location");
         this.searchClick();
         this.getComponent();
       })
     },
-    watch: {
-      pagination() {
-        this.getjob();
-      }
-    },
-
+    // watch: {
+    //   pagination() {
+    //     this.getjob();
+    //   }
+    // },
 
 
   }

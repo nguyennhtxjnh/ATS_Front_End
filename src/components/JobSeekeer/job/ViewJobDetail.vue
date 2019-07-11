@@ -3,10 +3,11 @@
     <v-layout align-center justify-center >
       <v-flex xs12 sm12 md10 >
         <!--header title-->
-        <v-container class=" mb-3" fluid grid-list-md style="background-color: #efebeb">
+        <v-container class=" mb-3" fluid grid-list-md style=" border: 1px solid red; border-radius: 5px;">
           <v-layout row wrap>
             <v-flex d-flex xs12 sm6 md3 class="align-center pa-0">
-              <v-img contain src="https://picsum.photos/510/300?random" aspect-ratio="2"></v-img>
+              <v-img src="https://www.seekpng.com/png/detail/25-257121_icon-big-image-png-camera-icon.png"  contain aspect-ratio="2"  v-if="!jobFull.company.logoImg"/>
+              <v-img contain :src="jobFull.company.logoImg" aspect-ratio="2" v-if="jobFull.company.logoImg"></v-img>
             </v-flex>
             <v-flex d-flex xs12 sm6 md6>
 
@@ -34,7 +35,8 @@
                     </v-flex>
                     <v-flex d-flex xs12>
 <!--                      <span>View will stay here</span> -->
-                      <span><b>Ngày hết hạn nộp:</b> {{jobFull.endDateForApply}}</span>
+                      <span><b>Khu vực:</b> {{jobFull.city.fullName}} <v-divider vertical class="ml-2 mr-2"></v-divider>
+                        <b>Ngày hết hạn nộp:</b> {{jobFull.endDateForApply}}</span>
                     </v-flex>
                     <v-flex d-flex xs12 fill-height>
 
@@ -94,14 +96,14 @@
                             <v-flex d-flex md12>
 
                               <v-flex md8 sm12>
+                                <h4>Quyền lợi ứng viên</h4>
+                                <v-flex md12 v-html="jobFull.candidateBenefits" class="pb-3">
+                                </v-flex>
                                 <h4>Thông tin công việc</h4>
                                 <v-flex md12 v-html="jobFull.jobDescription" class="pb-3">
                                 </v-flex>
                                 <h4>Yêu cầu công việc</h4>
                                 <v-flex md12 v-html="jobFull.additionalRequest" class="pb-3">
-                                </v-flex>
-                                <h4>Quyền lợi ứng viên</h4>
-                                <v-flex md12 v-html="jobFull.candidateBenefits" class="pb-3">
                                 </v-flex>
                               </v-flex>
 
@@ -164,8 +166,8 @@
 
                               <v-flex md8 sm12>
                                 <h4>Thông tin công ty</h4>
-                                <v-flex md12>
-                                  {{jobFull.company.description}}
+                                <v-flex md12 v-html="jobFull.company.description">
+
                                 </v-flex>
                               </v-flex>
 
