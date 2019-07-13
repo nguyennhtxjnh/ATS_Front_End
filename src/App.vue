@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="cusM">
 <!--    <img src="./assets/logo.png">-->
     <router-view :key="$router.fullPath"/>
 

@@ -21,6 +21,8 @@ import UpdateCVPage from "../views/Jobseeker/UpdateCVPage";
 import EmployerCreateCompanyPage from '../views/Employer/EmployerCreateCompanyPage'
 import JobSeekerViewJobDetailPage from '../views/Jobseeker/JobSeekerViewJobDetailPage'
 import EmployerJobCreateReviewPage from '../views/Employer/EmployerJobCreateReviewPage'
+import AdminDashBoardPage from '../views/Admin/AdminDashBoardPage'
+import AdminLoginPage from '../views/Admin/AdminLoginPage'
 
 
 Vue.use(Router)
@@ -146,6 +148,18 @@ const router = new Router({
     //   path: '/detail/:id',
     //   component: Detail
     // }
+    {
+      path: '/admin',
+      name: 'admin main screen',
+      component: AdminDashBoardPage
+    }
+    ,
+    {
+      path: '/admin-login',
+      name: 'admin login',
+      component: AdminLoginPage
+    }
+    ,
 
   ]
 })
