@@ -205,11 +205,15 @@
         <h1>Việc làm nổi bật hôm nay</h1>
         <v-layout wrap md12 xs12>
           <template v-for="job in info">
-            <v-flex md5 xs12 style="background-color: white" class="ma-3 pa-2" :key="job">
+
+            <v-flex md5 xs12 style="background-color: white" class="ma-3 pa-2" :key="job" @click="$router.push(`/thong-tin-cong-viec/${job.id}`)">
+
               <v-layout row wrap>
-                <v-flex md4>
-                  <v-img  :src="images.main"
+                <v-flex md4  >
+
+                  <v-img  :src="job.companyByCompanyId.logoImg"
                           height="100%"></v-img>
+
                 </v-flex>
                 <v-flex md1/>
                 <v-flex md7>
@@ -217,7 +221,13 @@
                     {{job.title}}
                   </h3>
                   <h5 align-lef>
-                    {{job.companyName}} - {{job.cityName}}
+                    <template v-for="city in cities">
+                      <v-flex v-if="city.id === job.cityId">
+                        {{job.companyByCompanyId.nameCompany}} - {{city.fullName}}
+                      </v-flex>
+                    </template>
+
+
                   </h5>
                   <v-flex align-left>
                     <h4>  <v-btn icon>
@@ -225,10 +235,12 @@
                     </v-btn>{{job.salaryTo}} - {{job.salaryFrom}} triệu</h4>
                   </v-flex>
                 </v-flex>
-              </v-layout>
-            </v-flex>
-          </template>
 
+              </v-layout>
+
+            </v-flex>
+
+          </template>
         </v-layout>
       </v-container>
     </v-card>
@@ -246,11 +258,13 @@
     name: "JobSeekerMainScreen",
     data : ()=>{ return {
       images : {'main' : require('@/assets/jsmain1.jpg')},
-      industries : [ { id: "1", name: "Foo" }, { id: "2", name: "Bar" }, { id: "3", name: "Baka" }, { id: "4", name: "Pig" }, ],
+      industries : [],
+      cities:[],
       jobs : [0,1,2,3,4,5,6,7],
-      companys : [8,9,10,11,12],
+      companys : [0,1,2,3,4],
+      cmpnys:[],
       icon : 'mdi-coin',
-      info : null,
+      info : '',
 
       searchValue: '',
       searchIndustry: '',
@@ -260,7 +274,19 @@
     },
     methods: {
       getComponent(){
-        const url = 'http://localhost:8080/job/getSearchComponent';
+        Axios
+          .get(Constants.URL+'/city/getAllCity')
+          .then(response => (
+            this.cities = response.data.data))
+
+        Axios
+          .get(Constants.URL+'/industry')
+          .then(response => (
+            this.industries = response.data))
+        Axios
+          .get(Constants.URL+'/job/getTop8')
+          .then(response => (this.info = response.data.data.content))
+        const url = Constants.URL+'/job/getSearchComponent';
         const method = 'GET';
         const data = '';
         let config = {
@@ -295,9 +321,7 @@
       }
     },
     mounted () {
-      Axios
-        .get('http://10.82.139.57:8080/job/getTop8')
-        .then(response => (this.info = response.data))
+
       this.$nextTick(() => {
         this.getComponent();
       })

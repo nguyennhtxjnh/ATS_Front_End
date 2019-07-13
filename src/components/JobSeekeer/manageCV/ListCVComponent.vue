@@ -1,4 +1,4 @@
-<template>
+<template v-on:load="getInit">
   <v-flex>
 
       <template v-for="(cv, index) in cvs">
@@ -99,9 +99,14 @@
 </template>
 
 <script>
+  import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/vi'
   import axios from 'axios';
   import {mapGetters} from 'vuex';
-  import Constants from '@/stores/constant.js'
+  import Constants from '@/stores/constant.js';
+  window.onload = function()
+  {
+getInit();
+  };
     export default {
         name: "ListCVComponent",
       data: () => ( {
@@ -110,6 +115,7 @@
         cvs: '',
         cv:'',
       }),methods :{
+
         removeCV(cv, position) {
 
 
@@ -177,10 +183,15 @@
 
             })
 
-        }
-      },
-      mounted() {
+        },
 
+      },
+      beforeUpdate(){
+        this.userId = this.userId1;
+
+      },
+
+      mounted() {
         this.userId = this.userId1;
         axios
           .get(Constants.URL+'/cv/get-list/'+this.userId)
@@ -197,14 +208,21 @@
             )
 
       },
+      watch(){
+
+          this.userId = this.userId1;
+      },
       computed: {
         ...mapGetters('AUTHENTICATION_STORE',{
+
           email : 'email1',
           roleId: 'roleId1',
           fullName: 'fullName1',
           userId1: 'userId1'
         }),
+
       },
+
 
     }
 </script>

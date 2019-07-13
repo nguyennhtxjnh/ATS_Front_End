@@ -2,48 +2,47 @@
   <v-app>
     <!--    ToolBar-->
     <template>
-      <v-toolbar fixed class="orange" v-if="$vuetify.breakpoint.mdAndUp">
-        <v-toolbar-title @click="$router.push('/trang-chu-tuyen-dung')" class="white--text hoverCSSTitle pr-5 mr-5" >Nhà Tuyển Dụng</v-toolbar-title>
-        <v-btn style="height: 100%" flat  class="orange white--text text-none"  @click="checkUser">
+      <v-toolbar fixed  style="border-bottom: 4px solid #ff5e2d;background-color: white" class="pb-1" v-if="$vuetify.breakpoint.mdAndUp" >
+        <v-toolbar-title @click="$router.push('/trang-chu-tuyen-dung')"class="black--text hoverCSSTitle pr-5 mr-5" >
+          <v-layout row wrap class="pl-5">
+            <v-img :src="require('@/assets/logoP.png')" style="width: 50px; height: 50px"></v-img>
+            <span class="pt-2 pl-3">Job Board</span>
+          </v-layout>
+        </v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn style="height: 100%" flat  class="white black--text" @click="" >
+          Báo Giá
+        </v-btn>
+        <v-btn style="height: 100%" flat  class="white black--text" @click="">
+          Dịch vụ
+        </v-btn>
+        <v-btn style="height: 100%" flat  class="white black--text" @click="$router.push('/quan-li-cong-viec')" v-if="roleId === 2">
+          Quản lý Tin tuyển dụng
+        </v-btn>
+        <v-btn style="height: 100%" flat  class="white black--text"  @click="checkUser"  v-if="roleId === 2">
           Đăng Tin Tuyển Dụng
         </v-btn>
 
-
-
-        <v-spacer></v-spacer>
-        <!--        <v-flex xs 4>-->
-        <!--            <span @click="test">fasfa</span>-->
-        <!--        </v-flex>-->
-        <!--      <v-btn icon>-->
-        <!--        <v-icon>search</v-icon>-->
-        <!--      </v-btn>-->
-
-        <!--      <v-btn icon>-->
-        <!--        <v-icon>apps</v-icon>-->
-        <!--      </v-btn>-->
-
-        <!--      <v-btn icon>-->
-        <!--        <v-icon>refresh</v-icon>-->
-        <!--      </v-btn>-->
-
-        <v-btn style="height: 100%" flat  class="orange white--text" @click="$router.push('/tuyen-dung-dang-nhap')" v-if="roleId !== 2">
+        <v-btn style="height: 100%" flat  class="white black--text " @click="$router.push('/tuyen-dung-dang-nhap')" v-if="roleId !== 2">
           Đăng Nhập
         </v-btn>
-        <Span  v-if="roleId !== 2" class="orange white--text">|</Span>
-        <v-btn style="height: 100%" flat  class="orange white--text" @click="$router.push('/tuyen-dung-dang-ky')" v-if="roleId !== 2">
+<!--        <Span  v-if="roleId !== 2" class="white black&#45;&#45;text ">|</Span>-->
+        <v-btn style="height: 100%" flat  class="white black--text" @click="$router.push('/tuyen-dung-dang-ky')" v-if="roleId !== 2">
           Đăng Ký
         </v-btn>
 
+
         <v-menu  v-if="roleId === 2"
+                 class="pt-3"
                  offset-y
                  style="height: 100%"
                  content-class="dropdown-menu"
-                 transition="slide-y-transition">
+                 transition="slide-y-transition" >
           <v-btn
             style="height: 100%"
             slot="activator"
             flat
-            color="white"
+            color="black"
           >
             <v-icon left>mdi-account</v-icon>
             {{ fullName }}
@@ -65,25 +64,31 @@
           </v-card>
         </v-menu>
 
-        <v-btn style="height: 100%" color="primary" @click="$router.push('/')">
+        <v-btn style="height: 100%" color="warning" @click="$router.push('/')">
           Người Tìm Việc
         </v-btn>
 
 
       </v-toolbar>
-      <v-toolbar fixed  color="orange" v-if="$vuetify.breakpoint.mdAndDown">
-        <v-toolbar-title @click="$router.push('/employer-main-screen')" class="white--text hoverCSSTitle" >Nhà Tuyển Dụng</v-toolbar-title>
+      <v-toolbar fixed   style="border-bottom: 4px solid #ff5e2d;background-color: white"  class="pb-1" v-if="$vuetify.breakpoint.mdAndDown">
+        <v-toolbar-title @click="$router.push('/employer-main-screen')" class="black--text hoverCSSTitle" >
+          <v-layout row wrap class="pl-5">
+            <v-img :src="require('@/assets/logoP.png')" style="width: 50px; height: 50px"></v-img>
+            <span class="pt-2 pl-3">Job Board</span>
+          </v-layout>
+        </v-toolbar-title>
         <v-spacer></v-spacer>
 
-        <v-btn style="height: 100%" class="pa-0" color="white" flat @click="$router.push('/tuyen-dung-dang-nhap')" v-if="roleId !== 2">
-          <v-icon left color="white" class="pl-3">mdi-login</v-icon>
+        <v-btn style="height: 100%" class="pa-0" color="black" flat @click="$router.push('/tuyen-dung-dang-nhap')" v-if="roleId !== 2">
+          <v-icon left color="black" class="pl-3">mdi-login</v-icon>
         </v-btn>
-        <Span  v-if="roleId !== 1" style="color: white !important;">|</Span>
-        <v-btn style="height: 100%" color="white" flat @click="$router.push('/tuyen-dung-dang-ky')" v-if="roleId !== 2">
-          <v-icon left color="white" class="pl-3">mdi-pencil-plus</v-icon>
+        <Span  v-if="roleId !== 2" style="color: black !important;">|</Span>
+        <v-btn style="height: 100%" color="black" flat @click="$router.push('/tuyen-dung-dang-ky')" v-if="roleId !== 2">
+          <v-icon left color="black" class="pl-3">mdi-pencil-plus</v-icon>
         </v-btn>
 
-        <v-menu  v-if="roleId === 2"
+        <v-menu
+          class="pt-1" v-if="roleId === 2"
                  offset-y
                  style="height: 100%"
                  content-class="dropdown-menu"
@@ -92,9 +97,9 @@
             style="height: 100%"
             slot="activator"
             flat
-            color="white"
+            color="black"
           >
-            <v-icon left color="white" class="pl-3">mdi-account</v-icon>
+            <v-icon left color="black" class="pl-3">mdi-account</v-icon>
           </v-btn>
           <v-card class="pa-0">
             <p class="pt-3 pl-3 pr-3" ><b> {{ fullName }} </b></p>
@@ -114,7 +119,7 @@
           </v-card>
         </v-menu>
 
-        <v-btn style="height: 100%" color="primary" @click="$router.push('/')">
+        <v-btn style="height: 100%" color="warning" @click="$router.push('/')">
           Người Tìm Việc
         </v-btn>
 
@@ -122,7 +127,7 @@
     </template>
     <!--    End ToolBar-->
     <v-content>
-      <v-flex >
+      <v-flex class="mt-2">
         <slot></slot>
       </v-flex>
     </v-content>
@@ -177,6 +182,7 @@
 </template>
 
 <script>
+  import Constants from '@/stores/constant.js'
   import {mapGetters} from 'vuex';
   import Axios from 'axios'
 
@@ -259,7 +265,7 @@
     },
     methods: {
       async getCompany(){
-        const url = 'http://localhost:8080/employercompany/getCompanyId'
+        const url = Constants.URL+'/employercompany/getCompanyId'
         const method = 'POST'
         const data = this.formDataCompany
         console.log(data)

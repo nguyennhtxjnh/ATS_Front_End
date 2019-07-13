@@ -1,48 +1,48 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <v-container fluid fill-height>
     <v-layout align-center justify-center>
 
       <v-flex align-center justify-center md8>
         <!--chon cong ty da co san-->
-        <v-flex xs12 >
-          <v-card style="border-style: solid; border-color: #ccc; border-width: 1px;" class="elevation-0 border_all">
-            <v-toolbar dark color="orange">
-              <v-toolbar-title>Chọn công ty đã có sẵn</v-toolbar-title>
-              <v-spacer></v-spacer>
+<!--        <v-flex xs12 >-->
+<!--          <v-card style="border-style: solid; border-color: #ccc; border-width: 1px;" class="elevation-0 border_all">-->
+<!--            <v-toolbar dark color="orange">-->
+<!--              <v-toolbar-title>Chọn công ty đã có sẵn</v-toolbar-title>-->
+<!--              <v-spacer></v-spacer>-->
 
-            </v-toolbar>
-            <v-form @submit.prevent="chooseCompany" ref="form">
-              <v-card-text>
-                <v-container fluid fill-height>
-                  <v-layout fill-height wrap>
-                      <!--Tên Công Ty -->
-                      <v-flex md12 xs12>
-                        <v-autocomplete
-                          class="ma-2"
-                          autofocus
-                          :rules="[rules.required]"
-                          v-model="formDataCompany.companyId"
-                          prepend-icon="mdi-domain"
-                          :items="CompanyAPI"
-                          item-text="nameCompany"
-                          item-value="id"
-                          label="Công Ty"
-                        ></v-autocomplete>
-                      </v-flex>
-                  </v-layout>
-                </v-container>
+<!--            </v-toolbar>-->
+<!--            <v-form @submit.prevent="chooseCompany" ref="form">-->
+<!--              <v-card-text>-->
+<!--                <v-container fluid fill-height>-->
+<!--                  <v-layout fill-height wrap>-->
+<!--                      &lt;!&ndash;Tên Công Ty &ndash;&gt;-->
+<!--                      <v-flex md12 xs12>-->
+<!--                        <v-autocomplete-->
+<!--                          class="ma-2"-->
+<!--                          autofocus-->
+<!--                          :rules="[rules.required]"-->
+<!--                          v-model="formDataCompany.companyId"-->
+<!--                          prepend-icon="mdi-domain"-->
+<!--                          :items="CompanyAPI"-->
+<!--                          item-text="nameCompany"-->
+<!--                          item-value="id"-->
+<!--                          label="Công Ty"-->
+<!--                        ></v-autocomplete>-->
+<!--                      </v-flex>-->
+<!--                  </v-layout>-->
+<!--                </v-container>-->
 
-              </v-card-text>
-              <v-card-actions class="justify-center mb-4">
-                <div class="text-xs-center">
-                  <v-spacer></v-spacer>
-                  <v-btn color="orange" style="color: white !important;" type="submit">Xác Nhận</v-btn>
-                </div>
-              </v-card-actions>
-            </v-form>
-          </v-card>
-        </v-flex>
-        <v-flex xs12 style="background-color: #cccccc" class="mt-5 mb-5 pt-1"></v-flex>
+<!--              </v-card-text>-->
+<!--              <v-card-actions class="justify-center mb-4">-->
+<!--                <div class="text-xs-center">-->
+<!--                  <v-spacer></v-spacer>-->
+<!--                  <v-btn color="orange" style="color: white !important;" type="submit">Xác Nhận</v-btn>-->
+<!--                </div>-->
+<!--              </v-card-actions>-->
+<!--            </v-form>-->
+<!--          </v-card>-->
+<!--        </v-flex>-->
+<!--        <v-flex xs12 style="background-color: #cccccc" class="mt-5 mb-5 pt-1"></v-flex>-->
         <!--tao cong ty-->
         <v-flex xs12 >
           <v-card style="border-style: solid; border-color: #ccc; border-width: 1px;" class="elevation-0 border_all">
@@ -62,6 +62,43 @@
                         <v-text-field class="ma-2" prepend-icon="mdi-account-badge" name="title" label="Tên Công Ty" type="text"
                                       v-model="formData.nameCompany"
                                       :rules="[rules.required]"></v-text-field>
+                      </v-flex>
+<!--                      ngành nghề-->
+                      <v-flex md12 xs12>
+
+                      <v-autocomplete
+                        v-model="tmpIndus"
+                        :items="industries"
+                        chips
+                        prepend-icon="mdi-robot-industrial"
+                        color="blue-grey lighten-2"
+                        label="Ngành nghê"
+                        item-text="name"
+                        item-value="id"
+                        multiple
+                      >
+                        <template v-slot:selection="data">
+                          <v-chip
+                            :selected="data.selected"
+                            close
+                            class="chip--select-multi"
+                            @input="remove(data.item)"
+                          >
+
+                            {{ data.item.name }}
+                          </v-chip>
+                        </template>
+                        <template v-slot:item="data">
+                          <template v-if="typeof data.item !== 'object'">
+                            <v-list-tile-content v-text="data.item"></v-list-tile-content>
+                          </template>
+                          <template v-else>
+                            <v-list-tile-content>
+                              <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+                            </v-list-tile-content>
+                          </template>
+                        </template>
+                      </v-autocomplete>
                       </v-flex>
                       <!--City -->
                       <v-flex md12 xs12>
@@ -140,8 +177,6 @@
           </v-card>
         </v-flex>
       </v-flex>
-
-
     </v-layout>
   </v-container>
 </template>
@@ -151,6 +186,8 @@
   import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/vi'
   import {mapGetters} from 'vuex';
   import Axios from 'axios'
+  import Constants from '@/stores/constant.js'
+
 
   export default {
     name: 'CreateCompany',
@@ -160,9 +197,14 @@
         imageUrl: '',
         imageFile: '',
         sizeImg: '',
+        industries: [],
+        tmpIndus:[],
 
         CityAPI: [],
         CompanyAPI: [],
+        industry:{
+          industryId:''
+        },
 
         formDataCompany:{
           companyId: '',
@@ -172,6 +214,7 @@
         formData: {
               userId: '',
               cityId: '',
+          companyindustriesById:[],
 
               nameCompany: '',
               address: '',
@@ -206,29 +249,23 @@
 
       }
     },
+
     methods: {
-
+      remove (item) {
+        const index = this.tmpIndus.indexOf(item.id)
+        if (index >= 0) this.tmpIndus.splice(index, 1)
+      },
       chooseCompany(){
-        this.formDataCompany.userId = this.userId2;
-        const url = 'http://localhost:8080/employercompany/addNewEmployerCompany'
-        const method = 'POST'
-        const data = this.formDataCompany
 
-        Axios({url, method, data})
-          .then(response => {
-            this.$notify({
-              group: 'foo',
-              type: 'success',
-              title: 'Thành công',
-              text: 'Thêm công ty thành công!'
-            })
-            this.$router.push('/trang-chu-tuyen-dung')
-          })
-          .catch(error => {
-            console.log(error)
-          })
       },
       submitCompany() {
+
+        for( var indus in this.tmpIndus){
+
+          this.industry.industryId = this.tmpIndus[indus];
+          this.formData.companyindustriesById.push(Object.assign({}, this.industry));
+
+        }
         if (this.$refs.form.validate()) {
           if (this.formData.description === '') {
             this.$notify({
@@ -243,7 +280,7 @@
           this.toDataURL(this.imageUrl, function(dataUrl) {})
 
           this.formData.logoImg = this.imageUrl;
-          const url = 'http://localhost:8080/company';
+          const url = Constants.URL+'/company';
           const method = 'POST';
           const data = this.formData;
           let config = {
@@ -254,17 +291,35 @@
 
           Axios({url, method, data, config})
             .then(response => {
-              console.log(response)
-              this.$notify({
-                group: 'foo',
-                type: 'success',
-                title: 'Thành công',
-                text: 'Tạo công ty thành công!'
-              })
+              // this.$notify({
+              //   group: 'foo',
+              //   type: 'success',
+              //   title: 'Thành công',
+              //   text: 'Tạo công ty thành công!'
+              // })
+
+              this.formDataCompany.companyId = response.data.data;
+              this.formDataCompany.userId = this.userId2;
+              const url = Constants.URL+'/employercompany/addNewEmployerCompany'
+              const method = 'POST'
+              const data = this.formDataCompany
+
+              Axios({url, method, data})
+                .then(response => {
+                  this.$notify({
+                    group: 'foo',
+                    type: 'success',
+                    title: 'Thành công',
+                    text: 'Thêm công ty thành công!'
+                  })
+                  this.$router.push('/trang-chu-tuyen-dung')
+                })
+                .catch(error => {
+                  console.log(error)
+                })
               this.$router.push('/trang-chu-tuyen-dung')
             })
             .catch(error => {
-              console.log(error)
               this.$notify({
                 group: 'foo',
                 type: 'error',
@@ -332,11 +387,11 @@
         )
       },
       getInitData(){
-        const url = 'http://localhost:8080/user/getRegisterEmployerComponent';
+
+        const url = Constants.URL+'/user/getRegisterEmployerComponent';
         const method = 'GET';
         Axios({url, method})
           .then(response => {
-            console.log(response);
             if (response.data.success == true) {
               this.CityAPI = response.data.data.city;
               this.CompanyAPI = response.data.data.company;
@@ -350,7 +405,6 @@
             }
           })
           .catch(error => {
-            console.log(error)
             this.$notify({
               group: 'foo',
               type: 'error',
@@ -361,6 +415,11 @@
           .finally(() => {
 
           })
+        Axios
+          .get(Constants.URL+'/industry')
+          .then(response => (
+            this.industries = response.data))
+
       },
     },
     mounted () {
@@ -368,7 +427,8 @@
         this.formData.userId = this.userId2;
         this.formDataCompany.userId = this.userId2;
         this.getInitData();
-      })
+      });
+
     },
     computed: {
       ...mapGetters('AUTHENTICATION_STORE',{

@@ -21,6 +21,8 @@ import UpdateCVPage from "../views/Jobseeker/UpdateCVPage";
 import EmployerCreateCompanyPage from '../views/Employer/EmployerCreateCompanyPage'
 import JobSeekerViewJobDetailPage from '../views/Jobseeker/JobSeekerViewJobDetailPage'
 import EmployerJobCreateReviewPage from '../views/Employer/EmployerJobCreateReviewPage'
+import TabJobPage from "../views/Jobseeker/TabJobPage";
+import ManageJobPage from "../views/Employer/ManageJobPage";
 
 
 Vue.use(Router)
@@ -141,7 +143,16 @@ const router = new Router({
       name: 'employer review created job',
       component: EmployerJobCreateReviewPage
     }
-    ,
+    ,{
+      path: '/viec-lam-nguoi-tim-viec',
+      name: 'tab job',
+      component: TabJobPage
+    }
+    ,{
+      path: '/quan-li-cong-viec',
+      name: 'manage job',
+      component: ManageJobPage
+    }
     // {
     //   path: '/detail/:id',
     //   component: Detail

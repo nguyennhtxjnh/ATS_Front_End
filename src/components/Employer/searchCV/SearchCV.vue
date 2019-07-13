@@ -1,13 +1,14 @@
 <template>
+  <v-flex style="background-color: whitesmoke">
   <v-container>
     <v-card class="pa-5 ">
       <v-layout row wrap >
         <v-flex md6 xs12 class="mr-2" >
           <v-layout row>
-            <v-icon color="orange darken-2">mdi-account-circle-outline</v-icon>
+            <v-icon color="orange darken-2" class="mr-2">mdi-account-badge-horizontal-outline</v-icon>
             <v-text-field
-              v-model="industry"
-              :rules="[() => industry.length > 0 ||'Không được để trống']"
+              v-model="vacancyName"
+              :rules="[() => vacancyName.length > 0 ||'Không được để trống']"
               label="Vị trí công việc* "
             ></v-text-field>
           </v-layout>
@@ -16,7 +17,7 @@
         <v-spacer/>
         <v-flex md3 xs12 class="mr-2">
           <v-layout row>
-            <v-icon color="orange darken-2">mdi-map-marker</v-icon>
+            <v-icon color="orange darken-2" class="mr-2">mdi-map-marker</v-icon>
             <v-text-field
               v-model="address"
               :rules="[() => address.length > 0 ||'Không được để trống']"
@@ -37,11 +38,22 @@
       <v-layout row wrap>
         <v-flex md6 xs12 class="mr-2" >
           <v-layout row>
-            <v-icon color="orange darken-2">mdi-widgets</v-icon>
+            <v-icon color="orange darken-2"  class="mr-2">mdi-widgets</v-icon>
             <v-text-field
               v-model="skill"
               :rules="[() => skill.length > 0 ||'Không được để trống']"
               label="Kỹ năng của mà bạn đang tìm kiếm "
+            ></v-text-field>
+          </v-layout>
+
+        </v-flex>
+        <v-flex md5 xs12 class="ml-2" >
+          <v-layout row>
+            <v-icon color="orange darken-2" class="mr-2">mdi-robot-industrial</v-icon>
+           <v-text-field
+            v-model="industry"
+            :rules="[() => industry.length > 0 ||'Không được để trống']"
+            label="Ngành nghề "
             ></v-text-field>
           </v-layout>
 
@@ -82,7 +94,7 @@
       <v-flex md4 xs12 class="pl-3">
         <v-card class="pa-3">
           <v-layout row wrap>
-            <v-icon class="">mdi-pen-minus</v-icon>
+            <v-icon class="mr-2">mdi-pen-minus</v-icon>
             <h2>Ưu tiên hiển thị ứng viên</h2>
           </v-layout>
           <v-radio-group v-model="radios" :mandatory="false">
@@ -93,8 +105,8 @@
           </v-radio-group>
           <v-divider></v-divider>
           <v-layout row wrap>
-            <v-icon class="">mdi-calendar-blank</v-icon>
-            <h2>Năm sinh</h2>
+            <v-icon class="mr-2">mdi-calendar-blank</v-icon>
+            <h2>Tuổi</h2>
           </v-layout>
           <v-layout row wrap>
             <v-flex md6 class="pr-2">
@@ -115,7 +127,7 @@
           </v-layout>
           <v-divider></v-divider>
           <v-layout row wrap>
-            <v-icon class="">mdi-gender-male-female</v-icon>
+            <v-icon class="mr-2">mdi-gender-male-female</v-icon>
             <h2>Giới tính</h2>
           </v-layout>
           <v-select
@@ -133,7 +145,7 @@
     </v-layout>
 
   </v-container>
-
+  </v-flex>
 
 </template>
 
@@ -143,6 +155,7 @@
     export default {
         name: "SearchCV",
       data: () => ( {
+        vacancyName:'',
         industry:'',
         address:'',
         skill:'',

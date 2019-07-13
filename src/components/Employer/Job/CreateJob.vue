@@ -21,25 +21,41 @@
                   </v-flex>
 
                   <v-flex md12 xs12>
-                    <v-text-field class="ma-2" prepend-icon="mdi-map-marker-radius" name="Name" label="Địa Chỉ Làm Việc"
-                                  type="text"
-                                  v-model="formData.address"
-                                  :rules="[rules.required]"></v-text-field>
-                  </v-flex>
+                    <v-layout row wrap>
+                      <v-flex md6 xs12>
+                        <v-text-field class="ma-2" prepend-icon="mdi-map-marker-radius" name="Name" label="Địa Chỉ Làm Việc"
+                                      type="text"
+                                      v-model="formData.address"
+                                      :rules="[rules.required]"></v-text-field>
+                      </v-flex>
+                      <v-spacer/>
+                      <v-flex md5 xs12>
+                          <v-autocomplete
+                            prepend-icon="mdi-map-marker"
+                            v-model="formData.cityId"
+                            :items="cityAPI"
+                            item-text="fullName"
+                            item-value="id"
+                            label="Chọn Tỉnh/Thành Phố"
+                            :rules="[rules.required]"
+                          ></v-autocomplete>
+                      </v-flex>
+                    </v-layout>
 
-                  <!--                   Nơi Làm Việc-->
-                  <v-flex class="pa-1" xs12>
-                    <v-autocomplete
-                      prepend-icon="mdi-map-marker"
-                      v-model="formData.cityId"
-                      :items="cityAPI"
-                      item-text="fullName"
-                      item-value="id"
-                      label="Chọn Tĩnh/Thành Phố"
-                      :rules="[rules.required]"
-                    ></v-autocomplete>
                   </v-flex>
-                  <!--                    Hết Nơi Làm Việc-->
+<!--industry-->
+                  <v-flex md12 xs12>
+                    <v-autocomplete
+                      v-model="formData.industryId"
+                      :items="industries"
+                      item-text="name"
+                      item-value="id"
+                      label="Ngành nghề*"
+                      persistent-hint
+                      single-line
+                    ></v-autocomplete>
+
+                  </v-flex>
 
                   <v-flex  xs12>
                     <v-autocomplete
@@ -85,16 +101,10 @@
 
                   <!--  Kinh Nghiệm-->
                   <v-flex md12 xs12>
-                    <v-autocomplete
-                      class="ma-2"
-                      prepend-icon="mdi-calendar-clock"
-                      :items="skillYear"
-                      v-model="formData.yearExperience"
-                      item-text="yearName"
-                      item-value="id"
-                      label="Kinh Nghiệm"
-                      :rules="[rules.required]"
-                    ></v-autocomplete>
+                    <v-text-field class="ma-2" prepend-icon="mdi-calendar-clock" label="Kinh Nghiệm"
+                                  type="number" v-model="formData.yearExperience"
+
+                    ></v-text-field>
 
                   </v-flex>
                   <!--  Hết Kinh Nghiệm-->
@@ -208,10 +218,9 @@
                     <v-autocomplete
                       prepend-icon="mdi-account-star"
                       :items="skillChoose"
-                      v-model="selectedSkill"
+                      v-model="selectedSkill.skillMasterId"
                       item-text="skillName"
                       item-value="id"
-                      return-object
                       label="Kĩ Năng"
                       :rules="[rules.required]"
                     ></v-autocomplete>
@@ -219,11 +228,11 @@
                   <v-flex class="pa-1" md6 xs12>
                     <v-btn color="orange" style="color: white !important;" @click="addSkill">Thêm Kĩ Năng</v-btn>
                   </v-flex>
-                  <template v-for="(skill,index) in formDataSkill.listSkill">
+                  <template v-for="(skill,index) in formData.listSkill">
                     <v-flex class="pa-1" md5 xs12>
                       <v-autocomplete
                         :items="skillChoose"
-                        v-model="skill.id"
+                        v-model="skill.skillMasterId"
                         item-text="skillName"
                         item-value="id"
                         label="Kĩ Năng"
@@ -250,10 +259,12 @@
 <!--                  <v-flex class="pa-1" md2 xs12>-->
 <!--                    <v-btn color="error" @click="testPost()">test</v-btn>-->
 <!--                  </v-flex>-->
+
                 </v-layout>
               </v-container>
 
             </v-card-text>
+
             <v-card-actions class="justify-center mb-4">
               <div class="text-xs-center">
                 <v-spacer></v-spacer>
@@ -280,23 +291,28 @@
                           </v-flex>
 
                           <v-flex md12 xs12>
-                            <v-text-field class="ma-2" prepend-icon="mdi-map-marker-radius" name="Name" label="Địa Chỉ Làm Việc"
-                                          type="text"
-                                          disabled
-                                          v-model="formData.address"
-                                          ></v-text-field>
-                          </v-flex>
+                            <v-layout row wrap>
+                              <v-flex md6 xs12>
+                                <v-text-field class="ma-2" prepend-icon="mdi-map-marker-radius" name="Name" label="Địa Chỉ Làm Việc"
+                                              type="text"
+                                              v-model="formData.address"
+                                              :rules="[rules.required]"></v-text-field>
+                              </v-flex>
+                              <v-spacer/>
+                              <v-flex md5 xs12>
+                                <v-autocomplete
+                                  prepend-icon="mdi-map-marker"
+                                  v-model="formData.cityId"
+                                  :items="cityAPI"
+                                  item-text="fullName"
+                                  item-value="id"
+                                  label="Chọn Tỉnh/Thành Phố"
+                                  :rules="[rules.required]"
+                                ></v-autocomplete>
+                              </v-flex>
+                            </v-layout>
 
-                          <v-flex class="pa-1" xs12>
-                            <v-autocomplete
-                              prepend-icon="mdi-map-marker"
-                              v-model="formData.cityId"
-                              :items="cityAPI"
-                              item-text="fullName"
-                              item-value="id"
-                              label="Chọn Tĩnh/Thành Phố"
-                              disabled
-                            ></v-autocomplete>
+
                           </v-flex>
 
                           <v-flex  xs12>
@@ -331,16 +347,10 @@
                           </v-flex>
 
                           <v-flex md12 xs12>
-                            <v-autocomplete
-                              class="ma-2"
-                              prepend-icon="mdi-calendar-clock"
-                              :items="skillYear"
-                              v-model="formData.yearExperience"
-                              item-text="yearName"
-                              item-value="id"
-                              label="Kinh Nghiệm"
-                              disabled
-                            ></v-autocomplete>
+                            <v-text-field class="ma-2" prepend-icon="mdi-calendar-clock" label="Kinh Nghiệm"
+                                          type="number" v-model="formData.yearExperience"
+                                          disabled
+                            ></v-text-field>
 
                           </v-flex>
 
@@ -411,7 +421,7 @@
                             ></ckeditor>
                           </v-flex>
 
-                          <template v-for="(skill,index) in formDataSkill.listSkill">
+                          <template v-for="(skill,index) in formData.listSkill">
                             <v-flex class="pa-1" md6 xs12>
                               <v-autocomplete
                                 :items="skillChoose"
@@ -470,6 +480,8 @@
   import Axios from 'axios'
   import {mapGetters} from 'vuex'
   import Constants from '@/stores/constant.js'
+  import Swal from 'sweetalert2'
+
 
   export default {
     name: 'CreateJob',
@@ -478,7 +490,7 @@
         date: new Date().toISOString().substr(0, 10),
         menu2: false,
         dialog: false,
-
+        industries: [],
         tmpSkill: [],
 
         salaryChoose: ['Thỏa Thuận', 'Từ', 'Đến', 'Trong Khoảng'],
@@ -491,7 +503,7 @@
         cityAPI: [],
         workingType: ['Toàn Thời Gian', 'Bán Thời Gian', 'Thực Tập'],
         skillChoose: [],
-        selectedSkill: {id: 1, skillName: "C#"},
+        selectedSkill: {skillMasterId: '', skillLevel: ''},
         skillRating: [
           {
           id: 1,
@@ -527,7 +539,7 @@
           companyId: '',
           cityId: '',
           joblevelId: '',
-
+          industryId:'',
           title: '',
           address: '',
           vacancyName: '',
@@ -540,11 +552,12 @@
           candidateBenefits: '',
           workingType: '',
           numbeOfRecruitment: '',
+          listSkill:[]
         },
 
         formDataSkill:{
           jobId: '',
-          listSkill:[]
+
         },
 
         editor: DecoupledEditor,
@@ -589,7 +602,12 @@
         )
       },
       async getInitData () {
-        const url = 'http://localhost:1122/job/getJobComponent'
+
+        Axios
+          .get(Constants.URL+'/industry')
+          .then(response => (
+            this.industries = response.data))
+        const url = Constants.URL+'/job/getJobComponent'
         const method = 'GET'
         await Axios({url, method})
           .then(response => {
@@ -631,24 +649,24 @@
           })
           return;
         }
-        if(this.formDataSkill.listSkill.length === 0){
-          this.formDataSkill.listSkill.push(Object.assign({}, this.selectedSkill))
+        if(this.formData.listSkill.length === 0){
+          this.formData.listSkill.push(Object.assign({}, this.selectedSkill))
         }
-        if(this.formDataSkill.listSkill.length !== 0 && this.formDataSkill.listSkill.length < 3 ) {
-          console.log(this.formDataSkill.listSkill)
-          this.formDataSkill.listSkill.forEach((itemX) =>{
+        if(this.formData.listSkill.length !== 0 && this.formData.listSkill.length < 3 ) {
+          console.log(this.formData.listSkill)
+          this.formData.listSkill.forEach((itemX) =>{
             this.tmpSkill.push(itemX.id)
             this.tmpSkill = [...new Set(this.tmpSkill)];
           })
           if(!this.tmpSkill.includes(this.selectedSkill.id)){
-            this.formDataSkill.listSkill.push(Object.assign({}, this.selectedSkill))
+            this.formData.listSkill.push(Object.assign({}, this.selectedSkill))
           }
         }
 
       },
       removeSkill(index){
         console.log(index);
-        this.formDataSkill.listSkill.splice(index,1);
+        this.formData.listSkill.splice(index,1);
         this.tmpSkill.splice(index,1);
         console.log(this.listSkill);
       },
@@ -713,8 +731,6 @@
             if (response.data.success == true) {
               this.formData.companyId = response.data.data;
 
-              console.log(this.formData);
-
               const url = Constants.URL+'/job/create';
               const method = 'POST';
               const data = this.formData;
@@ -725,10 +741,23 @@
                 }
               }
 
-              await Axios({url, method, data, config})
+              await Axios({url,method, data, config})
                 .then(response => {
                   if (response.data.success == true) {
-                    this.submitSkill(response.data.data)
+                    console.log(response)
+
+                    Swal.fire({
+                      title: '<strong>Thành công/strong>',
+                      type: 'success',
+                      html:'',
+                      focusConfirm: true,
+                      confirmButtonText:
+                        '<a href="/#/trang-chu-tuyen-dung"> Great! </a> ',
+                      confirmButtonAriaLabel: 'Thumbs up, great!',
+                      cancelButtonText:
+                        '<i class="fa fa-thumbs-down"></i>',
+                      cancelButtonAriaLabel: 'Thumbs down',
+                    })
                   }
                 })
                 .catch(error => {
@@ -766,45 +795,7 @@
 
           })
       },
-      async submitSkill (jobid){
-        for(let i = 0; i < this.formDataSkill.listSkill.length; i++){
-          this.formDataSkill.listSkill[i].skillMasterId = this.formDataSkill.listSkill[i]['id'];
-          delete this.formDataSkill.listSkill[i].id;
-          delete this.formDataSkill.listSkill[i].skillName;
-        }
-        this.formDataSkill.jobId = jobid;
 
-        const url = 'http://localhost:1122/skillneedforjob/addNewSkill'
-        const data = this.formDataSkill
-        const method = 'POST'
-
-        console.log(this.formDataSkill)
-
-        await Axios({url, method, data})
-          .then(response => {
-            if (response.data.success == true) {
-              this.$notify({
-                group: 'foo',
-                type: 'success',
-                title: 'Thành Công',
-                text: 'Đăng Tin Thành Công!'
-              })
-              sessionStorage.setItem("jobInfo", JSON.stringify(this.formData));
-              sessionStorage.setItem("jobSkill", JSON.stringify(this.formDataSkill));
-              this.$router.push("/dang-tin-tuyen-dung-thanh-cong");
-              // this.$router.push('/trang-chu-tuyen-dung');
-            }
-          })
-          .catch(error => {
-            console.log(error)
-            this.$notify({
-              group: 'foo',
-              type: 'error',
-              title: 'Thất Bại',
-              text: 'Đã Xảy Ra Lỗi!'
-            })
-          })
-      },
     },
     mounted () {
       this.$nextTick( () => {

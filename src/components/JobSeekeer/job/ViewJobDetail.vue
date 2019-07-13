@@ -1,12 +1,13 @@
 <template>
+  <v-flex style="background-color: whitesmoke">
   <v-container fluid fill-height >
     <v-layout align-center justify-center >
       <v-flex xs12 sm12 md10 >
         <!--header title-->
-        <v-container class=" mb-3" fluid grid-list-md style="background-color: #efebeb">
+        <v-container class=" mb-3" fluid grid-list-md style="background-color: white">
           <v-layout row wrap>
             <v-flex d-flex xs12 sm6 md3 class="align-center pa-0">
-              <v-img contain src="https://picsum.photos/510/300?random" aspect-ratio="2"></v-img>
+              <v-img contain :src="imgUrl" aspect-ratio="2"></v-img>
             </v-flex>
             <v-flex d-flex xs12 sm6 md6>
 
@@ -47,13 +48,7 @@
             </v-flex>
             <v-layout xs12 sm6 md3 child-flex text-xs-center>
               <v-flex md12  class="align-center">
-                <v-flex xs12 v-if="roleId === 1">
-                  <v-btn block color="primary">Nộp Đơn</v-btn>
-                </v-flex>
-
-                <v-flex xs12 v-if="roleId === 1">
-                  <v-btn  block outline color="error"><v-icon dark>favorite</v-icon>Lưu Việc Làm</v-btn>
-                </v-flex>
+                <ApplyJobComponent :JobID="jobFull.id"></ApplyJobComponent>
 
               </v-flex>
             </v-layout>
@@ -65,8 +60,6 @@
           <!--        tab-->
             <template  >
               <v-tabs
-                color="cyan"
-                dark
                 next-icon="mdi-arrow-right-bold-box-outline"
                 prev-icon="mdi-arrow-left-bold-box-outline"
                 show-arrows
@@ -278,18 +271,24 @@
       </v-flex>
     </v-layout>
   </v-container>
+  </v-flex>
 </template>
 
 <script>
   import Constants from '@/stores/constant.js'
   import Axios from 'axios'
   import {mapGetters} from 'vuex';
+  import ApplyJobComponent from "../applyJob/ApplyJobComponent";
 
   export default {
     name: 'ViewJobDetail',
+    components: {ApplyJobComponent},
     data: function () {
       return {
+        userId:'',
+        imgUrl:require('@/assets/jsmain1.jpg'),
         tab: null,
+        saved:false,
         loading: false,
         pagination: {},
         items: [
@@ -310,6 +309,8 @@
       getjob(){
 
       },
+
+
       getJobDetail(){
         this.loading = true;
         Axios.get(Constants.URL+`/job/getJobDetail?id=${+this.id}`)
@@ -317,6 +318,7 @@
             this.jobFull = response.data.data;
             this.jobFull.createdDate = this.moment(this.jobFull.createdDate).format('DD-MM-YYYY');
             this.jobFull.endDateForApply = this.moment(this.jobFull.endDateForApply).format('DD-MM-YYYY');
+            this.imgUrl = this.jobFull.company.logoImg;
             console.log(this.jobFull);
           })
           .catch(console.error)
@@ -340,15 +342,15 @@
 
     },
     mounted() {
-      this.$nextTick(() => {
         this.getJobDetail();
-      })
+
     },
     computed: {
       ...mapGetters('AUTHENTICATION_STORE',{
         email : 'email1',
         roleId: 'roleId1',
         fullName: 'fullName1',
+        userId1: 'userId1'
       }),
     },
     watch: {

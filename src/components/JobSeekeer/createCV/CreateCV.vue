@@ -82,7 +82,7 @@
                   :items="industries"
                   item-text="name"
                   item-value="id"
-                  label="Nghề nghiệp*"
+                  label="Ngành nghề*"
                   persistent-hint
                   single-line
                 ></v-autocomplete>
@@ -431,6 +431,16 @@
 
         this.info.img = this.imageUrl;
         this.info.userId = this.userId1;
+        if (this.info.title.isEmpty){
+          for (indus in this.industries){
+            if(this.industries[indus].id =this.info.industryId){
+              this.info.title = this.industries[indus].name;
+            }
+
+          }
+
+        }
+
         console.log(this.info);
         axios.post( Constants.URL+'/cv/create',
           this.info

@@ -1,66 +1,65 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-    <v-container fluid>
-      <v-layout row wrap align-center justify-center>
+  <v-flex style="background-color: #efebeb">
+
+      <v-layout row wrap>
 <!--        Search Bar-->
-        <v-flex xs8 >
-            <v-layout style="border-radius: 4px; background-color: #00b9f2!important">
-              <v-flex md4 xs12 class="white ma-2" style="border-radius: 4px; height: 58px">
-<!--                <v-text-field-->
-<!--                  outline-->
-<!--                  label="Nhập chức danh, vị trí, kỹ năng..."-->
-<!--                  single-line-->
-<!--                  hide-details-->
-<!--                  v-model="selectSkill"-->
-<!--                ></v-text-field>-->
-<!--                <v-combobox-->
-<!--                  v-model="selectSkill"-->
-<!--                  :items="items"-->
-<!--                  outline-->
-<!--                  single-line-->
-<!--                  label="Nhập chức danh, vị trí, kỹ năng..."-->
-<!--                ></v-combobox>-->
-                    <v-combobox
-                      single-line
-                      outline
-                      label="Nhập chức danh, vị trí, kỹ năng..."
-                      :items="searchAPI"
-                      :search-input.sync="selectSkill"
-                      v-model="selectSkill"
-                    ></v-combobox>
-                </v-flex >
-              <v-flex md3 xs12 class="white ma-2" style="border-radius: 4px; height: 59px">
+        <v-flex  style="background: #ffffd5"
+                      prominent
+                      height="auto"
+                      class="py-3 px-5"
+        >
+
+          <v-flex md12  black--text title  >
+            <h3>Tìm công việc phù hợp</h3>
+          </v-flex>
+          <v-flex md12 class="pr-0 mr-0">
+            <v-layout row wrap>
+              <v-flex md4 xs12 class="mr-2" >
+                <!--                  <v-text-field-->
+                <!--                    label="Nhập chức danh, vị trí, kỹ năng..."-->
+                <!--                    v-model="searchValue"-->
+                <!--                    single-line-->
+                <!--                  ></v-text-field>-->
+                <v-combobox
+                  single-line
+                  label="Nhập chức danh, vị trí, kỹ năng..."
+                  :items="searchAPI"
+                  :search-input.sync="searchValue"
+                  v-model="searchValue"
+                ></v-combobox>
+              </v-flex>
+
+              <v-flex md3 xs12 class="mr-2">
                 <v-autocomplete
-                  outline
                   v-bind:items="industries"
-                  v-model="selectJob"
+                  v-model="searchIndustry"
                   item-text="name"
                   item-value="id"
+                  return-object
                   label="Tất cả các ngành nghề"
-                  hide-details
                 ></v-autocomplete>
               </v-flex>
 
-              <v-flex md3 xs12  class="white ma-2" style="border-radius: 4px; height: 59px">
+              <v-flex md3 xs12  class="mr-2">
                 <v-autocomplete
                   :items="industries"
-                  v-model="selectLocation"
+                  v-model="searchCity"
                   item-text="name"
                   item-value="id"
-                  outline
+                  return-object
                   label="Tất cả địa điểm"
-                  hide-details
                 ></v-autocomplete>
               </v-flex>
-              <v-flex md2 xs12 class="ma-2">
-                <v-btn block color="warning" style="height: 78%; border-radius: 4px" @click="searchClick"><h4>Tìm kiếm</h4></v-btn>
+              <v-flex md1 xs12 >
+                <v-btn color="warning" @click="startSearch"><h4>Tìm kiếm</h4></v-btn>
               </v-flex>
-
             </v-layout>
           </v-flex>
+        </v-flex>
 <!--        Search filter-->
 
 <!--        Search Result-->
-        <v-flex xs8 class="mt-2">
+        <v-flex xs12 md12 class="mt2 white" >
           <v-data-table
             :items="job"
             :loading="loading"
@@ -138,7 +137,8 @@
         </v-flex>
 
       </v-layout>
-    </v-container>
+
+  </v-flex>
 </template>
 
 <script>
@@ -158,7 +158,8 @@
 
         cbCompany: ['ABC', '123', 'CT'],
         images: {'main': require('@/assets/jsmain1.jpg')},
-        industries: [{id: "1", name: "Foo"}, {id: "2", name: "Bar"}, {id: "3", name: "Baka"}, {id: "4", name: "Pig"},],
+        industries: [],
+        cities:[],
         jobs: [0, 1, 2, 3, 4, 5, 6, 7],
         companys: [8, 9, 10, 11, 12],
         icon: 'mdi-coin',
@@ -188,27 +189,40 @@
     },
     methods: {
       getComponent(){
-        const url = 'http://localhost:8080/job/getSearchComponent';
-        const method = 'GET';
-        const data = '';
-        let config = {
-          headers: {
-            accessToken: localStorage.getItem('token1')
-          }
-        }
+        // const url = Constants.URL+'/job/getSearchComponent';
+        // const method = 'GET';
+        // const data = '';
+        // let config = {
+        //   headers: {
+        //     accessToken: localStorage.getItem('token1')
+        //   }
+        // }
 
-        Axios({url, method, data, config})
-          .then(response => {
-            if (response.data.success == true) {
-              this.searchAPI =  response.data.data;
-              console.log(this.searchAPI)
+        // Axios.get(Constants.URL+'/job/getSearchComponent')
+        //   .then(response => {
+        //       this.searchAPI =  response.data.all;
+        //       this.industries = response.data.industry;
+        //       this.cities = response.data.city;
+        //       console.log(this.searchAPI)
+        //   })
+        //   .catch(console.error)
+        //   .finally(() => {
+        //     this.loading = false;
+        //   })
+        Axios
+          .get(Constants.URL+'/job/getSearchComponent')
+          .then(response =>
+            (
+              this.searchAPI =  response.data.all))
+        Axios
+          .get(Constants.URL+'/industry')
+          .then(response => (
+            this.industries = response.data))
+        Axios
+          .get(Constants.URL+'/city/getAllCity')
+          .then(response => (
+            this.cities = response.data.data))
 
-            }
-          })
-          .catch(console.error)
-          .finally(() => {
-            this.loading = false;
-          })
       },
 
       getjob() {
@@ -271,6 +285,9 @@
   .hoverClass:hover, titleResult:hover {
     cursor: pointer;
     color: orange !important;
+  }
+  h3, h2, h1, h4, h5, span {
+    font-family: "Times New Roman";
   }
 
 </style>
