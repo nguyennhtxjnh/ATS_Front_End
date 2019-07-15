@@ -23,6 +23,8 @@ import JobSeekerViewJobDetailPage from '../views/Jobseeker/JobSeekerViewJobDetai
 import EmployerJobCreateReviewPage from '../views/Employer/EmployerJobCreateReviewPage'
 import TabJobPage from "../views/Jobseeker/TabJobPage";
 import ManageJobPage from "../views/Employer/ManageJobPage";
+import CVAppliedPage from "../views/Employer/CVAppliedPage";
+import ViewCVAppliedPage from "../views/Employer/ViewCVAppliedPage";
 
 
 Vue.use(Router)
@@ -152,7 +154,20 @@ const router = new Router({
       path: '/quan-li-cong-viec',
       name: 'manage job',
       component: ManageJobPage
+    },
+    {
+      path: '/CV-ung-tuyen/:jobid',
+      name: 'CV applied',
+      component: CVAppliedPage
+
+    },
+    {
+      path: '/xem-CV-ung-tuyen/:cvid',
+      name: 'view CV applied',
+      component: ViewCVAppliedPage
+
     }
+
     // {
     //   path: '/detail/:id',
     //   component: Detail

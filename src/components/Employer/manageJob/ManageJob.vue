@@ -29,6 +29,7 @@
             <ListJobPost></ListJobPost>
           </v-card>
           <v-card flat v-if="i.id === '4'">
+            <ListJobExpired></ListJobExpired>
           </v-card>
         </v-tab-item>
       </v-tabs>
@@ -40,9 +41,10 @@
 <script>
     import SearchCV from "../searchCV/SearchCV";
     import ListJobPost from "./ListJobPost";
+    import ListJobExpired from "./ListJobExpired";
     export default {
         name: "ManageJob",
-      components: {ListJobPost, SearchCV},
+      components: {ListJobExpired, ListJobPost, SearchCV},
       data: function () {
         return{
           active: null,

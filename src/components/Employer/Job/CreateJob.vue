@@ -747,16 +747,23 @@
                     console.log(response)
 
                     Swal.fire({
-                      title: '<strong>Thành công/strong>',
+                      title: '<strong>Thành công</strong>',
                       type: 'success',
                       html:'',
-                      focusConfirm: true,
-                      confirmButtonText:
-                        '<a href="/#/trang-chu-tuyen-dung"> Great! </a> ',
-                      confirmButtonAriaLabel: 'Thumbs up, great!',
+                      showCloseButton: true, showCancelButton: true,
+                      focusConfirm: false,
                       cancelButtonText:
-                        '<i class="fa fa-thumbs-down"></i>',
-                      cancelButtonAriaLabel: 'Thumbs down',
+                        '<form method="get" action="/#/trang-chu-tuyen-dung">\n' +
+                        '    <button type="submit" > Trang chủ</button>\n' +
+                        '</form>',
+                      cancelButtonAriaLabel: 'Trang chủ',
+                      confirmButtonText:
+                        '</form> <form method="get" action="/#/quan-li-cong-viec">\n' +
+                        '    <button type="submit" > Quản lý tin dăng tuyển</button>\n' +
+                        '</form>',
+                     confirmButtonAriaLabel: 'Quản lý tin dăng tuyển',
+
+
                     })
                   }
                 })

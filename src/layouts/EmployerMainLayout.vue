@@ -3,7 +3,7 @@
     <!--    ToolBar-->
     <template>
       <v-toolbar fixed  style="border-bottom: 4px solid #ff5e2d;background-color: white" class="pb-1" v-if="$vuetify.breakpoint.mdAndUp" >
-        <v-toolbar-title @click="$router.push('/trang-chu-tuyen-dung')"class="black--text hoverCSSTitle pr-5 mr-5" >
+        <v-toolbar-title @click="$router.push('/trang-chu-tuyen-dung')" class="black--text hoverCSSTitle pr-5 mr-5" >
           <v-layout row wrap class="pl-5">
             <v-img :src="require('@/assets/logoP.png')" style="width: 50px; height: 50px"></v-img>
             <span class="pt-2 pl-3">Job Board</span>
@@ -71,7 +71,7 @@
 
       </v-toolbar>
       <v-toolbar fixed   style="border-bottom: 4px solid #ff5e2d;background-color: white"  class="pb-1" v-if="$vuetify.breakpoint.mdAndDown">
-        <v-toolbar-title @click="$router.push('/employer-main-screen')" class="black--text hoverCSSTitle" >
+        <v-toolbar-title @click="$router.push('/trang-chu-tuyen-dung')" class="black--text hoverCSSTitle" >
           <v-layout row wrap class="pl-5">
             <v-img :src="require('@/assets/logoP.png')" style="width: 50px; height: 50px"></v-img>
             <span class="pt-2 pl-3">Job Board</span>

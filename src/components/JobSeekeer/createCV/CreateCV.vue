@@ -252,7 +252,7 @@
           <!--Kinh nghiệm-->
           <WorkExperienceComponent :workexperiences="info.workexperiencesById"></WorkExperienceComponent>
           <!--Kỹ năng-->
-<!--          <SkillInCVComponent :skillincvs="info.skillincvs"></SkillInCVComponent>-->
+          <SkillInCVComponent :skillincvsById="info.skillincvsById"></SkillInCVComponent>
 
           <!--dự án-->
           <ProjectorProductWorkedComponent
@@ -271,7 +271,7 @@
       <v-layout row wrap>
         <v-spacer/>
         <v-flex md2 xs12>
-          <router-link to="/thong-tin">
+          <router-link to="/quan-li-CV" tag="button">
             <v-btn  color="orange" dark @click="create">Tạo CV</v-btn>
           </router-link>
 
@@ -291,6 +291,7 @@
   import SkillInCVComponent from "./SkillInCVComponent";
   import ProjectorProductWorkedComponent from "./ProjectorProductWorkedComponent";
   import ProfileBasicComponent from "../manageCV/ProfileBasicComponent";
+  import Swal from 'sweetalert2'
 
 
   import {mapGetters} from 'vuex';
@@ -348,6 +349,7 @@
           projectorproductworkedsById: [],
           socialactivitiesById: [],
           workexperiencesById: [],
+          skillincvsById: [],
 
         },
        rules: {
@@ -444,8 +446,18 @@
         console.log(this.info);
         axios.post( Constants.URL+'/cv/create',
           this.info
-        ).then(function(){
-          console.log('SUCCESS!!');
+        ).then(response => {
+          console.log(response)
+          if(response.data.success === true){
+            Swal.fire({
+              position: 'top-end',
+              type: 'success',
+              title: 'Đã lưu CV',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }
+
         })
           .catch(function(){
             console.log('FAILURE!!');

@@ -14,13 +14,20 @@
                   <span class="headline" >Kỹ năng</span>
                   <v-layout row wrap>
                     <v-flex md12 xs12>
-                      <v-text-field
-                        v-model="newSkillInCV.skillName"
-                        label="Kỹ năng *"
-                        placeholder="Tên kỹ năng"
-                        :rules="[() => newSkillInCV.skillName.length > 0 ||'Không được để trống']"
-                      ></v-text-field>
-
+<!--                      <v-text-field-->
+<!--                        v-model="newSkillInCV.skillName"-->
+<!--                        label="Kỹ năng *"-->
+<!--                        placeholder="Tên kỹ năng"-->
+<!--                        :rules="[() => newSkillInCV.skillName.length > 0 ||'Không được để trống']"-->
+<!--                      ></v-text-field>-->
+                      <v-autocomplete
+                        prepend-icon="mdi-account-star"
+                        :items="selectedSkill"
+                        v-model="newSkillInCV.skillMasterId"
+                        item-text="skillName"
+                        item-value="id"
+                        label="Kĩ Năng"
+                      ></v-autocomplete>
                     </v-flex>
                     <v-flex md12 xs12>
                       <v-layout row wrap>
@@ -30,7 +37,7 @@
                         <v-flex md12 xs12>
                         <v-rating
                           style="float: left"
-                          v-model="newSkillInCV.rate"
+                          v-model="newSkillInCV.skillLevel"
                           color="yellow darken-3"
                           background-color="grey darken-1"
                           empty-icon="$vuetify.icons.ratingFull"
@@ -54,22 +61,28 @@
         </v-flex>
         <v-flex md12 xs12 v-if="btnSubmit === true">
           <v-container align="center">
-            <template v-for="(skillincv,index) in skillincvs">
+            <template v-for="(skillincv,index) in skillincvsById">
               <v-container>
                 <v-layout row wrap>
                   <v-spacer/>
                   <v-flex md2 xs2>
-                    <v-icon color="orange darken-2">mdi-skill</v-icon>
+                    <v-icon color="orange darken-2" size="40px">mdi-briefcase-account</v-icon>
                   </v-flex>
                   <v-flex md4 xs8>
                     <v-layout row wrap>
                       <v-flex md12 xs12 >
-                        <h2 style="float: left">{{skillincv.skillName}}</h2>
+                        <template v-for="skill in selectedSkill">
+                          <v-flex v-if="skill.id === skillincv.skillMasterId">
+                            <h2 style="float: left">{{skill.skillName}}</h2>
+                          </v-flex>
+
+                        </template>
+
                       </v-flex>
                       <v-flex md12 xs12 >
                         <v-rating
                           style="float: left"
-                          v-model="skillincv.rate"
+                          v-model="skillincv.skillLevel"
                           value="rate"
                           color="yellow darken-3"
                           background-color="grey darken-1"
@@ -77,7 +90,6 @@
                           half-increments
                           readonly=""
                         ></v-rating>
-                        {{skillincvs.rate}}
                       </v-flex>
 
                     </v-layout>
@@ -99,7 +111,7 @@
                   </v-flex>
                 </v-layout>
               </v-container>
-              <v-divider v-if="index != (skillincvs.length-1)"></v-divider>
+              <v-divider v-if="index != (skillincvsById.length-1)"></v-divider>
             </template>
           </v-container>
 
@@ -111,46 +123,100 @@
 </template>
 
 <script>
+  import Axios from 'axios'
+  import Constants from '@/stores/constant.js'
     export default {
         name: "SkillInCVComponent",
       props: {
-        skillincvs: Array,
+        skillincvsById: Array,
       },
       data: () => ( {
         dialog3: false,
+        editB: false,
         btnSubmit: false,
+        selectedSkill:[],
         newSkillInCV: {
-          skillName:'',
-          rate:4,
+          skillMasterId:'',
+          skillLevel:4,
         },
         defaultSkillInCV:{
-          skillName:'',
-          rate:4,
+          skillMasterId:'',
+          skillLevel:4,
         }
       }),
       methods: {
         update() {
-          if(this.newSkillInCV.skillName != ""){
-            this.btnSubmit = true;
-            this.skillincvs.push(Object.assign({},this.newSkillInCV));
-            Object.assign(this.newSkillInCV,this.defaultSkillInCV);
+          if (this.newSkillInCV.skillMasterId != "") {
+            var check = false;
+            var e;
+
+            for (e in  this.skillincvsById) {
+              var tmp = this.skillincvsById[e].skillMasterId;
+              if (tmp === this.newSkillInCV.skillMasterId) {
+
+                if(this.editB){
+                  if(this.skillincvsById[this.position].skillMasterId !== this.newSkillInCV.skillMasterId){
+                    alert("Kĩ năng đã tồn tại");
+                    check = true;
+                  }else {
+                    check = false;
+                  }
+                }else {
+                  alert("Kĩ năng đã tồn tại");
+                  check = true;
+                }
+              }
+            }
+
+
+            if (check == false) {
+              if (this.editB === true) {
+                console.log(this.position);
+                this.btnSubmit = true;
+                this.dialog3 = false;
+                Object.assign(this.skillincvsById[this.position], this.newSkillInCV);
+                Object.assign(this.newSkillInCV, this.defaultSkillInCV);
+                this.editB = false;
+                this.position = "";
+
+              }else {
+                this.btnSubmit = true;
+                this.dialog3 = false;
+                this.skillincvsById.push(Object.assign({}, this.newSkillInCV));
+                Object.assign(this.newSkillInCV, this.defaultSkillInCV);
+              }}}
+          else {
+            alert("Hãy nhập thông tin cần thiết.");
           }
+
         }, remove(position){
-          this.skillincvs.splice(position, 1 );
-          if(this.skillincvs.length === 0){
+          this.skillincvsById.splice(position, 1 );
+          if(this.skillincvsById.length === 0){
             this.btnSubmit = false;
           }
           console.log('delete')
         },
         edit(skillincv,position){
-
-          Object.assign(this.newSkillInCV,skillincv);
-          this.skillincvs.splice(position, 1 );
-          if(this.skillincvs.length === 0){
+          Object.assign(this.newSkillInCV, skillincv);
+          this.position = position;
+          this.dialog3 = true;
+          this.editB = true;
+          if (this.skillincvsById.length === 0) {
             this.btnSubmit = false;
           }
+
           console.log('edit')
+
         }
+      },
+      mounted () {
+
+            Axios
+              .get(Constants.URL+'/skillmaster/')
+              .then(response => (
+                this.selectedSkill = response.data))
+
+
       }
     }
 </script>

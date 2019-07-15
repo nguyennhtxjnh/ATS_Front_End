@@ -18,7 +18,7 @@
             </v-layout>
           </v-flex>
           <!-- danh sách CV-->
-          <ListCVComponent></ListCVComponent>
+          <ListCVComponent :userId1="userId1"></ListCVComponent>
 
         </v-flex>
         <v-spacer/>
@@ -29,11 +29,32 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex';
     import ListCVComponent from "./ListCVComponent";
     import ProfileBasicComponent from "./ProfileBasicComponent";
+
     export default {
         name: "ManageCV",
+
       components: {ProfileBasicComponent, ListCVComponent},
+      data: () => ( {
+       userId:'',
+      }),
+      mounted(){
+        this.userId = this.userId1
+      },
+      computed: {
+        ...mapGetters('AUTHENTICATION_STORE',{
+
+          email : 'email1',
+          roleId: 'roleId1',
+          fullName: 'fullName1',
+          userId1: 'userId1'
+        }),
+
+      },
+
+
     }
 </script>
 

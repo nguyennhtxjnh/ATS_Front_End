@@ -1,5 +1,5 @@
 <template>
-  <v-flex style="background-color: lightgray">
+  <v-flex style="background-color: whitesmoke">
   <v-container>
     <v-layout row wrap>
       <v-spacer/>
@@ -238,7 +238,7 @@
         }
       }
     , mounted() {
-        axios
+       // axios
         //   .get('http://localhost:1122/cv/getOne/'+this.cvid+'/0')
         //   .then(response => (
         //     this.info = response.data.data

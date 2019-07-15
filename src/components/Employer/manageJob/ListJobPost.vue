@@ -2,7 +2,7 @@
     <v-flex style="background-color: whitesmoke">
       <v-container>
         <v-layout wrap md12 xs12>
-          <template v-for="job in info">
+          <template  v-for="job in info">
             <v-container md7 xs12 style="background-color: white" class="ma-3 pa-2" >
               <v-layout row wrap>
                 <v-flex md2 xs3 class="pa-2">
@@ -34,10 +34,13 @@
                            color="warning" outline class="pa-2" block @click="$router.push('/goi-y-CV')">
                       Gợi ý ứng viên
                     </v-btn>
-                  <v-btn style="height: auto"
-                         color="warning" outline class="pa-2" block @click="$router.push('/goi-y-CV')">
-                    Ứng viên đã ứng tuyển
-                  </v-btn>
+                  <router-link v-bind:to="'/CV-ung-tuyen/$'+job.id" tag="button">
+                    <v-btn style="height: auto"
+                           color="warning" outline class="pa-2" block >
+                      Ứng viên đã ứng tuyển
+                    </v-btn>
+                  </router-link>
+
 
 
                 </v-flex>
@@ -60,6 +63,7 @@
         return{
           images : {'main' : require('@/assets/jsmain1.jpg')},
           info:[],
+          job:'',
           cities:[],
 
         }

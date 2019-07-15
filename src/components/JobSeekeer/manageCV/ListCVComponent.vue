@@ -30,7 +30,7 @@
                       <!--              link cv-->
                       <v-flex md12 xs12 sm12 >
                         <v-flex  xs12 class="py-2 ma-2 text-truncate">
-                          {{cv.usersByUserId.fullName}}
+                          {{cv.lastName}} {{cv.firstName}}
                         </v-flex>
                       </v-flex>
                       <v-flex md12 xs12 sm12 >
@@ -103,11 +103,11 @@
   import axios from 'axios';
   import {mapGetters} from 'vuex';
   import Constants from '@/stores/constant.js';
-  window.onload = function()
-  {
-getInit();
-  };
+
     export default {
+      props: {
+        userId1: Number,
+      },
         name: "ListCVComponent",
       data: () => ( {
         userid:'',
@@ -150,7 +150,7 @@ getInit();
           ).then(response => {
             if (response.data.success === true) {
               axios
-                .get(Constants.URL+'/cv/get-list/1')
+                .get(Constants.URL+'/cv/get-list/'+this.userId1)
                 .then(response => {
                   this.cvs = response.data.data;
                   for(var cv in this.cvs){
@@ -186,15 +186,10 @@ getInit();
         },
 
       },
-      beforeUpdate(){
-        this.userId = this.userId1;
-
-      },
-
       mounted() {
-        this.userId = this.userId1;
+        console.log(Constants.URL+'/cv/get-list/'+this.userId1)
         axios
-          .get(Constants.URL+'/cv/get-list/'+this.userId)
+          .get(Constants.URL+'/cv/get-list/'+this.userId1)
           .then(response => {
               this.cvs = response.data.data;
               for(var cv in this.cvs){
@@ -206,20 +201,6 @@ getInit();
               this.cvs.sort(function(a, b){return b.id - a.id});
             }
             )
-
-      },
-      watch(){
-
-          this.userId = this.userId1;
-      },
-      computed: {
-        ...mapGetters('AUTHENTICATION_STORE',{
-
-          email : 'email1',
-          roleId: 'roleId1',
-          fullName: 'fullName1',
-          userId1: 'userId1'
-        }),
 
       },
 
