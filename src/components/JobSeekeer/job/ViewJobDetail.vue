@@ -61,9 +61,6 @@
             </v-layout>
           </v-layout>
         </v-container>
-        <!--end header title-->
-
-
           <!--        tab-->
             <template  >
               <v-tabs
@@ -274,9 +271,6 @@
                 </v-tabs-items>
               </v-tabs>
             </template>
-
-        <!--     end tab-->
-
       </v-flex>
     </v-layout>
   </v-container>
@@ -325,20 +319,6 @@
             this.loading = false;
           })
       },
-      formatDate(unix) {
-        const date = new Date(unix * 1000); // convert to milliseconds
-        const year = date.getFullYear();
-        let month = date.getMonth() + 1;
-        let day = date.getDate();
-
-        // Check if day or month is only 1 digit
-        // this because Moment.js works with 0 leading values
-        if (day.toString().length !== 2) day = `0${day}`;
-        if (month.toString().length !== 2) month = `0${month}`;
-
-        return `${year}-${month}-${day}`;
-      },
-
     },
     mounted() {
       this.$nextTick(() => {

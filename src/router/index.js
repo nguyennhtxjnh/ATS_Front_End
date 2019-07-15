@@ -23,6 +23,8 @@ import JobSeekerViewJobDetailPage from '../views/Jobseeker/JobSeekerViewJobDetai
 import EmployerJobCreateReviewPage from '../views/Employer/EmployerJobCreateReviewPage'
 import AdminDashBoardPage from '../views/Admin/AdminDashBoardPage'
 import AdminLoginPage from '../views/Admin/AdminLoginPage'
+import AdminViewAllJobPage from '../views/Admin/AdminViewAllJobPage'
+import AdminAllServicePage from '../views/Admin/AdminAllServicePage'
 
 
 Vue.use(Router)
@@ -148,6 +150,8 @@ const router = new Router({
     //   path: '/detail/:id',
     //   component: Detail
     // }
+
+    //Admin Router Link
     {
       path: '/admin',
       name: 'admin main screen',
@@ -158,6 +162,18 @@ const router = new Router({
       path: '/admin-login',
       name: 'admin login',
       component: AdminLoginPage
+    }
+    ,
+    {
+      path: '/admin-view-all-job',
+      name: 'admin view all job',
+      component: AdminViewAllJobPage
+    }
+    ,
+    {
+      path: '/admin-all-service',
+      name: 'admin view all service',
+      component: AdminAllServicePage
     }
     ,
 
@@ -197,7 +213,7 @@ router.beforeEach((to, from, next) => {
     return;
   }
 
-  //--userid2
+  //--userid2 and userid3
 
   if (store.getters['AUTHENTICATION_STORE/isLoggedIn2']) {
     store.dispatch('AUTHENTICATION_STORE/INIT2')
@@ -250,6 +266,56 @@ router.beforeEach((to, from, next) => {
     // next('/dang-nhap');
     // return;
   }
+
+  //--userid4
+  if (store.getters['AUTHENTICATION_STORE/isLoggedIn3']) {
+    store.dispatch('AUTHENTICATION_STORE/INIT3')
+      .then(() => next())
+      .catch(() => {
+        store.dispatch('AUTHENTICATION_STORE/LOGOUT3')
+          .then(() => {
+            this.$router.push('/admin-login');
+          });
+      });
+    next();
+  }
+
+  if (to.path === '/admin-login') {
+    if (store.getters['AUTHENTICATION_STORE/isLoggedIn3']) {
+      store.dispatch('AUTHENTICATION_STORE/INIT3')
+        .then(() => next('/admin'))
+        .catch(error => {
+            if (error.response) {
+              console.log(error.response.data)
+            } else {
+              console.log(error)
+            }
+            next('/admin-login')
+          }
+        );
+      return;
+    }
+    next();
+    return;
+  }
+
+  if (to.path === '/admin') {
+    if (!store.getters['AUTHENTICATION_STORE/isLoggedIn3']) {
+      store.dispatch('AUTHENTICATION_STORE/INIT3')
+        .then(() => next())
+        .catch(error => {
+            if (error.response) {
+              console.log(error.response.data)
+            } else {
+              console.log(error)
+            }
+            next('/admin-login')
+          }
+        );
+      return;
+    }
+  }
+
   next();
 });
 

@@ -18,14 +18,15 @@
               <v-text-field class="ma-2" prepend-icon="person" name="Email" label="Email" maxlength="40" v-model="loginEmail" type="text" :rules="[rules.required, rules.counter, rules.email]"></v-text-field>
               <v-text-field class="ma-2" prepend-icon="lock" name="Password" label="Mật Khẩu" maxlength="40" v-model="loginPassword" type="password" :rules="[rules.required, rules.counter]"></v-text-field>
             </v-card-text>
-<!--            <v-card-text >-->
-<!--              <p class="text-sm-left">Chưa có tài khoản đăng nhập? <a @click="$router.push('/tuyen-dung-dang-ky')"> Tạo ngay.</a></p>-->
+<!--            <v-card-text>-->
+<!--              <p class="text-sm-left">Chưa có tài khoản đăng nhập?<a @click="$router.push('/admin-signup')"> Tạo ngay.</a>-->
+<!--              </p>-->
 <!--            </v-card-text>-->
 
             <v-card-actions class="justify-center mb-4">
               <div class="text-xs-center">
                 <v-spacer></v-spacer>
-                <v-btn type="submit" color="warning" :loading="loading" >Đăng nhập</v-btn>
+                <v-btn type="submit" color="warning" >Đăng nhập</v-btn>
               </div>
             </v-card-actions>
           </v-form>
@@ -65,15 +66,15 @@
         if(this.$refs.form.validate()){
           const email = this.loginEmail;
           const password = this.loginPassword;
-          this.$store.dispatch('AUTHENTICATION_STORE/LOGIN2', {email, password})
+          this.$store.dispatch('AUTHENTICATION_STORE/LOGIN3', {email, password})
             .then(() => {
 
-              this.$store.dispatch('AUTHENTICATION_STORE/INIT2')
+              this.$store.dispatch('AUTHENTICATION_STORE/INIT3')
                 .then(() => {
-                  this.$router.push('/trang-chu-tuyen-dung');
+                  this.$router.push('/admin');
                 })
                 .catch((error) => {
-                  this.$router.push('/tuyen-dung-dang-nhap');
+                  this.$router.push('/admin-login');
                 });
 
             })

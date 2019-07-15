@@ -1,4 +1,4 @@
-<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
+<template>
   <v-container fluid class="pt-0">
     <v-layout row wrap align-right>
       <v-flex xs12 class="mb-5">
@@ -19,6 +19,15 @@
           <v-btn color="primary" @click="getAllJob()">Tìm</v-btn>
         </v-flex>
 
+        <!--        <v-text-field-->
+<!--          v-model="search"-->
+<!--          append-icon="search"-->
+<!--          label="Tìm kiếm theo tiêu đề hoặc công ty"-->
+<!--          single-line-->
+<!--          hide-details-->
+<!--          outline-->
+<!--          class="mb-3"-->
+<!--        ></v-text-field>-->
 
         <v-data-table
           :items="Job"
@@ -26,6 +35,7 @@
           :loading="loading"
           :pagination.sync="pagination"
           :total-items="pagination.totalItems"
+
           :rows-per-page-text="'Số hàng mỗi trang'"
           :rows-per-page-items="[10, 25, 50, {text: 'Tất cả', value: -1}]"
           :no-data-text="'Không có dữ liệu'"
@@ -54,9 +64,6 @@
 
             <td class="text-xs-left">
 
-<!--              <v-btn outline flat fab small @click="viewInfo(item.id)" color="grey">-->
-<!--                <v-icon>mdi-eye-outline</v-icon>-->
-<!--              </v-btn>-->
               <v-btn
                 outline flat fab small color="grey"
                 @click="viewInfo(item.id)"
@@ -64,20 +71,23 @@
                 <v-icon>mdi-eye-outline</v-icon>
               </v-btn>
 
+              <v-btn
+                outline flat fab small color="grey"
+                @click="addStatusId(item.id)"
+                @click.stop="dialogStatus = true">
+                <v-icon>mdi-pencil</v-icon>
+              </v-btn>
+
             </td>
           </template>
-<!--          <template v-slot:no-results>-->
-<!--            <v-alert :value="true" color="error" icon="warning">-->
-<!--              Không tìm thấy kết quả cho từ khóa "{{ search }}".-->
-<!--            </v-alert>-->
-<!--          </template>-->
+
         </v-data-table>
 
 
 
       </v-flex>
     </v-layout>
-<!--    detailView-->
+    <!--    detailView-->
     <v-dialog
       v-model="dialog"
       max-width="1200px">
@@ -291,6 +301,39 @@
       </v-card>
     </v-dialog>
 
+    <v-dialog
+      v-model="dialogStatus"
+      max-width="420px">
+      <v-card>
+        <v-card-title class="headline"><b>Duyệt công việc</b></v-card-title>
+
+        <v-divider></v-divider>
+        <v-card-text>
+          <v-flex xs12 class="justify-center align-center"> <p style="text-align: center">Bạn muốn duyệt công việc này</p> </v-flex>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn
+            color="green darken-1"
+            flat="flat"
+            @click="dialogStatus = false">
+            Đóng
+          </v-btn>
+
+          <v-btn
+            color="green darken-1"
+            flat="flat"
+            @click="changeStatus()"
+          >
+            Xác nhận
+          </v-btn>
+
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
   </v-container>
 </template>
 
@@ -298,13 +341,14 @@
   import Axios from 'axios'
 
   export default {
-    name: 'AdminDashBoard',
+    name: 'AdminViewAllJob',
     data() {
       return {
         search: '',
         Job: [],
         loading: false,
         dialog: false,
+        dialogStatus: false,
         items: [
           'Thông Tin', 'Công Ty',
         ],
@@ -360,13 +404,39 @@
           listSkillName: [],
           listJobSameCompany: []
         },
-
+        formJobStatusData: {
+          id: '',
+          status: 'approved'
+        },
       }
     },
     methods: {
-       async viewInfo(id){
+      addStatusId(id) {
+        this.formJobStatusData.id = id;
+      },
+      changeStatus(){
+        const url = 'http://localhost:8080/job/changeJobStatus'
+        const method = 'POST'
+        const data = this.formJobStatusData
+console.log(data)
+        Axios({url, method, data})
+          .then(response => {
+            this.$notify({
+              group: 'foo',
+              type: 'success',
+              title: 'Thành công',
+              text: 'Duyệt thành công!'
+            })
+            this.getAllJob();
+            this.dialogStatus = false;
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      },
+      async viewInfo(id){
         this.loading = true;
-         await Axios.get(`http://localhost:8080/job/getJobDetail?id=${id}`)
+        await Axios.get(`http://localhost:8080/job/getJobDetail?id=${id}`)
           .then(response => {
             this.jobFull = response.data.data;
             this.jobFull.createdDate = this.moment(this.jobFull.createdDate).format('DD-MM-YYYY');
@@ -378,29 +448,13 @@
           })
       },
       getAllJob() {
-
-        // if (this.search) {
-          Axios.get('http://localhost:8080/job/getAllJob?search=' + this.search + '&status=')
-            .then(response => {
-              this.Job = response.data.data.content;
-              // this.pagination.totalItems =  this.Job.length
-            })
-            .catch(err => console.log(err.response.data))
-            .finally(() => this.loading = false);
-        // }
-        // if(this.pagination){
-        //   this.loading = true;
-        //   Axios.get(`http://localhost:8080/job/getAllJob`)
-        //     .then(response => {
-        //       // console.log(response)
-        //       this.Job = response.data.data.content;
-        //       console.log("abc")
-        //     })
-        //     .catch(console.error)
-        //     .finally(() => {
-        //       this.loading = false;
-        //     })
-        // }
+        Axios.get('http://localhost:8080/job/getAllJob?search=' + this.search + '&status=new')
+          .then(response => {
+            this.Job = response.data.data.content;
+            console.log(response)
+          })
+          .catch(err => console.log(err.response.data))
+          .finally(() => this.loading = false);
       },
 
     },
@@ -412,7 +466,6 @@
     beforeMount(){
 
     },
-
   }
 </script>
 

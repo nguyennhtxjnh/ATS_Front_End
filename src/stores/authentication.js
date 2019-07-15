@@ -107,10 +107,10 @@ export default {
     roleId2: state => state.roleId2,
     fullName2: state => state.fullName2,
 
-    email3: state => state.email2,
-    userId3 : state => state.userId2,
-    roleId3: state => state.roleId2,
-    fullName3: state => state.fullName2,
+    email3: state => state.email3,
+    userId3 : state => state.userId3,
+    roleId3: state => state.roleId3,
+    fullName3: state => state.fullName3,
   },
   actions: {
     LOGIN1 ({commit}, user) {
@@ -169,7 +169,7 @@ export default {
         axios({url: 'http://localhost:8080/user/login', data: user, method: 'POST'})
           .then(response => {
             const token = response.data.data.accessToken
-            if (response.data.data.roleId === 3) {
+            if (response.data.data.roleId === 4) {
               localStorage.setItem('token3', token)
               commit('SUCCESS3', token)
             } else {
