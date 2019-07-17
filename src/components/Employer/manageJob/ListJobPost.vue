@@ -34,12 +34,10 @@
                            color="warning" outline class="pa-2" block @click="$router.push('/goi-y-CV')">
                       Gợi ý ứng viên
                     </v-btn>
-                  <router-link v-bind:to="'/CV-ung-tuyen/$'+job.id" tag="button">
                     <v-btn style="height: auto"
-                           color="warning" outline class="pa-2" block >
+                           color="warning" outline class="pa-2" block  @click="$router.push('/CV-ung-tuyen/'+job.id)">
                       Ứng viên đã ứng tuyển
                     </v-btn>
-                  </router-link>
 
 
 

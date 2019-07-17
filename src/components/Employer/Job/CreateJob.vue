@@ -765,6 +765,14 @@
 
 
                     })
+                  }else {
+                    this.$notify({
+                      group: 'foo',
+                      type: 'warn',
+                      title: 'Không tìm thấy công ty',
+                      text: 'Bạn không nằm trong công ty nào để đăng tin tuyển dụng'
+                    })
+                    this.$router.push('/tao-cong-ty');
                   }
                 })
                 .catch(error => {

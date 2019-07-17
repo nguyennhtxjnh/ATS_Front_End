@@ -127,7 +127,7 @@
                 group: 'foo',
                 type: 'success',
                 title: 'Thành Công',
-                text: 'Đăng Tin Thành Công!'
+                text: 'Đặt làm CV chính Thành Công!'
               })
             }
           })

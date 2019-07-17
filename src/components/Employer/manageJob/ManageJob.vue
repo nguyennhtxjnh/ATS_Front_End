@@ -21,14 +21,12 @@
           :key="i.id"
         >
           <v-card flat v-if="i.id === '1'" >
-            <SearchCV></SearchCV>
+            <CreateJob></CreateJob>
           </v-card>
           <v-card flat v-if="i.id === '2'">
-          </v-card>
-          <v-card flat v-if="i.id === '3'">
             <ListJobPost></ListJobPost>
           </v-card>
-          <v-card flat v-if="i.id === '4'">
+          <v-card flat v-if="i.id === '3'">
             <ListJobExpired></ListJobExpired>
           </v-card>
         </v-tab-item>
@@ -42,20 +40,36 @@
     import SearchCV from "../searchCV/SearchCV";
     import ListJobPost from "./ListJobPost";
     import ListJobExpired from "./ListJobExpired";
+    import {mapGetters} from 'vuex';
+    import CreateJob from "../Job/CreateJob";
     export default {
         name: "ManageJob",
-      components: {ListJobExpired, ListJobPost, SearchCV},
+      components: {CreateJob, ListJobExpired, ListJobPost, SearchCV},
       data: function () {
         return{
           active: null,
           tab: null,
           menu: [
-            {name:'Tìm kiếm Ứng Viên', id:'1'},   {name:'Ứng viên đang theo dõi', id:'2'},
-            {name:'Tin tuyển dụng đang đăng tuyển', id:'3'},{name:'Tin tuyển dụng hết hạn', id:'4'}
+            {name:'Đăng tin tuyển dụng', id:'1'},
+            {name:'Tin tuyển dụng đang đăng tuyển', id:'2'},{name:'Tin tuyển dụng hết hạn', id:'3'}
           ],
+          formDataCompany: {
+            userId: '',
+          }
 
 
         }
+      },
+      methods:{
+
+      },
+      computed: {
+        ...mapGetters('AUTHENTICATION_STORE',{
+          email : 'email2',
+          roleId: 'roleId2',
+          fullName: 'fullName2',
+          userId2: 'userId2',
+        })
       }
     }
 </script>

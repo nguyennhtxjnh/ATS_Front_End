@@ -81,7 +81,12 @@
                   <v-container fluid grid-list-md class="pa-0">
                     <v-layout row wrap class="pa-0">
 
-                      <v-img class="hoverClass" src="https://cdn-images.threadless.com/threadless-media/artist_shops/shops/vue/products/195796/shirt-1490420513-abd7b25b157f3450ce8c2a09ee51c36e.png?v=3&d=eyJvbmx5X21ldGEiOiBmYWxzZSwgImZvcmNlIjogZmFsc2UsICJvcHMiOiBbWyJ0cmltIiwgW2ZhbHNlLCBmYWxzZV0sIHt9XSwgWyJyZXNpemUiLCBbXSwgeyJ3aWR0aCI6IDk5Ni4wLCAiYWxsb3dfdXAiOiBmYWxzZSwgImhlaWdodCI6IDk5Ni4wfV0sIFsiY2FudmFzX2NlbnRlcmVkIiwgWzEyMDAsIDEyMDBdLCB7ImJhY2tncm91bmQiOiAiZmZmZmZmIn1dLCBbInJlc2l6ZSIsIFs4MDBdLCB7fV0sIFsiY2FudmFzX2NlbnRlcmVkIiwgWzgwMCwgODAwLCAiI2ZmZmZmZiJdLCB7fV0sIFsiZW5jb2RlIiwgWyJqcGciLCA4NV0sIHt9XV19" @click="$router.push(`/thong-tin-cong-viec/${item.id}`)" contain aspect-ratio="1.6"></v-img>
+                      <v-img class="hoverClass" src="https://cdn-images.threadless.com/threadless-media/artist_shops/
+                      shops/vue/products/195796/shirt-1490420513-abd7b25b157f3450ce8c2a09ee51c36e.png?v=3&d=eyJvbmx5X21ldGEiOiBmYWxzZSwgImZvcmNlIjogZmFsc2UsICJvcHMiOi
+                      BbWyJ0cmltIiwgW2ZhbHNlLCBmYWxzZV0sIHt9XSwgWyJyZXNpemUiLCBbXSwgeyJ3aWR0aCI6IDk5N
+                      i4wLCAiYWxsb3dfdXAiOiBmYWxzZSwgImhlaWdodCI6IDk5Ni4wfV0sIFsiY2FudmFzX2NlbnRlcmVkIiwgWzEyMDAsIDE
+                      yMDBdLCB7ImJhY2tncm91bmQiOiAiZmZmZmZmIn1dLCBbInJlc2l6ZSIsIFs4MDBdLCB7fV0sIFsiY2FudmFzX2NlbnRlcmVkIiwgWzgwMCwgODA
+                      wLCAiI2ZmZmZmZiJdLCB7fV0sIFsiZW5jb2RlIiwgWyJqcGciLCA4NV0sIHt9XV19" @click="$router.push(`/thong-tin-cong-viec/${item.id}`)" contain aspect-ratio="1.6"></v-img>
 
                       <v-flex d-flex xs12 md7 class="pt-0 pb-0 pr-0 pl-3" >
 
@@ -132,7 +137,7 @@
             </template>
           </v-data-table>
           <div class="text-xs-center pt-2">
-            <v-pagination v-model="pagination.page" :length="Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)"></v-pagination>
+<!--            <v-pagination v-model="pagination.page" :length="Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)"></v-pagination>-->
           </div>
         </v-flex>
 
@@ -176,7 +181,9 @@
         ],
         pagination: {},
         job: [],
-
+        searchValue: '',
+        searchIndustry: '',
+        searchCity: '',
         selectSkill: '',
         selectJob: '',
         selectLocation: '',
@@ -189,26 +196,48 @@
     },
     methods: {
       getComponent(){
-        // const url = Constants.URL+'/job/getSearchComponent';
-        // const method = 'GET';
-        // const data = '';
-        // let config = {
-        //   headers: {
-        //     accessToken: localStorage.getItem('token1')
-        //   }
-        // }
 
-        // Axios.get(Constants.URL+'/job/getSearchComponent')
-        //   .then(response => {
-        //       this.searchAPI =  response.data.all;
-        //       this.industries = response.data.industry;
-        //       this.cities = response.data.city;
-        //       console.log(this.searchAPI)
-        //   })
-        //   .catch(console.error)
-        //   .finally(() => {
-        //     this.loading = false;
-        //   })
+
+      },
+      favoriteBtn(){
+        this.favorite = !this.favorite;
+        this.textBtnFav.text = this.favorite ? 'Lưu Việc Làm' : 'Đã Lưu';
+      },
+      searchClick(){
+        sessionStorage.setItem("skill", this.selectSkill);
+        sessionStorage.setItem("job", this.selectJob);
+        sessionStorage.setItem("location", this.selectLocation);
+        console.log(this.selectSkill + ", " + this.selectJob + ", " + this.selectLocation);
+
+          this.loading = true;
+          // Axios.get(Constants.URL+`/job/search?search=` + this.selectSkill)
+          //   .then(response => {
+          //     this.job = response.data.data;
+          //     console.log(this.job)
+          //   })
+          //   .catch(console.error)
+          //   .finally(() => {
+          //     this.loading = false;
+          //   })
+
+
+      },startSearch(){
+        if(this.searchValue === null || this.searchValue === ''){
+          sessionStorage.setItem("skill", '');
+        }else{
+          sessionStorage.setItem("skill", this.searchValue);
+        }
+        sessionStorage.setItem("job", this.searchIndustry);
+        sessionStorage.setItem("location", this.searchCity);
+        this.$router.push('/tim-kiem');
+      }
+    },
+    mounted() {
+      this.$nextTick(() => {
+        this.selectSkill = sessionStorage.getItem("skill");
+        this.selectJob = sessionStorage.getItem("job");
+        this.selectLocation = sessionStorage.getItem("location");
+        this.searchClick();
         Axios
           .get(Constants.URL+'/job/getSearchComponent')
           .then(response =>
@@ -222,58 +251,12 @@
           .get(Constants.URL+'/city/getAllCity')
           .then(response => (
             this.cities = response.data.data))
-
-      },
-
-      getjob() {
-      //   this.loading = true;
-      //   Axios.get(`http://localhost:8080/job`)
-      //     .then(response => {
-      //       this.job = response.data.content;
-      //     })
-      //     .catch(console.error)
-      //     .finally(() => {
-      //       this.loading = false;
-      //     })
-      // },
-      },
-      favoriteBtn(){
-        this.favorite = !this.favorite;
-        this.textBtnFav.text = this.favorite ? 'Lưu Việc Làm' : 'Đã Lưu';
-      },
-      searchClick(){
-        sessionStorage.setItem("skill", this.selectSkill);
-        sessionStorage.setItem("job", this.selectJob);
-        sessionStorage.setItem("location", this.selectLocation);
-        console.log(this.selectSkill + ", " + this.selectJob + ", " + this.selectLocation);
-
-          this.loading = true;
-          Axios.get(Constants.URL+`/job/search?search=` + this.selectSkill)
-            .then(response => {
-              this.job = response.data.data;
-              console.log(this.job)
-            })
-            .catch(console.error)
-            .finally(() => {
-              this.loading = false;
-            })
-
-
-      }
-    },
-    mounted() {
-      this.$nextTick(() => {
-        this.selectSkill = sessionStorage.getItem("skill");
-        this.selectJob = sessionStorage.getItem("job");
-        this.selectLocation = sessionStorage.getItem("location");
-        this.searchClick();
-        this.getComponent();
       })
     },
     watch: {
-      pagination() {
-        this.getjob();
-      }
+      // pagination() {
+      //   this.getjob();
+      // }
     },
 
 

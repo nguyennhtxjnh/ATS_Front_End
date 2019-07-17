@@ -9,7 +9,7 @@
   <v-btn   color="primary" fixed floating="right"  style="margin-top: 250px; margin-left: 20px; width: 220px">
     <v-icon class="mr-1">thumb_up</v-icon> Đặt lịch phỏng vấn
   </v-btn>
-  <v-btn color="primary" fixed floating="right"  style="margin-top: 350px; margin-left: 20px; width: 220px">
+  <v-btn color="grey" dark fixed floating="right"  style="margin-top: 350px; margin-left: 20px; width: 220px">
     <v-icon class="mr-1" >thumb_down</v-icon> Bỏ qua
   </v-btn>
 

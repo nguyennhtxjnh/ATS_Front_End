@@ -93,7 +93,7 @@
 
               this.$store.dispatch('AUTHENTICATION_STORE/INIT1')
                 .then(() => {
-                  this.$router.push('/')
+                  this.$router.push('/viec-lam-nguoi-tim-viec')
                 })
                 .catch((error) => {
                   this.$router.push('/dang-nhap')

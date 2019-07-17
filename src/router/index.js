@@ -25,6 +25,7 @@ import TabJobPage from "../views/Jobseeker/TabJobPage";
 import ManageJobPage from "../views/Employer/ManageJobPage";
 import CVAppliedPage from "../views/Employer/CVAppliedPage";
 import ViewCVAppliedPage from "../views/Employer/ViewCVAppliedPage";
+import ManageJobSeekerPage from "../views/Employer/ManageJobSeekerPage";
 
 
 Vue.use(Router)
@@ -166,7 +167,11 @@ const router = new Router({
       name: 'view CV applied',
       component: ViewCVAppliedPage
 
-    }
+    },{
+      path: '/quan-li-ung-vien',
+      name: 'manage jobseeker',
+      component: ManageJobSeekerPage
+    },
 
     // {
     //   path: '/detail/:id',

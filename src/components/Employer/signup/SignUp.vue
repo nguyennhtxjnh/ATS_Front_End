@@ -203,7 +203,7 @@
                     this.$router.push('/tao-cong-ty');
                   } else {
                     await this.addCompany(userId);
-                    this.$router.push('/trang-chu-tuyen-dung');
+                    this.$router.push('/quan-li-viec-lam');
                   }
                 })
                 .catch((error) => {

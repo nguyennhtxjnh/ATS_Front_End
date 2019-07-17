@@ -5,7 +5,13 @@
 
       <v-toolbar fixed  style="border-bottom: 4px solid #ff5e2d; background-color: white " class="pb-1" v-if="$vuetify.breakpoint.mdAndUp" >
 
-        <v-toolbar-title @click="$router.push('/')" class="black--text hoverCSSTitle" >
+        <v-toolbar-title v-if="roleId !== 1" @click="$router.push('/')"  class="black--text hoverCSSTitle" >
+          <v-layout row wrap class="pl-5">
+            <v-img :src="require('@/assets/logoP.png')" style="width: 50px; height: 50px"></v-img>
+            <span class="pt-2 pl-3">Job Board</span>
+          </v-layout>
+        </v-toolbar-title>
+        <v-toolbar-title v-if="roleId === 1" @click="$router.push('/viec-lam-nguoi-tim-viec')"  class="black--text hoverCSSTitle" >
           <v-layout row wrap class="pl-5">
             <v-img :src="require('@/assets/logoP.png')" style="width: 50px; height: 50px"></v-img>
             <span class="pt-2 pl-3">Job Board</span>
@@ -13,8 +19,11 @@
         </v-toolbar-title>
         <v-spacer></v-spacer>
 
-        <v-btn style="height: 100%" color="black" flat @click="$router.push('/viec-lam-nguoi-tim-viec')">
-          Việc làm
+        <v-btn style="height: 100%" color="black" flat @click="$router.push('/tim-kiem')" >
+          Tìm việc
+        </v-btn>
+        <v-btn style="height: 100%" color="black" flat @click="$router.push('/viec-lam-nguoi-tim-viec')" v-if="roleId === 1">
+         Quản lí Việc làm
         </v-btn>
 
         <v-btn style="height: 100%" color="black" flat @click="$router.push('/quan-li-CV')" v-if="roleId === 1">
@@ -60,7 +69,10 @@
           </v-card>
         </v-menu>
 
-        <v-btn style="height: 100%" color="warning" @click="$router.push('/trang-chu-tuyen-dung')">
+        <v-btn style="height: 100%" color="warning" v-if="roleId2 !== 2" @click="$router.push('/trang-chu-tuyen-dung')">
+          Nhà Tuyển Dụng
+        </v-btn>
+        <v-btn style="height: 100%" color="warning" v-if="roleId2 === 2" @click="$router.push('/quan-li-cong-viec')">
           Nhà Tuyển Dụng
         </v-btn>
       </v-toolbar>
@@ -75,7 +87,7 @@
       <v-spacer></v-spacer>
 
       <v-btn style="height: 100%" color="black" flat @click="$router.push('/viec-lam-nguoi-tim-viec')">
-        Việc làm
+       Quản lí Việc làm
       </v-btn>
 
       <v-btn style="height: 100%" color="black" flat @click="$router.push('/quan-li-CV')" v-if="roleId === 1">
@@ -189,7 +201,7 @@
         <v-flex md4 xs12 class="text-lg-left pl-5 my-5">
           <div class=" orange--text headline" >
             Về JOB BOARD</div>
-          <v-list v-for="item in menu1" :key="item.link">
+          <v-list v-for="item in menu1" :key="item.id">
             <v-list-tile  v-html="item.display" :to="item.link">
             </v-list-tile>
           </v-list>
@@ -198,7 +210,7 @@
           <div class=" orange--text headline">
             Công Cụ
           </div>
-          <v-list v-for="item1 in menu2" :key="item1.link">
+          <v-list v-for="item1 in menu2" :key="item1.id">
             <v-list-tile  v-html="item1.display" :to="item1.link">
             </v-list-tile>
           </v-list>
@@ -279,52 +291,65 @@
           'mdi-instagram'
         ],
         menu1: [
-          {
+          { id:'1',
             display: 'Giới thiệu',
             link: '/',
           },{
+            id:'2',
             display: 'Liên hệ',
             link: '/',
           },{
+            id:'3',
             display: 'Góc Báo',
             link: '/',
           },{
+            id:'4',
             display: 'Hỏi Đáp',
             link: '/',
           },{
+            id:'5',
             display: 'Thỏa Thuận Sử Dụng',
             link: '/',
           },{
+            id:'6',
             display: 'Quy Định Bảo Mật',
             link: '/',
           },{
+            id:'7',
             display: 'Quy Chế Hoạt Động Giao Dịch Thương Mại Điện Tử',
             link: '/',
           },{
+            id:'8',
             display: 'Ứng dụng điện thoại',
             link: '/',
           }
         ],
         menu2: [
-        {
+        {  id:'1',
             display: 'Tài Khoản ',
             link: '/',
           },{
+            id:'2',
             display: 'Hồ Sơ Của Tôi',
             link: '/',
           },{
+            id:'3',
             display: 'Việc Làm Của Tôi',
             link: '/',
           },{
+            id:'4',
             display: 'Thông Báo Việc Làm',
             link: '/',
           },{
+            id:'5',
             display: 'Phản Hồi',
             link: '/',
           },{
+            id:'6',
             display: 'Tư Vấn Nghề Nghiệp',
             link: '/',
           },{
+            id:'7',
             display: 'Sơ Đồ Trang Web',
             link: '/',
           }
@@ -352,6 +377,9 @@
           email : 'email1',
           roleId: 'roleId1',
           fullName: 'fullName1',
+        email2 : 'email2',
+        roleId2: 'roleId2',
+        fullName2: 'fullName2',
       }),
     },
 

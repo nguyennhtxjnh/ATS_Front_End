@@ -67,9 +67,9 @@
         Axios
           .get(Constants.URL+'/apply/list-applied/'+this.userId)
           .then(response => (this.info = response.data.data))
-        this.$nextTick(() => {
-          this.getComponent();
-        })
+        // this.$nextTick(() => {
+        //   // this.getComponent();
+        // })
       },
       computed: {
         ...mapGetters('AUTHENTICATION_STORE',{

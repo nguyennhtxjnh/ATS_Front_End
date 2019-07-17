@@ -5,6 +5,12 @@
         <h2 style="color: #ff5e2d ">Các CV đã ứng tuyển</h2>
       </v-card-title>
       <v-divider class="pb-3"></v-divider>
+      <v-layout row wrap v-if="cvs.length === 0">
+        <v-spacer/>
+        <img :src="require('@/assets/empty-product.png')" >
+        <v-spacer/>
+      </v-layout>
+
       <template v-for="cv in cvs">
 
         <v-layout row wrap @click="$router.push('/xem-CV-ung-tuyen/'+cv.id)">
