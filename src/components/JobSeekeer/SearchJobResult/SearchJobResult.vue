@@ -22,7 +22,7 @@
                 <!--                  ></v-text-field>-->
                 <v-combobox
                   single-line
-                  label="Nhập chức danh, vị trí, kỹ năng..."
+                  label="Tên công việc, vị trí bạn muốn ứng tuyển..."
                   :items="searchAPI"
                   :search-input.sync="searchValue"
                   v-model="searchValue"

@@ -40,15 +40,14 @@
     import SearchCV from "../searchCV/SearchCV";
     import ListJobPost from "./ListJobPost";
     import ListJobExpired from "./ListJobExpired";
-    import {mapGetters} from 'vuex';
     import CreateJob from "../Job/CreateJob";
     export default {
         name: "ManageJob",
       components: {CreateJob, ListJobExpired, ListJobPost, SearchCV},
       data: function () {
         return{
-          active: null,
-          tab: null,
+          active: '',
+          tab: '',
           menu: [
             {name:'Đăng tin tuyển dụng', id:'1'},
             {name:'Tin tuyển dụng đang đăng tuyển', id:'2'},{name:'Tin tuyển dụng hết hạn', id:'3'}
@@ -63,14 +62,7 @@
       methods:{
 
       },
-      computed: {
-        ...mapGetters('AUTHENTICATION_STORE',{
-          email : 'email2',
-          roleId: 'roleId2',
-          fullName: 'fullName2',
-          userId2: 'userId2',
-        })
-      }
+
     }
 </script>
 

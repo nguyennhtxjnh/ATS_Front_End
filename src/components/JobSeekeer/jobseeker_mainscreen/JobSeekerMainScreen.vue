@@ -33,7 +33,7 @@
 <!--                  ></v-text-field>-->
                   <v-combobox
                     single-line
-                    label="Nhập chức danh, vị trí, kỹ năng..."
+                    label="Tên công việc, vị trí bạn muốn ứng tuyển..."
                     :items="searchAPI.all"
                     :search-input.sync="searchValue"
                     v-model="searchValue"
@@ -212,7 +212,7 @@
 
                 <v-layout row wrap>
                   <v-flex md4  xs4>
-                    <v-img  :src="job.companyByCompanyId.logoImg"
+                    <v-img  :src="job.companyLogoImg"
                             height="100%"></v-img>
                   </v-flex>
                   <v-flex md1/>
@@ -221,17 +221,14 @@
                       {{job.title}}
                     </h2>
                     <v-flex align-left>
-                      <h4>{{job.companyByCompanyId.nameCompany}}</h4>
+                      <h4>{{job.companyName}}</h4>
                       <!--                    <h4>  <v-btn icon>-->
                       <!--                      <v-icon color="orange darken-2" >mdi-coin</v-icon>-->
                       <!--                    </v-btn>{{job.salaryTo}} - {{job.salaryFrom}} triệu</h4>-->
                     </v-flex>
                     <span align-lef>
-                    <template v-for="city in cities">
-                      <v-flex v-if="city.id === job.cityId">
-                         {{city.fullName}}
-                      </v-flex>
-                    </template>
+                   {{job.cityName}}
+
                   </span>
 
                   </v-flex>
