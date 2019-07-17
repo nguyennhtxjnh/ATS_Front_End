@@ -78,10 +78,17 @@
               </v-btn>
 
               <v-btn
-                outline flat fab small color="primary"
-                @click="addStatusId(item.id)"
-                @click.stop="dialogStatus = true">
-                <v-icon>mdi-check-bold</v-icon>
+                outline flat fab small color="success"
+                @click="addJobId(item.id)"
+                @click.stop="dialogStatusApproved = true">
+                <v-icon>mdi-check</v-icon>
+              </v-btn>
+
+              <v-btn
+                outline flat fab small color="error"
+                @click="addJobId(item.id)"
+                @click.stop="dialogStatusDeny = true">
+                <v-icon>mdi-window-close</v-icon>
               </v-btn>
 
             </td>
@@ -308,7 +315,7 @@
     </v-dialog>
     <!-- Duyet-->
     <v-dialog
-      v-model="dialogStatus"
+      v-model="dialogStatusApproved"
       max-width="500px">
       <v-card>
         <v-card-title class="headline orange"><b style="color: white">Duyệt công việc</b></v-card-title>
@@ -323,21 +330,13 @@
           <v-btn
             color="green darken-1"
             flat="flat"
-            @click="dialogStatus = false">
+            @click="dialogStatusApproved = false">
             Đóng
           </v-btn>
 
           <v-btn
-            color="error"
-            outline=""
-            @click="confirmDialog('spam')"
-          >
-            Báo cáo spam
-          </v-btn>
-
-          <v-btn
             color="success"
-            @click="confirmDialog('approved')"
+            @click="changeStatus('approved')"
           >
             Duyệt
           </v-btn>
@@ -345,17 +344,16 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <!--confirm-->
+    <!--deny-->
     <v-dialog
-      v-model="dialogConfirm"
-      max-width="500px"
-      style="height: 200px">
+      v-model="dialogStatusDeny"
+      max-width="500px">
       <v-card>
-        <v-card-title class="headline orange"><b style="color: white">Thông báo</b></v-card-title>
+        <v-card-title class="headline orange"><b style="color: white">Từ chối công việc</b></v-card-title>
 
         <v-divider></v-divider>
         <v-card-text>
-          <v-flex xs12 class="justify-center align-center"> <p style="text-align: center">Bạn có chắc thực hiện thao tác này</p> </v-flex>
+          <v-flex xs12 class="justify-center align-center"> <p style="text-align: center">Từ chối duyệt công việc này?</p> </v-flex>
         </v-card-text>
 
         <v-card-actions class="align-center justify-center">
@@ -363,21 +361,21 @@
           <v-btn
             color="green darken-1"
             flat="flat"
-            @click="dialogConfirm = false">
+            @click="dialogStatusDeny = false">
             Đóng
           </v-btn>
 
           <v-btn
-            color="success"
-            flat="flat"
-            @click="changeStatus()"
+            color="error"
+            @click="changeStatus('deny')"
           >
-            Xác Nhận
+            Từ chối
           </v-btn>
 
         </v-card-actions>
       </v-card>
     </v-dialog>
+
 
   </v-container>
 </template>
@@ -393,8 +391,8 @@
         Job: [],
         loading: false,
         dialog: false,
-        dialogStatus: false,
-        dialogConfirm: false,
+        dialogStatusApproved: false,
+        dialogStatusDeny: false,
         items: [
           'Thông Tin', 'Công Ty',
         ],
@@ -457,14 +455,11 @@
       }
     },
     methods: {
-      addStatusId(id) {
+      addJobId(id){
         this.formJobStatusData.id = id;
       },
-      confirmDialog(status){
-        this.dialogConfirm = true;
+      changeStatus(status){
         this.formJobStatusData.status = status;
-      },
-      changeStatus(){
         const url = 'http://localhost:8080/job/changeJobStatus'
         const method = 'POST'
         const data = this.formJobStatusData
@@ -483,12 +478,12 @@
                 group: 'foo',
                 type: 'success',
                 title: 'Thành công',
-                text: 'Báo cáo spam!'
+                text: 'Từ chối duyệt công việc thành công!'
               })
             }
             this.getAllJob();
-            this.dialogStatus = false;
-            this.dialogConfirm = false;
+            this.dialogStatusApproved = false;
+            this.dialogStatusDeny = false;
           })
           .catch(error => {
             console.log(error)

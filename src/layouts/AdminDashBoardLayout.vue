@@ -133,7 +133,7 @@
             path: "/admin"
           },
           {
-            name: "Công việc mới tạo",
+            name: "Duyệt công việc mới tạo",
             icon: "mdi-domain",
             path: "/admin-view-all-new-job"
           },
@@ -145,7 +145,7 @@
             path: "/admin-view-all-company"
           },
           {
-            name: "Công ty mới tạo",
+            name: "Duyệt công ty mới tạo",
             icon: "mdi-domain",
             path: "/admin-view-all-new-company"
           },
