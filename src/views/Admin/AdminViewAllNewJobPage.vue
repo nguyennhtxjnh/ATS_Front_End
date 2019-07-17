@@ -1,16 +1,16 @@
 <template>
   <AdminDashBoardLayout>
-    <AdminViewAllJob></AdminViewAllJob>
+    <AdminViewAllNewJob></AdminViewAllNewJob>
   </AdminDashBoardLayout>
 </template>
 
 <script>
-  import AdminViewAllJob from '../../components/Admin/Job/AdminViewAllNewJob'
+  import AdminViewAllNewJob from '../../components/Admin/Job/AdminViewAllNewJob'
   import AdminDashBoardLayout from '../../layouts/AdminDashBoardLayout'
 
   export default {
     name: 'AdminViewAllJobPage',
-    components: {AdminViewAllJob, AdminDashBoardLayout}
+    components: {AdminViewAllNewJob, AdminDashBoardLayout}
   }
 </script>
 

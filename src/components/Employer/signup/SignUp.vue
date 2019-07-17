@@ -48,17 +48,17 @@
                                   :rules="[rules.required, rules.counter]"></v-text-field>
                   </v-flex>
 
-                  <v-flex  xs12 >
-                    <v-select class="ma-2"
-                      prepend-icon="mdi-account"
-                      :items="chooseGender"
-                      v-model="formData.gender"
-                      item-text="name"
-                      item-value="id"
-                      label="Giới Tính"
-                      :rules="[rules.required]"
-                    ></v-select>
-                  </v-flex>
+<!--                  <v-flex  xs12 >-->
+<!--                    <v-select class="ma-2"-->
+<!--                      prepend-icon="mdi-account"-->
+<!--                      :items="chooseGender"-->
+<!--                      v-model="formData.gender"-->
+<!--                      item-text="name"-->
+<!--                      item-value="id"-->
+<!--                      label="Giới Tính"-->
+<!--                      :rules="[rules.required]"-->
+<!--                    ></v-select>-->
+<!--                  </v-flex>-->
 
 <!--                  <v-flex xs12 >-->
 <!--                    <v-autocomplete-->

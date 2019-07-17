@@ -5,7 +5,7 @@
         <h2>Tất Cả Công Việc</h2>
       </v-flex>
       <v-flex xs12>
-        <v-flex xs5 d-flex>
+        <v-flex d-flex xs5>
           <v-text-field
             v-model="search"
             append-icon="search"
@@ -16,7 +16,10 @@
             class="mb-3"
           ></v-text-field>
 
-          <v-btn color="primary" @click="getAllJob()">Tìm</v-btn>
+
+          <v-flex xs2>
+            <v-btn style="height: 56px; position: relative; bottom: 5px" color="primary" @click="getAllJob()">Tìm</v-btn>
+          </v-flex>
         </v-flex>
 
 
@@ -47,6 +50,9 @@
               </v-chip>
               <v-chip color="success" v-if="item.status === 'approved'">
                 <span style="color: white !important;">Đã duyệt</span>
+              </v-chip>
+              <v-chip color="grey" v-if="item.status === 'spam'">
+                <span style="color: white !important;">Spam</span>
               </v-chip>
 
             </td>
@@ -309,10 +315,10 @@
           'Thông Tin', 'Công Ty',
         ],
         headers: [
-          {text: 'Tiêu đề công việc', value: 'title', sortable: false},
+          {text: 'Tiêu đề công việc', value: 'title',},
           {text: 'Công ty', value: 'companyByCompanyId.nameCompany', sortable: false},
-          {text: 'Ngày đăng', value: 'createdDate', sortable: false},
-          {text: 'Trạng thái công việc', value: 'status', sortable: false},
+          {text: 'Ngày đăng', value: 'createdDate',},
+          {text: 'Trạng thái công việc', value: 'status', },
           {text: 'Thao tác', sortable: false},
         ],
         pagination: {

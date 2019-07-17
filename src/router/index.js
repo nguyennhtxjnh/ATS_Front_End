@@ -23,8 +23,11 @@ import JobSeekerViewJobDetailPage from '../views/Jobseeker/JobSeekerViewJobDetai
 import EmployerJobCreateReviewPage from '../views/Employer/EmployerJobCreateReviewPage'
 import AdminDashBoardPage from '../views/Admin/AdminDashBoardPage'
 import AdminLoginPage from '../views/Admin/AdminLoginPage'
-import AdminViewAllJobPage from '../views/Admin/AdminViewAllJobPage'
+import AdminViewAllNewJobPage from '../views/Admin/AdminViewAllNewJobPage'
 import AdminAllServicePage from '../views/Admin/AdminAllServicePage'
+import AdminViewAllCompanyPage from '../views/Admin/AdminViewAllCompanyPage'
+import AdminViewAllAccountPage from '../views/Admin/AdminViewAllAccountPage'
+import AdminViewAllNewCompanyPage from '../views/Admin/AdminViewAllNewCompanyPage'
 
 
 Vue.use(Router)
@@ -165,15 +168,33 @@ const router = new Router({
     }
     ,
     {
-      path: '/admin-view-all-job',
+      path: '/admin-view-all-new-job',
       name: 'admin view all job',
-      component: AdminViewAllJobPage
+      component: AdminViewAllNewJobPage
     }
     ,
     {
       path: '/admin-all-service',
       name: 'admin view all service',
       component: AdminAllServicePage
+    }
+    ,
+    {
+      path: '/admin-view-all-company',
+      name: 'admin view all company',
+      component: AdminViewAllCompanyPage
+    }
+    ,
+    {
+      path: '/admin-view-all-new-company',
+      name: 'admin view all new company',
+      component: AdminViewAllNewCompanyPage
+    }
+    ,
+    {
+      path: '/admin-view-all-account',
+      name: 'admin view all account',
+      component: AdminViewAllAccountPage
     }
     ,
 

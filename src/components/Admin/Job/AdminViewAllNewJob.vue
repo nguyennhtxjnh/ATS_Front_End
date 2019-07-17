@@ -5,19 +5,25 @@
         <h2>Tất Cả Công Việc</h2>
       </v-flex>
       <v-flex xs12>
-        <v-flex xs5 d-flex>
-          <v-text-field
-            v-model="search"
-            append-icon="search"
-            label="Tìm kiếm theo tiêu đề hoặc công ty"
-            single-line
-            hide-details
-            outline
-            class="mb-3"
-          ></v-text-field>
 
-          <v-btn color="primary" @click="getAllJob()">Tìm</v-btn>
-        </v-flex>
+              <v-flex d-flex xs5>
+                <v-text-field
+                  v-model="search"
+                  append-icon="search"
+                  label="Tìm kiếm theo tiêu đề hoặc công ty"
+                  single-line
+                  hide-details
+                  outline
+                  class="mb-3"
+                ></v-text-field>
+
+
+              <v-flex xs2>
+                <v-btn style="height: 56px; position: relative; bottom: 5px" color="primary" @click="getAllJob()">Tìm</v-btn>
+              </v-flex>
+              </v-flex>
+
+
 
         <!--        <v-text-field-->
 <!--          v-model="search"-->
@@ -72,10 +78,10 @@
               </v-btn>
 
               <v-btn
-                outline flat fab small color="grey"
+                outline flat fab small color="primary"
                 @click="addStatusId(item.id)"
                 @click.stop="dialogStatus = true">
-                <v-icon>mdi-pencil</v-icon>
+                <v-icon>mdi-check-bold</v-icon>
               </v-btn>
 
             </td>
@@ -300,20 +306,19 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-
+    <!-- Duyet-->
     <v-dialog
       v-model="dialogStatus"
-      max-width="420px">
+      max-width="500px">
       <v-card>
-        <v-card-title class="headline"><b>Duyệt công việc</b></v-card-title>
+        <v-card-title class="headline orange"><b style="color: white">Duyệt công việc</b></v-card-title>
 
         <v-divider></v-divider>
         <v-card-text>
           <v-flex xs12 class="justify-center align-center"> <p style="text-align: center">Bạn muốn duyệt công việc này</p> </v-flex>
         </v-card-text>
 
-        <v-card-actions>
-          <v-spacer></v-spacer>
+        <v-card-actions class="align-center justify-center">
 
           <v-btn
             color="green darken-1"
@@ -323,11 +328,51 @@
           </v-btn>
 
           <v-btn
+            color="error"
+            outline=""
+            @click="confirmDialog('spam')"
+          >
+            Báo cáo spam
+          </v-btn>
+
+          <v-btn
+            color="success"
+            @click="confirmDialog('approved')"
+          >
+            Duyệt
+          </v-btn>
+
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <!--confirm-->
+    <v-dialog
+      v-model="dialogConfirm"
+      max-width="500px"
+      style="height: 200px">
+      <v-card>
+        <v-card-title class="headline orange"><b style="color: white">Thông báo</b></v-card-title>
+
+        <v-divider></v-divider>
+        <v-card-text>
+          <v-flex xs12 class="justify-center align-center"> <p style="text-align: center">Bạn có chắc thực hiện thao tác này</p> </v-flex>
+        </v-card-text>
+
+        <v-card-actions class="align-center justify-center">
+
+          <v-btn
             color="green darken-1"
+            flat="flat"
+            @click="dialogConfirm = false">
+            Đóng
+          </v-btn>
+
+          <v-btn
+            color="success"
             flat="flat"
             @click="changeStatus()"
           >
-            Xác nhận
+            Xác Nhận
           </v-btn>
 
         </v-card-actions>
@@ -349,6 +394,7 @@
         loading: false,
         dialog: false,
         dialogStatus: false,
+        dialogConfirm: false,
         items: [
           'Thông Tin', 'Công Ty',
         ],
@@ -360,8 +406,8 @@
           {text: 'Thao tác', sortable: false},
         ],
         pagination: {
-          sortBy: 'title',
-          ascending: true
+          sortBy: 'createdDate',
+          descending: true
         },
         jobFull: {
           id : '',
@@ -414,21 +460,35 @@
       addStatusId(id) {
         this.formJobStatusData.id = id;
       },
+      confirmDialog(status){
+        this.dialogConfirm = true;
+        this.formJobStatusData.status = status;
+      },
       changeStatus(){
         const url = 'http://localhost:8080/job/changeJobStatus'
         const method = 'POST'
         const data = this.formJobStatusData
-console.log(data)
+        console.log(data)
         Axios({url, method, data})
           .then(response => {
-            this.$notify({
-              group: 'foo',
-              type: 'success',
-              title: 'Thành công',
-              text: 'Duyệt thành công!'
-            })
+            if(data.status === 'approved'){
+              this.$notify({
+                group: 'foo',
+                type: 'success',
+                title: 'Thành công',
+                text: 'Duyệt thành công!'
+              })
+            } else {
+              this.$notify({
+                group: 'foo',
+                type: 'success',
+                title: 'Thành công',
+                text: 'Báo cáo spam!'
+              })
+            }
             this.getAllJob();
             this.dialogStatus = false;
+            this.dialogConfirm = false;
           })
           .catch(error => {
             console.log(error)

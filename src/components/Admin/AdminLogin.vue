@@ -26,7 +26,7 @@
             <v-card-actions class="justify-center mb-4">
               <div class="text-xs-center">
                 <v-spacer></v-spacer>
-                <v-btn type="submit" color="warning" >Đăng nhập</v-btn>
+                <v-btn type="submit" color="warning" :loading="loading" >Đăng nhập</v-btn>
               </div>
             </v-card-actions>
           </v-form>
@@ -46,6 +46,7 @@
       return{
         loginEmail: "",
         loginPassword: "",
+        loading: false,
         rules: {
           required: value => !!value || 'Không được để trống ô này.',
           counter: value => value.length <= 40 || 'Tối Đa 40 Kí Tự',
@@ -63,6 +64,7 @@
     },
     methods: {
       login: function () {
+        this.loading = true;
         if(this.$refs.form.validate()){
           const email = this.loginEmail;
           const password = this.loginPassword;
@@ -86,6 +88,7 @@
                 text: 'Tên đăng nhập hoặc mật khẩu không đúng!'
                 // text: 'Đã Xảy Ra Lỗi'
               });
+              this.loading = false
             });
         }
 

@@ -12,11 +12,11 @@
           <v-flex class="pa-3"><v-icon left style="color: white">mdi-account</v-icon><span class="nameText">{{fullName}}</span></v-flex>
         </v-flex>
         <v-list dense>
-<!--Job-->
+          <!--Job-->
           <v-list-group
             no-action
             sub-group
-            value="true"
+            :value="valueJob"
           >
             <template v-slot:activator>
               <v-list-tile>
@@ -38,11 +38,63 @@
 
             </v-list-tile>
           </v-list-group>
-<!--          Service-->
+          <!--Company-->
           <v-list-group
             no-action
             sub-group
-            value="true"
+            :value="valueCompany"
+          >
+            <template v-slot:activator>
+              <v-list-tile>
+                <v-list-tile-title>Công Ty</v-list-tile-title>
+              </v-list-tile>
+            </template>
+
+            <v-list-tile
+              v-for="(item, i) in menuCompany"
+              :key="i"
+              :to="item.path"
+              active-class="activeCSS"
+              :class="item.path === $route.path ? 'activeCSS' : ''"
+            >
+              <v-list-tile-action>
+                <v-icon>{{item.icon}}</v-icon>
+              </v-list-tile-action>
+              {{item.name}}
+
+            </v-list-tile>
+          </v-list-group>
+          <!--Account-->
+          <v-list-group
+            no-action
+            sub-group
+            :value="valueAccount"
+          >
+            <template v-slot:activator>
+              <v-list-tile>
+                <v-list-tile-title>Quản Lý Người Dùng</v-list-tile-title>
+              </v-list-tile>
+            </template>
+
+            <v-list-tile
+              v-for="(item, i) in menuUser"
+              :key="i"
+              :to="item.path"
+              active-class="activeCSS"
+              :class="item.path === $route.path ? 'activeCSS' : ''"
+            >
+              <v-list-tile-action>
+                <v-icon>{{item.icon}}</v-icon>
+              </v-list-tile-action>
+              {{item.name}}
+
+            </v-list-tile>
+          </v-list-group>
+          <!--Service-->
+          <v-list-group
+            no-action
+            sub-group
+            :value="valueService"
           >
             <template v-slot:activator>
               <v-list-tile>
@@ -64,11 +116,10 @@
 
             </v-list-tile>
           </v-list-group>
-<!-- Account-->
+          <!-- Logout-->
           <v-list-group
             no-action
             sub-group
-            value="true"
           >
             <template v-slot:activator>
               <v-list-tile>
@@ -120,6 +171,10 @@
     data: function(){
       return {
         drawer: null,
+        valueJob: true,
+        valueCompany: true,
+        valueAccount: true,
+        valueService: true,
         menuJob: [
           {
             name: "Tất cả công việc",
@@ -127,11 +182,31 @@
             path: "/admin"
           },
           {
-            name: "Công việc mới đăng",
+            name: "Công việc mới tạo",
             icon: "mdi-domain",
-            path: "/admin-view-all-job"
+            path: "/admin-view-all-new-job"
           },
           ],
+        menuCompany: [
+          {
+            name: "Tất cả công ty",
+            icon: "mdi-domain",
+            path: "/admin-view-all-company"
+          },
+          {
+            name: "Công ty mới tạo",
+            icon: "mdi-domain",
+            path: "/admin-view-all-new-company"
+          },
+
+        ],
+        menuUser: [
+          {
+            name: "Tất cả người dùng",
+            icon: "mdi-domain",
+            path: "/admin-view-all-account"
+          },
+        ],
         menuService: [
           {
             name: "Tất cả dịch vụ",
@@ -142,13 +217,29 @@
       }
     },
     methods: {
-
+      checkCurrentPath(){
+        if(this.$router.currentRoute.path === '/admin' || this.$router.currentRoute.path === '/admin-view-all-new-job'){
+          this.valueJob = true;
+        }
+        if(this.$router.currentRoute.path === '/admin-view-all-company' || this.$router.currentRoute.path === '/admin-view-all-new-company'){
+          this.valueCompany = true;
+        }
+        if(this.$router.currentRoute.path === '/admin-view-all-account'){
+          this.valueAccount = true;
+        }
+        if(this.$router.currentRoute.path === '/admin-all-service'){
+          this.valueService = true;
+        }
+      },
       logout(){
         this.$store.dispatch('AUTHENTICATION_STORE/LOGOUT3')
           .then(() => {
             this.$router.push('/admin-login');
           });
       }
+    },
+    mounted(){
+      // this.checkCurrentPath();
     },
     computed: {
       ...mapGetters('AUTHENTICATION_STORE',{
