@@ -11,20 +11,11 @@
         <v-flex d-flex align-center style="height: 64px;" class="orange">
           <v-flex class="pa-3"><v-icon left style="color: white">mdi-account</v-icon><span class="nameText">{{fullName}}</span></v-flex>
         </v-flex>
-        <v-list dense>
+        <v-list dense class="pt-0">
           <!--Job-->
-          <v-list-group
-            no-action
-            sub-group
-            :value="valueJob"
-          >
-            <template v-slot:activator>
-              <v-list-tile>
-                <v-list-tile-title>Công Việc</v-list-tile-title>
-              </v-list-tile>
-            </template>
-
-            <v-list-tile
+          <v-subheader>Công Việc</v-subheader>
+          <v-list-tile
+              style="padding-left: 40px;"
               v-for="(item, i) in menuJob"
               :key="i"
               :to="item.path"
@@ -37,20 +28,11 @@
               {{item.name}}
 
             </v-list-tile>
-          </v-list-group>
+          <v-divider></v-divider>
           <!--Company-->
-          <v-list-group
-            no-action
-            sub-group
-            :value="valueCompany"
-          >
-            <template v-slot:activator>
-              <v-list-tile>
-                <v-list-tile-title>Công Ty</v-list-tile-title>
-              </v-list-tile>
-            </template>
-
+          <v-subheader>Công ty</v-subheader>
             <v-list-tile
+              style="padding-left: 40px"
               v-for="(item, i) in menuCompany"
               :key="i"
               :to="item.path"
@@ -63,20 +45,11 @@
               {{item.name}}
 
             </v-list-tile>
-          </v-list-group>
+          <v-divider></v-divider>
           <!--Account-->
-          <v-list-group
-            no-action
-            sub-group
-            :value="valueAccount"
-          >
-            <template v-slot:activator>
-              <v-list-tile>
-                <v-list-tile-title>Quản Lý Người Dùng</v-list-tile-title>
-              </v-list-tile>
-            </template>
-
+          <v-subheader >Quản lý người dùng</v-subheader>
             <v-list-tile
+              style="padding-left: 40px"
               v-for="(item, i) in menuUser"
               :key="i"
               :to="item.path"
@@ -89,20 +62,11 @@
               {{item.name}}
 
             </v-list-tile>
-          </v-list-group>
+          <v-divider></v-divider>
           <!--Service-->
-          <v-list-group
-            no-action
-            sub-group
-            :value="valueService"
-          >
-            <template v-slot:activator>
-              <v-list-tile>
-                <v-list-tile-title>Dịch vụ</v-list-tile-title>
-              </v-list-tile>
-            </template>
-
+          <v-subheader >Dịch vụ</v-subheader>
             <v-list-tile
+              style="padding-left: 40px"
               v-for="(item, i) in menuService"
               :key="i"
               :to="item.path"
@@ -115,25 +79,16 @@
               {{item.name}}
 
             </v-list-tile>
-          </v-list-group>
+          <v-divider></v-divider>
           <!-- Logout-->
-          <v-list-group
-            no-action
-            sub-group
-          >
-            <template v-slot:activator>
-              <v-list-tile>
-                <v-list-tile-title>Tài khoản</v-list-tile-title>
-              </v-list-tile>
-            </template>
-
-            <v-list-tile @click="logout">
+          <v-subheader >Tài khoản</v-subheader>
+            <v-list-tile @click="logout"
+                         style="padding-left: 40px">
               <v-list-tile-action>
                 <v-icon>mdi-logout-variant</v-icon>
               </v-list-tile-action>
              Đăng Xuất
             </v-list-tile>
-          </v-list-group>
 
           <v-list-tile >
             <v-list-tile-action>
@@ -171,10 +126,6 @@
     data: function(){
       return {
         drawer: null,
-        valueJob: true,
-        valueCompany: true,
-        valueAccount: true,
-        valueService: true,
         menuJob: [
           {
             name: "Tất cả công việc",
@@ -217,20 +168,6 @@
       }
     },
     methods: {
-      checkCurrentPath(){
-        if(this.$router.currentRoute.path === '/admin' || this.$router.currentRoute.path === '/admin-view-all-new-job'){
-          this.valueJob = true;
-        }
-        if(this.$router.currentRoute.path === '/admin-view-all-company' || this.$router.currentRoute.path === '/admin-view-all-new-company'){
-          this.valueCompany = true;
-        }
-        if(this.$router.currentRoute.path === '/admin-view-all-account'){
-          this.valueAccount = true;
-        }
-        if(this.$router.currentRoute.path === '/admin-all-service'){
-          this.valueService = true;
-        }
-      },
       logout(){
         this.$store.dispatch('AUTHENTICATION_STORE/LOGOUT3')
           .then(() => {
@@ -239,7 +176,7 @@
       }
     },
     mounted(){
-      // this.checkCurrentPath();
+
     },
     computed: {
       ...mapGetters('AUTHENTICATION_STORE',{
