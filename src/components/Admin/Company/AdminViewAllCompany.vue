@@ -2,24 +2,25 @@
   <v-container fluid class="pt-0">
     <v-layout row wrap align-right>
       <v-flex xs12 class="mb-5">
-        <h2>Tất Cả Công Việc</h2>
+        <h2>Tất Cả Công Ty</h2>
       </v-flex>
       <v-flex xs12>
         <v-flex d-flex xs5>
           <v-text-field
             v-model="search"
             append-icon="search"
-            label="Tìm kiếm theo tiêu đề hoặc công ty"
+            label="Tìm kiếm theo tên công ty"
             single-line
             hide-details
             outline
+            @input="getAllCompany()"
             class="mb-3"
           ></v-text-field>
 
 
-          <v-flex xs2>
-            <v-btn style="height: 56px; position: relative; bottom: 5px" color="primary" @click="getAllCompany()">Tìm</v-btn>
-          </v-flex>
+<!--          <v-flex xs2>-->
+<!--            <v-btn style="height: 56px; position: relative; bottom: 5px" color="primary" @click="getAllCompany()">Tìm</v-btn>-->
+<!--          </v-flex>-->
         </v-flex>
 
 

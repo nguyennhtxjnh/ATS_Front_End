@@ -2,7 +2,7 @@
   <v-container fluid class="pt-0">
     <v-layout row wrap align-right>
       <v-flex xs12 class="mb-5">
-        <h2>Tất Cả Công Việc</h2>
+        <h2>Công Việc Đang Chờ Duyệt</h2>
       </v-flex>
       <v-flex xs12>
 
@@ -14,13 +14,14 @@
                   single-line
                   hide-details
                   outline
+                  @input="getAllJob()"
                   class="mb-3"
                 ></v-text-field>
 
 
-              <v-flex xs2>
-                <v-btn style="height: 56px; position: relative; bottom: 5px" color="primary" @click="getAllJob()">Tìm</v-btn>
-              </v-flex>
+<!--              <v-flex xs2>-->
+<!--                <v-btn style="height: 56px; position: relative; bottom: 5px" color="primary" @click="getAllJob()">Tìm</v-btn>-->
+<!--              </v-flex>-->
               </v-flex>
 
 

@@ -13,13 +13,14 @@
             single-line
             hide-details
             outline
+            @input="getAllJob()"
             class="mb-3"
           ></v-text-field>
 
 
-          <v-flex xs2>
-            <v-btn style="height: 56px; position: relative; bottom: 5px" color="primary" @click="getAllJob()">Tìm</v-btn>
-          </v-flex>
+<!--          <v-flex xs2>-->
+<!--            <v-btn style="height: 56px; position: relative; bottom: 5px" color="primary" @click="getAllJob()">Tìm</v-btn>-->
+<!--          </v-flex>-->
         </v-flex>
 
 
