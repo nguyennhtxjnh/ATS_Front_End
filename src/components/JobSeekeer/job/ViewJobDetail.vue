@@ -35,7 +35,8 @@
                     </v-flex>
                     <v-flex d-flex xs12>
 <!--                      <span>View will stay here</span> -->
-                      <span><b>Ngày hết hạn nộp:</b> {{jobFull.endDateForApply}}</span>
+                      <span><b>Khu vực:</b> {{jobFull.city.fullName}} <v-divider vertical class="ml-2 mr-2"></v-divider>
+                        <b>Ngày hết hạn nộp:</b> {{jobFull.endDateForApply}}</span>
                     </v-flex>
                     <v-flex d-flex xs12 fill-height>
 
@@ -157,8 +158,8 @@
 
                               <v-flex md8 sm12>
                                 <h4>Thông tin công ty</h4>
-                                <v-flex md12>
-                                  {{jobFull.company.description}}
+                                <v-flex md12 v-html="jobFull.company.description">
+
                                 </v-flex>
                               </v-flex>
 
@@ -326,24 +327,11 @@
             this.loading = false;
           })
       },
-      formatDate(unix) {
-        const date = new Date(unix * 1000); // convert to milliseconds
-        const year = date.getFullYear();
-        let month = date.getMonth() + 1;
-        let day = date.getDate();
-
-        // Check if day or month is only 1 digit
-        // this because Moment.js works with 0 leading values
-        if (day.toString().length !== 2) day = `0${day}`;
-        if (month.toString().length !== 2) month = `0${month}`;
-
-        return `${year}-${month}-${day}`;
-      },
-
     },
     mounted() {
+      this.$nextTick(() => {
         this.getJobDetail();
-
+      })
     },
     computed: {
       ...mapGetters('AUTHENTICATION_STORE',{

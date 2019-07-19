@@ -21,6 +21,18 @@
                   </v-flex>
 
                   <v-flex md12 xs12>
+                    <v-autocomplete class="ma-2"
+                      prepend-icon="mdi-domain"
+                      v-model="formData.industryId"
+                      :items="industryAPI"
+                      item-text="name"
+                      item-value="id"
+                      label="Ngành Nghề"
+                      :rules="[rules.required]"
+                    ></v-autocomplete>
+                  </v-flex>
+
+                  <v-flex md12 xs12>
                     <v-layout row wrap>
                       <v-flex md6 xs12>
                         <v-text-field class="ma-2" prepend-icon="mdi-map-marker-radius" name="Name" label="Địa Chỉ Làm Việc"
@@ -43,19 +55,7 @@
                     </v-layout>
 
                   </v-flex>
-<!--industry-->
-                  <v-flex md12 xs12>
-                    <v-autocomplete
-                      v-model="formData.industryId"
-                      :items="industries"
-                      item-text="name"
-                      item-value="id"
-                      label="Ngành nghề*"
-                      persistent-hint
-                      single-line
-                    ></v-autocomplete>
-
-                  </v-flex>
+                  <!--                    Hết Nơi Làm Việc-->
 
                   <v-flex  xs12>
                     <v-autocomplete
@@ -101,10 +101,19 @@
 
                   <!--  Kinh Nghiệm-->
                   <v-flex md12 xs12>
-                    <v-text-field class="ma-2" prepend-icon="mdi-calendar-clock" label="Kinh Nghiệm"
+<!--                    <v-autocomplete-->
+<!--                      class="ma-2"-->
+<!--                      prepend-icon="mdi-calendar-clock"-->
+<!--                      :items="skillYear"-->
+<!--                      v-model="formData.yearExperience"-->
+<!--                      item-text="yearName"-->
+<!--                      item-value="id"-->
+<!--                      label="Kinh Nghiệm"-->
+<!--                      :rules="[rules.required]"-->
+<!--                    ></v-autocomplete>-->
+                    <v-text-field class="ma-2" prepend-icon="mdi-calendar-clock"  label="Kinh Nghiệm"
                                   type="number" v-model="formData.yearExperience"
-
-                    ></v-text-field>
+                                  :rules="[rules.required, rules.noMinus]"></v-text-field>
 
                   </v-flex>
                   <!--  Hết Kinh Nghiệm-->
@@ -291,10 +300,23 @@
                           </v-flex>
 
                           <v-flex md12 xs12>
+                            <v-autocomplete class="ma-2"
+                                            prepend-icon="mdi-domain"
+                                            v-model="formData.industryId"
+                                            :items="industryAPI"
+                                            item-text="name"
+                                            item-value="id"
+                                            label="Ngành Nghề"
+                                            disabled
+                            ></v-autocomplete>
+                          </v-flex>
+
+                          <v-flex md12 xs12>
                             <v-layout row wrap>
                               <v-flex md6 xs12>
                                 <v-text-field class="ma-2" prepend-icon="mdi-map-marker-radius" name="Name" label="Địa Chỉ Làm Việc"
                                               type="text"
+                                              disabled
                                               v-model="formData.address"
                                               :rules="[rules.required]"></v-text-field>
                               </v-flex>
@@ -307,7 +329,7 @@
                                   item-text="fullName"
                                   item-value="id"
                                   label="Chọn Tỉnh/Thành Phố"
-                                  :rules="[rules.required]"
+                                  disabled
                                 ></v-autocomplete>
                               </v-flex>
                             </v-layout>
@@ -671,7 +693,10 @@
         console.log(this.listSkill);
       },
 
-      submitjob () {
+      async submitjob () {
+        this.formData.userId = this.userId2;
+        this.formDataCompany.userId = this.userId2;
+        await this.getCompany();
         this.dialog = false;
         if (this.$refs.form.validate()) {
           if (this.formData.salaryTo < this.formData.salaryFrom && this.formData.salaryFrom !== 0) {

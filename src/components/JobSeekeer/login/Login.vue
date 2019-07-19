@@ -63,6 +63,7 @@
       return {
         loginEmail: '',
         loginPassword: '',
+        loading: false,
         rules: {
           required: value => !!value || 'Không được để trống ô này.',
           counter: value => value.length <= 40 || 'Tối Đa 40 Kí Tự',
@@ -85,6 +86,7 @@
     },
     methods: {
       login: function () {
+        this.loading = true;
         if (this.$refs.form.validate()) {
           const email = this.loginEmail
           const password = this.loginPassword
@@ -94,9 +96,11 @@
               this.$store.dispatch('AUTHENTICATION_STORE/INIT1')
                 .then(() => {
                   this.$router.push('/viec-lam-nguoi-tim-viec')
+                  this.loading = false;
                 })
                 .catch((error) => {
                   this.$router.push('/dang-nhap')
+                  this.loading = false;
                 })
 
             })
@@ -109,6 +113,7 @@
                 // text: 'Đã Xảy Ra Lỗi'
               })
             })
+          this.loading = false;
         }
       },
       async onSignInSuccess (googleUser) {
