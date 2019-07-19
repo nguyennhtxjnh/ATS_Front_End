@@ -43,7 +43,8 @@
 
           <template #items="{item}">
             <td  class="text-xs">{{item.nameCompany}}</td>
-            <td  class="text-xs">{{item.cityByCityId.fullName}}</td>
+            <td  class="text-xs">{{item.usersEmail}}</td>
+            <td  class="text-xs">{{item.cityName}}</td>
             <td  class="text-xs">{{moment(item.createdDate).format('DD-MM-YYYY')}}</td>
             <td  class="text-xs-left">
               <v-chip color="error" v-if="item.status === 'new'">
@@ -87,7 +88,7 @@
     <!--    detailView-->
     <v-dialog
       v-model="dialog"
-      max-width="1200px">
+      max-width="900px">
       <v-card>
         <v-card-title class="headline"><b>Thông tin công ty</b></v-card-title>
 
@@ -95,11 +96,21 @@
         <v-card-text>
           <v-container class=" mb-3" fluid grid-list-md style=" border: 1px solid red; border-radius: 5px;">
             <v-layout row wrap>
-              <v-flex d-flex xs12 sm6 md3 class="align-center pa-0">
+              <v-flex xs4 class="align-center justify-center" >
+                <p class="text-xs-center"><b>Logo Công Ty</b></p>
                 <v-img src="https://www.seekpng.com/png/detail/25-257121_icon-big-image-png-camera-icon.png"  contain aspect-ratio="2"  v-if="!companyDetail.logoImg"/>
                 <v-img contain :src="companyDetail.logoImg" aspect-ratio="2" v-if="companyDetail.logoImg"></v-img>
               </v-flex>
-              abc
+              <v-flex xs8>
+                <v-flex xs12><b>Tên công ty:</b> {{companyDetail.nameCompany}}</v-flex>
+                <v-flex xs12><b>Thành phố:</b> {{companyDetail.cityName}}</v-flex>
+                <v-flex xs12><b>Ngày tạo:</b> {{moment(companyDetail.createdDate).format('DD-MM-YYYY')}}</v-flex>
+                <v-flex xs12><b>Email công ty:</b> {{companyDetail.email}}</v-flex>
+                <v-flex xs12><b>Email nhà tuyển dụng chính:</b> {{companyDetail.usersEmail}}</v-flex>
+                <v-flex xs12><b>Số điện thoại công ty:</b> {{companyDetail.telephoneNumber}}</v-flex>
+                <v-flex xs12><b>Thông tin chi tiết:</b> <p style="word-wrap: break-word;" v-html="companyDetail.description"></p></v-flex>
+              </v-flex>
+
             </v-layout>
           </v-container>
           <!--        tab-->
@@ -136,7 +147,8 @@
         dialog: false,
         headers: [
           {text: 'Tên công ty', value: 'nameCompany',},
-          {text: 'Thành phố', value: 'cityByCityId.fullName', sortable: false},
+          {text: 'Email nhà tuyển dụng chính', value: 'usersEmail',},
+          {text: 'Thành phố', value: 'cityName', sortable: false},
           {text: 'Ngày tạo', value: 'createdDate',},
           {text: 'Trạng thái công ty', value: 'status', },
           {text: 'Thao tác', sortable: false},
@@ -146,12 +158,9 @@
           ascending: true
         },
         companyDetail:{
+            usersEmail: '',
             address: '',
-            address: '',
-            cityByCityId: {
-              fullName: '',
-              id: ''
-            },
+            cityName: '',
             cityId: '',
             companyindustriesById: '',
             createdDate: '',

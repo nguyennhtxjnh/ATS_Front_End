@@ -168,6 +168,7 @@
         formDataCompany:{
           companyId: '',
           userId: '',
+          status: '',
         },
 
         formData: {
@@ -232,7 +233,8 @@
 
       chooseCompany(){
         this.formDataCompany.userId = this.userId2;
-        const url = 'http://localhost:8080/employercompany/addNewEmployerCompanyExistedCompany'
+        this.formDataCompany.status = 'onhold';
+        const url = 'http://localhost:8080/employercompany/addNewEmployerCompany'
         const method = 'POST'
         const data = this.formDataCompany
 
@@ -279,6 +281,7 @@
             .then(response => {
               console.log(response)
               this.formDataCompany.companyId = response.data.data
+              this.formDataCompany.status = 'approved';
               this.mapCompany()
             })
             .catch(error => {

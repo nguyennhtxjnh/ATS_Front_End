@@ -28,6 +28,7 @@ import AdminAllServicePage from '../views/Admin/AdminAllServicePage'
 import AdminViewAllCompanyPage from '../views/Admin/AdminViewAllCompanyPage'
 import AdminViewAllAccountPage from '../views/Admin/AdminViewAllAccountPage'
 import AdminViewAllNewCompanyPage from '../views/Admin/AdminViewAllNewCompanyPage'
+import EmployerCompanyApplyPage from '../views/Employer/EmployerCompanyApplyPage'
 
 
 Vue.use(Router)
@@ -149,10 +150,13 @@ const router = new Router({
       component: EmployerJobCreateReviewPage
     }
     ,
-    // {
-    //   path: '/detail/:id',
-    //   component: Detail
-    // }
+    {
+      path: '/cong-ty-duyet-tuyen-dung',
+      name: 'employer apply sub employer',
+      component: EmployerCompanyApplyPage
+    }
+    ,
+
 
     //Admin Router Link
     {

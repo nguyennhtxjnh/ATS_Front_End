@@ -785,7 +785,7 @@
           .then( response => {
             if (response.data.success == true) {
               console.log(response)
-              this.formData.companyId = response.data.data
+              this.formData.companyId = response.data.data.companyId
             } else {
               this.$notify({
                 group: 'foo',

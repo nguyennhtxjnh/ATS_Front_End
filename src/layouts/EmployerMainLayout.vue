@@ -8,6 +8,10 @@
           Đăng Tin Tuyển Dụng
         </v-btn>
 
+        <v-btn style="height: 100%" flat  class="orange white--text text-none" @click="$router.push('/cong-ty-duyet-tuyen-dung')">
+          Những nhà tuyển dụng muốn tham gia công ty
+        </v-btn>
+
 
 
         <v-spacer></v-spacer>
@@ -265,8 +269,27 @@
         console.log(data)
         await Axios({url, method, data})
           .then(async response => {
+            // console.log(response)
             if (response.data.success == true) {
-              this.$router.push('/dang-tin-tuyen-dung');
+              if(response.data.data.status === 'approved' && response.data.data.companyStatus === 'approved'){
+                this.$router.push('/dang-tin-tuyen-dung');
+              }
+              if(response.data.data.companyStatus !== 'approved'){
+                this.$notify({
+                  group: 'foo',
+                  type: 'warn',
+                  title: 'Công ty chưa được duyệt',
+                  text: 'Công ty của bạn chưa được duyệt'
+                })
+              }
+              if(response.data.data.status !== 'approved'){
+                this.$notify({
+                  group: 'foo',
+                  type: 'warn',
+                  title: 'Bạn chưa có quyền đăng tin tuyển dụng',
+                  text: 'Công ty chưa xác nhận bạn để thực hiện việc tuyển dụng'
+                })
+              }
             } else {
               this.$notify({
                 group: 'foo',
