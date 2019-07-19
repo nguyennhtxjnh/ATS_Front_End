@@ -23,7 +23,21 @@
             <v-layout row wrap>
               <v-flex md8 xs8>
                 <h2>{{cv.lastName}} {{cv.firstName}}</h2>
-                <span><i>Vị trí ứng tuyển:</i> {{cv.industryByIndustryId.name}}</span>
+                <v-layout row wrap  >
+                <span><i>Học vấn:</i>
+                <template v-if="cv.educationsById.length > 0" v-for="edu in cv.educationsById ">
+                   Trường {{edu.schoolName}}
+                </template>
+                </span>
+                </v-layout>
+                <v-layout row wrap  >
+                <span><i>Kinh nghiệm:</i>
+                <template v-if="cv.workexperiencesById.length > 0" v-for="edu in cv.workexperiencesById ">
+                  Công ty {{edu.companyName}} - chức vụ {{edu.vacancyName}}
+                </template>
+                </span>
+                </v-layout>
+<!--                <span><i>Vị trí ứng tuyển:</i> {{cv.industryByIndustryId.name}}</span>-->
 <!--                <v-layout row wrap>-->
 <!--                  <v-icon class="">mdi-bag-personal</v-icon>-->
 <!--                  <span>Quản lý cửa hàng - Cửu hàng điện thoại di động</span>-->
@@ -41,7 +55,7 @@
                     <v-icon class="">mdi-map-marker</v-icon>
                     <span>Địa điểm: {{cv.cityByCityId.fullName}}</span>
                   </v-flex>
-
+                <v-spacer/>
                   <v-flex md6 xs4 style="border: 2px #2c3e50; border-style: dotted"  class="pa-1" v-if="cv.yearExperience !== ''">
                     <v-icon class="">mdi-calendar-blank</v-icon>
                     <span>Thời gian làm việc thực tế {{cv.yearExperience}} năm</span>

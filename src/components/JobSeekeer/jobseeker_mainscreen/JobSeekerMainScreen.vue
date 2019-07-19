@@ -45,8 +45,7 @@
                     :items="industries"
                     v-model="searchIndustry"
                     item-text="name"
-                    item-value="id"
-                    return-object
+                    item-value="name"
                     label="Tất cả các ngành nghề"
                   ></v-autocomplete>
                 </v-flex>
@@ -56,8 +55,7 @@
                     :items="cities"
                     v-model="searchCity"
                     item-text="fullName"
-                    item-value="id"
-                    return-object
+                    item-value="fullName"
                     label="Tất cả địa điểm"
                   ></v-autocomplete>
                 </v-flex>

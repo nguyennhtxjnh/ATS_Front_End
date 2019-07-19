@@ -246,7 +246,7 @@
             </v-container>
           </v-card>
           <!-- học vấn-->
-          <EducationComponent :educationsById="info.educationsById"></EducationComponent>
+          <EducationComponent v-if="info.educationsById.length != 0" :educationsById="info.educationsById"></EducationComponent>
           <!--Kinh nghiệm-->
           <WorkExperienceComponent :workexperiences="info.workexperiencesById"></WorkExperienceComponent>
           <!--Kỹ năng-->

@@ -215,6 +215,7 @@
               .get(Constants.URL+'/skillmaster/')
               .then(response => (
                 this.selectedSkill = response.data))
+        console.log(this.selectedSkill)
 
 
       }
