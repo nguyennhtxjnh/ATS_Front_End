@@ -2,13 +2,13 @@
   <v-app>
     <!--    ToolBar-->
     <template>
-      <v-toolbar fixed class="orange" v-if="$vuetify.breakpoint.mdAndUp">
-        <v-toolbar-title @click="$router.push('/trang-chu-tuyen-dung')" class="white--text hoverCSSTitle pr-5 mr-5" >Nhà Tuyển Dụng</v-toolbar-title>
-        <v-btn style="height: 100%" flat  class="orange white--text text-none"  @click="checkUser">
+      <v-toolbar fixed style="border-bottom: 4px solid #ff5e2d; background-color: white" v-if="$vuetify.breakpoint.mdAndUp">
+        <v-toolbar-title @click="$router.push('/trang-chu-tuyen-dung')" class="hoverCSSTitle pr-5 mr-5" >Nhà Tuyển Dụng</v-toolbar-title>
+        <v-btn style="height: 100%" flat  class=" text-none"  @click="checkUser">
           Đăng Tin Tuyển Dụng
         </v-btn>
 
-        <v-btn style="height: 100%" flat  class="orange white--text text-none" @click="$router.push('/cong-ty-duyet-tuyen-dung')">
+        <v-btn style="height: 100%" flat  class=" text-none" @click="$router.push('/cong-ty-duyet-tuyen-dung')">
           Những nhà tuyển dụng muốn tham gia công ty
         </v-btn>
 

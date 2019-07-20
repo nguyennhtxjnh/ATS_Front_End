@@ -234,7 +234,7 @@
         if(this.statusSelect === "Tất cả trạng thái") this.tempSearch = "";
         if(this.statusSelect === "Đang hoạt động") this.tempSearch = "new";
         if(this.statusSelect === "Đã bị khóa") this.tempSearch = "ban";
-        Axios.get('http://localhost:8080/user/getAllUser?search=' + this.search + '&status=' + this.tempSearch)
+        Axios.get('http://localhost:1122/user/getAllUser?search=' + this.search + '&status=' + this.tempSearch)
           .then(response => {
             if(response.data.data !== null){
               this.Account = response.data.data.content;

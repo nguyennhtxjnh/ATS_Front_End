@@ -13,6 +13,7 @@ import GSignInButton from 'vue-google-signin-button'
 import './api_client.js';
 import './platform.js';
 
+
 Vue.use(Vuetify, {
   iconfont: 'mdi'
 });

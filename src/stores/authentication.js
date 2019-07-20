@@ -166,7 +166,7 @@ export default {
     LOGIN3 ({commit}, user) {
       return new Promise((resolve, reject) => {
         commit('REQUEST')
-        axios({url: 'http://localhost:8080/user/login', data: user, method: 'POST'})
+        axios({url: 'http://localhost:1122/user/login', data: user, method: 'POST'})
           .then(response => {
             const token = response.data.data.accessToken
             if (response.data.data.roleId === 4) {
@@ -332,7 +332,7 @@ export default {
             accessToken: token
           }
         }
-        axios.post('http://localhost:8080/user/checkLogin',null,config)
+        axios.post('http://localhost:1122/user/checkLogin',null,config)
           .then(response => {
             // console.log(response)
             const email = response.data.data.email

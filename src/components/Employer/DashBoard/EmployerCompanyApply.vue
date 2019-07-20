@@ -74,7 +74,7 @@
 
         <v-divider></v-divider>
         <v-card-text>
-          <v-flex xs12 class="justify-center align-center"> <p style="text-align: center">Bạn muốn duyệt công ty này?</p> </v-flex>
+          <v-flex xs12 class="justify-center align-center"> <p style="text-align: center">Bạn muốn chấp nhận đơn gia nhập này?</p> </v-flex>
         </v-card-text>
 
         <v-card-actions class="align-center justify-center">
@@ -105,7 +105,7 @@
 
         <v-divider></v-divider>
         <v-card-text>
-          <v-flex xs12 class="justify-center align-center"> <p style="text-align: center">Từ chối duyệt công ty này?</p> </v-flex>
+          <v-flex xs12 class="justify-center align-center"> <p style="text-align: center">Từ chối đơn gia nhập?</p> </v-flex>
         </v-card-text>
 
         <v-card-actions class="align-center justify-center">
@@ -141,7 +141,6 @@
       return {
         search: '',
         Employer: [],
-        userId: '',
         loading: false,
         dialog: false,
         dialogStatusApproved: false,
@@ -168,7 +167,7 @@
       },
       changeStatus(status){
         this.formEmployerStatusData.status = status;
-        const url = 'http://localhost:8080/employercompany/changeEmployerCompanyStatus'
+        const url = 'http://localhost:1122/employercompany/changeEmployerCompanyStatus'
         const method = 'POST'
         const data = this.formEmployerStatusData
         console.log(data)
@@ -198,10 +197,9 @@
           })
       },
       getEmployer() {
-        console.log(this.userId)
           this.loading = true;
-          Axios.get('http://localhost:8080/employercompany/getAllEmployerCompanyByStatus?search=' +
-            this.search + '&status=onhold&userId=' + this.userId)
+          Axios.get('http://localhost:1122/employercompany/getAllEmployerCompanyByStatus?search=' +
+            this.search + '&status=onhold&userId=' + this.userId2)
             .then(response => {
               if(response.data.data !== null){
                 this.Employer = response.data.data.content;
@@ -219,7 +217,6 @@
         this.getEmployer()
       },
       userId2(){
-        this.userId = this.userId2
         this.getEmployer()
       },
     },

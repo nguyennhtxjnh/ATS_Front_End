@@ -186,7 +186,7 @@
       },
       getAllCompany() {
         this.loading = true;
-        Axios.get('http://localhost:8080/company/getCompanyAdmin?search=' + this.search + '&status=')
+        Axios.get('http://localhost:1122/company/getCompanyAdmin?search=' + this.search + '&status=')
           .then(response => {
             this.Company = response.data.data.content;
             console.log(this.Company)

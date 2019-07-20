@@ -251,7 +251,7 @@
       },
       changeStatus(status){
         this.formJobStatusData.status = status;
-        const url = 'http://localhost:8080/company/changeCompanyStatus'
+        const url = 'http://localhost:1122/company/changeCompanyStatus'
         const method = 'POST'
         const data = this.formJobStatusData
         console.log(data)
@@ -289,7 +289,7 @@
       },
       getAllCompany() {
         this.loading = true;
-        Axios.get('http://localhost:8080/company/getCompanyAdmin?search=' + this.search + '&status=new')
+        Axios.get('http://localhost:1122/company/getCompanyAdmin?search=' + this.search + '&status=new')
           .then(response => {
             this.Company = response.data.data.content;
             console.log(this.Company)
