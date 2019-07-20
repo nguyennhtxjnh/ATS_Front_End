@@ -33,23 +33,27 @@
                   </v-flex>
 
                   <v-flex md12 xs12>
-                    <v-text-field class="ma-2" prepend-icon="mdi-map-marker-radius" name="Name" label="Địa Chỉ Làm Việc"
-                                  type="text"
-                                  v-model="formData.address"
-                                  :rules="[rules.required]"></v-text-field>
-                  </v-flex>
+                    <v-layout row wrap>
+                      <v-flex md6 xs12>
+                        <v-text-field class="ma-2" prepend-icon="mdi-map-marker-radius" name="Name" label="Địa Chỉ Làm Việc"
+                                      type="text"
+                                      v-model="formData.address"
+                                      :rules="[rules.required]"></v-text-field>
+                      </v-flex>
+                      <v-spacer/>
+                      <v-flex md5 xs12>
+                          <v-autocomplete
+                            prepend-icon="mdi-map-marker"
+                            v-model="formData.cityId"
+                            :items="cityAPI"
+                            item-text="fullName"
+                            item-value="id"
+                            label="Chọn Tỉnh/Thành Phố"
+                            :rules="[rules.required]"
+                          ></v-autocomplete>
+                      </v-flex>
+                    </v-layout>
 
-                  <!--                   Nơi Làm Việc-->
-                  <v-flex class="pa-1" xs12>
-                    <v-autocomplete
-                      prepend-icon="mdi-map-marker"
-                      v-model="formData.cityId"
-                      :items="cityAPI"
-                      item-text="fullName"
-                      item-value="id"
-                      label="Chọn Tĩnh/Thành Phố"
-                      :rules="[rules.required]"
-                    ></v-autocomplete>
                   </v-flex>
                   <!--                    Hết Nơi Làm Việc-->
 
@@ -223,10 +227,9 @@
                     <v-autocomplete
                       prepend-icon="mdi-account-star"
                       :items="skillChoose"
-                      v-model="selectedSkill"
+                      v-model="selectedSkill.skillMasterId"
                       item-text="skillName"
                       item-value="id"
-                      return-object
                       label="Kĩ Năng"
                       :rules="[rules.required]"
                     ></v-autocomplete>
@@ -238,7 +241,7 @@
                     <v-flex class="pa-1" md5 xs12>
                       <v-autocomplete
                         :items="skillChoose"
-                        v-model="skill.id"
+                        v-model="skill.skillMasterId"
                         item-text="skillName"
                         item-value="id"
                         label="Kĩ Năng"
@@ -265,10 +268,12 @@
 <!--                  <v-flex class="pa-1" md2 xs12>-->
 <!--                    <v-btn color="error" @click="testPost()">test</v-btn>-->
 <!--                  </v-flex>-->
+
                 </v-layout>
               </v-container>
 
             </v-card-text>
+
             <v-card-actions class="justify-center mb-4">
               <div class="text-xs-center">
                 <v-spacer></v-spacer>
@@ -307,23 +312,29 @@
                           </v-flex>
 
                           <v-flex md12 xs12>
-                            <v-text-field class="ma-2" prepend-icon="mdi-map-marker-radius" name="Name" label="Địa Chỉ Làm Việc"
-                                          type="text"
-                                          disabled
-                                          v-model="formData.address"
-                                          ></v-text-field>
-                          </v-flex>
+                            <v-layout row wrap>
+                              <v-flex md6 xs12>
+                                <v-text-field class="ma-2" prepend-icon="mdi-map-marker-radius" name="Name" label="Địa Chỉ Làm Việc"
+                                              type="text"
+                                              disabled
+                                              v-model="formData.address"
+                                              :rules="[rules.required]"></v-text-field>
+                              </v-flex>
+                              <v-spacer/>
+                              <v-flex md5 xs12>
+                                <v-autocomplete
+                                  prepend-icon="mdi-map-marker"
+                                  v-model="formData.cityId"
+                                  :items="cityAPI"
+                                  item-text="fullName"
+                                  item-value="id"
+                                  label="Chọn Tỉnh/Thành Phố"
+                                  disabled
+                                ></v-autocomplete>
+                              </v-flex>
+                            </v-layout>
 
-                          <v-flex class="pa-1" xs12>
-                            <v-autocomplete
-                              prepend-icon="mdi-map-marker"
-                              v-model="formData.cityId"
-                              :items="cityAPI"
-                              item-text="fullName"
-                              item-value="id"
-                              label="Chọn Tĩnh/Thành Phố"
-                              disabled
-                            ></v-autocomplete>
+
                           </v-flex>
 
                           <v-flex  xs12>
@@ -358,16 +369,10 @@
                           </v-flex>
 
                           <v-flex md12 xs12>
-                            <v-autocomplete
-                              class="ma-2"
-                              prepend-icon="mdi-calendar-clock"
-                              :items="skillYear"
-                              v-model="formData.yearExperience"
-                              item-text="yearName"
-                              item-value="id"
-                              label="Kinh Nghiệm"
-                              disabled
-                            ></v-autocomplete>
+                            <v-text-field class="ma-2" prepend-icon="mdi-calendar-clock" label="Kinh Nghiệm"
+                                          type="number" v-model="formData.yearExperience"
+                                          disabled
+                            ></v-text-field>
 
                           </v-flex>
 
@@ -496,6 +501,9 @@
   import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/vi'
   import Axios from 'axios'
   import {mapGetters} from 'vuex'
+  import Constants from '@/stores/constant.js'
+  import Swal from 'sweetalert2'
+
 
   export default {
     name: 'CreateJob',
@@ -504,7 +512,7 @@
         date: new Date().toISOString().substr(0, 10),
         menu2: false,
         dialog: false,
-
+        industries: [],
         tmpSkill: [],
 
         salaryChoose: ['Thỏa Thuận', 'Từ', 'Đến', 'Trong Khoảng'],
@@ -515,10 +523,9 @@
         }, {id: 5, yearName: '5 năm'}, {id: 6, yearName: '5 năm trở lên'},],
         jobLevelAPI: [],
         cityAPI: [],
-        industryAPI: [],
         workingType: ['Toàn Thời Gian', 'Bán Thời Gian', 'Thực Tập'],
         skillChoose: [],
-        selectedSkill: {id: 1, skillName: "C#"},
+        selectedSkill: {skillMasterId: '', skillLevel: ''},
         skillRating: [
           {
           id: 1,
@@ -554,8 +561,7 @@
           companyId: '',
           cityId: '',
           joblevelId: '',
-          industryId: '',
-
+          industryId:'',
           title: '',
           address: '',
           vacancyName: '',
@@ -568,13 +574,12 @@
           candidateBenefits: '',
           workingType: '',
           numbeOfRecruitment: '',
-
-          listSkill: [],
+          listSkill:[]
         },
 
         formDataSkill:{
           jobId: '',
-          listSkill:[]
+
         },
 
         editor: DecoupledEditor,
@@ -619,13 +624,16 @@
         )
       },
       async getInitData () {
-        const url = 'http://localhost:8080/job/getJobComponent'
+
+        Axios
+          .get(Constants.URL+'/industry')
+          .then(response => (
+            this.industries = response.data))
+        const url = Constants.URL+'/job/getJobComponent'
         const method = 'GET'
         await Axios({url, method})
           .then(response => {
             if (response.data.success == true) {
-              console.log(response);
-              this.industryAPI = response.data.data.industry
               this.jobLevelAPI = response.data.data.level
               this.cityAPI = response.data.data.city
               this.skillChoose = response.data.data.skillname
@@ -676,14 +684,13 @@
             this.formData.listSkill.push(Object.assign({}, this.selectedSkill))
           }
         }
-        console.log(this.formData.listSkill);
 
       },
       removeSkill(index){
         console.log(index);
         this.formData.listSkill.splice(index,1);
         this.tmpSkill.splice(index,1);
-        console.log(this.formData.listSkill);
+        console.log(this.listSkill);
       },
 
       async submitjob () {
@@ -726,47 +733,9 @@
             return
           }
 
-          for(let i = 0; i < this.formData.listSkill.length; i++){
-            this.formData.listSkill[i].skillMasterId = this.formData.listSkill[i]['id'];
-            delete this.formData.listSkill[i].id;
-            delete this.formData.listSkill[i].skillName;
-          }
-
-          const url = 'http://localhost:8080/job/create';
-          const method = 'POST';
-          const data = this.formData;
-          console.log(data)
-          let config = {
-            headers: {
-              accessToken: localStorage.getItem('token2')
-            }
-          }
-
-          Axios({url, method, data, config})
-            .then(response => {
-              if (response.data.success == true) {
-                this.$notify({
-                  group: 'foo',
-                  type: 'success',
-                  title: 'Thành Công',
-                  text: 'Đăng Tin Thành Công!'
-                })
-                this.$router.push("/dang-tin-tuyen-dung-thanh-cong");
-              }
-            })
-            .catch(error => {
-              console.log(error)
-              this.$notify({
-                group: 'foo',
-                type: 'error',
-                title: 'Thất Bại',
-                text: 'Đã Xảy Ra Lỗi!'
-              })
-            })
-            .finally(() => {
-
-            })
-
+          this.formDataCompany.userId = this.userId2;
+          this.formData.userId = this.userId2;
+          this.getCompany();
         }else{
           this.$notify({
             group: 'foo',
@@ -777,15 +746,73 @@
         }
       },
       async getCompany(){
-        const url = 'http://localhost:8080/employercompany/getCompanyId'
+
+        const url = Constants.URL+'/employercompany/getCompanyId'
         const method = 'POST'
         const data = this.formDataCompany
         console.log(data)
           await Axios({url, method, data})
-          .then( response => {
+          .then(async response => {
             if (response.data.success == true) {
-              console.log(response)
-              this.formData.companyId = response.data.data.companyId
+              this.formData.companyId = response.data.data.companyId;
+
+              const url = Constants.URL+'/job/create';
+              const method = 'POST';
+              const data = this.formData;
+              console.log(data)
+              let config = {
+                headers: {
+                  accessToken: localStorage.getItem('token2')
+                }
+              }
+
+              await Axios({url,method, data, config})
+                .then(response => {
+                  if (response.data.success == true) {
+                    console.log(response)
+
+                    Swal.fire({
+                      title: '<strong>Thành công</strong>',
+                      type: 'success',
+                      html:'',
+                      showCloseButton: true, showCancelButton: true,
+                      focusConfirm: false,
+                      cancelButtonText:
+                        '<form method="get" action="/#/trang-chu-tuyen-dung">\n' +
+                        '    <button type="submit" > Trang chủ</button>\n' +
+                        '</form>',
+                      cancelButtonAriaLabel: 'Trang chủ',
+                      confirmButtonText:
+                        '</form> <form method="get" action="/#/quan-li-cong-viec">\n' +
+                        '    <button type="submit" > Quản lý tin dăng tuyển</button>\n' +
+                        '</form>',
+                     confirmButtonAriaLabel: 'Quản lý tin dăng tuyển',
+
+
+                    })
+                  }else {
+                    this.$notify({
+                      group: 'foo',
+                      type: 'warn',
+                      title: 'Không tìm thấy công ty',
+                      text: 'Bạn không nằm trong công ty nào để đăng tin tuyển dụng'
+                    })
+                    this.$router.push('/tao-cong-ty');
+                  }
+                })
+                .catch(error => {
+                  console.log(error)
+                  this.$notify({
+                    group: 'foo',
+                    type: 'error',
+                    title: 'Thất Bại',
+                    text: 'Đã Xảy Ra Lỗi!'
+                  })
+                })
+                .finally(() => {
+
+                })
+
             } else {
               this.$notify({
                 group: 'foo',
@@ -808,45 +835,7 @@
 
           })
       },
-      async submitSkill (jobid){
-        for(let i = 0; i < this.formDataSkill.listSkill.length; i++){
-          this.formDataSkill.listSkill[i].skillMasterId = this.formDataSkill.listSkill[i]['id'];
-          delete this.formDataSkill.listSkill[i].id;
-          delete this.formDataSkill.listSkill[i].skillName;
-        }
-        this.formDataSkill.jobId = jobid;
 
-        const url = 'http://localhost:8080/skillneedforjob/addNewSkill'
-        const data = this.formDataSkill
-        const method = 'POST'
-
-        console.log(this.formDataSkill)
-
-        await Axios({url, method, data})
-          .then(response => {
-            if (response.data.success == true) {
-              this.$notify({
-                group: 'foo',
-                type: 'success',
-                title: 'Thành Công',
-                text: 'Đăng Tin Thành Công!'
-              })
-              // sessionStorage.setItem("jobInfo", JSON.stringify(this.formData));
-              // sessionStorage.setItem("jobSkill", JSON.stringify(this.formDataSkill));
-              this.$router.push("/dang-tin-tuyen-dung-thanh-cong");
-              // this.$router.push('/trang-chu-tuyen-dung');
-            }
-          })
-          .catch(error => {
-            console.log(error)
-            this.$notify({
-              group: 'foo',
-              type: 'error',
-              title: 'Thất Bại',
-              text: 'Đã Xảy Ra Lỗi!'
-            })
-          })
-      },
     },
     mounted () {
       this.$nextTick( () => {

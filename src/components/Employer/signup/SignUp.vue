@@ -60,19 +60,19 @@
 <!--                    ></v-select>-->
 <!--                  </v-flex>-->
 
-<!--                  <v-flex xs12 >-->
-<!--                    <v-autocomplete-->
-<!--                      class="ma-2"-->
-<!--                      :rules="[rules.required]"-->
-<!--                      v-model="formDataCompany.companyId"-->
-<!--                      prepend-icon="mdi-domain"-->
-<!--                      :items="CompanyAPI"-->
-<!--                      item-text="nameCompany"-->
-<!--                      item-value="id"-->
-<!--                      label="Công Ty"-->
-<!--                    ></v-autocomplete>-->
+                  <v-flex xs12 >
+                    <v-autocomplete
+                      class="ma-2"
+                      :rules="[rules.required]"
+                      v-model="formDataCompany.companyId"
+                      prepend-icon="mdi-domain"
+                      :items="CompanyAPI"
+                      item-text="nameCompany"
+                      item-value="id"
+                      label="Công Ty"
+                    ></v-autocomplete>
 
-<!--                  </v-flex>-->
+                  </v-flex>
 
                   <v-flex xs12 >
                     <v-autocomplete class="ma-2"
@@ -131,7 +131,7 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
+  import Constants from '@/stores/constant.js'
   import Axios from 'axios'
 
   export default {
@@ -179,33 +179,32 @@
       testCompany(){
         console.log(this.formDataCompany.companyId);
       },
-      // addCompany(userId){
-      //   this.formDataCompany.userId = userId;
-      //
-      //   const url = 'http://localhost:8080/employercompany/addNewEmployerCompany'
-      //   const method = 'POST'
-      //   const data = this.formDataCompany
-      //
-      //   Axios({url, method, data})
-      //     .then(response => {
-      //       console.log(response)
-      //     })
-      //     .catch(error => {
-      //       console.log(error)
-      //     })
-      // },
-       login: function (email, password) {
+      addCompany(userId){
+        this.formDataCompany.userId = userId;
+
+        const url = Constants.URL+'/employercompany/addNewEmployerCompany'
+        const method = 'POST'
+        const data = this.formDataCompany
+
+        Axios({url, method, data})
+          .then(response => {
+            console.log(response)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      },
+       login: function (email, password, userId) {
           this.$store.dispatch('AUTHENTICATION_STORE/LOGIN2', {email, password})
             .then(() => {
               this.$store.dispatch('AUTHENTICATION_STORE/INIT2')
-                .then(() => {
-                  // if (this.formDataCompany.companyId === -1){
-                  //   this.$router.push('/tao-cong-ty');
-                  // } else {
-                  //   await this.addCompany(userId);
-                  //   this.$router.push('/trang-chu-tuyen-dung');
-                  // }
-                  this.$router.push('/tao-cong-ty');
+                .then(async () => {
+                  if (this.formDataCompany.companyId === -1){
+                    this.$router.push('/tao-cong-ty');
+                  } else {
+                    await this.addCompany(userId);
+                    this.$router.push('/quan-li-viec-lam');
+                  }
                 })
                 .catch((error) => {
                   this.$router.push('/tuyen-dung-dang-nhap');
@@ -224,7 +223,7 @@
       async register () {
         if (this.$refs.form.validate()) {
           if (this.formData.password === this.repassword) {
-            const url = 'http://localhost:8080/user/registration'
+            const url = Constants.URL+'/user/registration'
             const method = 'POST'
             const data = this.formData
             await Axios({url, method, data})
@@ -270,7 +269,7 @@
         }
       },
       getInitData(){
-        const url = 'http://localhost:8080/user/getRegisterEmployerComponent';
+        const url = Constants.URL+'/user/getRegisterEmployerComponent';
         const method = 'GET';
         Axios({url, method})
           .then(response => {
@@ -279,11 +278,11 @@
               console.log(response)
               this.LevelAPI = response.data.data.level;
               this.CityAPI = response.data.data.city;
-              // this.CompanyAPI.push({
-              //   id : -1,
-              //   nameCompany : "Khác"
-              // })
-              // this.CompanyAPI = this.CompanyAPI.concat(response.data.data.company);
+              this.CompanyAPI.push({
+                id : -1,
+                nameCompany : "Khác"
+              })
+              this.CompanyAPI = this.CompanyAPI.concat(response.data.data.company);
 
             } else {
               this.$notify({

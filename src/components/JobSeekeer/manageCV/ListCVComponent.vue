@@ -1,4 +1,4 @@
-<template>
+<template v-on:load="getInit">
   <v-flex>
 
       <template v-for="(cv, index) in cvs">
@@ -30,7 +30,7 @@
                       <!--              link cv-->
                       <v-flex md12 xs12 sm12 >
                         <v-flex  xs12 class="py-2 ma-2 text-truncate">
-                          {{cv.usersByUserId.fullName}}
+                          {{cv.lastName}} {{cv.firstName}}
                         </v-flex>
                       </v-flex>
                       <v-flex md12 xs12 sm12 >
@@ -99,18 +99,27 @@
 </template>
 
 <script>
+  import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/vi'
   import axios from 'axios';
+  import {mapGetters} from 'vuex';
+  import Constants from '@/stores/constant.js';
+
     export default {
+      props: {
+        userId1: Number,
+      },
         name: "ListCVComponent",
       data: () => ( {
+        userid:'',
         position:'',
         cvs: '',
         cv:'',
       }),methods :{
+
         removeCV(cv, position) {
 
 
-          axios.post( 'http://localhost:1122/cv/deleteCV/'+cv.id,
+          axios.post( Constants.URL+'/cv/deleteCV/'+cv.id,
           ).then(response => {
             if (response.data.success === true) {
               this.cvs.splice(position, 1);
@@ -118,7 +127,7 @@
                 group: 'foo',
                 type: 'success',
                 title: 'Thành Công',
-                text: 'Đăng Tin Thành Công!'
+                text: 'Đặt làm CV chính Thành Công!'
               })
             }
           })
@@ -137,11 +146,11 @@
       },
         setMainCV(cv){
           console.log(cv.id);
-          axios.get( 'http://localhost:1122/cv/set-main-cv/'+cv.id
+          axios.get( Constants.URL+'/cv/set-main-cv/'+cv.id
           ).then(response => {
             if (response.data.success === true) {
               axios
-                .get('http://localhost:1122/cv/get-list/1')
+                .get(Constants.URL+'/cv/get-list/'+this.userId1)
                 .then(response => {
                   this.cvs = response.data.data;
                   for(var cv in this.cvs){
@@ -174,11 +183,13 @@
 
             })
 
-        }
+        },
+
       },
       mounted() {
+        console.log(Constants.URL+'/cv/get-list/'+this.userId1)
         axios
-          .get('http://localhost:1122/cv/get-list/1')
+          .get(Constants.URL+'/cv/get-list/'+this.userId1)
           .then(response => {
               this.cvs = response.data.data;
               for(var cv in this.cvs){
@@ -191,7 +202,8 @@
             }
             )
 
-      }
+      },
+
 
     }
 </script>

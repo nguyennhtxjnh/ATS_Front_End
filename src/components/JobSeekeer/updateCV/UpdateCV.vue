@@ -246,7 +246,7 @@
             </v-container>
           </v-card>
           <!-- học vấn-->
-          <EducationComponent :educationsById="info.educationsById"></EducationComponent>
+          <EducationComponent v-if="info.educationsById.length != 0" :educationsById="info.educationsById"></EducationComponent>
           <!--Kinh nghiệm-->
           <WorkExperienceComponent :workexperiences="info.workexperiencesById"></WorkExperienceComponent>
           <!--Kỹ năng-->
@@ -289,6 +289,7 @@
   import ProjectorProductWorkedComponent from "./ProjectorProductWorkedComponent";
   import ProfileBasicComponent from "../manageCV/ProfileBasicComponent";
 
+  import Constants from '@/stores/constant.js'
 
 
   export default {
@@ -428,7 +429,7 @@
 
         this.info.img = this.imageUrl;
         console.log(this.info);
-        axios.post( 'http://localhost:1122/cv/create',
+        axios.post( Constants.URL+'/cv/create',
           this.info
         ).then(function(){
           console.log('SUCCESS!!');
@@ -478,7 +479,7 @@
       //   });
       console.log(this.cvid)
       axios
-        .get('http://localhost:1122/cv/getOne/'+this.cvid+'/0')
+        .get(Constants.URL+'/cv/getOne/'+this.cvid+'/0')
         .then(response => {
             this.info = response.data.data;
             console.log(this.info);
@@ -493,11 +494,11 @@
 
         )
       axios
-        .get('http://localhost:1122/city/getAllCity')
+        .get(Constants.URL+'/city/getAllCity')
         .then(response => (
           this.cities = response.data.data))
       axios
-        .get('http://localhost:1122/industry')
+        .get(Constants.URL+'/industry')
         .then(response => (
           this.industries = response.data))
 

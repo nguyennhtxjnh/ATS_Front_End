@@ -28,11 +28,18 @@
                   </v-btn>{{job.salaryTo}} - {{job.salaryFrom}} triệu</h4>
                 </v-flex>
               </v-flex>
-              <v-flex md3 class="pt-5">
+              <v-flex md3 class="pt-3 pr-2">
+
                 <v-btn style="height: auto"
-                       dark
-                       icon @click="remove(index)">
-                  <v-icon color="orange darken-2">mdi-delete</v-icon></v-btn>
+                       color="warning" outline class="pa-2" block @click="$router.push('/goi-y-CV')">
+                  Gợi ý ứng viên
+                </v-btn>
+                <v-btn style="height: auto"
+                       color="warning" outline class="pa-2" block @click="$router.push('/goi-y-CV')">
+                  Ứng viên đã ứng tuyển
+                </v-btn>
+
+
               </v-flex>
             </v-layout>
           </v-container>
@@ -47,45 +54,44 @@
   import Axios from 'axios'
   import Constants from '@/stores/constant.js'
   import {mapGetters} from 'vuex';
-    export default {
-      name: "JobSaved",
-      data :()=>{
-        return{
-          images : {'main' : require('@/assets/jsmain1.jpg')},
-          info:'',
-          cities:[],
+  export default {
+    name: "ListJobExpired",
+    data :()=>{
+      return{
+        images : {'main' : require('@/assets/jsmain1.jpg')},
+        info:[],
+        cities:[],
 
+      }
+    },
+    mounted () {
+      this.userId = this.userId2;
+      Axios
+        .get(Constants.URL+'/city/getAllCity')
+        .then(response => (
+          this.cities = response.data.data))
+      Axios
+        .get(Constants.URL+'/job/list-invalid/'+this.userId)
+        .then(response => (this.info = response.data.data))
+    },
+    methods: {
+      remove(position){
+        this.info.splice(position, 1);
+        if (this.info.length === 0) {
+          this.btnsubmit = false;
         }
-      },
-      mounted () {
-        this.userId = this.userId1;
-        Axios
-          .get(Constants.URL+'/city/getAllCity')
-          .then(response => (
-            this.cities = response.data.data))
-        Axios
-          .get(Constants.URL+'/jobseekerlikejob/list/'+this.userId)
-          .then(response => (this.info = response.data.data))
-
-      },
-      methods: {
-        remove(position){
-          this.jobs.splice(position, 1);
-          if (this.jobs.length === 0) {
-            this.btnsubmit = false;
-          }
-          console.log('delete')
-        }
-      },
-      computed: {
-        ...mapGetters('AUTHENTICATION_STORE',{
-          email : 'email1',
-          roleId: 'roleId1',
-          fullName: 'fullName1',
-          userId1: 'userId1'
-        }),
-      },
-    }
+        console.log('delete')
+      }
+    },
+    computed: {
+      ...mapGetters('AUTHENTICATION_STORE',{
+        email : 'email2',
+        roleId: 'roleId2',
+        fullName: 'fullName2',
+        userId2: 'userId2'
+      }),
+    },
+  }
 </script>
 
 <style scoped>

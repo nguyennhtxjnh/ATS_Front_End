@@ -2,66 +2,106 @@
   <v-app>
   <!--    ToolBar-->
   <template>
-    <v-toolbar fixed color="orange" v-if="$vuetify.breakpoint.mdAndUp">
-      <v-toolbar-title @click="$router.push('/')" class="white--text hoverCSSTitle" >ATS</v-toolbar-title>
-      <v-spacer></v-spacer>
 
-      <v-btn style="height: 100%" color="white" flat @click="$router.push('/dang-nhap')" v-if="roleId !== 1">
-        Đăng Nhập
-      </v-btn>
-      <Span  v-if="roleId !== 1" style="color: white !important;">|</Span>
-      <v-btn style="height: 100%" color="white" flat @click="$router.push('/dang-ky')" v-if="roleId !== 1">
-        Đăng Ký
-      </v-btn>
+      <v-toolbar fixed  style="border-bottom: 4px solid #ff5e2d; background-color: white " class="pb-1" v-if="$vuetify.breakpoint.mdAndUp" >
 
-      <v-menu  v-if="roleId === 1"
-        offset-y
-        style="height: 100%"
-        content-class="dropdown-menu"
-        transition="slide-y-transition">
-        <v-btn
-          style="height: 100%"
-          slot="activator"
-          flat
-          color="white"
-        >
-          <v-icon left color="white">mdi-account</v-icon>
-          {{ fullName }}
+        <v-toolbar-title v-if="roleId !== 1" @click="$router.push('/')"  class="black--text hoverCSSTitle" >
+          <v-layout row wrap class="pl-5">
+            <v-img :src="require('@/assets/logoP.png')" style="width: 50px; height: 50px"></v-img>
+            <span class="pt-2 pl-3">Job Board</span>
+          </v-layout>
+        </v-toolbar-title>
+        <v-toolbar-title v-if="roleId === 1" @click="$router.push('/viec-lam-nguoi-tim-viec')"  class="black--text hoverCSSTitle" >
+          <v-layout row wrap class="pl-5">
+            <v-img :src="require('@/assets/logoP.png')" style="width: 50px; height: 50px"></v-img>
+            <span class="pt-2 pl-3">Job Board</span>
+          </v-layout>
+        </v-toolbar-title>
+        <v-spacer></v-spacer>
+
+        <v-btn style="height: 100%" color="black" flat @click="$router.push('/tim-kiem')" >
+          Tìm việc
         </v-btn>
-        <v-card class="pa-0">
-          <v-list dense class="pt-2 pr-0 pl-0 pb-2">
-            <v-list-tile
-              v-for="notification in notifications"
-              :key="notification.title"
-              class="hoverCSS pa-2 "
-              @click="notificationClick(notification)"
-            >
-              <v-icon color="black" class="pr-2">{{notification.icon}}</v-icon>
-              <v-list-tile-action
-                v-text="notification.title"
-              />
-            </v-list-tile>
-          </v-list>
-        </v-card>
-      </v-menu>
+        <v-btn style="height: 100%" color="black" flat @click="$router.push('/viec-lam-nguoi-tim-viec')" v-if="roleId === 1">
+         Quản lí Việc làm
+        </v-btn>
 
-      <v-btn style="height: 100%" color="primary" @click="$router.push('/trang-chu-tuyen-dung')">
-        Nhà Tuyển Dụng
-      </v-btn>
-    </v-toolbar>
-    <v-toolbar fixed  color="orange" v-if="$vuetify.breakpoint.mdAndDown">
-      <v-toolbar-title @click="$router.push('/')" class="white--text hoverCSSTitle">ATS</v-toolbar-title>
+        <v-btn style="height: 100%" color="black" flat @click="$router.push('/quan-li-CV')" v-if="roleId === 1">
+          Quản lí CV
+        </v-btn>
+        <v-btn style="height: 100%" color="black" flat @click="$router.push('/dang-nhap')" v-if="roleId !== 1">
+          Đăng Nhập
+        </v-btn>
+        <Span  v-if="roleId !== 1" style="color: white !important;">|</Span>
+        <v-btn style="height: 100%" color="black" flat @click="$router.push('/dang-ky')" v-if="roleId !== 1">
+          Đăng Ký
+        </v-btn>
+
+        <v-menu  v-if="roleId === 1"
+                 class="pt-3"
+                 offset-y
+                 style="height: 100%"
+                 content-class="dropdown-menu"
+                 transition="slide-y-transition">
+          <v-btn
+            style="height: 100%"
+            slot="activator"
+            flat
+            color="black"
+          >
+            <v-icon left color="black">mdi-account</v-icon>
+            {{ fullName }}
+          </v-btn>
+          <v-card class="pa-0">
+            <v-list dense class="pt-2 pr-0 pl-0 pb-2">
+              <v-list-tile
+                v-for="notification in notifications"
+                :key="notification.title"
+                class="hoverCSS pa-2 "
+                @click="notificationClick(notification)"
+              >
+                <v-icon color="black" class="pr-2">{{notification.icon}}</v-icon>
+                <v-list-tile-action
+                  v-text="notification.title"
+                />
+              </v-list-tile>
+            </v-list>
+          </v-card>
+        </v-menu>
+
+        <v-btn style="height: 100%" color="warning" v-if="roleId2 !== 2" @click="$router.push('/trang-chu-tuyen-dung')">
+          Nhà Tuyển Dụng
+        </v-btn>
+        <v-btn style="height: 100%" color="warning" v-if="roleId2 === 2" @click="$router.push('/quan-li-cong-viec')">
+          Nhà Tuyển Dụng
+        </v-btn>
+      </v-toolbar>
+    <v-toolbar fixed  style="border-bottom: 4px solid #ff5e2d; background-color: white " v-if="$vuetify.breakpoint.mdAndDown" >
+
+      <v-toolbar-title @click="$router.push('/')" class="black--text hoverCSSTitle" >
+        <v-layout row wrap class="">
+          <v-img :src="require('@/assets/logoP.png')" style="width: 30px; height: 30px"></v-img>
+        </v-layout>
+      </v-toolbar-title>
       <v-spacer></v-spacer>
 
-      <v-btn style="height: 100%" class="pa-0" color="white" flat @click="$router.push('/dang-nhap')" v-if="roleId !== 1">
-        <v-icon left color="white" class="pl-3">mdi-login</v-icon>
-      </v-btn>
-      <Span  v-if="roleId !== 1" style="color: white !important;">|</Span>
-      <v-btn style="height: 100%" color="white" flat @click="$router.push('/dang-ky')" v-if="roleId !== 1">
-        <v-icon left color="white" class="pl-3">mdi-pencil-plus</v-icon>
-      </v-btn>
+<!--      <v-btn style="height: 100%" color="black" flat @click="$router.push('/viec-lam-nguoi-tim-viec')">-->
+<!--       Quản lí Việc làm-->
+<!--      </v-btn>-->
+
+<!--      <v-btn style="height: 100%" color="black" flat @click="$router.push('/quan-li-CV')" v-if="roleId === 1">-->
+<!--        Quản lí CV-->
+<!--      </v-btn>-->
+<!--      <v-btn style="height: 100%" color="black" flat @click="$router.push('/dang-nhap')" v-if="roleId !== 1">-->
+<!--        Đăng Nhập-->
+<!--      </v-btn>-->
+<!--      <Span  v-if="roleId !== 1" style="color: white !important;">|</Span>-->
+<!--      <v-btn style="height: 100%" color="black" flat @click="$router.push('/dang-ky')" v-if="roleId !== 1">-->
+<!--        Đăng Ký-->
+<!--      </v-btn>-->
 
       <v-menu  v-if="roleId === 1"
+               class="pt-3"
                offset-y
                style="height: 100%"
                content-class="dropdown-menu"
@@ -70,15 +110,49 @@
           style="height: 100%"
           slot="activator"
           flat
-          color="white"
+          color="black"
         >
-          <v-icon left color="white" class="pl-3">mdi-account</v-icon>
+          <v-icon left color="black">mdi-account</v-icon>
+
         </v-btn>
         <v-card class="pa-0">
-          <p class="pt-3 pl-3 pr-3" ><b> {{ fullName }} </b></p>
-          <v-list dense class="pt-0 pr-0 pl-0 pb-2">
+          <v-list dense class="pt-2 pr-0 pl-0 pb-2">
+            <v-list-tile-title>
+             <span class="pl-5">{{ fullName }}</span>
+            </v-list-tile-title>
             <v-list-tile
-              v-for="notification in notifications"
+              v-for="notification in notificationsSmall"
+              :key="notification.title"
+              class="hoverCSS pa-2 "
+              @click="notificationClick(notification)"
+            >
+              <v-icon color="black" class="pr-2">{{notification.icon}}</v-icon>
+              <v-list-tile-action
+                v-text="notification.title"
+              />
+            </v-list-tile>
+          </v-list>
+        </v-card>
+      </v-menu>
+      <v-menu  v-if="roleId !== 1"
+               class="pt-3"
+               offset-y
+               style="height: 100%"
+               content-class="dropdown-menu"
+               transition="slide-y-transition">
+        <v-btn
+          style="height: 100%"
+          slot="activator"
+          flat
+          color="black"
+        >
+          <v-icon left color="black">mdi-account</v-icon>
+        </v-btn>
+        <v-card class="pa-0">
+          <v-list dense class="pt-2 pr-0 pl-0 pb-2">
+
+            <v-list-tile
+              v-for="notification in menuListSmall"
               :key="notification.title"
               class="hoverCSS pa-2 "
               @click="notificationClick(notification)"
@@ -92,15 +166,64 @@
         </v-card>
       </v-menu>
 
-      <v-btn style="height: 100%" color="primary" @click="$router.push('/trang-chu-tuyen-dung')">
+      <v-btn style="height: 100% ; " color="warning" @click="$router.push('/trang-chu-tuyen-dung')">
         Nhà Tuyển Dụng
       </v-btn>
-
     </v-toolbar>
+
+
+<!--    <v-toolbar fixed  style="border-bottom: 4px solid #ff5e2d; background-color: white "  v-if="$vuetify.breakpoint.mdAndDown">-->
+<!--      <v-toolbar-title @click="$router.push('/')" style="color: black" class=" black&#45;&#45;text hoverCSSTitle">ATS</v-toolbar-title>-->
+<!--      <v-spacer></v-spacer>-->
+
+<!--      <v-btn style="height: 100%" class="pa-0" color="white" flat @click="$router.push('/dang-nhap')" v-if="roleId !== 1">-->
+<!--        <v-icon left color="white" class="pl-3">mdi-login</v-icon>-->
+<!--      </v-btn>-->
+<!--      <Span  v-if="roleId !== 1" style="color: white !important;">|</Span>-->
+<!--      <v-btn style="height: 100%" color="white" flat @click="$router.push('/dang-ky')" v-if="roleId !== 1">-->
+<!--        <v-icon left color="white" class="pl-3">mdi-pencil-plus</v-icon>-->
+<!--      </v-btn>-->
+
+<!--      <v-menu  v-if="roleId === 1"-->
+<!--               offset-y-->
+<!--               style="height: 100%"-->
+<!--               content-class="dropdown-menu"-->
+<!--               transition="slide-y-transition">-->
+<!--        <v-btn-->
+<!--          style="height: 100%"-->
+<!--          slot="activator"-->
+<!--          flat-->
+<!--          color="white"-->
+<!--        >-->
+<!--          <v-icon left color="black" class="pl-3">mdi-account</v-icon>-->
+<!--        </v-btn>-->
+<!--        <v-card class="pa-0">-->
+<!--          <p class="pt-3 pl-3 pr-3" ><b> {{ fullName }} </b></p>-->
+<!--          <v-list dense class="pt-0 pr-0 pl-0 pb-2">-->
+<!--            <v-list-tile-->
+<!--              v-for="notification in notifications"-->
+<!--              :key="notification.title"-->
+<!--              class="hoverCSS pa-2 "-->
+<!--              @click="notificationClick(notification)"-->
+<!--            >-->
+<!--              <v-icon color="black" class="pr-2">{{notification.icon}}</v-icon>-->
+<!--              <v-list-tile-action-->
+<!--                v-text="notification.title"-->
+<!--              />-->
+<!--            </v-list-tile>-->
+<!--          </v-list>-->
+<!--        </v-card>-->
+<!--      </v-menu>-->
+
+<!--      <v-btn style="height: 100%" color="#72a3f7" @click="$router.push('/trang-chu-tuyen-dung')">-->
+<!--        Nhà Tuyển Dụng-->
+<!--      </v-btn>-->
+
+<!--    </v-toolbar>-->
   </template>
   <!--    End ToolBar-->
   <v-content>
-    <v-flex >
+    <v-flex class="mt-3" >
       <slot></slot>
     </v-flex>
   </v-content>
@@ -111,7 +234,7 @@
         <v-flex md4 xs12 class="text-lg-left pl-5 my-5">
           <div class=" orange--text headline" >
             Về JOB BOARD</div>
-          <v-list v-for="item in menu1" :key="item.link">
+          <v-list v-for="item in menu1" :key="item.id">
             <v-list-tile  v-html="item.display" :to="item.link">
             </v-list-tile>
           </v-list>
@@ -120,7 +243,7 @@
           <div class=" orange--text headline">
             Công Cụ
           </div>
-          <v-list v-for="item1 in menu2" :key="item1.link">
+          <v-list v-for="item1 in menu2" :key="item1.id">
             <v-list-tile  v-html="item1.display" :to="item1.link">
             </v-list-tile>
           </v-list>
@@ -163,11 +286,10 @@
     data: function(){
       return {
 
+
         notifications: [
-          {
-            icon: 'mdi-account',
-            title: 'Thông Tin',
-          },
+
+
           {
             icon: 'mdi-logout-variant',
             title: 'Đăng Xuất',
@@ -176,7 +298,11 @@
         notificationsSmall: [
           {
             icon: 'mdi-account',
-            title: 'Thông Tin',
+            title: 'Quản lí CV',
+          },
+          {
+            icon: 'mdi-account',
+            title: 'Quản lí Việc làm',
           },
           {
             icon: 'mdi-logout-variant',
@@ -200,52 +326,65 @@
           'mdi-instagram'
         ],
         menu1: [
-          {
+          { id:'1',
             display: 'Giới thiệu',
             link: '/',
           },{
+            id:'2',
             display: 'Liên hệ',
             link: '/',
           },{
+            id:'3',
             display: 'Góc Báo',
             link: '/',
           },{
+            id:'4',
             display: 'Hỏi Đáp',
             link: '/',
           },{
+            id:'5',
             display: 'Thỏa Thuận Sử Dụng',
             link: '/',
           },{
+            id:'6',
             display: 'Quy Định Bảo Mật',
             link: '/',
           },{
+            id:'7',
             display: 'Quy Chế Hoạt Động Giao Dịch Thương Mại Điện Tử',
             link: '/',
           },{
+            id:'8',
             display: 'Ứng dụng điện thoại',
             link: '/',
           }
         ],
         menu2: [
-        {
+        {  id:'1',
             display: 'Tài Khoản ',
             link: '/',
           },{
+            id:'2',
             display: 'Hồ Sơ Của Tôi',
             link: '/',
           },{
+            id:'3',
             display: 'Việc Làm Của Tôi',
             link: '/',
           },{
+            id:'4',
             display: 'Thông Báo Việc Làm',
             link: '/',
           },{
+            id:'5',
             display: 'Phản Hồi',
             link: '/',
           },{
+            id:'6',
             display: 'Tư Vấn Nghề Nghiệp',
             link: '/',
           },{
+            id:'7',
             display: 'Sơ Đồ Trang Web',
             link: '/',
           }
@@ -256,14 +395,20 @@
     methods: {
 
       notificationClick(notification){
-        if (notification.title === 'Thông Tin'){
-          this.$router.push('/thong-tin');
+        if (notification.title === 'Quản lí CV'){
+          this.$router.push('/quan-li-CV');
+        }
+        if (notification.title === 'Quản lí Việc làm'){
+          this.$router.push('/viec-lam-nguoi-tim-viec');
         }
         if (notification.title === 'Đăng Xuất') {
           this.$store.dispatch('AUTHENTICATION_STORE/LOGOUT1')
             .then(() => {
               this.$router.push('/dang-nhap');
             });
+        }
+        if (notification.title === 'Đăng Nhập') {
+          this.$router.push('/dang-nhap');
         }
       },
     },
@@ -273,6 +418,9 @@
           email : 'email1',
           roleId: 'roleId1',
           fullName: 'fullName1',
+        email2 : 'email2',
+        roleId2: 'roleId2',
+        fullName2: 'fullName2',
       }),
     },
 

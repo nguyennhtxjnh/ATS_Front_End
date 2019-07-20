@@ -21,6 +21,11 @@ import UpdateCVPage from "../views/Jobseeker/UpdateCVPage";
 import EmployerCreateCompanyPage from '../views/Employer/EmployerCreateCompanyPage'
 import JobSeekerViewJobDetailPage from '../views/Jobseeker/JobSeekerViewJobDetailPage'
 import EmployerJobCreateReviewPage from '../views/Employer/EmployerJobCreateReviewPage'
+import TabJobPage from "../views/Jobseeker/TabJobPage";
+import ManageJobPage from "../views/Employer/ManageJobPage";
+import CVAppliedPage from "../views/Employer/CVAppliedPage";
+import ViewCVAppliedPage from "../views/Employer/ViewCVAppliedPage";
+import ManageJobSeekerPage from "../views/Employer/ManageJobSeekerPage";
 import AdminDashBoardPage from '../views/Admin/AdminDashBoardPage'
 import AdminLoginPage from '../views/Admin/AdminLoginPage'
 import AdminViewAllNewJobPage from '../views/Admin/AdminViewAllNewJobPage'
@@ -155,8 +160,38 @@ const router = new Router({
       name: 'employer apply sub employer',
       component: EmployerCompanyApplyPage
     }
-    ,
 
+    ,{
+      path: '/viec-lam-nguoi-tim-viec',
+      name: 'tab job',
+      component: TabJobPage
+    }
+    ,{
+      path: '/quan-li-cong-viec',
+      name: 'manage job',
+      component: ManageJobPage
+    },
+    {
+      path: '/CV-ung-tuyen/:jobid',
+      name: 'CV applied',
+      component: CVAppliedPage
+
+    },
+    {
+      path: '/xem-CV-ung-tuyen/:cvid',
+      name: 'view CV applied',
+      component: ViewCVAppliedPage
+
+    },{
+      path: '/quan-li-ung-vien',
+      name: 'manage jobseeker',
+      component: ManageJobSeekerPage
+    },
+
+    // {
+    //   path: '/detail/:id',
+    //   component: Detail
+    // }
 
     //Admin Router Link
     {

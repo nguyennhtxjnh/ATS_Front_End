@@ -1,13 +1,13 @@
 <template>
+  <v-flex style="background-color: whitesmoke">
   <v-container fluid fill-height >
     <v-layout align-center justify-center >
       <v-flex xs12 sm12 md10 >
         <!--header title-->
-        <v-container class=" mb-3" fluid grid-list-md style=" border: 1px solid red; border-radius: 5px;">
+        <v-container class=" mb-3" fluid grid-list-md style="background-color: white">
           <v-layout row wrap>
             <v-flex d-flex xs12 sm6 md3 class="align-center pa-0">
-              <v-img src="https://www.seekpng.com/png/detail/25-257121_icon-big-image-png-camera-icon.png"  contain aspect-ratio="2"  v-if="!jobFull.company.logoImg"/>
-              <v-img contain :src="jobFull.company.logoImg" aspect-ratio="2" v-if="jobFull.company.logoImg"></v-img>
+              <v-img contain :src="imgUrl" aspect-ratio="2"></v-img>
             </v-flex>
             <v-flex d-flex xs12 sm6 md6>
 
@@ -49,23 +49,18 @@
             </v-flex>
             <v-layout xs12 sm6 md3 child-flex text-xs-center>
               <v-flex md12  class="align-center">
-                <v-flex xs12 v-if="roleId === 1">
-                  <v-btn block color="primary">Nộp Đơn</v-btn>
-                </v-flex>
-
-                <v-flex xs12 v-if="roleId === 1">
-                  <v-btn  block outline color="error"><v-icon dark>favorite</v-icon>Lưu Việc Làm</v-btn>
-                </v-flex>
+                <ApplyJobComponent :JobID="jobFull.id"></ApplyJobComponent>
 
               </v-flex>
             </v-layout>
           </v-layout>
         </v-container>
+        <!--end header title-->
+
+
           <!--        tab-->
             <template  >
               <v-tabs
-                color="cyan"
-                dark
                 next-icon="mdi-arrow-right-bold-box-outline"
                 prev-icon="mdi-arrow-left-bold-box-outline"
                 show-arrows
@@ -93,14 +88,14 @@
                             <v-flex d-flex md12>
 
                               <v-flex md8 sm12>
-                                <h4>Quyền lợi ứng viên</h4>
-                                <v-flex md12 v-html="jobFull.candidateBenefits" class="pb-3">
-                                </v-flex>
                                 <h4>Thông tin công việc</h4>
                                 <v-flex md12 v-html="jobFull.jobDescription" class="pb-3">
                                 </v-flex>
                                 <h4>Yêu cầu công việc</h4>
                                 <v-flex md12 v-html="jobFull.additionalRequest" class="pb-3">
+                                </v-flex>
+                                <h4>Quyền lợi ứng viên</h4>
+                                <v-flex md12 v-html="jobFull.candidateBenefits" class="pb-3">
                                 </v-flex>
                               </v-flex>
 
@@ -271,20 +266,30 @@
                 </v-tabs-items>
               </v-tabs>
             </template>
+
+        <!--     end tab-->
+
       </v-flex>
     </v-layout>
   </v-container>
+  </v-flex>
 </template>
 
 <script>
+  import Constants from '@/stores/constant.js'
   import Axios from 'axios'
   import {mapGetters} from 'vuex';
+  import ApplyJobComponent from "../applyJob/ApplyJobComponent";
 
   export default {
     name: 'ViewJobDetail',
+    components: {ApplyJobComponent},
     data: function () {
       return {
+        userId:'',
+        imgUrl:require('@/assets/jsmain1.jpg'),
         tab: null,
+        saved:false,
         loading: false,
         pagination: {},
         items: [
@@ -305,13 +310,16 @@
       getjob(){
 
       },
+
+
       getJobDetail(){
         this.loading = true;
-        Axios.get(`http://localhost:8080/job/getJobDetail?id=${+this.id}`)
+        Axios.get(Constants.URL+`/job/getJobDetail?id=${+this.id}`)
           .then(response => {
             this.jobFull = response.data.data;
             this.jobFull.createdDate = this.moment(this.jobFull.createdDate).format('DD-MM-YYYY');
             this.jobFull.endDateForApply = this.moment(this.jobFull.endDateForApply).format('DD-MM-YYYY');
+            this.imgUrl = this.jobFull.company.logoImg;
             console.log(this.jobFull);
           })
           .catch(console.error)
@@ -330,6 +338,7 @@
         email : 'email1',
         roleId: 'roleId1',
         fullName: 'fullName1',
+        userId1: 'userId1'
       }),
     },
     watch: {

@@ -71,7 +71,7 @@
 
               this.$store.dispatch('AUTHENTICATION_STORE/INIT2')
                 .then(() => {
-                  this.$router.push('/trang-chu-tuyen-dung');
+                  this.$router.push('/quan-li-cong-viec');
                   this.loading = false;
                 })
                 .catch((error) => {

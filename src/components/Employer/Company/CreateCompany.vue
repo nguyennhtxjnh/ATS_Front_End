@@ -65,6 +65,43 @@
                                       v-model="formData.nameCompany"
                                       :rules="[rules.required]"></v-text-field>
                       </v-flex>
+<!--                      ngành nghề-->
+                      <v-flex md12 xs12>
+
+                      <v-autocomplete
+                        v-model="tmpIndus"
+                        :items="industries"
+                        chips
+                        prepend-icon="mdi-robot-industrial"
+                        color="blue-grey lighten-2"
+                        label="Ngành nghê"
+                        item-text="name"
+                        item-value="id"
+                        multiple
+                      >
+                        <template v-slot:selection="data">
+                          <v-chip
+                            :selected="data.selected"
+                            close
+                            class="chip--select-multi"
+                            @input="remove(data.item)"
+                          >
+
+                            {{ data.item.name }}
+                          </v-chip>
+                        </template>
+                        <template v-slot:item="data">
+                          <template v-if="typeof data.item !== 'object'">
+                            <v-list-tile-content v-text="data.item"></v-list-tile-content>
+                          </template>
+                          <template v-else>
+                            <v-list-tile-content>
+                              <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+                            </v-list-tile-content>
+                          </template>
+                        </template>
+                      </v-autocomplete>
+                      </v-flex>
                       <!--City -->
                       <v-flex md12 xs12>
                         <v-autocomplete class="ma-2"
@@ -142,7 +179,6 @@
           </v-card>
         </v-flex>
       </v-flex>
-
     </v-layout>
   </v-container>
 </template>
@@ -152,6 +188,8 @@
   import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/vi'
   import {mapGetters} from 'vuex';
   import Axios from 'axios'
+  import Constants from '@/stores/constant.js'
+
 
   export default {
     name: 'CreateCompany',
@@ -161,9 +199,14 @@
         imageUrl: '',
         imageFile: '',
         sizeImg: '',
+        industries: [],
+        tmpIndus:[],
 
         CityAPI: [],
         CompanyAPI: [],
+        industry:{
+          industryId:''
+        },
 
         formDataCompany:{
           companyId: '',
@@ -174,6 +217,7 @@
         formData: {
               userId: '',
               cityId: '',
+          companyindustriesById:[],
 
               nameCompany: '',
               address: '',
@@ -209,6 +253,10 @@
       }
     },
     methods: {
+      remove (item) {
+        const index = this.tmpIndus.indexOf(item.id)
+        if (index >= 0) this.tmpIndus.splice(index, 1)
+      },
 
       mapCompany(){
         this.formDataCompany.userId = this.userId2;
@@ -252,8 +300,14 @@
             console.log(error)
           })
       },
-
       async submitCompany() {
+
+        for( var indus in this.tmpIndus){
+
+          this.industry.industryId = this.tmpIndus[indus];
+          this.formData.companyindustriesById.push(Object.assign({}, this.industry));
+
+        }
         if (this.$refs.form.validate()) {
           if (this.formData.description === '') {
             this.$notify({
@@ -268,7 +322,7 @@
           this.toDataURL(this.imageUrl, function(dataUrl) {})
 
           this.formData.logoImg = this.imageUrl;
-          const url = 'http://localhost:8080/company';
+          const url = Constants.URL+'/company';
           const method = 'POST';
           const data = this.formData;
           let config = {
@@ -285,7 +339,6 @@
               this.mapCompany()
             })
             .catch(error => {
-              console.log(error)
               this.$notify({
                 group: 'foo',
                 type: 'error',
@@ -354,11 +407,11 @@
         )
       },
       getInitData(){
-        const url = 'http://localhost:8080/user/getRegisterEmployerComponent';
+
+        const url = Constants.URL+'/user/getRegisterEmployerComponent';
         const method = 'GET';
         Axios({url, method})
           .then(response => {
-            console.log(response);
             if (response.data.success == true) {
               this.CityAPI = response.data.data.city;
               this.CompanyAPI = response.data.data.company;
@@ -372,7 +425,6 @@
             }
           })
           .catch(error => {
-            console.log(error)
             this.$notify({
               group: 'foo',
               type: 'error',
@@ -383,6 +435,11 @@
           .finally(() => {
 
           })
+        Axios
+          .get(Constants.URL+'/industry')
+          .then(response => (
+            this.industries = response.data))
+
       },
       scrollToTop() {
         window.scrollTo(0,0);

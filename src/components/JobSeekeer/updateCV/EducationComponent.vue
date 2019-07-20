@@ -198,44 +198,51 @@
     name: "EducationComponent",
 
     props: {
-      educationsById: Array,
+      educationsById: {
+        type: Array,
+        default: []
+      }
+
     },
-    data: () => ({
-      position: '',
-      dialog: false,
-      menu1: false,
-      menu2: false,
-      editB: false,
-      checkbox1: false,
-      btnsubmit: false,
-      education: {
-        schoolName: '',
-        major: '',
-        schoolType: null,
-        description: '',
-        startTime: new Date().toISOString().substr(0, 10),
-        endtime: new Date().toISOString().substr(0, 10),
+    data: ()=>{
+        return {
+          position: '',
+          dialog: false,
+          menu1: false,
+          menu2: false,
+          editB: false,
+          checkbox1: false,
+          btnsubmit: true,
+          education: {
+            schoolName: '',
+            major: '',
+            schoolType: null,
+            description: '',
+            startTime: new Date().toISOString().substr(0, 10),
+            endtime: new Date().toISOString().substr(0, 10),
+          },
+          st: [{i: 1, name: "Đại học"}, {i: 2, name: "Cao Đẳng"}, {i: 3, name: "Trung cấp"}, {
+            i: 4, name: "Trung học phổ thông"
+          },],
+          newEducation: {
+            schoolName: '',
+            major: '',
+            schoolType: null,
+            description: '',
+            startTime: new Date().toISOString().substr(0, 10),
+            endtime: new Date().toISOString().substr(0, 10),
+          },
+          defaultEducation: {
+            schoolName: '',
+            major: '',
+            schoolType: null,
+            description: '',
+            startTime: new Date().toISOString().substr(0, 10),
+            endtime: new Date().toISOString().substr(0, 10),
+          },
+
+      }
       },
-      st: [{i: 1, name: "Đại học"}, {i: 2, name: "Cao Đẳng"}, {i: 3, name: "Trung cấp"}, {
-        i: 4, name: "Trung học phổ thông"
-      },],
-      newEducation: {
-        schoolName: '',
-        major: '',
-        schoolType: null,
-        description: '',
-        startTime: new Date().toISOString().substr(0, 10),
-        endtime: new Date().toISOString().substr(0, 10),
-      },
-      defaultEducation: {
-        schoolName: '',
-        major: '',
-        schoolType: null,
-        description: '',
-        startTime: new Date().toISOString().substr(0, 10),
-        endtime: new Date().toISOString().substr(0, 10),
-      },
-    }),
     methods: {
       update() {
 
@@ -304,16 +311,17 @@
 
         console.log('edit')
       }
-    },  mounted() {
-      console.log(this.educationsById);
+    },
+    mounted() {
       if(this.educationsById.length >0){
         this.btnsubmit = true;
         for(var edu in this.educationsById){
           var stime = new Date(this.educationsById[edu].startTime);
-          this.info.educationsById[edu].startTime = stime.toISOString().substr(0, 10);
+          this.educationsById[edu].startTime = stime.toISOString().substr(0, 10);
           var etime = new Date(this.educationsById[edu].endtime);
-          this.info.educationsById[edu].endtime = etime.toISOString().substr(0, 10);
+          this.educationsById[edu].endtime = etime.toISOString().substr(0, 10);
         }
+        console.log(this.educationsById);
       }
     }
 
