@@ -24,6 +24,7 @@
             <SearchCV></SearchCV>
           </v-card>
           <v-card flat v-if="i.id === '2'">
+
           </v-card>
 
         </v-tab-item>
