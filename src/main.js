@@ -12,6 +12,7 @@ import CKEditor from '@ckeditor/ckeditor5-vue';
 import GSignInButton from 'vue-google-signin-button'
 import './api_client.js';
 import './platform.js';
+import VueSweetalert2 from 'vue-sweetalert2';
 
 Vue.use(Vuetify, {
   iconfont: 'mdi'
@@ -21,7 +22,7 @@ Vue.prototype.moment = moment;
 Vue.use(Notificaton);
 Vue.use(CKEditor);
 Vue.use(GSignInButton);
-
+Vue.use(VueSweetalert2);
 
 /* eslint-disable no-new */
 new Vue({

@@ -13,7 +13,7 @@
 
       <template v-for="cv in cvs">
 
-        <v-layout row wrap @click="$router.push('/xem-CV-ung-tuyen/'+cv.id)">
+        <v-layout row wrap @click="$router.push('/xem-CV-ung-tuyen/'+cv.id+'/'+jobid)">
           <v-flex md2 xs3>
             <v-avatar size="150px" align="center">
               <v-img v-bind:src="cv.img"></v-img>
@@ -123,7 +123,6 @@
           for(var cv in this.cvs){
             var date = new Date(this.cvs[cv].createdDate);
             // var tmp = date.getDay()
-
             this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
           }
           this.cvs.sort(function(a, b){return b.id - a.id});

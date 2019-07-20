@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <v-container fluid fill-height>
     <v-layout align-center justify-center>
 
@@ -259,7 +259,7 @@
 
       mapCompany(){
         this.formDataCompany.userId = this.userId2;
-        const url = 'http://localhost:8080/employercompany/addNewEmployerCompany'
+        const url = Constants.URL+'/employercompany/addNewEmployerCompany'
         const method = 'POST'
         const data = this.formDataCompany
 
@@ -280,7 +280,7 @@
 
       chooseCompany(){
         this.formDataCompany.userId = this.userId2;
-        const url = 'http://localhost:8080/employercompany/addNewEmployerCompanyExistedCompany'
+        const url = Constants.URL+'/employercompany/addNewEmployerCompanyExistedCompany'
         const method = 'POST'
         const data = this.formDataCompany
 

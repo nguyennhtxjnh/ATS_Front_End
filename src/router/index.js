@@ -170,7 +170,7 @@ const router = new Router({
 
     },
     {
-      path: '/xem-CV-ung-tuyen/:cvid',
+      path: '/xem-CV-ung-tuyen/:cvid/:jobid',
       name: 'view CV applied',
       component: ViewCVAppliedPage
 

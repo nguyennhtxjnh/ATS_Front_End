@@ -66,16 +66,7 @@
 
         }
       },
-      mounted () {
-        this.userId = this.userId2;
-        Axios
-          .get(Constants.URL+'/city/getAllCity')
-          .then(response => (
-            this.cities = response.data.data))
-        Axios
-          .get(Constants.URL+'/job/list-valid/'+this.userId)
-          .then(response => (this.info = response.data.data))
-      },
+
       methods: {
         remove(position){
           this.info.splice(position, 1);
@@ -83,6 +74,24 @@
             this.btnsubmit = false;
           }
           console.log('delete')
+        },
+        getComponent(){
+          this.userId = this.userId2;
+          Axios
+            .get(Constants.URL+'/city/getAllCity')
+            .then(response => (
+              this.cities = response.data.data))
+          Axios
+            .get(Constants.URL+'/job/list-valid/'+this.userId)
+            .then(response => (this.info = response.data.data))
+        }
+      },
+      mounted(){
+        this.getComponent();
+      },
+      watch:{
+        userId2(){
+          this.getComponent();
         }
       },
       computed: {

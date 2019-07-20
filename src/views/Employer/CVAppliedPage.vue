@@ -1,6 +1,6 @@
 <template>
     <EmployerMainLayout>
-      <CVappliedComponent :jobid="jobid"></CVappliedComponent>
+      <CVappliedComponent></CVappliedComponent>
     </EmployerMainLayout>
 </template>
 
@@ -15,7 +15,7 @@
         imgURL:'',
         cvs:[],
         page:'',
-        jobid: this.$route.params.jobid,
+        // jobid: this.$route.params.jobid,
       }),
       mounted() {
           console.log(this.jobid)
