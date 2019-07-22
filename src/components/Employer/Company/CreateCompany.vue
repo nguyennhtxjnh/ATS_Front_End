@@ -211,6 +211,7 @@
         formDataCompany:{
           companyId: '',
           userId: '',
+          status: '',
         },
 
         formData: {
@@ -259,7 +260,7 @@
 
       mapCompany(){
         this.formDataCompany.userId = this.userId2;
-        const url = Constants.URL+'/employercompany/addNewEmployerCompany'
+        const url =  Constants.URL+'/employercompany/addNewEmployerCompany'
         const method = 'POST'
         const data = this.formDataCompany
 
@@ -280,7 +281,8 @@
 
       chooseCompany(){
         this.formDataCompany.userId = this.userId2;
-        const url = Constants.URL+'/employercompany/addNewEmployerCompanyExistedCompany'
+        this.formDataCompany.status = 'onhold';
+        const url =  Constants.URL+'/employercompany/addNewEmployerCompany';
         const method = 'POST'
         const data = this.formDataCompany
 
@@ -290,7 +292,7 @@
               group: 'foo',
               type: 'success',
               title: 'Thành công',
-              text: 'Thêm công ty thành công!'
+              text: 'Chọn công ty thành công!'
             })
             this.$router.push('/trang-chu-tuyen-dung')
           })
@@ -331,33 +333,10 @@
 
           await Axios({url, method, data, config})
             .then(response => {
-              // this.$notify({
-              //   group: 'foo',
-              //   type: 'success',
-              //   title: 'Thành công',
-              //   text: 'Tạo công ty thành công!'
-              // })
-
-              this.formDataCompany.companyId = response.data.data;
-              this.formDataCompany.userId = this.userId2;
-              const url = Constants.URL+'/employercompany/addNewEmployerCompany'
-              const method = 'POST'
-              const data = this.formDataCompany
-
-              Axios({url, method, data})
-                .then(response => {
-                  this.$notify({
-                    group: 'foo',
-                    type: 'success',
-                    title: 'Thành công',
-                    text: 'Thêm công ty thành công!'
-                  })
-                  this.$router.push('/trang-chu-tuyen-dung')
-                })
-                .catch(error => {
-                  console.log(error)
-                })
-              this.$router.push('/trang-chu-tuyen-dung')
+              console.log(response)
+              this.formDataCompany.companyId = response.data.data
+              this.formDataCompany.status = 'approved';
+              this.mapCompany()
             })
             .catch(error => {
               this.$notify({

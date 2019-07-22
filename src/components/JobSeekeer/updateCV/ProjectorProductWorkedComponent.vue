@@ -1,4 +1,3 @@
-
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <v-card style="background-color: white" class="mt-5">
     <v-container>
@@ -193,6 +192,8 @@
       projectorproductworkeds: Array,
     },
     data: () => ( {
+      position:'',
+      editB: false,
       btnSubmit: false,
       dialog1: false,
       date: new Date().toISOString().substr(0, 10),
@@ -219,10 +220,55 @@
     }),
     methods: {
       update() {
-        this.dialog1 = false;
-        this.btnSubmit = true;
-        this.projectorproductworkeds.push(Object.assign({},this.newProjectorProduct));
-        Object.assign(this.newProjectorProduct,this.defaultProjectorProduct);
+        if (this.newProjectorProduct.schoolName != "") {
+          var check = false;
+          var e;
+
+          for (e in  this.projectorproductworkeds) {
+            var tmp = this.projectorproductworkeds[e].productName;
+            if (tmp === this.newProjectorProduct.productName) {
+
+              if(this.editB){
+                if(this.projectorproductworkeds[this.position].productName !== this.newProjectorProduct.productName){
+                  alert("Dự án đã tồn tại");
+                  check = true;
+                }else {
+                  check = false;
+                }
+              }else {
+                alert("Dự án đã tồn tại");
+                check = true;
+              }
+            }
+          }
+
+
+          if (check == false) {
+            if (this.editB === true) {
+              console.log(this.position);
+              this.btnSubmit = true;
+              this.dialog1 = false;
+              Object.assign(this.projectorproductworkeds[this.position], this.newProjectorProduct);
+              Object.assign(this.newProjectorProduct, this.defaultProjectorProduct);
+              this.editB = false;
+              this.position = "";
+
+            }else {
+              this.btnSubmit = true;
+              this.dialog1 = false;
+              if (this.checkbox1 == true) {
+                this.newProjectorProduct.endtime = " hiện tại"
+              }
+              this.projectorproductworkeds.push(Object.assign({}, this.newProjectorProduct));
+              Object.assign(this.newProjectorProduct, this.defaultProjectorProduct);
+            }}}
+        else {
+          alert("Hãy nhập thông tin cần thiết.");
+        }
+        // this.dialog1 = false;
+        // this.btnSubmit = true;
+        // this.projectorproductworkeds.push(Object.assign({},this.newProjectorProduct));
+        // Object.assign(this.newProjectorProduct,this.defaultProjectorProduct);
 
       }, remove(position){
         this.projectorproductworkeds.splice(position, 1 );
@@ -233,10 +279,11 @@
       },
       edit(projectorProduct,position){
 
-        Object.assign(this.newProjectorProduct,projectorProduct);
-        this.projectorproductworkeds.splice(position, 1 );
+        Object.assign(this.newProjectorProduct, projectorProduct);
+        this.position = position;
         this.dialog1 = true;
-        if(this.projectorproductworkeds.length === 0){
+        this.editB = true;
+        if (this.projectorproductworkeds.length === 0) {
           this.btnSubmit = false;
         }
         console.log('edit')

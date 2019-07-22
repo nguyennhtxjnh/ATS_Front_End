@@ -1,6 +1,11 @@
 <template>
   <v-flex style="background-color: whitesmoke">
     <v-container>
+      <v-layout row wrap v-if="info.length === 0">
+        <v-spacer/>
+        <img :src="require('@/assets/empty-product.png')" >
+        <v-spacer/>
+      </v-layout>
       <v-layout wrap md12 xs12>
         <template v-for="job in info">
           <v-container md7 xs12 style="background-color: white" class="ma-3 pa-2" >
@@ -58,23 +63,30 @@
     name: "ListJobExpired",
     data :()=>{
       return{
-        images : {'main' : require('@/assets/jsmain1.jpg')},
         info:[],
         cities:[],
 
       }
     },
     mounted () {
-      this.userId = this.userId2;
-      Axios
-        .get(Constants.URL+'/city/getAllCity')
-        .then(response => (
-          this.cities = response.data.data))
-      Axios
-        .get(Constants.URL+'/job/list-invalid/'+this.userId)
-        .then(response => (this.info = response.data.data))
+      this.getComponent();
+    },
+    watch:{
+      userId2(){
+        this.getComponent();
+      }
     },
     methods: {
+      getComponent(){
+        this.userId = this.userId2;
+        Axios
+          .get(Constants.URL+'/city/getAllCity')
+          .then(response => (
+            this.cities = response.data.data))
+        Axios
+          .get(Constants.URL+'/job/list-invalid/'+this.userId)
+          .then(response => (this.info = response.data.data))
+      },
       remove(position){
         this.info.splice(position, 1);
         if (this.info.length === 0) {

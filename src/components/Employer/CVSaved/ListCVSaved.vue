@@ -2,7 +2,7 @@
   <v-container>
     <v-card class="pa-3">
       <v-card-title>
-        <h2 style="color: #ff5e2d ">Các CV đã ứng tuyển</h2>
+        <h2 style="color: #ff5e2d ">Các CV đã lưu</h2>
       </v-card-title>
       <v-divider class="pb-3"></v-divider>
       <v-layout row wrap v-if="cvs.length === 0">
@@ -37,25 +37,25 @@
                 </template>
                 </span>
                 </v-layout>
-<!--                <span><i>Vị trí ứng tuyển:</i> {{cv.industryByIndustryId.name}}</span>-->
-<!--                <v-layout row wrap>-->
-<!--                  <v-icon class="">mdi-bag-personal</v-icon>-->
-<!--                  <span>Quản lý cửa hàng - Cửu hàng điện thoại di động</span>-->
-<!--                </v-layout>-->
-<!--                <v-layout row wrap>-->
-<!--                  <v-icon class="">mdi-bag-personal</v-icon>-->
-<!--                  <span>Nhân viên thu hồi nợ qua điện thoại - Công ty tài chính FECredit</span>-->
-<!--                </v-layout>-->
-<!--                <v-layout row wrap>-->
-<!--                  <v-icon class="">mdi-school</v-icon>-->
-<!--                  <span>Quản lý cửa hàng - Cửu hàng điện thoại di động</span>-->
-<!--                </v-layout>-->
+                <!--                <span><i>Vị trí ứng tuyển:</i> {{cv.industryByIndustryId.name}}</span>-->
+                <!--                <v-layout row wrap>-->
+                <!--                  <v-icon class="">mdi-bag-personal</v-icon>-->
+                <!--                  <span>Quản lý cửa hàng - Cửu hàng điện thoại di động</span>-->
+                <!--                </v-layout>-->
+                <!--                <v-layout row wrap>-->
+                <!--                  <v-icon class="">mdi-bag-personal</v-icon>-->
+                <!--                  <span>Nhân viên thu hồi nợ qua điện thoại - Công ty tài chính FECredit</span>-->
+                <!--                </v-layout>-->
+                <!--                <v-layout row wrap>-->
+                <!--                  <v-icon class="">mdi-school</v-icon>-->
+                <!--                  <span>Quản lý cửa hàng - Cửu hàng điện thoại di động</span>-->
+                <!--                </v-layout>-->
                 <v-layout row wrap  >
                   <v-flex md5 xs4 style="border: 2px #2c3e50; border-style: dotted"  class="pa-1 mr-2">
                     <v-icon class="">mdi-map-marker</v-icon>
                     <span>Địa điểm: {{cv.cityByCityId.fullName}}</span>
                   </v-flex>
-                <v-spacer/>
+                  <v-spacer/>
                   <v-flex md6 xs4 style="border: 2px #2c3e50; border-style: dotted"  class="pa-1" v-if="cv.yearExperience !== ''">
                     <v-icon class="">mdi-calendar-blank</v-icon>
                     <span>Thời gian làm việc thực tế {{cv.yearExperience}} năm</span>
@@ -82,7 +82,7 @@
       </template>
 
 
-<!--      page-->
+      <!--      page-->
       <v-layout row wrap>
         <v-spacer/>
         <v-flex md8 xs12 v-if="cvs.length === 0" >
@@ -98,41 +98,53 @@
 </template>
 
 <script>
-  import axios from 'axios';
+  import axios from 'axios'
   import Constants from '@/stores/constant.js'
-  export default {
-    name: "CVappliedComponent",
-    // props: {
-    //   jobid: Number
-    // },
-    data: function ()  {
-      return{
-        imgURL: '',
-        cvs: [],
-        page: 1,
-        jobid: this.$route.params.jobid,
+  import {mapGetters} from 'vuex';
+    export default {
+        name: "ListCVSaved",
+      data: function ()  {
+        return{
+          imgURL: '',
+          cvs: [],
+          page: 1,
+        }
       }
-    }
-    ,
-    mounted() {
-      console.log(this.jobid)
-      axios
-        .get(Constants.URL+'/apply/cv-applied/'+this.jobid)
-        .then(response => {
-          this.cvs = response.data.data;
-          for(var cv in this.cvs){
-            var date = new Date(this.cvs[cv].createdDate);
-            // var tmp = date.getDay()
-            this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
-          }
-          this.cvs.sort(function(a, b){return b.id - a.id});
-        })
+      , mounted () {
+        this.getComponent();
+      },
+      watch:{
+        userId2(){
+          this.getComponent();
+        }
+      },
+      methods: {
+        getComponent(){
 
+        axios
+          .get(Constants.URL+'/userlifecv/list/'+this.userId2)
+          .then(response => {
+            this.cvs = response.data.data;
+            for(var cv in this.cvs){
+              var date = new Date(this.cvs[cv].createdDate);
+              // var tmp = date.getDay()
+              this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
+            }
+            this.cvs.sort(function(a, b){return b.id - a.id});
+          })}
+
+      },
+      computed: {
+        ...mapGetters('AUTHENTICATION_STORE',{
+          email : 'email2',
+          roleId: 'roleId2',
+          fullName: 'fullName2',
+          userId2: 'userId2'
+        }),
+      },
     }
-  }
 </script>
 
 <style scoped>
 
 </style>
-

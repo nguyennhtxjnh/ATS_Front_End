@@ -100,9 +100,92 @@
       <v-flex md8 xs12>
         <v-card class="pa-2">
           <v-card-title>
+
             <h2 style="color: red"> Các ứng viên phù hợp</h2>
           </v-card-title>
           <v-divider></v-divider>
+
+            <h2 style="color: red"> Các vị trí đã được tìm kiếm</h2>
+
+          <v-divider></v-divider>
+          <v-card-text>
+            <v-layout row wrap v-if="cvs.length === 0">
+              <v-spacer/>
+              <img :src="require('@/assets/empty-product.png')" style="height: 330px" >
+              <v-spacer/>
+            </v-layout>
+
+            <template v-for="cv in cvs">
+
+              <v-layout row wrap @click="$router.push('/xem-CV-ung-tuyen/'+cv.id+'/'+jobid)">
+                <v-flex md2 xs3>
+                  <v-avatar size="150px" align="center">
+                    <v-img v-bind:src="cv.img"></v-img>
+                  </v-avatar>
+                </v-flex>
+                <v-flex md8 xs8>
+                  <v-layout row wrap>
+                    <v-flex md8 xs8>
+                      <h2>{{cv.lastName}} {{cv.firstName}}</h2>
+                      <v-layout row wrap  >
+                <span><i>Học vấn:</i>
+                <template v-if="cv.educationsById.length > 0" v-for="edu in cv.educationsById ">
+                   Trường {{edu.schoolName}}
+                </template>
+                </span>
+                      </v-layout>
+                      <v-layout row wrap  >
+                <span><i>Kinh nghiệm:</i>
+                <template v-if="cv.workexperiencesById.length > 0" v-for="edu in cv.workexperiencesById ">
+                  Công ty {{edu.companyName}} - chức vụ {{edu.vacancyName}}
+                </template>
+                </span>
+                      </v-layout>
+                      <!--                <span><i>Vị trí ứng tuyển:</i> {{cv.industryByIndustryId.name}}</span>-->
+                      <!--                <v-layout row wrap>-->
+                      <!--                  <v-icon class="">mdi-bag-personal</v-icon>-->
+                      <!--                  <span>Quản lý cửa hàng - Cửu hàng điện thoại di động</span>-->
+                      <!--                </v-layout>-->
+                      <!--                <v-layout row wrap>-->
+                      <!--                  <v-icon class="">mdi-bag-personal</v-icon>-->
+                      <!--                  <span>Nhân viên thu hồi nợ qua điện thoại - Công ty tài chính FECredit</span>-->
+                      <!--                </v-layout>-->
+                      <!--                <v-layout row wrap>-->
+                      <!--                  <v-icon class="">mdi-school</v-icon>-->
+                      <!--                  <span>Quản lý cửa hàng - Cửu hàng điện thoại di động</span>-->
+                      <!--                </v-layout>-->
+                      <v-layout row wrap  >
+                        <v-flex md5 xs4 style="border: 2px #2c3e50; border-style: dotted"  class="pa-1 mr-2">
+                          <v-icon class="">mdi-map-marker</v-icon>
+                          <span>Địa điểm: {{cv.cityByCityId.fullName}}</span>
+                        </v-flex>
+                        <v-spacer/>
+                        <v-flex md6 xs4 style="border: 2px #2c3e50; border-style: dotted"  class="pa-1" v-if="cv.yearExperience !== ''">
+                          <v-icon class="">mdi-calendar-blank</v-icon>
+                          <span>Thời gian làm việc thực tế {{cv.yearExperience}} năm</span>
+                        </v-flex>
+                      </v-layout>
+                    </v-flex>
+                    <v-spacer/>
+                    <v-flex md3 xs4>
+                      <i style="float: right"><v-icon>mdi-update</v-icon>  {{cv.createdDate}}</i>
+                    </v-flex>
+                  </v-layout>
+                  <v-layout row wrap class="mt-3">
+                    <v-flex md10 xs4 style="border: 2px #2c3e50; border-style: dotted"  class="pa-1">
+                      <v-icon class="">mdi-star</v-icon>
+                      <span>Mục tiêu: {{cv.description}}
+                </span>
+                    </v-flex>
+                  </v-layout>
+
+                </v-flex>
+              </v-layout>
+              <v-divider class="mt-2 mb-2" v-if=""></v-divider>
+
+            </template>
+          </v-card-text>
+
 <!--          <v-card-text>-->
 <!--            <h3>Hành chính văn phòng</h3>-->
 <!--            <table >-->
@@ -123,85 +206,10 @@
 <!--              </tr>-->
 <!--            </table>-->
 <!--          </v-card-text>-->
-<!--          show réxult-->
-          <v-layout row wrap v-if="cvs.length === 0">
-            <v-spacer/>
-            <img :src="require('@/assets/empty-product.png')"  height="370px">
-            <v-spacer/>
-          </v-layout>
 
-          <template v-for="cv in cvs">
-
-            <v-layout row wrap @click="$router.push('/xem-CV-ung-tuyen/'+cv.id+'/'+jobid)">
-              <v-flex md2 xs3>
-                <v-avatar size="150px" align="center">
-                  <v-img v-bind:src="cv.img"></v-img>
-                </v-avatar>
-              </v-flex>
-              <v-flex md8 xs8>
-                <v-layout row wrap>
-                  <v-flex md8 xs8>
-                    <h2>{{cv.lastName}} {{cv.firstName}}</h2>
-                    <v-layout row wrap  >
-                <span><i>Học vấn:</i>
-                <template v-if="cv.educationsById.length > 0" v-for="edu in cv.educationsById ">
-                   Trường {{edu.schoolName}}
-                </template>
-                </span>
-                    </v-layout>
-                    <v-layout row wrap  >
-                <span><i>Kinh nghiệm:</i>
-                <template v-if="cv.workexperiencesById.length > 0" v-for="edu in cv.workexperiencesById ">
-                  Công ty {{edu.companyName}} - chức vụ {{edu.vacancyName}}
-                </template>
-                </span>
-                    </v-layout>
-                    <!--                <span><i>Vị trí ứng tuyển:</i> {{cv.industryByIndustryId.name}}</span>-->
-                    <!--                <v-layout row wrap>-->
-                    <!--                  <v-icon class="">mdi-bag-personal</v-icon>-->
-                    <!--                  <span>Quản lý cửa hàng - Cửu hàng điện thoại di động</span>-->
-                    <!--                </v-layout>-->
-                    <!--                <v-layout row wrap>-->
-                    <!--                  <v-icon class="">mdi-bag-personal</v-icon>-->
-                    <!--                  <span>Nhân viên thu hồi nợ qua điện thoại - Công ty tài chính FECredit</span>-->
-                    <!--                </v-layout>-->
-                    <!--                <v-layout row wrap>-->
-                    <!--                  <v-icon class="">mdi-school</v-icon>-->
-                    <!--                  <span>Quản lý cửa hàng - Cửu hàng điện thoại di động</span>-->
-                    <!--                </v-layout>-->
-                    <v-layout row wrap  >
-                      <v-flex md5 xs4 style="border: 2px #2c3e50; border-style: dotted"  class="pa-1 mr-2">
-                        <v-icon class="">mdi-map-marker</v-icon>
-                        <span>Địa điểm: {{cv.cityByCityId.fullName}}</span>
-                      </v-flex>
-                      <v-spacer/>
-                      <v-flex md6 xs4 style="border: 2px #2c3e50; border-style: dotted"  class="pa-1" v-if="cv.yearExperience !== ''">
-                        <v-icon class="">mdi-calendar-blank</v-icon>
-                        <span>Thời gian làm việc thực tế {{cv.yearExperience}} năm</span>
-                      </v-flex>
-                    </v-layout>
-                  </v-flex>
-                  <v-spacer/>
-                  <v-flex md3 xs4>
-                    <i style="float: right"><v-icon>mdi-update</v-icon>  {{cv.createdDate}}</i>
-                  </v-flex>
-                </v-layout>
-                <v-layout row wrap class="mt-3">
-                  <v-flex md10 xs4 style="border: 2px #2c3e50; border-style: dotted"  class="pa-1">
-                    <v-icon class="">mdi-star</v-icon>
-                    <span>Mục tiêu: {{cv.description}}
-                </span>
-                  </v-flex>
-                </v-layout>
-
-              </v-flex>
-            </v-layout>
-            <v-divider class="mt-2 mb-2" v-if=""></v-divider>
-
-          </template>
         </v-card>
       </v-flex>
-
+<!-- option-->
       <v-flex md4 xs12 class="pl-3">
         <v-card class="pa-3">
           <v-layout row wrap>
@@ -304,6 +312,13 @@
           console.log(this.lskill +"/"+this.cityId+"/"+this.industryId);
           console.log("indus: "+this.industryId);
           console.log("city: "+this.cityId);
+          axios
+            .get(Constants.URL+'/cv/search/'+this.lskill +"/"+this.cityId+"/"+this.industryId)
+            .then(response => {
+              console.log(response)
+              this.cvs = response.data.content;}
+            )
+
         }
 
       },

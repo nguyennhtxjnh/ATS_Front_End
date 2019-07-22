@@ -33,6 +33,9 @@ import AdminAllServicePage from '../views/Admin/AdminAllServicePage'
 import AdminViewAllCompanyPage from '../views/Admin/AdminViewAllCompanyPage'
 import AdminViewAllAccountPage from '../views/Admin/AdminViewAllAccountPage'
 import AdminViewAllNewCompanyPage from '../views/Admin/AdminViewAllNewCompanyPage'
+import EmployerCompanyApplyPage from '../views/Employer/EmployerCompanyApplyPage'
+import ListSuggestJob from "../components/JobSeekeer/suggestJob/ListSuggestJob";
+import ListSuggestJobPage from "../views/Jobseeker/ListSuggestJobPage";
 
 
 Vue.use(Router)
@@ -153,6 +156,13 @@ const router = new Router({
       name: 'employer review created job',
       component: EmployerJobCreateReviewPage
     }
+    ,
+    {
+      path: '/cong-ty-duyet-tuyen-dung',
+      name: 'employer apply sub employer',
+      component: EmployerCompanyApplyPage
+    }
+
     ,{
       path: '/viec-lam-nguoi-tim-viec',
       name: 'tab job',
@@ -227,7 +237,11 @@ const router = new Router({
       name: 'admin view all account',
       component: AdminViewAllAccountPage
     }
-    ,
+    , {
+      path: '/xem-goi-y-viec-lam/:cvid',
+      name: 'suggest job',
+      component: ListSuggestJobPage
+    }
 
   ]
 })

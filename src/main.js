@@ -14,6 +14,7 @@ import './api_client.js';
 import './platform.js';
 import VueSweetalert2 from 'vue-sweetalert2';
 
+
 Vue.use(Vuetify, {
   iconfont: 'mdi'
 });
