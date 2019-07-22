@@ -1,25 +1,30 @@
 <template>
   <v-container fluid class="pt-0">
     <v-layout row wrap align-right>
-      <v-flex xs12 class="mb-5">
-        <h2>Tất Cả Công Ty</h2>
+
+      <v-flex xs12>
+        <v-container fluid class="pt-0">
+          <v-layout row wrap align-right>
+            <v-flex xs7 >
+              <h2 class="textCustom">Duyệt Công Ty Đang Chờ Duyệt</h2>
+            </v-flex>
+            <v-spacer></v-spacer>
+            <v-flex xs5>
+              <v-text-field
+                v-model="search"
+                append-icon="search"
+                label="Tìm kiếm theo tên công ty"
+                single-line
+                hide-details
+                outline
+                @input="getAllCompany()"
+                class="mb-3"
+              ></v-text-field>
+            </v-flex>
+          </v-layout>
+        </v-container>
       </v-flex>
       <v-flex xs12>
-        <v-flex d-flex xs5>
-          <v-text-field
-            v-model="search"
-            append-icon="search"
-            label="Tìm kiếm theo tên công ty"
-            single-line
-            hide-details
-            outline
-            @input="getAllCompany()"
-            class="mb-3"
-          ></v-text-field>
-
-        </v-flex>
-
-
         <v-data-table
           :items="Company"
           :headers="headers"
@@ -311,5 +316,7 @@
 </script>
 
 <style scoped>
-
+  .textCustom {
+    color: #ff5e2d;
+  }
 </style>

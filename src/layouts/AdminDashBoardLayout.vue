@@ -8,14 +8,13 @@
         fixed
         v-model="drawer"
         app>
-        <v-flex d-flex align-center style="height: 64px;" class="orange">
-          <v-flex class="pa-3"><v-icon left style="color: white">mdi-account</v-icon><span class="nameText">{{fullName}}</span></v-flex>
+        <v-flex d-flex align-center style="border-bottom: 4px solid #ff5e2d; background-color: white "  >
+          <v-flex class="pa-3"><v-icon left >mdi-account</v-icon><span class="nameText">{{fullName}}</span></v-flex>
         </v-flex>
         <v-list dense class="pt-0">
           <!--Job-->
-          <v-subheader>Công Việc</v-subheader>
+          <v-subheader class="textCustom"><h3>Công Việc</h3></v-subheader>
           <v-list-tile
-              style="padding-left: 40px;"
               v-for="(item, i) in menuJob"
               :key="i"
               :to="item.path"
@@ -30,9 +29,8 @@
             </v-list-tile>
           <v-divider></v-divider>
           <!--Company-->
-          <v-subheader>Công ty</v-subheader>
+          <v-subheader class="textCustom"><h3>Công ty</h3></v-subheader>
             <v-list-tile
-              style="padding-left: 40px"
               v-for="(item, i) in menuCompany"
               :key="i"
               :to="item.path"
@@ -47,9 +45,8 @@
             </v-list-tile>
           <v-divider></v-divider>
           <!--Account-->
-          <v-subheader >Quản lý người dùng</v-subheader>
+          <v-subheader class="textCustom"><h3>Quản lý người dùng</h3></v-subheader>
             <v-list-tile
-              style="padding-left: 40px"
               v-for="(item, i) in menuUser"
               :key="i"
               :to="item.path"
@@ -64,9 +61,9 @@
             </v-list-tile>
           <v-divider></v-divider>
           <!--Service-->
-          <v-subheader >Dịch vụ</v-subheader>
+          <v-subheader class="textCustom"><h3>Dịch vụ</h3></v-subheader>
             <v-list-tile
-              style="padding-left: 40px"
+
               v-for="(item, i) in menuService"
               :key="i"
               :to="item.path"
@@ -81,9 +78,8 @@
             </v-list-tile>
           <v-divider></v-divider>
           <!-- Logout-->
-          <v-subheader >Tài khoản</v-subheader>
-            <v-list-tile @click="logout"
-                         style="padding-left: 40px">
+          <v-subheader class="textCustom"><h3>Tài khoản</h3></v-subheader>
+            <v-list-tile @click="logout">
               <v-list-tile-action>
                 <v-icon>mdi-logout-variant</v-icon>
               </v-list-tile-action>
@@ -101,7 +97,7 @@
 
         </v-list>
       </v-navigation-drawer>
-      <v-toolbar color="indigo" dark fixed app>
+      <v-toolbar style="border-bottom: 4px solid #ff5e2d; background-color: white; height: 66px" flat fixed app>
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         <v-toolbar-title>Admin Site</v-toolbar-title>
       </v-toolbar>
@@ -197,14 +193,18 @@
   }
 
   .activeCSS{
-    background-color: orange !important;
+    background-color: #ff5e2d !important;
     color: white;
   }
 
   .nameText {
     padding-left: 15px;
     font-size: 20px;
-    color: white;
+    /*color: white;*/
+  }
+
+  .textCustom {
+    color: #ff5e2d;
   }
 
 </style>

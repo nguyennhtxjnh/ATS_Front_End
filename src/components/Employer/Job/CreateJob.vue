@@ -82,8 +82,8 @@
                     <v-autocomplete
                       class="ma-2"
                       prepend-icon="mdi-format-list-bulleted-type"
-                      :items="workingType"
-                      v-model="formData.workingType"
+                      :items="workingtype"
+                      v-model="formData.workingtype"
                       label="Loại Hình Làm Việc"
                       :rules="[rules.required]"
                     ></v-autocomplete>
@@ -223,7 +223,7 @@
                   </v-flex>
 
                   <!--                  ki nang-->
-                  <v-flex class="pa-1"  xs12>
+                  <v-flex class="pa-2"  xs12>
 
                     <v-autocomplete
                       prepend-icon="mdi-account-star"
@@ -246,7 +246,7 @@
 <!--                  </v-flex>-->
 
                   <template v-for="(skill,index) in formData.listSkill">
-                    <v-flex class="pa-1" md5 xs12>
+                    <v-flex class="pa-2" md6 xs12>
                       <v-autocomplete
                         :items="skillChoose"
                         v-model="skill.id"
@@ -258,7 +258,7 @@
                         outline
                       ></v-autocomplete>
                     </v-flex>
-                    <v-flex class="pa-1" md5 xs12>
+                    <v-flex class="pa-2" md6 xs12>
                       <v-autocomplete
                         prepend-icon="mdi-star"
                         :items="skillRating"
@@ -362,8 +362,8 @@
                             <v-autocomplete
                               class="ma-2"
                               prepend-icon="mdi-format-list-bulleted-type"
-                              :items="workingType"
-                              v-model="formData.workingType"
+                              :items="workingtype"
+                              v-model="formData.workingtype"
                               label="Loại Hình Làm Việc"
                               disabled
                             ></v-autocomplete>
@@ -532,7 +532,7 @@
         jobLevelAPI: [],
         cityAPI: [],
         industryAPI: [],
-        workingType: ['Toàn Thời Gian', 'Bán Thời Gian', 'Thực Tập'],
+        workingtype: ['Toàn Thời Gian', 'Bán Thời Gian', 'Thực Tập'],
         skillChoose: [],
         selectedSkill: {
           skillMasterId: '',
@@ -584,7 +584,7 @@
           jobDescription: '',
           additionalRequest: '',
           candidateBenefits: '',
-          workingType: '',
+          workingtype: '',
           numbeOfRecruitment: '',
           listSkill:[]
         },
@@ -755,9 +755,9 @@
             this.formData.listSkill[i].skillMasterId = this.formData.listSkill[i]['id'];
             delete this.formData.listSkill[i].id;
           }
-          if(this.formData.workingType === 'Toàn Thời Gian') this.formData.workingType = 'FULLTIME';
-          if(this.formData.workingType === 'Bán Thời Gian') this.formData.workingType = 'PARTTIME';
-          if(this.formData.workingType === 'Thực Tập')  this.formData.workingType = 'INTERN';
+          if(this.formData.workingtype === 'Toàn Thời Gian') this.formData.workingtype = 'FULLTIME';
+          if(this.formData.workingtype === 'Bán Thời Gian') this.formData.workingtype = 'PARTTIME';
+          if(this.formData.workingtype === 'Thực Tập')  this.formData.workingtype = 'INTERN';
 
 
           const url = Constants.URL+'/job/create';

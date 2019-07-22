@@ -34,6 +34,7 @@ import AdminViewAllCompanyPage from '../views/Admin/AdminViewAllCompanyPage'
 import AdminViewAllAccountPage from '../views/Admin/AdminViewAllAccountPage'
 import AdminViewAllNewCompanyPage from '../views/Admin/AdminViewAllNewCompanyPage'
 import EmployerCompanyApplyPage from '../views/Employer/EmployerCompanyApplyPage'
+import EmployerGetServicePage from '../views/Employer/EmployerGetServicePage'
 
 
 Vue.use(Router)
@@ -182,16 +183,18 @@ const router = new Router({
       name: 'view CV applied',
       component: ViewCVAppliedPage
 
-    },{
+    },
+    {
       path: '/quan-li-ung-vien',
       name: 'manage jobseeker',
       component: ManageJobSeekerPage
     },
+    {
+      path: '/tuyen-dung-dich-vu',
+      name: 'get service',
+      component: EmployerGetServicePage
+    },
 
-    // {
-    //   path: '/detail/:id',
-    //   component: Detail
-    // }
 
     //Admin Router Link
     {
