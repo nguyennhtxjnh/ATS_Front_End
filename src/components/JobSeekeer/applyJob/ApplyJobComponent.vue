@@ -58,8 +58,8 @@
     </v-flex>
 
     <v-flex xs12 v-if="roleId === 1">
-      <v-btn  block color="gray" @click="saveJob" v-if="saved === false"><v-icon dark>favorite</v-icon>Lưu Việc Làm</v-btn>
-      <v-btn  block color="error" outline @click="rejectSave" v-if="saved === true"><v-icon dark>favorite</v-icon>Lưu Việc Làm</v-btn>
+      <v-btn  block color="gray" @click="saveJob" v-if="saved === false"><v-icon dark>favorite</v-icon>Đã Lưu Việc Làm</v-btn>
+      <v-btn  block color="error" outline @click="rejectSave" v-if="saved === true"><v-icon dark>favorite</v-icon> Lưu Việc Làm</v-btn>
     </v-flex>
 
 

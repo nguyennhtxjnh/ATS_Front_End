@@ -63,7 +63,6 @@
     name: "ListJobExpired",
     data :()=>{
       return{
-        images : {'main' : require('@/assets/jsmain1.jpg')},
         info:[],
         cities:[],
 

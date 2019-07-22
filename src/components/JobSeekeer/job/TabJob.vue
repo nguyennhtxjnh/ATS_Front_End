@@ -25,7 +25,7 @@
               <SearchJobResult></SearchJobResult>
             </v-card>
             <v-card flat v-if="i.id === '2'">
-              <ManageCV></ManageCV>
+              <SuggestJob></SuggestJob>
             </v-card>
             <v-card flat v-if="i.id === '3'">
               <JobSaved></JobSaved>
@@ -45,9 +45,10 @@
     import ManageCV from "../manageCV/ManageCV";
     import JobSaved from "../DashBoard/JobSaved";
     import ApplyManager from "../DashBoard/ApplyManager";
+    import SuggestJob from "../suggestJob/SuggestJob";
     export default {
         name: "TabJob",
-      components: {ApplyManager, JobSaved, ManageCV, SearchJobResult},
+      components: {SuggestJob, ApplyManager, JobSaved, ManageCV, SearchJobResult},
       data: function () {
         return{
           active: null,
