@@ -24,6 +24,7 @@
             <SearchCV></SearchCV>
           </v-card>
           <v-card flat v-if="i.id === '2'">
+            <ListCVSaved></ListCVSaved>
           </v-card>
 
         </v-tab-item>
@@ -35,9 +36,10 @@
 
 <script>
     import SearchCV from "../searchCV/SearchCV";
+    import ListCVSaved from "../CVSaved/ListCVSaved";
     export default {
         name: "ManageJobSeeker",
-      components: {SearchCV},
+      components: {ListCVSaved, SearchCV},
       data: function () {
         return{
           active: null,

@@ -182,18 +182,28 @@
   export default {
     name: "WorkExperienceComponent",
     props: {
-      workexperiences: Array,
+      workexperiences:  {
+        type: Array,
+        default: []
+      },
     },
     data: () => ( {
       position:'',
       editB: false,
-      btnSubmit: false,
+      btnSubmit: true,
       dialog1: false,
       date: new Date().toISOString().substr(0, 10),
       date1: new Date().toISOString().substr(0, 10),
       menu1: false,
       menu2: false,
       checkbox1: false,
+      workexperience:{
+        companyName: '',
+        vacancyName: '',
+        description: '',
+        startTime: new Date().toISOString().substr(0, 10),
+        endTime: new Date().toISOString().substr(0, 10),
+      },
       newWorkExperience: {
         companyName: '',
         vacancyName: '',
@@ -279,6 +289,19 @@
           this.btnSubmit = false;
         }
         console.log('edit')
+      }
+    },
+    mounted() {
+      console.log(this.workexperiences);
+      if(this.workexperiences.length > 0){
+        this.btnSubmit = true;
+        for(var edu in this.workexperiences){
+          var stime = new Date(this.workexperiences[edu].startTime);
+          this.workexperiences[edu].startTime = stime.toISOString().substr(0, 10);
+          var etime = new Date(this.workexperiences[edu].endtime);
+          this.workexperiences[edu].endtime = etime.toISOString().substr(0, 10);
+        }
+        console.log(this.workexperiences);
       }
     }
 

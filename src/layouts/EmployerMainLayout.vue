@@ -9,7 +9,7 @@
             <span class="pt-2 pl-3">Job Board</span>
           </v-layout>
         </v-toolbar-title>
-        <v-toolbar-title @click="$router.push('/quan-li-cong-viec')"  v-if="roleId === 2" class="black--text hoverCSSTitle pr-5 mr-5" >
+        <v-toolbar-title @click="$router.push('/quan-li-ung-vien')"  v-if="roleId === 2" class="black--text hoverCSSTitle pr-5 mr-5" >
           <v-layout row wrap class="pl-5">
             <v-img :src="require('@/assets/logoP.png')" style="width: 50px; height: 50px"></v-img>
             <span class="pt-2 pl-3">Job Board</span>
@@ -357,8 +357,14 @@
         }
       },
       notificationClick(notification){
-        if (notification.title === 'Thông Tin'){
-          this.$router.push('/tuyen-dung-thong-tin');
+        if (notification.title === 'Quản lí ứng viên'){
+          this.$router.push('/quan-li-ung-vien');
+        }
+        if (notification.title === 'Quản lí tin tuyển dụng'){
+          this.$router.push('/quan-li-cong-viec');
+        }
+        if (notification.title === 'Dịch vụ'){
+          this.$router.push('');
         }
         if (notification.title === 'Đăng Xuất') {
           this.$store.dispatch('AUTHENTICATION_STORE/LOGOUT2')

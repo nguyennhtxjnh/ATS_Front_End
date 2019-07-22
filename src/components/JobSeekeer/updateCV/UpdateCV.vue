@@ -18,9 +18,9 @@
             </v-flex><!-- end thông tin-->
             <v-flex md4 xs12>
               <v-flex md12 xs12>
-                <img :src="imageUrl" id="imageAvatar" height="200" width="200" v-if="imageUrl" @click='pickFile'/>
+                <img :src="imageUrl" height="200" width="200" v-if="imageUrl" @click='pickFile'/>
                 <v-text-field  label="Chọn ảnh đại diện" @click='pickFile' v-model='imageName'
-                              prepend-icon='attach_file'></v-text-field>
+                               prepend-icon='attach_file'></v-text-field>
                 <input
                   type="file"
                   style="display: none"
@@ -171,19 +171,19 @@
             </v-flex>
             <v-flex md12 xs12>
 
-              <!--              <v-layout row>-->
-              <!--                <v-flex md12 xs12>-->
-              <!--                  <v-icon color="orange darken-2" class="pr-2" style="float: left">mdi-account-circle-outline</v-icon>-->
-              <!--                  <h4 style="float: left">Giới tính</h4>-->
-              <!--                  <v-container fluid align="left">-->
-              <!--                    <v-radio-group v-model="info.gender" :mandatory="false" >-->
-              <!--                      <v-radio label="Nữ" value="1"></v-radio>-->
-              <!--                      <v-radio label="Nam" value="2"></v-radio>-->
-              <!--                      <v-radio label="Khác" value="3"></v-radio>-->
-              <!--                    </v-radio-group>-->
-              <!--                  </v-container>-->
-              <!--                </v-flex>-->
-              <!--              </v-layout>-->
+<!--                            <v-layout row>-->
+<!--                              <v-flex md12 xs12>-->
+<!--                                <v-icon color="orange darken-2" class="pr-2" style="float: left">mdi-account-circle-outline</v-icon>-->
+<!--                                <h4 style="float: left">Giới tính</h4>-->
+<!--                                <v-container fluid align="left">-->
+<!--                                  <v-radio-group v-model="info.gender" :mandatory="false" >-->
+<!--                                    <v-radio label="Nữ" value="1"></v-radio>-->
+<!--                                    <v-radio label="Nam" value="2"></v-radio>-->
+<!--                                    <v-radio label="Khác" value="3"></v-radio>-->
+<!--                                  </v-radio-group>-->
+<!--                                </v-container>-->
+<!--                              </v-flex>-->
+<!--                            </v-layout>-->
             </v-flex>
             <v-flex md12 xs12>
               <v-layout row wrap>
@@ -250,7 +250,7 @@
           <!--Kinh nghiệm-->
           <WorkExperienceComponent :workexperiences="info.workexperiencesById"></WorkExperienceComponent>
           <!--Kỹ năng-->
-<!--          <SkillInCVComponent :skillincvs="info.skillincvs"></SkillInCVComponent>-->
+          <!--          <SkillInCVComponent :skillincvs="info.skillincvs"></SkillInCVComponent>-->
 
           <!--dự án-->
           <ProjectorProductWorkedComponent
@@ -287,7 +287,6 @@
   import SocialActivitiesComponent from "./SocialActivitiesComponent";
   import SkillInCVComponent from "./SkillInCVComponent";
   import ProjectorProductWorkedComponent from "./ProjectorProductWorkedComponent";
-  import ProfileBasicComponent from "../manageCV/ProfileBasicComponent";
 
   import Constants from '@/stores/constant.js'
 
@@ -295,7 +294,6 @@
   export default {
     name: "UpdateCV",
     components: {
-      ProfileBasicComponent,
       ProjectorProductWorkedComponent,
       EducationComponent,
       SkillInCVComponent,
@@ -303,10 +301,10 @@
     },
     data : function () {
       return{
-       cvid: this.$route.params.cvid,
-       base64: '',
-       imageA:'',
-       file: '',
+        cvid: this.$route.params.cvid,
+        base64: '',
+        imageA:'',
+        file: '',
         btnDown: false,
         title: "Image Upload",
         dialog: false,
@@ -347,14 +345,14 @@
           workexperiencesById: [],
 
         },
-       rules: {
+        rules: {
           noMinus: value => value >= 0 || 'Lương Không Được Nhỏ Hơn 0',
           required: value => !!value || 'Không được để trống ô này.',
           // counter: value => value.length <= 40 || 'Tối Đa 40 Kí Tự',
-         telephone: value => {
-           const pattern = /^[0-9]{10,12}$/
+          telephone: value => {
+            const pattern = /^[0-9]{10,12}$/
             return pattern.test(value)|| 'Phải dùng 10 tới 12 chữ số'
-         },
+          },
           email: value => {
             const pattern = /^[\w-]+@([\w-]+\.)+[\w-]+$/
             return pattern.test(value) || 'Địa chỉ email không phù hợp.'
@@ -486,10 +484,10 @@
             if(this.info.img !== null){
               this.imageUrl = this.info.img;
             }
-          var date = new Date(this.info.dob);
-          // var tmp = date.getDate() +"/" + (date.getMonth()+1)+"/"+date.getFullYear();
-          // this.cvs[cv].createdDate = tmp;
-          this.info.dob = date.toISOString().substr(0, 10);
+            var date = new Date(this.info.dob);
+            // var tmp = date.getDate() +"/" + (date.getMonth()+1)+"/"+date.getFullYear();
+            // this.cvs[cv].createdDate = tmp;
+            this.info.dob = date.toISOString().substr(0, 10);
           }
 
         )
@@ -503,7 +501,6 @@
           this.industries = response.data))
 
     }
-
   }
 </script>
 

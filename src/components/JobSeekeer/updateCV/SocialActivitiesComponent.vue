@@ -10,7 +10,14 @@
           <v-dialog v-model="dialog4" persistent max-width="800px">
             <template
               v-slot:activator="{ on }">
-              <v-btn color="orange" dark v-on="on">Thêm mục</v-btn>
+              <v-btn color="orange" dark v-on="on">
+                <v-flex v-if="btnSubmit === false">
+                  Thêm mục
+                </v-flex>
+                <v-flex v-if="btnSubmit === true">
+                  <v-icon color="white darken-2">mdi-plus</v-icon>
+                </v-flex>
+              </v-btn>
             </template>
             <v-card>
               <v-card-text>
@@ -57,7 +64,7 @@
                 <v-layout row wrap>
                   <v-spacer/>
                   <v-flex md2 xs2>
-                    <v-icon color="orange darken-2">mdi-home-city-outline</v-icon>
+                    <v-icon color="orange darken-2" size="40px" class="">mdi-account-child</v-icon>
                   </v-flex>
                   <v-flex md4 xs8>
                     <v-layout row wrap>
@@ -105,6 +112,8 @@
         socialactivities: Array,
       },
       data: () => ( {
+        position:'',
+        editB: false,
         btnSubmit: false,
         dialog4: false,
         newSocialActivities: {
@@ -119,11 +128,52 @@
       methods: {
         update() {
           if(this.newSocialActivities.name != ""){
-            this.dialog4 = false;
-            this.btnSubmit = true;
-            this.socialactivities.push(Object.assign({},this.newSocialActivities));
-            Object.assign(this.newSocialActivities,this.defaultSocialActivities);
-          }
+              var check = false;
+              var e;
+
+              for (e in  this.socialactivities) {
+                var tmp = this.socialactivities[e].name;
+                if (tmp === this.newSocialActivities.name) {
+
+                  if(this.editB){
+                    if(this.socialactivities[this.position].name !== this.newSocialActivities.name){
+                      alert("Hoạt động đã tồn tại");
+                      check = true;
+                    }else {
+                      check = false;
+                    }
+                  }else {
+                    alert("Hoạt động đã tồn tại");
+                    check = true;
+                  }
+                }
+              }
+
+
+              if (check == false) {
+                if (this.editB === true) {
+                  console.log(this.position);
+                  this.btnSubmit = true;
+                  this.dialog4 = false;
+                  Object.assign(this.socialactivities[this.position], this.newSocialActivities);
+                  Object.assign(this.newSocialActivities, this.defaultSocialActivities);
+                  this.editB = false;
+                  this.position = "";
+
+                }else {
+                  this.btnSubmit = true;
+                  this.dialog4 = false;
+                  if (this.checkbox1 == true) {
+                    this.newSocialActivities.endtime = " hiện tại"
+                  }
+                  this.socialactivities.push(Object.assign({}, this.newSocialActivities));
+                  Object.assign(this.newSocialActivities, this.defaultSocialActivities);
+                }}}
+            else {
+              alert("Hãy nhập thông tin cần thiết.");
+            }
+
+          
         }, remove(position){
           this.socialactivities.splice(position, 1 );
           if(this.socialactivities.length === 0){
@@ -134,11 +184,13 @@
         edit(socialactivity,position){
 
           Object.assign(this.newSocialActivities,socialactivity);
-          this.socialactivities.splice(position, 1 );
+          this.position = position;
           this.dialog4 = true;
-          if(this.socialactivities.length === 0){
+          this.editB = true;
+          if (this.socialactivities.length === 0) {
             this.btnSubmit = false;
           }
+
           console.log('edit')
         }
       }
