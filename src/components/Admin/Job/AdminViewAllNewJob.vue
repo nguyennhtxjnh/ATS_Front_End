@@ -461,7 +461,7 @@
       },
       changeStatus(status){
         this.formJobStatusData.status = status;
-        const url = 'http://localhost:8080/job/changeJobStatus'
+        const url = 'http://localhost:1122/job/changeJobStatus'
         const method = 'POST'
         const data = this.formJobStatusData
         console.log(data)
@@ -492,7 +492,7 @@
       },
       async viewInfo(id){
         this.loading = true;
-        await Axios.get(`http://localhost:8080/job/getJobDetail?id=${id}`)
+        await Axios.get(`http://localhost:1122/job/getJobDetail?id=${id}`)
           .then(response => {
             this.jobFull = response.data.data;
             this.jobFull.createdDate = this.moment(this.jobFull.createdDate).format('DD-MM-YYYY');
@@ -504,7 +504,7 @@
           })
       },
       getAllJob() {
-        Axios.get('http://localhost:8080/job/getAllJob?search=' + this.search + '&status=new')
+        Axios.get('http://localhost:1122/job/getAllJob?search=' + this.search + '&status=new')
           .then(response => {
             this.Job = response.data.data.content;
             console.log(response)

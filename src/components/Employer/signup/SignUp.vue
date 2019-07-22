@@ -60,19 +60,19 @@
 <!--                    ></v-select>-->
 <!--                  </v-flex>-->
 
-                  <v-flex xs12 >
-                    <v-autocomplete
-                      class="ma-2"
-                      :rules="[rules.required]"
-                      v-model="formDataCompany.companyId"
-                      prepend-icon="mdi-domain"
-                      :items="CompanyAPI"
-                      item-text="nameCompany"
-                      item-value="id"
-                      label="Công Ty"
-                    ></v-autocomplete>
+<!--                  <v-flex xs12 >-->
+<!--                    <v-autocomplete-->
+<!--                      class="ma-2"-->
+<!--                      :rules="[rules.required]"-->
+<!--                      v-model="formDataCompany.companyId"-->
+<!--                      prepend-icon="mdi-domain"-->
+<!--                      :items="CompanyAPI"-->
+<!--                      item-text="nameCompany"-->
+<!--                      item-value="id"-->
+<!--                      label="Công Ty"-->
+<!--                    ></v-autocomplete>-->
 
-                  </v-flex>
+<!--                  </v-flex>-->
 
                   <v-flex xs12 >
                     <v-autocomplete class="ma-2"
@@ -199,12 +199,12 @@
             .then(() => {
               this.$store.dispatch('AUTHENTICATION_STORE/INIT2')
                 .then(async () => {
-                  if (this.formDataCompany.companyId === -1){
+                  // if (this.formDataCompany.companyId === -1){
+                  //   this.$router.push('/tao-cong-ty');
+                  // } else {
+                    // await this.addCompany(userId);
                     this.$router.push('/tao-cong-ty');
-                  } else {
-                    await this.addCompany(userId);
-                    this.$router.push('/quan-li-viec-lam');
-                  }
+                  // }
                 })
                 .catch((error) => {
                   this.$router.push('/tuyen-dung-dang-nhap');
