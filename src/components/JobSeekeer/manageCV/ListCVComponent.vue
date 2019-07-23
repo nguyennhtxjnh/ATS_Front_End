@@ -105,9 +105,6 @@
   import Constants from '@/stores/constant.js';
 
     export default {
-      props: {
-        userId1: Number,
-      },
         name: "ListCVComponent",
       data: () => ( {
         userid:'',
@@ -184,26 +181,42 @@
             })
 
         },
+        getInit(){
+          console.log(Constants.URL+'/cv/get-list/'+this.userId1)
+          axios
+            .get(Constants.URL+'/cv/get-list/'+this.userId1)
+            .then(response => {
+                this.cvs = response.data.data;
+                for(var cv in this.cvs){
+                  var date = new Date(this.cvs[cv].createdDate);
+                  // var tmp = date.getDay()
 
-      },
-      mounted() {
-        console.log(Constants.URL+'/cv/get-list/'+this.userId1)
-        axios
-          .get(Constants.URL+'/cv/get-list/'+this.userId1)
-          .then(response => {
-              this.cvs = response.data.data;
-              for(var cv in this.cvs){
-                var date = new Date(this.cvs[cv].createdDate);
-                // var tmp = date.getDay()
-
-                this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
+                  this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
+                }
+                this.cvs.sort(function(a, b){return b.id - a.id});
               }
-              this.cvs.sort(function(a, b){return b.id - a.id});
-            }
             )
+        }
 
       },
+      mounted(){
+       this.getInit()
+      },
+      watch:{
+        userId1(){
+          this.getInit()
+        }
+      },
+      computed: {
+        ...mapGetters('AUTHENTICATION_STORE',{
 
+          email : 'email1',
+          roleId: 'roleId1',
+          fullName: 'fullName1',
+          userId1: 'userId1'
+        }),
+
+      },
 
     }
 </script>

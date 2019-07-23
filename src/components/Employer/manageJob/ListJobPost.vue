@@ -1,6 +1,11 @@
 <template>
     <v-flex style="background-color: whitesmoke">
       <v-container>
+        <v-layout row wrap v-if="info.length === 0">
+          <v-spacer/>
+          <img :src="require('@/assets/empty-product.png')" >
+          <v-spacer/>
+        </v-layout>
         <v-layout wrap md12 xs12>
           <template  v-for="job in info">
             <v-container md7 xs12 style="background-color: white" class="ma-3 pa-2" >
@@ -29,7 +34,6 @@
                   </v-flex>
                 </v-flex>
                 <v-flex md3 class="pt-3 pr-2">
-
                     <v-btn style="height: auto"
                            color="warning" outline class="pa-2" block @click="$router.push('/goi-y-CV')">
                       Gợi ý ứng viên
@@ -38,9 +42,6 @@
                            color="warning" outline class="pa-2" block  @click="$router.push('/CV-ung-tuyen/'+job.id)">
                       Ứng viên đã ứng tuyển
                     </v-btn>
-
-
-
                 </v-flex>
               </v-layout>
             </v-container>

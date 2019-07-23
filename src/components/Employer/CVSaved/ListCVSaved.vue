@@ -13,7 +13,7 @@
 
       <template v-for="cv in cvs">
 
-        <v-layout row wrap @click="$router.push('/xem-CV-ung-tuyen/'+cv.id+'/'+jobid)">
+        <v-layout row wrap @click="$router.push('/xem-CV/'+cv.id)">
           <v-flex md2 xs3>
             <v-avatar size="150px" align="center">
               <v-img v-bind:src="cv.img"></v-img>
@@ -85,7 +85,7 @@
       <!--      page-->
       <v-layout row wrap>
         <v-spacer/>
-        <v-flex md8 xs12 v-if="cvs.length === 0" >
+        <v-flex md8 xs12 v-if="cvs.length !== 0" >
           <v-pagination
             v-model="page"
             :length="15"

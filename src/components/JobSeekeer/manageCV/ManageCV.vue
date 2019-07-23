@@ -43,6 +43,11 @@
       mounted(){
         this.userId = this.userId1
       },
+      watch:{
+        userId1(){
+          this.userId = this.userId1
+        }
+      },
       computed: {
         ...mapGetters('AUTHENTICATION_STORE',{
 

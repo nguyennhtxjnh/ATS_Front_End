@@ -105,20 +105,17 @@
           </v-card-title>
           <v-divider></v-divider>
 
-            <h2 style="color: red"> Các vị trí đã được tìm kiếm</h2>
-
-          <v-divider></v-divider>
           <v-card-text>
             <v-layout row wrap v-if="cvs.length === 0">
               <v-spacer/>
-              <img :src="require('@/assets/empty-product.png')" style="height: 330px" >
+              <img :src="require('@/assets/empty-product.png')" style="height: 240px" >
               <v-spacer/>
             </v-layout>
 
             <template v-for="cv in cvs">
 
               <v-layout row wrap @click="$router.push('/xem-CV-ung-tuyen/'+cv.id+'/'+jobid)">
-                <v-flex md2 xs3>
+                <v-flex md3 xs3>
                   <v-avatar size="150px" align="center">
                     <v-img v-bind:src="cv.img"></v-img>
                   </v-avatar>
@@ -141,19 +138,6 @@
                 </template>
                 </span>
                       </v-layout>
-                      <!--                <span><i>Vị trí ứng tuyển:</i> {{cv.industryByIndustryId.name}}</span>-->
-                      <!--                <v-layout row wrap>-->
-                      <!--                  <v-icon class="">mdi-bag-personal</v-icon>-->
-                      <!--                  <span>Quản lý cửa hàng - Cửu hàng điện thoại di động</span>-->
-                      <!--                </v-layout>-->
-                      <!--                <v-layout row wrap>-->
-                      <!--                  <v-icon class="">mdi-bag-personal</v-icon>-->
-                      <!--                  <span>Nhân viên thu hồi nợ qua điện thoại - Công ty tài chính FECredit</span>-->
-                      <!--                </v-layout>-->
-                      <!--                <v-layout row wrap>-->
-                      <!--                  <v-icon class="">mdi-school</v-icon>-->
-                      <!--                  <span>Quản lý cửa hàng - Cửu hàng điện thoại di động</span>-->
-                      <!--                </v-layout>-->
                       <v-layout row wrap  >
                         <v-flex md5 xs4 style="border: 2px #2c3e50; border-style: dotted"  class="pa-1 mr-2">
                           <v-icon class="">mdi-map-marker</v-icon>
@@ -185,28 +169,6 @@
 
             </template>
           </v-card-text>
-
-<!--          <v-card-text>-->
-<!--            <h3>Hành chính văn phòng</h3>-->
-<!--            <table >-->
-<!--              <tr>-->
-<!--                <td class="pr-3">Chuyên viên Nhân sự (45,105)</td>-->
-<!--                <td class="pr-3">Chuyên viên Tuyển dụng (12,714)</td>-->
-<!--                <td>Nhân viên Hành chính - Văn phòng (63,194)</td>-->
-<!--              </tr>-->
-<!--              <tr>-->
-<!--                <td class="pr-3">Nhân viên Hành chính - Nhân sự (45,105)</td>-->
-<!--                <td class="pr-3">Nhân viên Hành chính - Kế toán (12,714)</td>-->
-<!--                <td>Thu ngân (63,194)</td>-->
-<!--              </tr>-->
-<!--              <tr>-->
-<!--                <td class="pr-3">Kế toán (45,105)</td>-->
-<!--                <td class="pr-3">Lễ tân (12,714)</td>-->
-<!--                <td>Giao dịch viên (63,194)</td>-->
-<!--              </tr>-->
-<!--            </table>-->
-<!--          </v-card-text>-->
-
         </v-card>
       </v-flex>
 <!-- option-->
@@ -218,9 +180,7 @@
           </v-layout>
           <v-radio-group v-model="radios" :mandatory="false">
             <v-radio label="Cập nhật mới nhất" value="1"></v-radio>
-            <v-radio label="Đang tìm viêc" value="2"></v-radio>
-            <v-radio label="Có kinh nghiệm làm việc" value="3"></v-radio>
-            <v-radio label="Ứng viên phù hợp" value="4"></v-radio>
+
           </v-radio-group>
           <v-divider></v-divider>
           <v-layout row wrap>
@@ -228,21 +188,15 @@
             <h2>Tuổi</h2>
           </v-layout>
           <v-layout row wrap>
-            <v-flex md6 class="pr-2">
+            <v-flex md10 class="pr-2">
               <v-select
                 :items="items"
-                label="Từ"
+                label="tuổi"
                 outline
               ></v-select>
             </v-flex>
 
-            <v-flex md6 class="pl-2">
-              <v-select
-                :items="items"
-                label="Dến"
-                outline
-              ></v-select>
-            </v-flex>
+
           </v-layout>
           <v-divider></v-divider>
           <v-layout row wrap>
@@ -316,7 +270,9 @@
             .get(Constants.URL+'/cv/search/'+this.lskill +"/"+this.cityId+"/"+this.industryId)
             .then(response => {
               console.log(response)
-              this.cvs = response.data.content;}
+              this.cvs = response.data.content;
+              this.lskill = [];
+            }
             )
 
         }

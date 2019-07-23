@@ -57,19 +57,30 @@
 
         }
       },
+      methods:{
+        getInit(){
+          this.userId = this.userId1;
+          console.log(this.userId)
+          Axios
+            .get(Constants.URL+'/city/getAllCity')
+            .then(response => (
+              this.cities = response.data.data))
+          Axios
+            .get(Constants.URL+'/apply/list-applied/'+this.userId)
+            .then(response => (this.info = response.data.data))
+          // this.$nextTick(() => {
+          //   // this.getComponent();
+          // })
+        }
+      },
       mounted () {
-        this.userId = this.userId1;
-        console.log(this.userId)
-        Axios
-          .get(Constants.URL+'/city/getAllCity')
-          .then(response => (
-            this.cities = response.data.data))
-        Axios
-          .get(Constants.URL+'/apply/list-applied/'+this.userId)
-          .then(response => (this.info = response.data.data))
-        // this.$nextTick(() => {
-        //   // this.getComponent();
-        // })
+        this.getInit();
+      },
+      watch:{
+        userId1(){
+          this.getInit();
+
+        }
       },
       computed: {
         ...mapGetters('AUTHENTICATION_STORE',{

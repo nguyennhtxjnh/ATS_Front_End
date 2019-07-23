@@ -1,7 +1,12 @@
 <template>
   <v-flex style="background-color: whitesmoke">
     <v-container>
-      <v-layout wrap md12 xs12>
+    <v-layout row wrap v-if="info.length === 0">
+      <v-spacer/>
+      <img :src="require('@/assets/empty-product.png')" >
+      <v-spacer/>
+    </v-layout>
+      <v-layout wrap md12 xs12 v-if="info.length !== 0">
         <template v-for="job in info">
           <v-container md7 xs12 style="background-color: white" class="ma-3 pa-2" >
             <v-layout row wrap>
@@ -58,15 +63,7 @@
         }
       },
       mounted () {
-        this.userId = this.userId1;
-        Axios
-          .get(Constants.URL+'/city/getAllCity')
-          .then(response => (
-            this.cities = response.data.data))
-        Axios
-          .get(Constants.URL+'/jobseekerlikejob/list/'+this.userId)
-          .then(response => (this.info = response.data.data))
-
+        this.getInit();
       },
       methods: {
         remove(position){
@@ -75,6 +72,22 @@
             this.btnsubmit = false;
           }
           console.log('delete')
+        },
+        getInit(){
+          this.userId = this.userId1;
+          Axios
+            .get(Constants.URL+'/city/getAllCity')
+            .then(response => (
+              this.cities = response.data.data))
+          Axios
+            .get(Constants.URL+'/jobseekerlikejob/list/'+this.userId)
+            .then(response => (this.info = response.data.data))
+        }
+      },
+      watch:{
+        userId1(){
+          this.getInit();
+
         }
       },
       computed: {

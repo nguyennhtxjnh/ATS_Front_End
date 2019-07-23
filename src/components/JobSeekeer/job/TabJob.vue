@@ -21,16 +21,13 @@
             v-for="i in menu"
             :key="i.id"
           >
-            <v-card flat v-if="i.id === '1'" >
-              <SearchJobResult></SearchJobResult>
-            </v-card>
-            <v-card flat v-if="i.id === '2'">
+            <v-card flat v-if="i.id === '1'">
               <SuggestJob></SuggestJob>
             </v-card>
-            <v-card flat v-if="i.id === '3'">
+            <v-card flat v-if="i.id === '2'">
               <JobSaved></JobSaved>
             </v-card>
-            <v-card flat v-if="i.id === '4'">
+            <v-card flat v-if="i.id === '3'">
               <ApplyManager></ApplyManager>
             </v-card>
           </v-tab-item>
@@ -54,8 +51,8 @@
           active: null,
           tab: null,
           menu: [
-            {name:'Tìm Việc Làm', id:'1'},   {name:'Việc làm phù hợp', id:'2'},
-            {name:'Việc làm đã lưu', id:'3'},{name:'Việc làm đã ứng tuyển', id:'4'}
+            {name:'Việc làm phù hợp', id:'1'},
+            {name:'Việc làm đã lưu', id:'2'},{name:'Việc làm đã ứng tuyển', id:'3'}
           ],
 
 

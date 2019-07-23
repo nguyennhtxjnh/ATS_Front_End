@@ -1,6 +1,16 @@
 <template>
   <v-flex style="background-color: whitesmoke">
     <v-container>
+      <v-card class="pa-3" style="background-color: white">
+        <v-card-title>
+          <h2 style="color: #ff5e2d ">Các job được gợi ý</h2>
+        </v-card-title>
+        <v-divider class="pb-3"></v-divider>
+        <v-layout row wrap v-if="info.length === 0">
+          <v-spacer/>
+          <img :src="require('@/assets/empty-product.png')" >
+          <v-spacer/>
+        </v-layout>
       <v-layout wrap md12 xs12>
         <template v-for="job in info">
           <v-container md7 xs12 style="background-color: white" class="ma-3 pa-2" @click="$router.push('/thong-tin-cong-viec/'+ job.id)">
@@ -37,6 +47,7 @@
         </template>
 
       </v-layout>
+      </v-card>
     </v-container>
   </v-flex>
 </template>
