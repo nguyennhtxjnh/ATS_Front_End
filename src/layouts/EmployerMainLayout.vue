@@ -29,7 +29,7 @@
         </v-toolbar-title> -->
 
         <v-spacer></v-spacer>
-        <v-btn style="height: 100%" flat  class="white black--text" @click="">
+        <v-btn style="height: 100%" flat  class="white black--text" @click="$router.push('/tuyen-dung-dich-vu')">
           Dịch vụ
         </v-btn>
         <v-btn style="height: 100%" flat  class="white black--text" @click="$router.push('/quan-li-ung-vien')" v-if="roleId === 2">

@@ -1,41 +1,31 @@
 <template>
   <v-container fluid class="pt-0">
     <v-layout row wrap align-right>
-      <v-flex xs12 class="mb-5">
-        <h2>Công Việc Đang Chờ Duyệt</h2>
-      </v-flex>
+
       <v-flex xs12>
+        <v-container fluid class="pt-0">
+          <v-layout row wrap align-right>
+            <v-flex xs7 >
+              <h2 class="textCustom">Công Việc Đang Chờ Duyệt</h2>
+            </v-flex>
+            <v-spacer></v-spacer>
+            <v-flex xs5>
+              <v-text-field
+                v-model="search"
+                append-icon="search"
+                label="Tìm kiếm theo tiêu đề hoặc công ty"
+                single-line
+                hide-details
+                outline
+                @input="getAllJob()"
+                class="mb-3"
+              ></v-text-field>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-flex>
 
-              <v-flex d-flex xs5>
-                <v-text-field
-                  v-model="search"
-                  append-icon="search"
-                  label="Tìm kiếm theo tiêu đề hoặc công ty"
-                  single-line
-                  hide-details
-                  outline
-                  @input="getAllJob()"
-                  class="mb-3"
-                ></v-text-field>
-
-
-<!--              <v-flex xs2>-->
-<!--                <v-btn style="height: 56px; position: relative; bottom: 5px" color="primary" @click="getAllJob()">Tìm</v-btn>-->
-<!--              </v-flex>-->
-              </v-flex>
-
-
-
-        <!--        <v-text-field-->
-<!--          v-model="search"-->
-<!--          append-icon="search"-->
-<!--          label="Tìm kiếm theo tiêu đề hoặc công ty"-->
-<!--          single-line-->
-<!--          hide-details-->
-<!--          outline-->
-<!--          class="mb-3"-->
-<!--        ></v-text-field>-->
-
+      <v-flex xs12>
         <v-data-table
           :items="Job"
           :headers="headers"
@@ -526,5 +516,7 @@
 </script>
 
 <style scoped>
-
+  .textCustom {
+    color: #ff5e2d;
+  }
 </style>

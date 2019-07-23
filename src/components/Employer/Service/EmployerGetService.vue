@@ -1,52 +1,21 @@
 <template>
-  <v-container fluid class="pt-0">
+  <v-container fluid class="pt-5">
     <v-layout row wrap align-right>
 
-      <v-flex xs12>
-
-        <v-container fluid class="pt-0">
-        <v-layout row wrap align-right>
-          <v-flex xs7>
-            <h2 class="textCustom">Tất cả tài khoản</h2>
-          </v-flex>
-          <v-spacer></v-spacer>
-          <v-flex xs3>
-            <v-text-field
-              v-model="search"
-              append-icon="search"
-              label="Tìm kiếm theo tên hoặc email"
-              single-line
-              hide-details
-              outline
-              @input="getAllAccount()"
-              class="mb-3"
-            ></v-text-field>
-          </v-flex>
-
-          <v-flex xs2 class="pl-2">
-            <v-autocomplete
-              outline
-              v-model="statusSelect"
-              :items="status"
-              item-text="name"
-              item-value="name"
-              label="Trạng thái"
-            ></v-autocomplete>
-          </v-flex>
-        </v-layout>
-        </v-container>
-
-
+      <v-flex xs12 class="align-center justify-center">
+        <p class="textCustom text-xs-center"><b>Tất Cả Dịch Vụ</b></p>
       </v-flex>
+
       <v-flex xs12>
-
-
         <v-data-table
-          :items="Account"
+          :items="Service"
           :headers="headers"
           :loading="loading"
           :pagination.sync="pagination"
           :total-items="pagination.totalItems"
+
+          hide-actions
+          hide-headers
 
           :rows-per-page-text="'Số hàng mỗi trang'"
           :rows-per-page-items="[10, 25, 50, {text: 'Tất cả', value: -1}]"
@@ -60,9 +29,9 @@
           </template>
 
           <template #items="{item}">
-            <td  class="text-xs">{{item.email}}</td>
-            <td  class="text-xs">{{item.fullName}}</td>
-            <td  class="text-xs">{{moment(item.createdDate).format('DD-MM-YYYY')}}</td>
+            <td  class="text-xs"></td>
+            <td  class="text-xs"></td>
+            <td  class="text-xs">{{moment().format('DD-MM-YYYY')}}</td>
             <td  class="text-xs-left">
               <v-chip color="success" v-if="item.status === 'new'">
                 <span style="color: white !important;">Đang hoạt động</span>
@@ -76,20 +45,26 @@
             <td class="text-xs-left">
 
               <v-btn
-                outline flat fab small color="primary"
-                @click="addAccountId(item.id)"
+                outline flat fab small color="grey"
+                @click="viewInfo(item.id)"
                 @click.stop="dialog = true">
-                <v-icon>mdi-pencil-outline</v-icon>
+                <v-icon>mdi-eye-outline</v-icon>
+              </v-btn>
+
+              <v-btn
+                outline flat small color="primary"
+                @click="addServiceId(item.id)"
+                @click.stop="dialog = true">
+                Mua Dịch Vụ
               </v-btn>
 
             </td>
           </template>
 
         </v-data-table>
-
       </v-flex>
-
     </v-layout>
+
     <!--    detailView-->
     <v-dialog
       v-model="dialog"
@@ -141,66 +116,53 @@
   import Axios from 'axios'
 
   export default {
-    name: 'AdminViewAllAccount',
+    name: 'EmployerGetService',
+    name: 'AdminAllService',
     data() {
       return {
         search: '',
-        tempSearch: '',
-        statusSelect: 'Tất cả trạng thái',
-        statusChangeSelect: 'Đang hoạt động',
-        status: [
-          {
-            id: 0,
-            name: "Tất cả trạng thái"
-          },
-          {
-            id: 1,
-            name: "Đang hoạt động"
-          },
-          {
-            id: 2,
-            name: "Đã bị khóa"
-          },
-        ],
-        statusChange: [
-          {
-            id: 1,
-            name: "Đang hoạt động"
-          },
-          {
-            id: 2,
-            name: "Đã bị khóa"
-          },
-        ],
-        Account: [],
+        Service: [],
         loading: false,
         dialog: false,
         headers: [
-          {text: 'Email', value: 'email', },
-          {text: 'Họ và tên', value: 'fullName', },
-          {text: 'Ngày tạo', value: 'createdDate', },
+          {text: 'Email', value: '', },
+          {text: 'Họ và tên', value: '', },
+          {text: 'Ngày tạo', value: '', },
           {text: 'Trạng thái', value: 'status', },
           {text: 'Thao tác', sortable: false},
         ],
         pagination: {
-          sortBy: 'createdDate',
+          sortBy: '',
           descending: true
         },
-        formAccountStatusData: {
+        formServiceStatusData: {
           id: '',
           status: ''
         },
       }
     },
     methods: {
-      addAccountId(id){
+      async viewInfo(id){
+        this.loading = true;
+        await Axios.get(`http://localhost:1122/job/getJobDetail?id=${id}`)
+          .then(response => {
+            this.jobFull = response.data.data;
+            this.jobFull.createdDate = this.moment(this.jobFull.createdDate).format('DD-MM-YYYY');
+            this.jobFull.endDateForApply = this.moment(this.jobFull.endDateForApply).format('DD-MM-YYYY');
+          })
+          .catch(console.error)
+          .finally(() => {
+            this.loading = false;
+          })
+      },
+      addServiceId(id){
         this.formAccountStatusData.id = id;
       },
       changeStatus(){
         if(this.statusChangeSelect === "Đang hoạt động") this.statusChangeSelect = "new";
         if(this.statusChangeSelect === "Đã bị khóa") this.statusChangeSelect = "ban";
         this.formAccountStatusData.status = this.statusChangeSelect;
-        const url = 'http://localhost:1122/user/changeUserStatus'
+        const url = 'http://localhost:8080//'
         const method = 'POST'
         const data = this.formAccountStatusData
         console.log(data)
@@ -232,32 +194,27 @@
             console.log(error)
           })
       },
-
-      getAllAccount() {
-        if(this.statusSelect === "Tất cả trạng thái") this.tempSearch = "";
-        if(this.statusSelect === "Đang hoạt động") this.tempSearch = "new";
-        if(this.statusSelect === "Đã bị khóa") this.tempSearch = "ban";
-        Axios.get('http://localhost:1122/user/getAllUser?search=' + this.search + '&status=' + this.tempSearch)
+      getAllService() {
+        Axios.get('http://localhost:1122/user/getAllUser?search=' + this.search + '&status=')
           .then(response => {
             if(response.data.data !== null){
-              this.Account = response.data.data.content;
+              this.Service = response.data.data.content;
               console.log(response)
             }else {
-              this.Account = []
+              this.Service = []
             }
           })
           .catch(err => console.log(err.response.data))
           .finally(() => this.loading = false);
       },
+      createService(){
 
+      }
     },
     watch: {
       pagination() {
-        this.getAllAccount()
+        this.getAllService()
       },
-      statusSelect(){
-        this.getAllAccount()
-      }
     },
     beforeMount(){
 
@@ -268,5 +225,10 @@
 <style scoped>
   .textCustom {
     color: #ff5e2d;
+    font-size: 30px;
+  }
+  .btnCustom {
+    background-color: #ff5e2d;
+    color: white;
   }
 </style>

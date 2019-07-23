@@ -1,29 +1,31 @@
 <template>
   <v-container fluid class="pt-0">
     <v-layout row wrap align-right>
-      <v-flex xs12 class="mb-5">
-        <h2>Tất Cả Công Ty</h2>
-      </v-flex>
+
       <v-flex xs12>
-        <v-flex d-flex xs5>
-          <v-text-field
-            v-model="search"
-            append-icon="search"
-            label="Tìm kiếm theo tên công ty"
-            single-line
-            hide-details
-            outline
-            @input="getAllCompany()"
-            class="mb-3"
-          ></v-text-field>
+        <v-container fluid class="pt-0">
+          <v-layout row wrap align-right>
+            <v-flex xs7>
+              <h2 class="textCustom">Tất Cả Công Ty</h2>
+            </v-flex>
+            <v-spacer></v-spacer>
+            <v-flex xs5>
+              <v-text-field
+                v-model="search"
+                append-icon="search"
+                label="Tìm kiếm theo tên công ty"
+                single-line
+                hide-details
+                outline
+                @input="getAllCompany()"
+                class="mb-3"
+              ></v-text-field>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-flex>
 
-
-<!--          <v-flex xs2>-->
-<!--            <v-btn style="height: 56px; position: relative; bottom: 5px" color="primary" @click="getAllCompany()">Tìm</v-btn>-->
-<!--          </v-flex>-->
-        </v-flex>
-
-
+      <v-flex xs12>
         <v-data-table
           :items="Company"
           :headers="headers"
@@ -74,16 +76,11 @@
 
             </td>
           </template>
-          <!--          <template v-slot:no-results>-->
-          <!--            <v-alert :value="true" color="error" icon="warning">-->
-          <!--              Không tìm thấy kết quả cho từ khóa "{{ search }}".-->
-          <!--            </v-alert>-->
-          <!--          </template>-->
+
         </v-data-table>
 
-
-
       </v-flex>
+
     </v-layout>
     <!--    detailView-->
     <v-dialog
@@ -208,5 +205,7 @@
 </script>
 
 <style scoped>
-
+  .textCustom {
+    color: #ff5e2d;
+  }
 </style>
