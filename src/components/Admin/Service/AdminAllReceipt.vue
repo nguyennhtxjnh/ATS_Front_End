@@ -1,4 +1,4 @@
-<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
+<template>
   <v-container fluid class="pt-0">
     <v-layout row wrap align-right>
 
@@ -6,9 +6,8 @@
         <v-container fluid class="pt-0">
           <v-layout row wrap align-right>
             <v-flex xs7 >
-              <h2 class="textCustom pl-2">Tất Cả Dịch Vụ</h2>
+              <h2 class="textCustom pl-2">Lịch sử giao dịch</h2>
               <v-spacer></v-spacer>
-              <v-btn class="btnCustom" flat @click.stop="dialogCreateStatus = true">Tạo mới dịch vụ</v-btn>
             </v-flex>
             <v-spacer></v-spacer>
             <v-flex xs3>
@@ -111,6 +110,11 @@
               <v-flex xs12><b>Giá: </b> {{formPackDetail.price}}</v-flex>
               <v-flex xs12>
                 <b>Các chức năng dịch vụ sẽ cung cấp:</b>
+                <template v-for="item in formPackDetail.listFunction">
+                  <v-flex xs12>
+                    {{item}}
+                  </v-flex>
+                </template>
               </v-flex>
 
             </v-layout>
@@ -179,68 +183,70 @@
 
       <v-card>
         <v-form ref="form" @submit.prevent="createService">
-        <v-card-title class="headline"><b>Tạo dịch vụ mới</b></v-card-title>
+          <v-card-title class="headline"><b>Tạo dịch vụ mới</b></v-card-title>
 
-        <v-divider></v-divider>
+          <v-divider></v-divider>
 
-        <v-card-text>
-          <v-container class=" mb-3" fluid grid-list-md>
-            <v-layout row wrap class="justify-center align-center">
-              <v-flex  xs10>
-                <v-text-field class="ma-2" prepend-icon="mdi-account-badge" name="name" label="Tên dịch vụ" type="text"
-                              v-model="formDataServiceCreate.name"
-                              :rules="[rules.required]"></v-text-field>
-              </v-flex>
-              <v-flex  xs10>
-                <v-text-field class="ma-2" prepend-icon="mdi-account-badge" name="info" label="Thông tin dịch vụ" type="text"
-                              v-model="formDataServiceCreate.description"
-                              :rules="[rules.required]"></v-text-field>
-              </v-flex>
-              <v-flex  xs10>
-                <v-text-field class="ma-2" prepend-icon="mdi-account-badge" name="duration" label="Thời hạn dịch vụ" type="number"
-                              v-model="formDataServiceCreate.duration"
-                              :rules="[rules.required]"></v-text-field>
-              </v-flex>
-              <v-flex  xs10>
-                <v-text-field class="ma-2" prepend-icon="mdi-account-badge" name="price" label="Giá dịch vụ" type="number"
-                              v-model="formDataServiceCreate.price"
-                              :rules="[rules.required]"></v-text-field>
-              </v-flex>
+          <v-card-text>
+            <v-container class=" mb-3" fluid grid-list-md>
+              <v-layout row wrap class="justify-center align-center">
+                <v-flex  xs10>
+                  <v-text-field class="ma-2" prepend-icon="mdi-account-badge" name="name" label="Tên dịch vụ" type="text"
+                                v-model="formDataServiceCreate.name"
+                                :rules="[rules.required]"></v-text-field>
+                </v-flex>
+                <v-flex  xs10>
+                  <v-text-field class="ma-2" prepend-icon="mdi-account-badge" name="info" label="Thông tin dịch vụ" type="text"
+                                v-model="formDataServiceCreate.description"
+                                :rules="[rules.required]"></v-text-field>
+                </v-flex>
+                <v-flex  xs10>
+                  <v-text-field class="ma-2" prepend-icon="mdi-account-badge" name="duration" label="Thời hạn dịch vụ" type="number"
+                                v-model="formDataServiceCreate.duration"
+                                :rules="[rules.required]"></v-text-field>
+                </v-flex>
+                <v-flex  xs10>
+                  <v-text-field class="ma-2" prepend-icon="mdi-account-badge" name="price" label="Giá dịch vụ" type="number"
+                                v-model="formDataServiceCreate.price"
+                                :rules="[rules.required]"></v-text-field>
+                </v-flex>
 
-              <v-flex  xs10>
-              <v-autocomplete
-                class="ma-2"
-                prepend-icon="mdi-account-badge"
-                v-model="formDataServiceCreate.listFunction"
-                :items="functionAPI"
-                item-text="functionName"
-                item-value="id"
-                label="Các chức năng dịch vụ sẽ cung cấp"
-                :rules="[rules.required]"
-              >
-              </v-autocomplete>
-              </v-flex>
+                <v-flex  xs10>
+                  <v-autocomplete
+                    chips
+                    class="ma-2"
+                    prepend-icon="mdi-account-badge"
+                    multiple
+                    v-model="formDataServiceCreate.listFunction"
+                    :items="functionAPI"
+                    item-text="functionName"
+                    item-value="id"
+                    label="Các chức năng dịch vụ sẽ cung cấp"
+                    :rules="[rules.required]"
+                  >
+                  </v-autocomplete>
+                </v-flex>
 
-            </v-layout>
-          </v-container>
-        </v-card-text>
+              </v-layout>
+            </v-container>
+          </v-card-text>
 
-        <v-card-actions class="justify-center align-center">
+          <v-card-actions class="justify-center align-center">
 
-          <v-btn
-            color="green darken-1"
-            flat="flat"
-            @click="dialogCreateStatus = false">
-            Đóng
-          </v-btn>
+            <v-btn
+              color="green darken-1"
+              flat="flat"
+              @click="dialogCreateStatus = false">
+              Đóng
+            </v-btn>
 
-          <v-btn
-            color="success"
-            type="submit">
-            Xác nhận
-          </v-btn>
+            <v-btn
+              color="success"
+              type="submit">
+              Xác nhận
+            </v-btn>
 
-        </v-card-actions>
+          </v-card-actions>
         </v-form>
       </v-card>
 
@@ -253,7 +259,7 @@
   import Axios from 'axios'
 
   export default {
-    name: 'AdminAllService',
+    name: 'AdminAllReceipt',
     data() {
       return {
         search: '',

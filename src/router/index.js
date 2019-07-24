@@ -35,6 +35,9 @@ import AdminViewAllAccountPage from '../views/Admin/AdminViewAllAccountPage'
 import AdminViewAllNewCompanyPage from '../views/Admin/AdminViewAllNewCompanyPage'
 import EmployerCompanyApplyPage from '../views/Employer/EmployerCompanyApplyPage'
 import EmployerGetServicePage from '../views/Employer/EmployerGetServicePage'
+import AdminAllReceiptPage from '../views/Admin/AdminAllReceiptPage'
+import AdminAcceptReceiptPage from '../views/Admin/AdminAcceptReceiptPage'
+import EmployerPayCheckPage from '../views/Employer/EmployerPayCheckPage'
 
 
 Vue.use(Router)
@@ -194,6 +197,12 @@ const router = new Router({
       name: 'get service',
       component: EmployerGetServicePage
     },
+    {
+      path: '/thanh-toan/:serviceid',
+      name: 'thanh toan dich vu',
+      component: EmployerPayCheckPage
+    }
+    ,
 
 
     //Admin Router Link
@@ -239,6 +248,19 @@ const router = new Router({
       component: AdminViewAllAccountPage
     }
     ,
+    {
+      path: '/admin-view-all-receipt',
+      name: 'admin view all receipt',
+      component: AdminAllReceiptPage
+    }
+    ,
+    {
+      path: '/admin-accept-receipt',
+      name: 'admin accept receipt',
+      component: AdminAcceptReceiptPage
+    }
+    ,
+
 
   ]
 })
@@ -257,7 +279,7 @@ router.beforeEach((to, from, next) => {
     next();
   }
 
-  if (to.path === '/dang-nhap' || to.path === '/dang-ki') {
+  if (to.path === '/dang-nhap' || to.path === '/dang-ky') {
     if (store.getters['AUTHENTICATION_STORE/isLoggedIn1']) {
       store.dispatch('AUTHENTICATION_STORE/INIT1')
         .then(() => next('/'))
@@ -267,7 +289,7 @@ router.beforeEach((to, from, next) => {
             } else {
               console.log(error)
             }
-            next('/dang-nhap')
+          next('/dang-nhap')
           }
         );
       return;

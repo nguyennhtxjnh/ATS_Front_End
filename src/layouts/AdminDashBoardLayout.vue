@@ -160,6 +160,17 @@
             icon: "mdi-domain",
             path: "/admin-all-service"
           },
+          {
+            name: "Chấp nhận hóa đơn",
+            icon: "mdi-domain",
+            path: "/admin-accept-receipt"
+          },
+          {
+            name: "Lịch sử giao dịch",
+            icon: "mdi-domain",
+            path: "/admin-view-all-receipt"
+          },
+
         ]
       }
     },

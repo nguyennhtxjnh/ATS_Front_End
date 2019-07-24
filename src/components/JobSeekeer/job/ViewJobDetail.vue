@@ -300,7 +300,7 @@
       }
     },
     props: {
-      id: Number,
+      serviceid: Number,
     },
     methods: {
       goToJob(index){

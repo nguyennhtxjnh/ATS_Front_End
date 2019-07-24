@@ -779,7 +779,7 @@
                   title: 'Thành công',
                   text: 'Đăng tin tuyển dụng thành công!'
                 })
-                this.$router.push('/trang-chu-tuyen-dung');
+                this.$router.push('/dang-tin-tuyen-dung-thanh-cong');
               } else {
                 this.$notify({
                   group: 'foo',
