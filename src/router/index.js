@@ -124,7 +124,7 @@ const router = new Router({
             name: 'searchCV',
             component: EmployerSearchCVPage
         }, {
-            path: '/goi-y-CV',
+            path: '/goi-y-CV/:jobid',
             name: 'suggestionCV',
             component: SuggestionCVPage
         },
@@ -161,7 +161,7 @@ const router = new Router({
         {
             path: '/CV-ung-tuyen/:jobid',
             name: 'CV applied',
-            component: CVAppliedPage
+            component: ViewCVAppliedPage
 
         },
         {

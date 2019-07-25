@@ -137,7 +137,7 @@
               </template>
             </v-data-table>
             <div class="text-xs-center pt-2">
-              <!--            <v-pagination v-model="pagination.page" :length="Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)"></v-pagination>-->
+                          <v-pagination v-model="pagination.page" :length="Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)"></v-pagination>
             </div>
           </v-flex>
           <v-spacer/>
@@ -261,9 +261,9 @@
       })
     },
     watch: {
-      // pagination() {
-      //   this.getjob();
-      // }
+      pagination() {
+        this.getjob();
+      }
     },
 
 

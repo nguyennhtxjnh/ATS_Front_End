@@ -16,7 +16,7 @@
               v-model="industryId"
               :items="industries"
               item-text="name"
-              item-value="id"
+              item-value="name"
               label="Ngành nghề*"
               persistent-hint
               single-line
@@ -32,7 +32,7 @@
               v-model="cityId"
               :items="cities"
               item-text="fullName"
-              item-value="id"
+              item-value="fullName"
               label="Tỉnh/ Thành phố"
               persistent-hint
               single-line
@@ -252,10 +252,10 @@
               if(this.listSkill[tmp].id === this.tmpSkill[skill]){
                 if(this.tmpSkill[skill] === this.tmpSkill[this.tmpSkill.length-1]){
 
-                    this.lskill += this.listSkill[tmp].skillName ;
+                    this.lskill += this.listSkill[tmp].id ;
                 }else {
 
-                   this.lskill += this.listSkill[tmp].skillName +",";
+                   this.lskill += this.listSkill[tmp].id +",";
                 }
               }
             }
@@ -267,10 +267,16 @@
           console.log("indus: "+this.industryId);
           console.log("city: "+this.cityId);
           axios
-            .get(Constants.URL+'/cv/search/'+this.lskill +"/"+this.cityId+"/"+this.industryId)
+            .get(Constants.URL+'/cv/search?listskill='+this.lskill+'&city='+ this.cityId +'&industry='+this.industryId)
             .then(response => {
               console.log(response)
               this.cvs = response.data.content;
+                for(var cv in this.cvs){
+                  var date = new Date(this.cvs[cv].createdDate);
+                  // var tmp = date.getDay()
+                  this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
+                }
+                this.cvs.sort(function(a, b){return b.id - a.id});
               this.lskill = [];
             }
             )
@@ -280,7 +286,7 @@
       },
       mounted() {
         axios
-        .get(Constants.URL+'/skillmaster/')
+          .get(Constants.URL+'/skillmaster/')
           .then(response => {
             console.log(response)
             this.listSkill = response.data}

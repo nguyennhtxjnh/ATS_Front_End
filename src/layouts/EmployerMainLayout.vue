@@ -2,32 +2,13 @@
   <v-app>
     <!--    ToolBar-->
     <template>
-      <v-toolbar fixed style="border-bottom: 4px solid #ff5e2d; background-color: white" v-if="$vuetify.breakpoint.mdAndUp">
-        <v-toolbar-title @click="$router.push('/trang-chu-tuyen-dung')" class="hoverCSSTitle pr-5 mr-5" >Nhà Tuyển Dụng</v-toolbar-title>
-        <v-btn style="height: 100%" flat  class=" text-none"  @click="checkUser">
-          Đăng Tin Tuyển Dụng
-        </v-btn>
-
-        <v-btn style="height: 100%" flat  class=" text-none" @click="$router.push('/cong-ty-duyet-tuyen-dung')">
-          Những nhà tuyển dụng muốn tham gia công ty
-        </v-btn>
-
-
-
-      <!-- <v-toolbar fixed  style="border-bottom: 4px solid #ff5e2d;background-color: white" class="pb-1" v-if="$vuetify.breakpoint.mdAndUp" >
-        <v-toolbar-title @click="$router.push('/trang-chu-tuyen-dung')"  v-if="roleId !== 2" class="black--text hoverCSSTitle pr-5 mr-5" >
-          <v-layout row wrap class="pl-5">
-            <v-img :src="require('@/assets/logoP.png')" style="width: 50px; height: 50px"></v-img>
-            <span class="pt-2 pl-3">Job Board</span>
+      <v-toolbar fixed style="border-bottom: 4px solid #ff5e2d; background-color: white" class="pb-1" v-if="$vuetify.breakpoint.mdAndUp">
+        <v-toolbar-title @click="$router.push('/trang-chu-tuyen-dung')" class="black--text hoverCSSTitle" >
+          <v-layout row wrap class="">
+            <v-img :src="require('@/assets/logoP.png')" style="width: 30px; height: 30px"></v-img>
           </v-layout>
         </v-toolbar-title>
-        <v-toolbar-title @click="$router.push('/quan-li-ung-vien')"  v-if="roleId === 2" class="black--text hoverCSSTitle pr-5 mr-5" >
-          <v-layout row wrap class="pl-5">
-            <v-img :src="require('@/assets/logoP.png')" style="width: 50px; height: 50px"></v-img>
-            <span class="pt-2 pl-3">Job Board</span>
-          </v-layout>
-        </v-toolbar-title> -->
-
+        <v-toolbar-title @click="$router.push('/trang-chu-tuyen-dung')" class="hoverCSSTitle pr-5 mr-5" >Nhà Tuyển Dụng</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn style="height: 100%" flat  class="white black--text" @click="$router.push('/tuyen-dung-dich-vu')">
           Dịch vụ
@@ -217,6 +198,9 @@
           {
             icon: 'mdi-account',
             title: 'Thông Tin',
+          },{
+            icon: 'mdi-account',
+            title: 'Quản lí nhà tuyển dụng',
           },
           {
             icon: 'mdi-logout-variant',
@@ -389,6 +373,9 @@
         }
       },
       notificationClick(notification){
+        if(notification.title === 'Quản lí nhà tuyển dụng'){
+          this.$router.push('/cong-ty-duyet-tuyen-dung');
+        }
         if (notification.title === 'Quản lí ứng viên'){
           this.$router.push('/quan-li-ung-vien');
         }

@@ -18,7 +18,7 @@
             </v-layout>
           </v-flex>
           <!-- danh sách CV-->
-          <ListCVComponent :userId1="userId1"></ListCVComponent>
+          <ListCVComponent></ListCVComponent>
 
         </v-flex>
         <v-spacer/>

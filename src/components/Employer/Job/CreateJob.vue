@@ -678,31 +678,9 @@
           val.length = 3;
         } else {
           this.formData.listSkill = val;
-          // console.log(this.formData.listSkill);
-        }
-        // if(this.selectedSkill === null){
-        //   this.$notify({
-        //     group: 'foo',
-        //     type: 'warn',
-        //     title: 'Chú ý',
-        //     text: 'Kĩ năng không được để trống!'
-        //   })
-        //   return;
-        // }
-        // if(this.formData.listSkill.length === 0){
 
-        // }
-        // if(this.formData.listSkill.length > 0 && this.formData.listSkill.length < 3 ) {
-        //   this.formData.listSkill.forEach((itemX) =>{
-        //     this.tmpSkill.push(itemX.skillMasterId)
-        //     console.log(this.tmpSkill)
-        //     this.tmpSkill = [...new Set(this.tmpSkill)];
-        //     console.log(this.tmpSkill)
-        //   })
-        //   if(!this.tmpSkill.includes(this.selectedSkill.skillMasterId)){
-        //     this.formData.listSkill.push(Object.assign({}, this.selectedSkill))
-        //   }
-        // }
+        }
+
 
       },
       removeSkill(index){
@@ -771,7 +749,7 @@
           }
           await Axios({url,method, data, config})
             .then(response => {
-              // console.log(response)
+               console.log(response)
               if(response.data.success === true){
                 this.$notify({
                   group: 'foo',
@@ -779,7 +757,7 @@
                   title: 'Thành công',
                   text: 'Đăng tin tuyển dụng thành công!'
                 })
-                this.$router.push('/trang-chu-tuyen-dung');
+                this.$router.push('/goi-y-CV/'+response.data.data);
               } else {
                 this.$notify({
                   group: 'foo',

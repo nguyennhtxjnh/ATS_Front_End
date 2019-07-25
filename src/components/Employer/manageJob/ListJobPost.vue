@@ -35,7 +35,7 @@
                 </v-flex>
                 <v-flex md3 class="pt-3 pr-2">
                     <v-btn style="height: auto"
-                           color="warning" outline class="pa-2" block @click="$router.push('/goi-y-CV')">
+                           color="warning" outline class="pa-2" block @click="$router.push('/goi-y-CV/'+job.id)">
                       Gợi ý ứng viên
                     </v-btn>
                     <v-btn style="height: auto"
