@@ -34,7 +34,7 @@
             </v-flex>
             <v-flex xs3></v-flex>
             <v-flex xs3 class="pt-5">
-              <v-btn block @click="$router.push('/thanh-toan')" outline color="primary">Mua Dịch vụ</v-btn>
+              <v-btn block @click="$router.push(`/thanh-toan/${Service[0].id}`)" outline color="primary">Mua Dịch vụ</v-btn>
             </v-flex>
 
           </v-layout>
@@ -43,10 +43,11 @@
       <v-flex xs12 class="pt-5 pb-5">
         <h2 class="textCustom text-xs-center pl-2">Những dịch vụ thêm</h2>
       </v-flex>
-      <v-container fluid class="pt-0">
-        <v-layout row wrap align-center class="justify-center">
-          <v-flex md8 xs12>
+      <v-flex xs2> </v-flex>
+      <v-flex xs8 class="align-center justify-center">
+          <v-flex xs12>
             <v-data-table
+              class="bgCustom pa-3"
               :items="Service"
               :headers="headers"
               :loading="loading"
@@ -66,8 +67,8 @@
               </template>
 
               <template #items="{item}">
-                <td  class="text-xs"><v-flex xs12>{{item.name}}</v-flex></td>
-                <td  class="text-xs-center"><v-flex xs12>{{item.price}}</v-flex></td>
+                <td  class="text-xs"><h3>{{item.name}}</h3></td>
+                <td  class="text-xs-left"><v-flex xs12>Giá: {{item.price}}</v-flex></td>
                 <td class="text-xs-right">
                   <v-flex xs12>
                     <v-btn
@@ -90,8 +91,7 @@
 
             </v-data-table>
           </v-flex>
-        </v-layout>
-      </v-container>
+      </v-flex>
 
 
     </v-layout>
@@ -113,12 +113,7 @@
               <v-flex xs12><b>Thời hạn dịch vụ cung cấp: </b> {{formPackDetail.duration}} ngày</v-flex>
               <v-flex xs12><b>Giá: </b> {{formPackDetail.price}}</v-flex>
               <v-flex xs12>
-                <b>Các chức năng dịch vụ sẽ cung cấp:</b>
-                <template v-for="item in formPackDetail.listFunction">
-                  <v-flex xs12>
-                    {{item}}
-                  </v-flex>
-                </template>
+                <b>Chức năng dịch vụ sẽ cung cấp:</b> {{formPackDetail.functionName}}
               </v-flex>
 
             </v-layout>

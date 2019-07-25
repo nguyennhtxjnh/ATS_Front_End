@@ -110,7 +110,7 @@
               <v-flex xs12><b>Thời hạn dịch vụ cung cấp: </b> {{formPackDetail.duration}} ngày</v-flex>
               <v-flex xs12><b>Giá: </b> {{formPackDetail.price}}</v-flex>
               <v-flex xs12>
-                <b>Các chức năng dịch vụ sẽ cung cấp:</b>
+                <b>Các chức năng dịch vụ sẽ cung cấp:</b> {{formPackDetail.functionName}}
               </v-flex>
 
             </v-layout>
@@ -211,11 +211,11 @@
               <v-autocomplete
                 class="ma-2"
                 prepend-icon="mdi-account-badge"
-                v-model="formDataServiceCreate.listFunction"
+                v-model="formDataServiceCreate.functionId"
                 :items="functionAPI"
                 item-text="functionName"
                 item-value="id"
-                label="Các chức năng dịch vụ sẽ cung cấp"
+                label="Chức năng dịch vụ sẽ cung cấp"
                 :rules="[rules.required]"
               >
               </v-autocomplete>
@@ -339,7 +339,7 @@
           duration: '',
           description: '',
           price: '',
-          listFunction: []
+          functionId: '',
         },
         functionAPI: []
       }

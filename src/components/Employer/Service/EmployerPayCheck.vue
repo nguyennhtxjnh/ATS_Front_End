@@ -11,11 +11,12 @@
           <v-container class=" mb-3" fluid grid-list-md>
             <v-layout row wrap>
 
-              <v-flex xs12><b>Tên dịch vụ: </b> </v-flex>
-              <v-flex xs12><b>Thời hạn dịch vụ cung cấp: </b>  </v-flex>
-              <v-flex xs12><b>Giá: </b> </v-flex>
+              <v-flex xs12><b>Tên dịch vụ: </b> {{formPackDetail.name}}</v-flex>
+              <v-flex xs12><b>Thông tin dịch vụ: </b> {{formPackDetail.description}}</v-flex>
+              <v-flex xs12><b>Thời hạn dịch vụ cung cấp: </b> {{formPackDetail.duration}} ngày</v-flex>
+              <v-flex xs12><b>Giá: </b> {{formPackDetail.price}}</v-flex>
               <v-flex xs12>
-
+                <b>Chức năng dịch vụ sẽ cung cấp:</b> {{formPackDetail.functionName}}
               </v-flex>
 
             </v-layout>
@@ -36,20 +37,56 @@
 </template>
 
 <script>
+  import Axios from 'axios'
+
   export default {
     name: 'EmployerPayCheck',
+    data() {
+      return {
+        formPackDetail: {
+          id: '',
+          name: '',
+          status: '',
+          duration: '',
+          description: '',
+          createdDate: '',
+          price: '',
+          functionpackagesById: [
+            {
+              id: '',
+              servicePackageId: '',
+              serviceFunctionId: ''
+            }
+          ],
+          receiptsById: []
+        },
+      }
+    },
     props: {
       serviceid: Number,
     },
     methods: {
       scrollToTop() {
         window.scrollTo(0,0);
-      }
+      },
+      viewInfo(){
+        this.loading = true;
+        Axios.get(`http://localhost:1122/servicePack/getServicePackDetail?id=${this.serviceid}`)
+          .then(response => {
+            this.formPackDetail = response.data.data;
+            this.formPackDetail.createdDate = this.moment(this.formPackDetail.createdDate).format('DD-MM-YYYY');
+            console.log(this.formPackDetail)
+          })
+          .catch(console.error)
+          .finally(() => {
+            this.loading = false;
+          })
+      },
     },
     mounted () {
       this.$nextTick(() => {
         this.scrollToTop();
-        console.log(this.serviceid)
+        this.viewInfo();
       })
     }
   }
