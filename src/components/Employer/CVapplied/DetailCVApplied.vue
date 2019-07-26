@@ -312,6 +312,7 @@
     import Constants from '@/stores/constant.js'
     import Axios from 'axios';
     import DetailComponent from "./DetailComponent";
+    import Swal from 'sweetalert2'
     export default {
       name: "DetailCVApplied",
       components: {DetailComponent},
@@ -437,36 +438,58 @@
             })
         },
         confirmCV() {
-          console.log("confirm")
-          Axios
-            .get(Constants.URL + '/apply/confirm/' + this.jobid + '/' + this.cvid)
-            .then(response => {
-              if (response.data.success === true) {
-                this.checkConfirm = 2;
-                this.$notify({
-                  group: 'foo',
-                  type: 'success',
-                  title: 'Thành công',
-                  text: 'Xác nhận thành công'
+          Swal.fire({
+            title: 'Bạn muốn xác nhận ứng viên này?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Đồng ý'
+          }).then((result) => {
+            if (result.value) {
+              Axios
+                .get(Constants.URL + '/apply/confirm/' + this.jobid + '/' + this.cvid)
+                .then(response => {
+                  if (response.data.success === true) {
+                    this.checkConfirm = "2";
+                    this.$notify({
+                      group: 'foo',
+                      type: 'success',
+                      title: 'Thành công',
+                      text: 'Xác nhận thành công'
+                    })
+                  }
                 })
-              }
-            })
+            }
+          })
         },
         denyCV() {
           console.log("deny")
-          Axios
-            .get(Constants.URL + '/apply/deny/' + this.jobid + '/' + this.cvid)
-            .then(response => {
-              if (response.data.success === true) {
-                this.checkConfirm = 3;
-                this.$notify({
-                  group: 'foo',
-                  type: 'success',
-                  title: 'Thành công',
-                  text: 'Bỏ qua thành công'
-                })
-              }
-            })
+          Swal.fire({
+            title: 'Bạn thật sự muốn bỏ ứng viên này?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Đồng ý'
+          }).then((result) => {
+              if (result.value) {
+                Axios
+                  .get(Constants.URL + '/apply/deny/' + this.jobid + '/' + this.cvid)
+                  .then(response => {
+                    if (response.data.success === true) {
+                      this.checkConfirm = 3;
+                      this.$notify({
+                        group: 'foo',
+                        type: 'success',
+                        title: 'Thành công',
+                        text: 'Bỏ qua thành công'
+                      })
+                    }
+                  })
+
+              }})
+
         },
 
 

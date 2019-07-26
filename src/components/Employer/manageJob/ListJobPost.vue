@@ -77,14 +77,18 @@
           console.log('delete')
         },
         getComponent(){
+          console.log("pót"+this.userId2);
           this.userId = this.userId2;
           Axios
             .get(Constants.URL+'/city/getAllCity')
             .then(response => (
               this.cities = response.data.data))
-          Axios
-            .get(Constants.URL+'/job/list-valid/'+this.userId)
-            .then(response => (this.info = response.data.data))
+          if(this.userId != null && this.userId !="" ){
+            Axios
+              .get(Constants.URL+'/job/list-valid/'+this.userId)
+              .then(response => (this.info = response.data.data))
+          }
+
         }
       },
       mounted(){

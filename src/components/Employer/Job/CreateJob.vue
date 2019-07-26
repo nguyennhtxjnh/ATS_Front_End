@@ -297,185 +297,166 @@
                     </v-card-title>
                     <v-card-text>
 
-                      <v-container fluid fill-height>
-                        <v-layout fill-height wrap>
+                      <v-container fluid fill-height >
+                        <v-layout align-center justify-center >
+                          <v-flex xs12 sm12 md10 >
+                            <!--header title-->
+                            <v-container class=" mb-3" fluid grid-list-md style="background-color: white">
+                              <v-layout row wrap>
+                                <v-flex d-flex xs12 sm6 md3 class="align-center pa-0">
+<!--                                  <v-img contain :src="imgUrl" aspect-ratio="2"></v-img>-->
+                                </v-flex>
+                                <v-flex d-flex xs12 sm6 md6>
 
-                          <v-flex md12 xs12>
-                            <v-text-field class="ma-2" prepend-icon="mdi-account-badge" name="title" label="Chức Danh Tuyển Dụng" type="text"
-                                          v-model="formData.title"
-                                          disabled
-                                          ></v-text-field>
+                                  <v-layout row wrap class="pa-0 ma-0" >
+
+                                    <v-flex d-flex class="pa-0 ma-0" md12>
+                                      <h1>{{formData.title}}</h1>
+                                    </v-flex>
+                                    <v-flex d-flex class="pa-0 ma-0" md12>
+                                      <v-layout row wrap class="pa-0 ma-0">
+<!--                                        <v-flex d-flex xs12>-->
+<!--                                          <span> <b>Công ty:</b> {{jobFull.company.nameCompany}}</span>-->
+<!--                                        </v-flex>-->
+<!--                                        <v-flex d-flex xs12 v-if="jobFull.salaryTo === 0 && jobFull.salaryFrom > 0">-->
+<!--                                          <span> <b>Mức lương: </b> từ {{jobFull.salaryFrom}}đ trở lên</span>-->
+<!--                                        </v-flex>-->
+<!--                                        <v-flex d-flex xs12 v-if="jobFull.salaryFrom === 0 && jobFull.salaryTo > 0">-->
+<!--                                          <span> <b>Mức lương:</b> lên đến {{jobFull.salaryTo}}đ</span>-->
+<!--                                        </v-flex>-->
+<!--                                        <v-flex d-flex xs12 v-if="jobFull.salaryTo > 0 && jobFull.salaryFrom > 0">-->
+<!--                                          <span> <b>Mức lương:</b> từ {{jobFull.salaryFrom}}đ đến {{jobFull.salaryTo}}đ</span>-->
+<!--                                        </v-flex>-->
+<!--                                        <v-flex d-flex xs12 v-if="jobFull.salaryTo === 0 && jobFull.salaryFrom === 0">-->
+<!--                                          <span><b>Mức lương:</b> thương lượng</span>-->
+<!--                                        </v-flex>-->
+                                        <v-flex d-flex xs12>
+                                          <!--                      <span>View will stay here</span> -->
+<!--                                          <span><b>Khu vực:</b> {{jobFull.city.fullName}} <v-divider vertical class="ml-2 mr-2"></v-divider>-->
+                       <span> <b>Ngày hết hạn nộp:</b> {{formData.endDateForApply}}</span>
+                                        </v-flex>
+                                        <v-flex d-flex xs12 fill-height>
+
+                                        </v-flex>
+                                      </v-layout>
+
+                                    </v-flex>
+                                  </v-layout>
+
+                                </v-flex>
+                                <v-layout xs12 sm6 md3 child-flex text-xs-center>
+                                  <v-flex md12  class="align-center">
+
+
+                                  </v-flex>
+                                </v-layout>
+                              </v-layout>
+                            </v-container>
+                            <!--end header title-->
+
+
+                            <!--        tab-->
+                            <template  >
+                              <v-tabs
+                                next-icon="mdi-arrow-right-bold-box-outline"
+                                prev-icon="mdi-arrow-left-bold-box-outline"
+                                show-arrows
+                              >
+                                <v-tabs-slider color="yellow"></v-tabs-slider>
+                                <v-tab
+                                  v-for="item in items"
+                                  :key="item"
+                                >
+                                  {{ item }}
+                                </v-tab>
+
+                                <v-tabs-items >
+                                  <v-tab-item
+                                    v-for="item in items"
+                                    :key="item"
+                                  >
+                                    <v-card flat>
+                                      <!--card content-->
+
+                                      <!--                  Thông Tin-->
+                                      <v-card-text v-if="item === 'Thông Tin'">
+                                        <v-container fluid fill-height>
+                                          <v-layout align-center justify-center >
+                                            <v-flex d-flex md12>
+
+                                              <v-flex md8 sm12>
+                                                <h4>Thông tin công việc</h4>
+                                                <v-flex md12 v-html="formData.jobDescription" class="pb-3">
+                                                </v-flex>
+                                                <h4>Yêu cầu công việc</h4>
+                                                <v-flex md12 v-html="formData.additionalRequest" class="pb-3">
+                                                </v-flex>
+                                                <h4>Quyền lợi ứng viên</h4>
+                                                <v-flex md12 v-html="formData.candidateBenefits" class="pb-3">
+                                                </v-flex>
+                                              </v-flex>
+
+<!--                                              <v-flex md4 sm12>-->
+<!--                                                <v-card flat>-->
+<!--                                                  <v-card-text >-->
+<!--                                                    <div style="border: 1px solid rgba(0,185,242,.5);" class="pa-3">-->
+
+<!--                                                      <v-text-field class="not-active"-->
+<!--                                                                    label="Ngày Đăng Tuyển"-->
+<!--                                                                    v-model="formData.createdDate"-->
+<!--                                                                    prepend-icon="mdi-calendar-clock"-->
+<!--                                                                    readonly-->
+<!--                                                                    color="none"-->
+<!--                                                      ></v-text-field>-->
+<!--                                                      <v-text-field class="not-active"-->
+<!--                                                                    label="Cấp Bậc"-->
+<!--                                                                    v-model="formData.joblevelName"-->
+<!--                                                                    prepend-icon="mdi-account "-->
+<!--                                                                    readonly-->
+<!--                                                                    color="none"-->
+<!--                                                      ></v-text-field>-->
+<!--                                                      <v-text-field class="not-active"-->
+<!--                                                                    label="Địa chỉ làm việc"-->
+<!--                                                                    v-model="formData.address"-->
+<!--                                                                    prepend-icon="mdi-map-marker"-->
+<!--                                                                    readonly-->
+<!--                                                                    color="none"-->
+<!--                                                      ></v-text-field>-->
+<!--                                                      <v-text-field class="not-active"-->
+<!--                                                                    label="Kĩ năng yêu cầu"-->
+<!--                                                                    v-model="formData.listSkillName"-->
+<!--                                                                    prepend-icon="mdi-account-star"-->
+<!--                                                                    readonly-->
+<!--                                                                    color="none"-->
+<!--                                                      ></v-text-field>-->
+<!--                                                      &lt;!&ndash;                                  <v-text-field class="not-active"&ndash;&gt;-->
+<!--                                                      &lt;!&ndash;                                                label="Ngôn Ngữ Trình Bày"&ndash;&gt;-->
+<!--                                                      &lt;!&ndash;                                                value="Bất kỳ"&ndash;&gt;-->
+<!--                                                      &lt;!&ndash;                                                prepend-icon="mdi-calendar-clock"&ndash;&gt;-->
+<!--                                                      &lt;!&ndash;                                                readonly&ndash;&gt;-->
+<!--                                                      &lt;!&ndash;                                                color="none"&ndash;&gt;-->
+<!--                                                      &lt;!&ndash;                                  ></v-text-field>&ndash;&gt;-->
+<!--                                                    </div>-->
+<!--                                                  </v-card-text>-->
+<!--                                                </v-card>-->
+
+<!--                                              </v-flex>-->
+                                            </v-flex>
+                                          </v-layout>
+                                        </v-container>
+                                      </v-card-text>
+                                      <!--                  End Thông Tin-->
+
+                                      <!--end card content-->
+                                    </v-card>
+                                  </v-tab-item>
+                                </v-tabs-items>
+                              </v-tabs>
+                            </template>
+
+                            <!--     end tab-->
+
                           </v-flex>
-
-                          <v-flex md12 xs12>
-                            <v-autocomplete class="ma-2"
-                                            prepend-icon="mdi-domain"
-                                            v-model="formData.industryId"
-                                            :items="industryAPI"
-                                            item-text="name"
-                                            item-value="id"
-                                            label="Ngành Nghề"
-                                            disabled
-                            ></v-autocomplete>
-                          </v-flex>
-
-                          <v-flex md12 xs12>
-                            <v-layout row wrap>
-                              <v-flex md6 xs12>
-                                <v-text-field class="ma-2" prepend-icon="mdi-map-marker-radius" name="Name" label="Địa Chỉ Làm Việc"
-                                              type="text"
-                                              disabled
-                                              v-model="formData.address"
-                                              :rules="[rules.required]"></v-text-field>
-                              </v-flex>
-                              <v-spacer/>
-                              <v-flex md5 xs12>
-                                <v-autocomplete
-                                  prepend-icon="mdi-map-marker"
-                                  v-model="formData.cityId"
-                                  :items="cityAPI"
-                                  item-text="fullName"
-                                  item-value="id"
-                                  label="Chọn Tỉnh/Thành Phố"
-                                  disabled
-                                ></v-autocomplete>
-                              </v-flex>
-                            </v-layout>
-
-
-                          </v-flex>
-
-                          <v-flex  xs12>
-                            <v-autocomplete
-                              class="ma-2"
-                              v-model="formData.joblevelId"
-                              prepend-icon="mdi-account"
-                              :items="jobLevelAPI"
-                              item-text="jobLevelName"
-                              item-value="id"
-                              label="Cấp Bậc"
-                              disabled
-                            ></v-autocomplete>
-                          </v-flex>
-
-                          <v-flex  md6 xs12>
-                            <v-autocomplete
-                              class="ma-2"
-                              prepend-icon="mdi-format-list-bulleted-type"
-                              :items="workingtype"
-                              v-model="formData.workingtype"
-                              label="Loại Hình Làm Việc"
-                              disabled
-                            ></v-autocomplete>
-                          </v-flex>
-
-                          <v-flex md6 xs12>
-                            <v-text-field class="ma-2" prepend-icon="mdi-account-plus" name="Name" label="Số Lượng Cần Tuyển"
-                                          type="number" v-model="formData.numbeOfRecruitment"
-                                          disabled
-                                          ></v-text-field>
-                          </v-flex>
-
-                          <v-flex md12 xs12>
-                            <v-text-field class="ma-2" prepend-icon="mdi-calendar-clock" label="Kinh Nghiệm"
-                                          type="number" v-model="formData.yearExperience"
-                                          disabled
-                            ></v-text-field>
-
-                          </v-flex>
-
-                          <v-flex md6 xs12>
-                            <v-select
-                              class="ma-2"
-                              prepend-icon="mdi-currency-usd"
-                              :items="salaryChoose"
-                              v-model="selectedSalary"
-                              item-text="name"
-                              item-value="id"
-                              label="Lương"
-                              v-on:change="resetSalary"
-                              disabled
-                            ></v-select>
-                          </v-flex>
-
-                          <v-flex md6 xs12 v-if="selectedSalary === 'Thỏa Thuận'">
-                          </v-flex>
-
-                          <v-flex md3 xs12 v-if="selectedSalary === 'Trong Khoảng' || selectedSalary === 'Từ'">
-                            <v-text-field class="ma-2" name="from" label="Từ" type="number" min="0"
-                                          v-model="formData.salaryFrom"
-                                          disabled
-                            ></v-text-field>
-                          </v-flex>
-
-                          <v-flex md3 xs12 v-if="selectedSalary === 'Trong Khoảng' || selectedSalary === 'Đến'">
-                            <v-text-field class="ma-2" name="to" label="Đến" type="number" min="0"
-                                          v-model="formData.salaryTo"
-                                          disabled
-                            ></v-text-field>
-                          </v-flex>
-
-                          <v-flex md12 xs12 class="pa-2 mt-5">
-                            <h3>Mô tả công việc <span class="red--text">*</span></h3>
-                            <v-label>Mô tả công việc phải làm dựa theo vị trí ứng tuyển</v-label>
-                            <ckeditor
-                                      v-model="formData.jobDescription"
-                                      disabled
-                                      style="border-style: solid; border-color: #ccc; border-width: 1px; height: 250px"
-                            ></ckeditor>
-                          </v-flex>
-
-                          <v-flex md12 xs12 class="pa-2 mt-5">
-                            <h3>Yêu cầu ứng viên <span class="red--text">*</span></h3>
-                            <v-label>Các kỹ năng chuyên môn của ứng viên để đáp ứng nhu cầu công việc, các kỹ năng được ưu tiên
-                              của ứng viên... vv
-                            </v-label>
-                            <ckeditor
-
-                                      v-model="formData.additionalRequest"
-                                      disabled
-                                      style="border-style: solid; border-color: #ccc; border-width: 1px; height: 250px"
-                            ></ckeditor>
-                          </v-flex>
-
-                          <v-flex md12 xs12 class="pa-2 mt-5">
-                            <h3>Quyền lợi ứng viên <span class="red--text">*</span></h3>
-                            <v-label>Các quyền lợi ứng viên được hưởng khi được nhận vào công ty như chế độ đào tạo, bảo hiểm,
-                              nghỉ mát, hoa hồng.. vv
-                            </v-label>
-                            <ckeditor
-
-                                      v-model="formData.candidateBenefits"
-                                      disabled
-                                      style="border-style: solid; border-color: #ccc; border-width: 1px; height: 250px"
-                            ></ckeditor>
-                          </v-flex>
-
-                          <template v-for="(skill,index) in formData.listSkill">
-                            <v-flex class="pa-1" md6 xs12>
-                              <v-autocomplete
-                                :items="skillChoose"
-                                v-model="skill.id"
-                                item-text="skillName"
-                                item-value="id"
-                                label="Kĩ Năng"
-                                disabled
-                                outline
-                              ></v-autocomplete>
-                            </v-flex>
-                            <v-flex class="pa-1" md6 xs12>
-                              <v-autocomplete
-                                prepend-icon="mdi-star"
-                                :items="skillRating"
-                                v-model="skill.skillLevel"
-                                item-text="name"
-                                item-value="id"
-                                label="Đánh Giá"
-                                disabled
-                              ></v-autocomplete>
-                            </v-flex>
-                          </template>
-
                         </v-layout>
                       </v-container>
 
@@ -538,6 +519,10 @@
           skillMasterId: '',
           skillLevel: ''
         },
+        items: [
+          'Thông Tin'
+        ]
+        ,
         skillRating: [
           {
           id: 1,
@@ -751,13 +736,22 @@
             .then(response => {
                console.log(response)
               if(response.data.success === true){
-                this.$notify({
-                  group: 'foo',
+                // this.$notify({
+                //   group: 'foo',
+                //   type: 'success',
+                //   title: 'Thành công',
+                //   text: 'Đăng tin tuyển dụng thành công!'
+                // })
+                Swal.fire({
+                  title: 'Đăng thành công',
+                  text: "Quản trị viên sẽ kiểm tra và phản hồi trong vòng 24h",
                   type: 'success',
-                  title: 'Thành công',
-                  text: 'Đăng tin tuyển dụng thành công!'
+                  confirmButtonColor: '#3085d6',
+                  confirmButtonText: 'Đồng ý'
+                }).then((result) => {
+                  this.$router.push('/goi-y-CV/'+response.data.data);
                 })
-                this.$router.push('/goi-y-CV/'+response.data.data);
+
               } else {
                 this.$notify({
                   group: 'foo',

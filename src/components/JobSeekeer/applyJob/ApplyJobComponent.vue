@@ -93,6 +93,12 @@
             .then(response => {
               if(response.data.success === true){
                 this.saved = true;
+                this.$notify({
+                  group: 'foo',
+                  type: 'success',
+                  title: 'Thành công',
+                  text: 'Lưu thành công'
+                })
               }
 
               }
@@ -106,6 +112,12 @@
             .then(response => {
                 if(response.data.success === true){
                   this.saved = false;
+                  this.$notify({
+                    group: 'foo',
+                    type: 'success',
+                    title: 'Thành công',
+                    text: 'Bỏ lưu thành công'
+                  })
                 }
 
               }

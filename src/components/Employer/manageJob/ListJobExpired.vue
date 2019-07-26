@@ -78,14 +78,16 @@
     },
     methods: {
       getComponent(){
+        console.log("Ẽpried"+this.userId2)
         this.userId = this.userId2;
         Axios
           .get(Constants.URL+'/city/getAllCity')
           .then(response => (
             this.cities = response.data.data))
+        if(this.userId != null && this.userId !="" ){
         Axios
           .get(Constants.URL+'/job/list-invalid/'+this.userId)
-          .then(response => (this.info = response.data.data))
+          .then(response => (this.info = response.data.data))}
       },
       remove(position){
         this.info.splice(position, 1);

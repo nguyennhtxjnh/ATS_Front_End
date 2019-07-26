@@ -15,15 +15,15 @@
           <v-flex md12 class="pr-0 mr-0">
             <v-layout row wrap>
               <v-flex md4 xs12 class="mr-2" >
-                <!--                  <v-text-field-->
-                <!--                    label="Nhập chức danh, vị trí, kỹ năng..."-->
-                <!--                    v-model="searchValue"-->
-                <!--                    single-line-->
-                <!--                  ></v-text-field>-->
+<!--                                  <v-text-field-->
+<!--                                    label="Nhập chức danh, vị trí, kỹ năng..."-->
+<!--                                    v-model="searchValue"-->
+<!--                                    single-line-->
+<!--                                  ></v-text-field>-->
                 <v-combobox
                   single-line
                   label="Tên công việc, vị trí bạn muốn ứng tuyển..."
-                  :items="searchAPI"
+                  :items="searchAPI.all"
                   :search-input.sync="searchValue"
                   v-model="searchValue"
                 ></v-combobox>
@@ -57,12 +57,15 @@
 <!--        Search filter-->
 
 <!--        Search Result-->
-    <v-layout xs12 row wrap class="mt2 white" v-if="checkJob === false">
+    <v-layout row wrap v-if="checkJob === false" class="white">
       <v-spacer/>
-      <img xs9 md9 :src="require('@/assets/empty-product.png')" >
+      <v-flex md2 xs2 >
+<!--        <img :src="require('@/assets/empty-product.png')" sizes="auto" >-->
+        <span> Không có dữ liệu</span>
+      </v-flex>
       <v-spacer/>
     </v-layout>
-        <v-layout row wrap class="mt-2"  v-if="checkJob">
+        <v-layout row wrap class="mt-2" v-if="checkJob" >
           <v-spacer/>
           <v-flex xs12 md9 class="mt2 white" >
             <v-data-table
@@ -244,12 +247,15 @@
         this.searchValue = sessionStorage.getItem("skill");
         this.searchIndustry = sessionStorage.getItem("job");
         this.selectLocation = sessionStorage.getItem("location");
-        this.searchClick();
+
+        if(this.searchValue != "" || this.searchIndustry != ""|| this.selectLocation != ""){
+          this.searchClick();
+        }
         Axios
           .get(Constants.URL+'/job/getSearchComponent')
           .then(response =>
             (
-              this.searchAPI =  response.data.all))
+              this.searchAPI =  response.data.data))
         Axios
           .get(Constants.URL+'/industry')
           .then(response => (

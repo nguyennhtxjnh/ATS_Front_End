@@ -46,7 +46,7 @@
         <v-spacer/>
       </v-layout>
       <v-layout row wrap class="pb-3">
-        <h4>Các vị trí tìm kiếm phổ biến:<i style="color: red">Nhân viên kinh doanh, Nhân viên Marketing, Chuyên viên Nhân sự, Lập trình viên</i> </h4>
+<!--        <h4>Các vị trí tìm kiếm phổ biến:<i style="color: red">Nhân viên kinh doanh, Nhân viên Marketing, Chuyên viên Nhân sự, Lập trình viên</i> </h4>-->
       </v-layout>
       <v-divider class="pb-3"></v-divider>
       <v-layout row wrap>
@@ -114,7 +114,7 @@
 
             <template v-for="cv in cvs">
 
-              <v-layout row wrap @click="$router.push('/xem-CV-ung-tuyen/'+cv.id+'/'+jobid)">
+              <v-layout row wrap @click="$router.push('/xem-CV/'+cv.id)">
                 <v-flex md3 xs3>
                   <v-avatar size="150px" align="center">
                     <v-img v-bind:src="cv.img"></v-img>

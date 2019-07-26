@@ -13,7 +13,6 @@ import JobSeekerMainScreenPage from "../views/Jobseeker/JobSeekerMainScreenPage"
 import EmployerMainScreenPage from "../views/Employer/EmployerMainScreenPage";
 import JobSeekerDashBoardPage from "../views/Jobseeker/JobSeekerDashBoardPage";
 import EmployerCreateJobPage from "../views/Employer/EmployerCreateJobPage";
-import EmployerJobDetailPage from "../views/Employer/EmployerJobDetailPage";
 import JobSeekerCreateCV from "../views/Jobseeker/JobSeekerCreateCV";
 import EmployerSearchCVPage from "../views/Employer/EmployerSearchCVPage";
 import SuggestionCVPage from "../views/Employer/SuggestionCVPage";
@@ -71,11 +70,6 @@ const router = new Router({
             path: '/dang-tin-tuyen-dung',
             name: 'employercreatejob',
             component: EmployerCreateJobPage
-        },
-        {
-            path: '/viec-lam',
-            name: 'employer job detail',
-            component: EmployerJobDetailPage
         },
         {
             path: '/tao-CV',
