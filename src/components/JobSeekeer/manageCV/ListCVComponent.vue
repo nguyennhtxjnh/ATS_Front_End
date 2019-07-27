@@ -45,34 +45,37 @@
                       </v-flex>
                       <!--              button -->
                       <v-flex md12 xs12>
-                        <v-flex lg3 md3 sm6 xs12  style="float: left">
-                          <router-link v-bind:to="'/xem-CV/'+ cv.id"  tag="button">
-                            <v-btn small >
-                              <v-icon>remove_red_eye</v-icon>
-                              xem CV</v-btn>
-                          </router-link>
-                        </v-flex>
-                        <v-flex lg3 md3 sm6 xs12  style="float: left">
-                          <router-link v-bind:to="'/cap-nhat-CV/'+ cv.id" tag="button">
-                            <v-btn small >  <v-icon>edit</v-icon>sửa CV</v-btn>
-                          </router-link>
-                        </v-flex>
-                        <v-flex lg3 md3 sm6 xs12  style="float: left">
+                        <v-layout row wrap>
+                          <v-flex lg3 md3 sm6 xs12  style="float: left">
+                            <router-link v-bind:to="'/xem-CV/'+ cv.id"  tag="button">
+                              <v-btn small  >
+                                <v-icon>remove_red_eye</v-icon>
+                                xem CV</v-btn>
+                            </router-link>
+                          </v-flex>
+                          <v-flex lg3 md3 sm6 xs12  style="float: left">
+                            <router-link v-bind:to="'/cap-nhat-CV/'+ cv.id" tag="button">
+                              <v-btn small >  <v-icon>edit</v-icon>sửa CV</v-btn>
+                            </router-link>
+                          </v-flex>
+                          <v-flex lg3 md3 sm6 xs12  style="float: left">
 
-                          <v-btn small @click="removeCV(cv, index)"><v-icon>delete</v-icon>xóa CV</v-btn>
-                        </v-flex>
-                        <v-flex lg3 md3 sm6 xs12  style="float: left">
-                          <v-flex  v-if="cv.isActive === 1">
-                            <v-btn small style="color: #ff5e2d" >
-                              <v-icon>star</v-icon>
-                               CV chính</v-btn>
+                            <v-btn small @click="removeCV(cv, index)"><v-icon>delete</v-icon>xóa CV</v-btn>
                           </v-flex>
-                          <v-flex  v-if="cv.isActive !== 1">
-                            <v-btn small style="" @click="setMainCV(cv)">
-                              <v-icon>star</v-icon>
-                              Đặt CV chính</v-btn>
+                          <v-flex lg3 md3 sm6 xs12 style="float: left">
+                            <v-flex  v-if="cv.isActive === 1">
+                              <v-btn small style="color: #ff5e2d" >
+                                <v-icon>star</v-icon>
+                                CV chính</v-btn>
+                            </v-flex>
+                            <v-flex  v-if="cv.isActive !== 1">
+                              <v-btn small style="" @click="setMainCV(cv)">
+                                <v-icon>star</v-icon>
+                                Đặt CV chính</v-btn>
+                            </v-flex>
                           </v-flex>
-                        </v-flex>
+                        </v-layout>
+
                       </v-flex>
                     </v-flex>
                     <v-spacer/>
@@ -182,6 +185,7 @@
 
         },
         getInit(){
+          if(this.userId1 != null && this.userId1 != ""){
           console.log(Constants.URL+'/cv/get-list/'+this.userId1)
           axios
             .get(Constants.URL+'/cv/get-list/'+this.userId1)
@@ -195,7 +199,7 @@
                 }
                 this.cvs.sort(function(a, b){return b.id - a.id});
               }
-            )
+            )}
         }
 
       },

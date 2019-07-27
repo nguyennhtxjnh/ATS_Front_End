@@ -271,9 +271,10 @@
       <v-layout row wrap>
         <v-spacer/>
         <v-flex md2 xs12>
-          <router-link to="/quan-li-CV" tag="button">
+          {{info}}
+<!--          <router-link to="/quan-li-CV" tag="button">-->
             <v-btn  color="orange" dark @click="create">Tạo CV</v-btn>
-          </router-link>
+<!--          </router-link>-->
 
         </v-flex>
         <v-spacer/>

@@ -7,7 +7,7 @@
       <v-divider class="pb-3"></v-divider>
       <v-layout row wrap v-if="cvs.length === 0">
         <v-spacer/>
-        <img :src="require('@/assets/empty-product.png')" >
+        <img :src="require('@/assets/empty-product.png')" height="240px" >
         <v-spacer/>
       </v-layout>
 

@@ -70,13 +70,6 @@
                     ></v-autocomplete>
                   </v-flex>
 
-<!--                  <v-flex md6 xs12>-->
-<!--                    <v-text-field class="ma-2" prepend-icon="mdi-account-badge" name="Name" label="Chức Danh Cụ Thể"-->
-<!--                                  type="text"-->
-<!--                                  v-model="formData.vacancyName"-->
-<!--                                  :rules="[rules.required]"></v-text-field>-->
-<!--                  </v-flex>-->
-
                   <!--Loại Hình-->
                   <v-flex  md6 xs12>
                     <v-autocomplete
@@ -101,16 +94,7 @@
 
                   <!--  Kinh Nghiệm-->
                   <v-flex md12 xs12>
-<!--                    <v-autocomplete-->
-<!--                      class="ma-2"-->
-<!--                      prepend-icon="mdi-calendar-clock"-->
-<!--                      :items="skillYear"-->
-<!--                      v-model="formData.yearExperience"-->
-<!--                      item-text="yearName"-->
-<!--                      item-value="id"-->
-<!--                      label="Kinh Nghiệm"-->
-<!--                      :rules="[rules.required]"-->
-<!--                    ></v-autocomplete>-->
+
                     <v-text-field class="ma-2" prepend-icon="mdi-calendar-clock"  label="Kinh Nghiệm"
                                   type="number" v-model="formData.yearExperience"
                                   :rules="[rules.required, rules.noMinus]"></v-text-field>
@@ -148,39 +132,6 @@
                                   :rules="[rules.noMinus]"
                     ></v-text-field>
                   </v-flex>
-                  <!--Hết Lương-->
-                  <!--Hết Hạn-->
-                  <!--                  <v-flex md12 xs12 class="pa-2">-->
-                  <!--                    <v-menu-->
-                  <!--                      v-model="menu2"-->
-                  <!--                      :close-on-content-click="false"-->
-                  <!--                      :nudge-right="40"-->
-                  <!--                      lazy-->
-                  <!--                      transition="scale-transition"-->
-                  <!--                      offset-y-->
-                  <!--                      full-width-->
-                  <!--                      max-width="290px"-->
-                  <!--                      min-width="290px"-->
-                  <!--                    >-->
-                  <!--                      <template v-slot:activator="{ on }">-->
-                  <!--                        <v-text-field-->
-                  <!--                          v-model="date"-->
-                  <!--                          label="Ngày Hết Hạn Tuyển Dụng"-->
-                  <!--                          hint="YYYY/MM/DD format"-->
-                  <!--                          persistent-hint-->
-                  <!--                          prepend-icon="event"-->
-                  <!--                          readonly-->
-
-                  <!--                          v-on="on"-->
-                  <!--                        ></v-text-field>-->
-                  <!--                      </template>-->
-                  <!--                      <v-date-picker v-model="formData.endDateForApply" no-title @input="menu2 = false"-->
-                  <!--                                     :min="new Date().toISOString().substr(0, 10)"-->
-
-                  <!--                      ></v-date-picker>-->
-                  <!--                    </v-menu>-->
-                  <!--                  </v-flex>-->
-                  <!--Hết Hết Hạn-->
 
                   <v-flex md12 xs12 class="pa-2 mt-5">
                     <h3>Mô tả công việc <span class="red--text">*</span></h3>
@@ -241,9 +192,7 @@
 
                   </v-flex>
 
-<!--                  <v-flex class="pa-1" md6 xs12>-->
-<!--                    <v-btn color="orange" style="color: white !important;" @click="addSkill">Thêm Kĩ Năng</v-btn>-->
-<!--                  </v-flex>-->
+
 
                   <template v-for="(skill,index) in formData.listSkill">
                     <v-flex class="pa-2" md6 xs12>
@@ -273,9 +222,7 @@
 <!--                      <v-btn color="error" @click="removeSkill(index)"><v-icon>mdi-trash-can-outline</v-icon></v-btn>-->
 <!--                    </v-flex>-->
                   </template>
-<!--                  <v-flex class="pa-1" md2 xs12>-->
-<!--                    <v-btn color="error" @click="testPost()">test</v-btn>-->
-<!--                  </v-flex>-->
+
 
                 </v-layout>
               </v-container>
@@ -304,36 +251,36 @@
                             <v-container class=" mb-3" fluid grid-list-md style="background-color: white">
                               <v-layout row wrap>
                                 <v-flex d-flex xs12 sm6 md3 class="align-center pa-0">
-<!--                                  <v-img contain :src="imgUrl" aspect-ratio="2"></v-img>-->
+                                  <v-img contain :src="imgUrl" aspect-ratio="2"></v-img>
                                 </v-flex>
                                 <v-flex d-flex xs12 sm6 md6>
 
                                   <v-layout row wrap class="pa-0 ma-0" >
 
                                     <v-flex d-flex class="pa-0 ma-0" md12>
-                                      <h1>{{formData.title}}</h1>
+                                      <h1>{{jobFull.title}}</h1>
                                     </v-flex>
                                     <v-flex d-flex class="pa-0 ma-0" md12>
                                       <v-layout row wrap class="pa-0 ma-0">
-<!--                                        <v-flex d-flex xs12>-->
-<!--                                          <span> <b>Công ty:</b> {{jobFull.company.nameCompany}}</span>-->
-<!--                                        </v-flex>-->
-<!--                                        <v-flex d-flex xs12 v-if="jobFull.salaryTo === 0 && jobFull.salaryFrom > 0">-->
-<!--                                          <span> <b>Mức lương: </b> từ {{jobFull.salaryFrom}}đ trở lên</span>-->
-<!--                                        </v-flex>-->
-<!--                                        <v-flex d-flex xs12 v-if="jobFull.salaryFrom === 0 && jobFull.salaryTo > 0">-->
-<!--                                          <span> <b>Mức lương:</b> lên đến {{jobFull.salaryTo}}đ</span>-->
-<!--                                        </v-flex>-->
-<!--                                        <v-flex d-flex xs12 v-if="jobFull.salaryTo > 0 && jobFull.salaryFrom > 0">-->
-<!--                                          <span> <b>Mức lương:</b> từ {{jobFull.salaryFrom}}đ đến {{jobFull.salaryTo}}đ</span>-->
-<!--                                        </v-flex>-->
-<!--                                        <v-flex d-flex xs12 v-if="jobFull.salaryTo === 0 && jobFull.salaryFrom === 0">-->
-<!--                                          <span><b>Mức lương:</b> thương lượng</span>-->
-<!--                                        </v-flex>-->
+                                        <v-flex d-flex xs12>
+                                          <span> <b>Công ty:</b> {{jobFull.company.nameCompany}}</span>
+                                        </v-flex>
+                                        <v-flex d-flex xs12 v-if="jobFull.salaryTo === 0 && jobFull.salaryFrom > 0">
+                                          <span> <b>Mức lương: </b> từ {{jobFull.salaryFrom}}đ trở lên</span>
+                                        </v-flex>
+                                        <v-flex d-flex xs12 v-if="jobFull.salaryFrom === 0 && jobFull.salaryTo > 0">
+                                          <span> <b>Mức lương:</b> lên đến {{jobFull.salaryTo}}đ</span>
+                                        </v-flex>
+                                        <v-flex d-flex xs12 v-if="jobFull.salaryTo > 0 && jobFull.salaryFrom > 0">
+                                          <span> <b>Mức lương:</b> từ {{jobFull.salaryFrom}}đ đến {{jobFull.salaryTo}}đ</span>
+                                        </v-flex>
+                                        <v-flex d-flex xs12 v-if="jobFull.salaryTo === 0 && jobFull.salaryFrom === 0">
+                                          <span><b>Mức lương:</b> thương lượng</span>
+                                        </v-flex>
                                         <v-flex d-flex xs12>
                                           <!--                      <span>View will stay here</span> -->
-<!--                                          <span><b>Khu vực:</b> {{jobFull.city.fullName}} <v-divider vertical class="ml-2 mr-2"></v-divider>-->
-                       <span> <b>Ngày hết hạn nộp:</b> {{formData.endDateForApply}}</span>
+                                          <span><b>Khu vực:</b> {{jobFull.city.fullName}} <v-divider vertical class="ml-2 mr-2"></v-divider>
+                        <b>Ngày hết hạn nộp:</b> {{jobFull.endDateForApply}}</span>
                                         </v-flex>
                                         <v-flex d-flex xs12 fill-height>
 
@@ -346,7 +293,7 @@
                                 </v-flex>
                                 <v-layout xs12 sm6 md3 child-flex text-xs-center>
                                   <v-flex md12  class="align-center">
-
+                                    <ApplyJobComponent :JobID="jobFull.id"></ApplyJobComponent>
 
                                   </v-flex>
                                 </v-layout>
@@ -395,52 +342,6 @@
                                                 <v-flex md12 v-html="formData.candidateBenefits" class="pb-3">
                                                 </v-flex>
                                               </v-flex>
-
-<!--                                              <v-flex md4 sm12>-->
-<!--                                                <v-card flat>-->
-<!--                                                  <v-card-text >-->
-<!--                                                    <div style="border: 1px solid rgba(0,185,242,.5);" class="pa-3">-->
-
-<!--                                                      <v-text-field class="not-active"-->
-<!--                                                                    label="Ngày Đăng Tuyển"-->
-<!--                                                                    v-model="formData.createdDate"-->
-<!--                                                                    prepend-icon="mdi-calendar-clock"-->
-<!--                                                                    readonly-->
-<!--                                                                    color="none"-->
-<!--                                                      ></v-text-field>-->
-<!--                                                      <v-text-field class="not-active"-->
-<!--                                                                    label="Cấp Bậc"-->
-<!--                                                                    v-model="formData.joblevelName"-->
-<!--                                                                    prepend-icon="mdi-account "-->
-<!--                                                                    readonly-->
-<!--                                                                    color="none"-->
-<!--                                                      ></v-text-field>-->
-<!--                                                      <v-text-field class="not-active"-->
-<!--                                                                    label="Địa chỉ làm việc"-->
-<!--                                                                    v-model="formData.address"-->
-<!--                                                                    prepend-icon="mdi-map-marker"-->
-<!--                                                                    readonly-->
-<!--                                                                    color="none"-->
-<!--                                                      ></v-text-field>-->
-<!--                                                      <v-text-field class="not-active"-->
-<!--                                                                    label="Kĩ năng yêu cầu"-->
-<!--                                                                    v-model="formData.listSkillName"-->
-<!--                                                                    prepend-icon="mdi-account-star"-->
-<!--                                                                    readonly-->
-<!--                                                                    color="none"-->
-<!--                                                      ></v-text-field>-->
-<!--                                                      &lt;!&ndash;                                  <v-text-field class="not-active"&ndash;&gt;-->
-<!--                                                      &lt;!&ndash;                                                label="Ngôn Ngữ Trình Bày"&ndash;&gt;-->
-<!--                                                      &lt;!&ndash;                                                value="Bất kỳ"&ndash;&gt;-->
-<!--                                                      &lt;!&ndash;                                                prepend-icon="mdi-calendar-clock"&ndash;&gt;-->
-<!--                                                      &lt;!&ndash;                                                readonly&ndash;&gt;-->
-<!--                                                      &lt;!&ndash;                                                color="none"&ndash;&gt;-->
-<!--                                                      &lt;!&ndash;                                  ></v-text-field>&ndash;&gt;-->
-<!--                                                    </div>-->
-<!--                                                  </v-card-text>-->
-<!--                                                </v-card>-->
-
-<!--                                              </v-flex>-->
                                             </v-flex>
                                           </v-layout>
                                         </v-container>

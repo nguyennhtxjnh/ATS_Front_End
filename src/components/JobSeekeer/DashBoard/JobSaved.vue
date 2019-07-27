@@ -3,7 +3,7 @@
     <v-container>
     <v-layout row wrap v-if="info.length === 0">
       <v-spacer/>
-      <img :src="require('@/assets/empty-product.png')" >
+      <img :src="require('@/assets/empty-product.png')" height="240px" >
       <v-spacer/>
     </v-layout>
       <v-layout wrap md12 xs12 v-if="info.length !== 0">
@@ -79,9 +79,12 @@
             .get(Constants.URL+'/city/getAllCity')
             .then(response => (
               this.cities = response.data.data))
+          if(this.userId != null && this.userId != ""){
           Axios
             .get(Constants.URL+'/jobseekerlikejob/list/'+this.userId)
-            .then(response => (this.info = response.data.data))
+            .then(response => {
+              this.info = response.data.data
+            })}
         }
       },
       watch:{

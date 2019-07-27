@@ -7,7 +7,7 @@
             <v-layout row wrap>
               <v-flex md2 xs3 class="pa-2">
                 <v-img  :src="job.companyByCompanyId.logoImg"
-                        height="100%"></v-img>
+                        height="240px"></v-img>
 
               </v-flex>
               <v-spacer/>
@@ -61,13 +61,16 @@
         getInit(){
           this.userId = this.userId1;
           console.log(this.userId)
+          if(this.userId != null && this.userId != ""){
+            Axios
+              .get(Constants.URL+'/apply/list-applied/'+this.userId)
+              .then(response => (this.info = response.data.data))
+          }
           Axios
             .get(Constants.URL+'/city/getAllCity')
             .then(response => (
               this.cities = response.data.data))
-          Axios
-            .get(Constants.URL+'/apply/list-applied/'+this.userId)
-            .then(response => (this.info = response.data.data))
+
           // this.$nextTick(() => {
           //   // this.getComponent();
           // })

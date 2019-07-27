@@ -7,17 +7,17 @@
       <v-divider class="pb-3"></v-divider>
       <v-layout row wrap v-if="cvs.length === 0">
         <v-spacer/>
-        <img :src="require('@/assets/empty-product.png')" >
+        <img :src="require('@/assets/empty-product.png')"  height="240px">
         <v-spacer/>
       </v-layout>
 
       <template v-for="cv in cvs">
 
         <v-layout row wrap @click="$router.push('/xem-goi-y-viec-lam/'+cv.id)">
-          <v-flex md2 xs3>
-            <v-avatar size="150px" align="center">
-              <v-img v-bind:src="cv.img"></v-img>
-            </v-avatar>
+          <v-flex md2 xs3 class="">
+
+              <v-img v-bind:src="cv.img" height="100%"></v-img>
+
           </v-flex>
           <v-flex md8 xs8>
             <v-layout row wrap>
@@ -37,38 +37,25 @@
                 </template>
                 </span>
                 </v-layout>
-                <!--                <span><i>Vị trí ứng tuyển:</i> {{cv.industryByIndustryId.name}}</span>-->
-                <!--                <v-layout row wrap>-->
-                <!--                  <v-icon class="">mdi-bag-personal</v-icon>-->
-                <!--                  <span>Quản lý cửa hàng - Cửu hàng điện thoại di động</span>-->
-                <!--                </v-layout>-->
-                <!--                <v-layout row wrap>-->
-                <!--                  <v-icon class="">mdi-bag-personal</v-icon>-->
-                <!--                  <span>Nhân viên thu hồi nợ qua điện thoại - Công ty tài chính FECredit</span>-->
-                <!--                </v-layout>-->
-                <!--                <v-layout row wrap>-->
-                <!--                  <v-icon class="">mdi-school</v-icon>-->
-                <!--                  <span>Quản lý cửa hàng - Cửu hàng điện thoại di động</span>-->
-                <!--                </v-layout>-->
                 <v-layout row wrap  >
-                  <v-flex md5 xs4 style="border: 2px #2c3e50; border-style: dotted"  class="pa-1 mr-2">
+                  <v-flex md5 xs5 style="border: 2px #2c3e50; border-style: dotted"  class="pa-1 mr-2">
                     <v-icon class="">mdi-map-marker</v-icon>
                     <span>Địa điểm: {{cv.cityByCityId.fullName}}</span>
                   </v-flex>
                   <v-spacer/>
-                  <v-flex md6 xs4 style="border: 2px #2c3e50; border-style: dotted"  class="pa-1" v-if="cv.yearExperience !== ''">
+                  <v-flex md6 xs6 style="border: 2px #2c3e50; border-style: dotted"  class="pa-1" v-if="cv.yearExperience !== ''">
                     <v-icon class="">mdi-calendar-blank</v-icon>
                     <span>Thời gian làm việc thực tế {{cv.yearExperience}} năm</span>
                   </v-flex>
                 </v-layout>
               </v-flex>
               <v-spacer/>
-              <v-flex md3 xs4>
+              <v-flex md3 xs3>
                 <i style="float: right"><v-icon>mdi-update</v-icon>  {{cv.createdDate}}</i>
               </v-flex>
             </v-layout>
             <v-layout row wrap class="mt-3">
-              <v-flex md10 xs4 style="border: 2px #2c3e50; border-style: dotted"  class="pa-1">
+              <v-flex md10 xs10 style="border: 2px #2c3e50; border-style: dotted"  class="pa-1">
                 <v-icon class="">mdi-star</v-icon>
                 <span>Mục tiêu: {{cv.description}}
                 </span>
@@ -85,7 +72,7 @@
       <!--      page-->
       <v-layout row wrap>
         <v-spacer/>
-        <v-flex md8 xs12 v-if="cvs.length === 0" >
+        <v-flex md8 xs12 v-if="cvs.length > 0" >
           <v-pagination
             v-model="page"
             :length="15"
@@ -108,9 +95,11 @@
         position:'',
         cvs: [],
         cv:'',
+        page:1,
       }),
       methods :{
         getComponent(){
+          if(this.userId1 != null && this.userId1 != ""){
           console.log(Constants.URL+'/cv/get-list/'+this.userId1)
           axios
             .get(Constants.URL+'/cv/get-list/'+this.userId1)
@@ -124,7 +113,7 @@
                 }
                 this.cvs.sort(function(a, b){return b.id - a.id});
               }
-            )
+            )}
 
         }
       },
