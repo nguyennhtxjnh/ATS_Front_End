@@ -37,19 +37,7 @@
                 </template>
                 </span>
                 </v-layout>
-                <!--                <span><i>Vị trí ứng tuyển:</i> {{cv.industryByIndustryId.name}}</span>-->
-                <!--                <v-layout row wrap>-->
-                <!--                  <v-icon class="">mdi-bag-personal</v-icon>-->
-                <!--                  <span>Quản lý cửa hàng - Cửu hàng điện thoại di động</span>-->
-                <!--                </v-layout>-->
-                <!--                <v-layout row wrap>-->
-                <!--                  <v-icon class="">mdi-bag-personal</v-icon>-->
-                <!--                  <span>Nhân viên thu hồi nợ qua điện thoại - Công ty tài chính FECredit</span>-->
-                <!--                </v-layout>-->
-                <!--                <v-layout row wrap>-->
-                <!--                  <v-icon class="">mdi-school</v-icon>-->
-                <!--                  <span>Quản lý cửa hàng - Cửu hàng điện thoại di động</span>-->
-                <!--                </v-layout>-->
+
                 <v-layout row wrap  >
                   <v-flex md5 xs4 style="border: 2px #2c3e50; border-style: dotted"  class="pa-1 mr-2">
                     <v-icon class="">mdi-map-marker</v-icon>
