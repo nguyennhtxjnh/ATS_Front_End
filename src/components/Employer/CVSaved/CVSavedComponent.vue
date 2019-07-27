@@ -2,7 +2,7 @@
   <v-container>
     <v-card class="pa-3">
       <v-card-title>
-        <h2 style="color: #ff5e2d ">Các CV đã lưu</h2>
+        <h2 style="color: #ff5e2d ">Các ứng viên đã lưu</h2>
       </v-card-title>
       <v-divider class="pb-3"></v-divider>
       <v-layout row wrap v-if="cvs.length === 0">
@@ -11,21 +11,17 @@
         <v-spacer/>
       </v-layout>
 
-      <template v-for="cv in cvs" v-if="cvs.length > 0">
+      <template v-for="cv in cvs">
 
-        <v-layout row wrap @click="$router.push('/xem-CV/'+cv.id)">
-          <v-flex md2 xs2>
-            <v-layout row wrap>
-              <v-avatar size="50">
-              <img :src="cv.img"  height="200px" >
-              </v-avatar>
-            </v-layout>
-
-
+        <v-layout row wrap @click="$router.push('/xem-CV-ung-tuyen/'+cv.id+'/'+jobid)">
+          <v-flex md2 xs3>
+            <v-avatar size="150px" align="center">
+              <v-img v-bind:src="cv.img"></v-img>
+            </v-avatar>
           </v-flex>
           <v-flex md8 xs8>
             <v-layout row wrap>
-              <v-flex md8 xs10>
+              <v-flex md8 xs8>
                 <h2>{{cv.lastName}} {{cv.firstName}}</h2>
                 <v-layout row wrap  >
                 <span><i>Học vấn:</i>
@@ -43,24 +39,24 @@
                 </v-layout>
 
                 <v-layout row wrap  >
-                  <v-flex md5 xs5 style="border: 2px #2c3e50; border-style: dotted"  class="pa-1 mr-2">
+                  <v-flex md5 xs4 style="border: 2px #2c3e50; border-style: dotted"  class="pa-1 mr-2">
                     <v-icon class="">mdi-map-marker</v-icon>
                     <span>Địa điểm: {{cv.cityByCityId.fullName}}</span>
                   </v-flex>
                   <v-spacer/>
-                  <v-flex md6 xs6 style="border: 2px #2c3e50; border-style: dotted"  class="pa-1" v-if="cv.yearExperience !== ''">
+                  <v-flex md6 xs4 style="border: 2px #2c3e50; border-style: dotted"  class="pa-1" v-if="cv.yearExperience !== ''">
                     <v-icon class="">mdi-calendar-blank</v-icon>
                     <span>Thời gian làm việc thực tế {{cv.yearExperience}} năm</span>
                   </v-flex>
                 </v-layout>
               </v-flex>
               <v-spacer/>
-              <v-flex md3 xs2>
+              <v-flex md3 xs4>
                 <i style="float: right"><v-icon>mdi-update</v-icon>  {{cv.createdDate}}</i>
               </v-flex>
             </v-layout>
             <v-layout row wrap class="mt-3">
-              <v-flex md10 xs10 style="border: 2px #2c3e50; border-style: dotted"  class="pa-1">
+              <v-flex md10 xs4 style="border: 2px #2c3e50; border-style: dotted"  class="pa-1">
                 <v-icon class="">mdi-star</v-icon>
                 <span>Mục tiêu: {{cv.description}}
                 </span>
@@ -77,7 +73,7 @@
       <!--      page-->
       <v-layout row wrap>
         <v-spacer/>
-        <v-flex md8 xs12 v-if="cvs.length !== 0" >
+        <v-flex md8 xs12 >
           <v-pagination
             v-model="page"
             :length="15"
@@ -90,43 +86,32 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  import Axios from 'axios'
   import Constants from '@/stores/constant.js'
   import {mapGetters} from 'vuex';
     export default {
-        name: "ListCVSaved",
+        name: "CVSavedComponent",
       data: function ()  {
         return{
           imgURL: '',
           cvs: [],
           page: 1,
+               }
+      }, methods:{
+        getComponent(){
+          Axios
+            .get(Constants.URL+'/userlifecv/list/'+this.userId2)
+            .then(response => (this.cvs = response.data.data))
         }
       }
-      , mounted () {
+      ,
+      mounted(){
         this.getComponent();
       },
       watch:{
         userId2(){
           this.getComponent();
         }
-      },
-      methods: {
-        getComponent(){
-        if(this.userId2 != null && this.userId2 != ""){
-          axios
-            .get(Constants.URL+'/userlifecv/list/'+this.userId2)
-            .then(response => {
-              this.cvs = response.data.data;
-              for(var cv in this.cvs){
-                var date = new Date(this.cvs[cv].createdDate);
-                // var tmp = date.getDay()
-                this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
-              }
-              this.cvs.sort(function(a, b){return b.id - a.id});
-            })}
-        }
-
-
       },
       computed: {
         ...mapGetters('AUTHENTICATION_STORE',{

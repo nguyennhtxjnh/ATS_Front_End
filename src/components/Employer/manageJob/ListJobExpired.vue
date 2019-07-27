@@ -3,7 +3,7 @@
     <v-container>
       <v-layout row wrap v-if="info.length === 0">
         <v-spacer/>
-        <img :src="require('@/assets/empty-product.png')" >
+        <img :src="require('@/assets/empty-product.png')" height="240px" >
         <v-spacer/>
       </v-layout>
       <v-layout wrap md12 xs12>

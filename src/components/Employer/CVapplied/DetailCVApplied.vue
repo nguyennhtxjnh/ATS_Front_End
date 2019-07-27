@@ -342,6 +342,7 @@
             .get(Constants.URL+'/apply/cv-applied/'+this.jobid)
             .then(response => {
               this.cvs = response.data.content;
+              this.lengthPage = response.data.totalPages;
               for(var cv in this.cvs){
                 var date = new Date(this.cvs[cv].createdDate);
                 this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
