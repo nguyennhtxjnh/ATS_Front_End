@@ -251,36 +251,36 @@
                             <v-container class=" mb-3" fluid grid-list-md style="background-color: white">
                               <v-layout row wrap>
                                 <v-flex d-flex xs12 sm6 md3 class="align-center pa-0">
-                                  <v-img contain :src="imgUrl" aspect-ratio="2"></v-img>
+                                  <v-img contain :src="company.logoImg" aspect-ratio="2"></v-img>
                                 </v-flex>
                                 <v-flex d-flex xs12 sm6 md6>
 
                                   <v-layout row wrap class="pa-0 ma-0" >
 
                                     <v-flex d-flex class="pa-0 ma-0" md12>
-                                      <h1>{{jobFull.title}}</h1>
+                                      <h1>{{formData.title}}</h1>
                                     </v-flex>
                                     <v-flex d-flex class="pa-0 ma-0" md12>
                                       <v-layout row wrap class="pa-0 ma-0">
                                         <v-flex d-flex xs12>
-                                          <span> <b>Công ty:</b> {{jobFull.company.nameCompany}}</span>
+                                          <span> <b>Công ty:</b> {{company.nameCompany}}</span>
                                         </v-flex>
-                                        <v-flex d-flex xs12 v-if="jobFull.salaryTo === 0 && jobFull.salaryFrom > 0">
-                                          <span> <b>Mức lương: </b> từ {{jobFull.salaryFrom}}đ trở lên</span>
+                                        <v-flex d-flex xs12 v-if="formData.salaryTo === 0 && formData.salaryFrom > 0">
+                                          <span> <b>Mức lương: </b> từ {{formData.salaryFrom}}đ trở lên</span>
                                         </v-flex>
-                                        <v-flex d-flex xs12 v-if="jobFull.salaryFrom === 0 && jobFull.salaryTo > 0">
-                                          <span> <b>Mức lương:</b> lên đến {{jobFull.salaryTo}}đ</span>
+                                        <v-flex d-flex xs12 v-if="formData.salaryFrom === 0 && formData.salaryTo > 0">
+                                          <span> <b>Mức lương:</b> lên đến {{formData.salaryTo}}đ</span>
                                         </v-flex>
-                                        <v-flex d-flex xs12 v-if="jobFull.salaryTo > 0 && jobFull.salaryFrom > 0">
-                                          <span> <b>Mức lương:</b> từ {{jobFull.salaryFrom}}đ đến {{jobFull.salaryTo}}đ</span>
+                                        <v-flex d-flex xs12 v-if="formData.salaryTo > 0 && formData.salaryFrom > 0">
+                                          <span> <b>Mức lương:</b> từ {{formData.salaryFrom}}đ đến {{formData.salaryTo}}đ</span>
                                         </v-flex>
-                                        <v-flex d-flex xs12 v-if="jobFull.salaryTo === 0 && jobFull.salaryFrom === 0">
+                                        <v-flex d-flex xs12 v-if="formData.salaryTo === 0 && formData.salaryFrom === 0">
                                           <span><b>Mức lương:</b> thương lượng</span>
                                         </v-flex>
                                         <v-flex d-flex xs12>
                                           <!--                      <span>View will stay here</span> -->
-                                          <span><b>Khu vực:</b> {{jobFull.city.fullName}} <v-divider vertical class="ml-2 mr-2"></v-divider>
-                        <b>Ngày hết hạn nộp:</b> {{jobFull.endDateForApply}}</span>
+<!--                                          <span><b>Khu vực:</b> {{jobFull.city.fullName}} <v-divider vertical class="ml-2 mr-2"></v-divider>-->
+<!--                       <span> <b>Ngày hết hạn nộp:</b> {{formData.endDateForApply}}</span>-->
                                         </v-flex>
                                         <v-flex d-flex xs12 fill-height>
 
@@ -291,12 +291,12 @@
                                   </v-layout>
 
                                 </v-flex>
-                                <v-layout xs12 sm6 md3 child-flex text-xs-center>
-                                  <v-flex md12  class="align-center">
-                                    <ApplyJobComponent :JobID="jobFull.id"></ApplyJobComponent>
+<!--                                <v-layout xs12 sm6 md3 child-flex text-xs-center>-->
+<!--                                  <v-flex md12  class="align-center">-->
+<!--                                    <ApplyJobComponent :JobID="jobFull.id"></ApplyJobComponent>-->
 
-                                  </v-flex>
-                                </v-layout>
+<!--                                  </v-flex>-->
+<!--                                </v-layout>-->
                               </v-layout>
                             </v-container>
                             <!--end header title-->
@@ -404,6 +404,7 @@
         dialog: false,
         industries: [],
         tmpSkill: [],
+        company:[],
 
         salaryChoose: ['Thỏa Thuận', 'Từ', 'Đến', 'Trong Khoảng'],
         selectedSalary: 'Thỏa Thuận',
@@ -522,6 +523,14 @@
       },
       async getInitData () {
 
+        if( this.userId2 != null && this.userId2 != "") {
+
+          this.formDataCompany.userId = this.userId2;
+          Axios
+            .post(Constants.URL + '/employercompany/getCompanyByUserId', this.formDataCompany)
+            .then(response => (
+              this.company = response.data.data))
+        }
         Axios
           .get(Constants.URL+'/industry')
           .then(response => (
@@ -728,6 +737,7 @@
       userId2(){
         this.formData.userId = this.userId2;
         this.formDataCompany.userId = this.userId2;
+        this.getInitData()
       }
     },
     computed: {
