@@ -74,9 +74,10 @@
                         chips
                         prepend-icon="mdi-robot-industrial"
                         color="blue-grey lighten-2"
-                        label="Ngành nghê"
+                        label="Ngành nghề"
                         item-text="name"
                         item-value="id"
+                        :rules="[rules.required]"
                         multiple
                       >
                         <template v-slot:selection="data">
@@ -111,7 +112,7 @@
                                         :items="CityAPI"
                                         item-text="fullName"
                                         item-value="id"
-                                        label="Chọn Tĩnh/Thành Phố"
+                                        label="Chọn Tỉnh/Thành Phố"
                                         persistent-hint
 
                         ></v-autocomplete>
@@ -119,7 +120,7 @@
                     </v-flex>
 
                     <v-flex xs12 md4 class="text-xs-center pr-2">
-                      <img src="https://www.seekpng.com/png/detail/25-257121_icon-big-image-png-camera-icon.png" class="hovePointer" @click='$refs.image.click()' height="150" v-if="!imageUrl"/>
+                      <img :src="require('@/assets/cmpdefault.png')" class="hovePointer" @click='$refs.image.click()' height="150" v-if="!imageUrl"/>
                       <img :src="imageUrl" height="150" class="hovePointer" v-if="imageUrl" @click='$refs.image.click()'/>
                       <!--                    <v-text-field label="Chọn Logo Công Ty" @click='$refs.image.click()' v-model='imageName' prepend-icon='attach_file'></v-text-field>-->
                       <h3>Chọn Logo Công Ty</h3>
@@ -149,9 +150,9 @@
 
                     <!--Phone -->
                     <v-flex xs12>
-                      <v-text-field class="ma-2" prepend-icon="phone" name="phone" label="Số Điện Thoại Công Ty" type="number"
+                      <v-text-field class="ma-2" prepend-icon="phone" name="phone" label="Số Điện Thoại Công Ty" type="text"
                                     v-model="formData.telephoneNumber"
-                                    :rules="[rules.required]"></v-text-field>
+                                    :rules="[rules.telephone]"></v-text-field>
                     </v-flex>
 
                     <!-- Thông Tin Công Ty-->
@@ -244,6 +245,10 @@
         rules: {
           required: value => !!value || 'Không được để trống ô này.',
           min: v => v.length >= 8 || 'Ít Nhất 8 Kí Tự',
+          telephone: value => {
+            const pattern = /^[0-9]{10,12}$/
+            return pattern.test(value)|| 'Phải dùng 10 tới 12 chữ số'
+          },
           cemail: value => {
             const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
             return pattern.test(value) || 'Địa chỉ email không phù hợp.'
@@ -266,13 +271,15 @@
 
         Axios({url, method, data})
           .then(response => {
+            if(response.data.success === true){
             this.$notify({
               group: 'foo',
               type: 'success',
               title: 'Thành công',
               text: 'Tạo công ty thành công!'
             })
-            this.$router.push('/trang-chu-tuyen-dung')
+            this.$router.push('/quan-li-ung-vien')
+            }
           })
           .catch(error => {
             console.log(error)
@@ -288,13 +295,16 @@
 
         Axios({url, method, data})
           .then(response => {
-            this.$notify({
-              group: 'foo',
-              type: 'success',
-              title: 'Thành công',
-              text: 'Chọn công ty thành công!'
-            })
-            this.$router.push('/trang-chu-tuyen-dung')
+            if(response.data.success === true){
+              this.$notify({
+                group: 'foo',
+                type: 'success',
+                title: 'Thành công',
+                text: 'Chọn công ty thành công!'
+              })
+              this.$router.push('/quan-li-ung-vien')
+            }
+
           })
           .catch(error => {
             console.log(error)

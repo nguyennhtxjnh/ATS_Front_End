@@ -43,9 +43,9 @@
                   </v-flex>
 
                   <v-flex  xs12>
-                    <v-text-field class="ma-2" prepend-icon="phone" name="phone" label="Số Điện Thoại Cá Nhân" type="number"
+                    <v-text-field class="ma-2" prepend-icon="phone" name="phone" label="Số Điện Thoại Cá Nhân" type="text"
                                   v-model="formData.telephoneNumber"
-                                  :rules="[rules.required, rules.counter]"></v-text-field>
+                                  :rules="[rules.required, rules.telephone]"></v-text-field>
                   </v-flex>
 
 <!--                  <v-flex  xs12 >-->
@@ -103,7 +103,7 @@
                       item-text="fullName"
                       item-value="id"
                       label="Nơi Làm Việc"
-                      hint="Chọn Tĩnh, Thành Phố"
+                      hint="Chọn Tỉnh, Thành Phố"
                       persistent-hint
 
                     ></v-autocomplete>
@@ -168,6 +168,10 @@
           required: value => !!value || 'Không được để trống ô này.',
           counter: value => value.length <= 25 || 'Tối Đa 25 Kí Tự',
           min: v => v.length >= 8 || 'Ít Nhất 8 Kí Tự',
+          telephone: value => {
+            const pattern = /^[0-9]{10,12}$/
+            return pattern.test(value)|| 'Phải dùng 10 tới 12 chữ số'
+          },
           cemail: value => {
             const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
             return pattern.test(value) || 'Địa chỉ email không phù hợp.'
@@ -179,21 +183,21 @@
       testCompany(){
         console.log(this.formDataCompany.companyId);
       },
-      addCompany(userId){
-        this.formDataCompany.userId = userId;
-
-        const url = Constants.URL+'/employercompany/addNewEmployerCompany'
-        const method = 'POST'
-        const data = this.formDataCompany
-
-        Axios({url, method, data})
-          .then(response => {
-            console.log(response)
-          })
-          .catch(error => {
-            console.log(error)
-          })
-      },
+      // addCompany(userId){
+      //   this.formDataCompany.userId = userId;
+      //
+      //   const url = Constants.URL+'/employercompany/addNewEmployerCompany'
+      //   const method = 'POST'
+      //   const data = this.formDataCompany
+      //
+      //   Axios({url, method, data})
+      //     .then(response => {
+      //       console.log(response)
+      //     })
+      //     .catch(error => {
+      //       console.log(error)
+      //     })
+      // },
        login: function (email, password, userId) {
           this.$store.dispatch('AUTHENTICATION_STORE/LOGIN2', {email, password})
             .then(() => {

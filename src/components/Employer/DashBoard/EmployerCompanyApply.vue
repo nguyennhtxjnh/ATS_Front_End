@@ -198,6 +198,7 @@
       },
       getEmployer() {
           this.loading = true;
+          if( this.userId2 != null &&  this.userId2 != ""){
           Axios.get('http://localhost:1122/employercompany/getAllEmployerCompanyByStatus?search=' +
             this.search + '&status=onhold&userId=' + this.userId2)
             .then(response => {
@@ -209,14 +210,16 @@
               // console.log(response)
             })
             .catch(err => console.log(err))
-            .finally(() => this.loading = false);
+            .finally(() => this.loading = false);}
       },
     },
     watch: {
-      pagination() {
-        this.getEmployer()
-      },
+
+
       userId2(){
+        this.getEmployer();
+      },
+      pagination() {
         this.getEmployer()
       },
     },

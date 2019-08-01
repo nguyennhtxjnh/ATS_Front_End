@@ -103,7 +103,7 @@
             .then(() => {
               this.$store.dispatch('AUTHENTICATION_STORE/INIT1')
                 .then(() => {
-                  this.$router.push('/thong-tin')
+                  this.$router.push('/tim-kiem')
                 })
                 .catch((error) => {
                   this.$router.push('/dang-nhap');

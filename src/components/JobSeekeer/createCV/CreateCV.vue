@@ -48,7 +48,7 @@
                 <v-layout row>
                   <v-icon color="orange darken-2">mdi-email-search-outline</v-icon>
                   <v-text-field
-                    :rule="[rules.email(info.email)]"
+                    :rule="[ rules.cemail]"
                     v-model="info.email"
                     label="Email* "
                   ></v-text-field>
@@ -361,10 +361,10 @@
            const pattern = /^[0-9]{10,12}$/
             return pattern.test(value)|| 'Phải dùng 10 tới 12 chữ số'
          },
-          email: value => {
-            const pattern = /^[\w-]+@([\w-]+\.)+[\w-]+$/
-            return pattern.test(value) || 'Địa chỉ email không phù hợp.'
-          }
+         cemail: value => {
+           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+           return pattern.test(value) || 'Địa chỉ email không phù hợp.'
+         }
         },}),
 
 

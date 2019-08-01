@@ -41,7 +41,7 @@
                       Gợi ý ứng viên
                     </v-btn>
                     <v-btn style="height: auto"
-                           color="warning" outline class="pa-2" block  @click="$router.push('/CV-ung-tuyen/'+job.id)">
+                           color="warning" outline class="pa-2" block  @click="$router.push('/xem-CV-ung-tuyen/'+job.id)">
                       Ứng viên đã ứng tuyển
                     </v-btn>
                 </v-flex>

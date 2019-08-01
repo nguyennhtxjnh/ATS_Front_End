@@ -348,12 +348,16 @@
             this.page = response.data.number + 1;
 
             for(var cv in this.cvs){
-              this.cvid = this.cvs[0].id;
+
               var date = new Date(this.cvs[cv].createdDate);
               // var tmp = date.getDay()
               this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
             }
             this.cvs.sort(function(a, b){return b.id - a.id});
+            this.cvid = this.cvs[0].id;
+            if(this.cvid != null && this.cvid != ""){
+              this.getCVid(this.cvid);
+            }
           })
 
       },
@@ -491,12 +495,17 @@
             this.page = response.data.number + 1;
 
             for(var cv in this.cvs){
-              this.cvid = this.cvs[0].id;
               var date = new Date(this.cvs[cv].createdDate);
               // var tmp = date.getDay()
               this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
             }
             this.cvs.sort(function(a, b){return b.id - a.id});
+            this.cvid = this.cvs[0].id;
+            if(this.cvid != null && this.cvid != ""){
+
+            this.getCVid(this.cvid);
+
+            }
           })
       }
     }

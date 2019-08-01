@@ -557,41 +557,7 @@
               this.cvid = this.cvs[0].id;
                 this.lskill = [];
               if(this.cvid != null && this.cvid != ""){
-                console.log(this.cvid )
-                axios
-                  .get(Constants.URL+'/cv/getOne/'+this.cvid+'/0')
-                  .then(response => {
-                      this.info = response.data.data;
-                      if(this.info.img === null || this.info.img === ""){
-                        this.imageUrl = require('@/assets/avatar-default-icon.png')
-                      }
-                      else {
-                        this.imageUrl = this.info.img;
-                      }
-                      var dob = new Date(this.info.dob);
-                      this.info.dob = dob.toISOString().substr(0, 10);
-                      for(var edu in this.info.educationsById){
-                        var stime = new Date(this.info.educationsById[edu].startTime);
-                        this.info.educationsById[edu].startTime = stime.toISOString().substr(0, 10);
-                        var etime = new Date(this.info.educationsById[edu].endtime);
-                        this.info.educationsById[edu].endtime = etime.toISOString().substr(0, 10);
-                      }
-                      for( var edu in this.info.workexperiencesById){
-                        var stime = new Date(this.info.workexperiencesById[edu].startTime);
-                        this.info.workexperiencesById[edu].startTime = stime.toISOString().substr(0, 10);
-                        var etime = new Date(this.info.workexperiencesById[edu].endTime);
-                        this.info.workexperiencesById[edu].endTime = etime.toISOString().substr(0, 10);
-                      }
-                      for( var edu in this.info.projectorproductworkedsById){
-                        var stime = new Date(this.info.projectorproductworkedsById[edu].startTime);
-                        this.info.projectorproductworkedsById[edu].startTime = stime.toISOString().substr(0, 10);
-                        var etime = new Date(this.info.projectorproductworkedsById[edu].endTime);
-                        this.info.projectorproductworkedsById[edu].endTime = etime.toISOString().substr(0, 10);
-                      }
-
-                    }
-
-                  )
+              this.getCVid(this.cvid)
               }
               }
             )
@@ -644,41 +610,7 @@
                 this.cvid = this.cvs[0].id;
               this.lskill = [];
                 if(this.cvid != null && this.cvid != ""){
-                  console.log(this.cvid )
-                  axios
-                    .get(Constants.URL+'/cv/getOne/'+this.cvid+'/0')
-                    .then(response => {
-                        this.info = response.data.data;
-                        if(this.info.img === null || this.info.img === ""){
-                          this.imageUrl = require('@/assets/avatar-default-icon.png')
-                        }
-                        else {
-                          this.imageUrl = this.info.img;
-                        }
-                        var dob = new Date(this.info.dob);
-                        this.info.dob = dob.toISOString().substr(0, 10);
-                        for(var edu in this.info.educationsById){
-                          var stime = new Date(this.info.educationsById[edu].startTime);
-                          this.info.educationsById[edu].startTime = stime.toISOString().substr(0, 10);
-                          var etime = new Date(this.info.educationsById[edu].endtime);
-                          this.info.educationsById[edu].endtime = etime.toISOString().substr(0, 10);
-                        }
-                        for( var edu in this.info.workexperiencesById){
-                          var stime = new Date(this.info.workexperiencesById[edu].startTime);
-                          this.info.workexperiencesById[edu].startTime = stime.toISOString().substr(0, 10);
-                          var etime = new Date(this.info.workexperiencesById[edu].endTime);
-                          this.info.workexperiencesById[edu].endTime = etime.toISOString().substr(0, 10);
-                        }
-                        for( var edu in this.info.projectorproductworkedsById){
-                          var stime = new Date(this.info.projectorproductworkedsById[edu].startTime);
-                          this.info.projectorproductworkedsById[edu].startTime = stime.toISOString().substr(0, 10);
-                          var etime = new Date(this.info.projectorproductworkedsById[edu].endTime);
-                          this.info.projectorproductworkedsById[edu].endTime = etime.toISOString().substr(0, 10);
-                        }
-
-                      }
-
-                    )
+                  this.getCVid(this.cvid)
                 }
             }
             )

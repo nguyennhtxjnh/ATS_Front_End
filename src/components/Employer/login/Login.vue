@@ -43,7 +43,6 @@
       return {
         loginEmail: "",
         loginPassword: "",
-        loading: false,
         rules: {
           required: value => !!value || 'Không được để trống ô này.',
           counter: value => value.length <= 40 || 'Tối Đa 40 Kí Tự',

@@ -1,5 +1,8 @@
 <template>
   <v-container>
+
+      <h2>Các ứng viên đã nộp đơn</h2>
+
     <v-layout row wrap v-if="cvs.length === 0">
       <v-spacer/>
       <img :src="require('@/assets/empty-product.png')" >

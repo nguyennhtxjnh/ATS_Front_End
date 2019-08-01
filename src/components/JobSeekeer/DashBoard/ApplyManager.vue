@@ -7,7 +7,7 @@
             <v-layout row wrap>
               <v-flex md2 xs3 class="pa-2">
                 <v-img  :src="job.companyByCompanyId.logoImg"
-                        height="240px"></v-img>
+                        ></v-img>
 
               </v-flex>
               <v-spacer/>

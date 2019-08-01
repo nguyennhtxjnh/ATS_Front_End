@@ -48,7 +48,7 @@
                             :items="cityAPI"
                             item-text="fullName"
                             item-value="id"
-                            label="Chọn Tĩnh/Thành Phố"
+                            label="Chọn Tỉnh/Thành Phố"
                             :rules="[rules.required]"
                           ></v-autocomplete>
                       </v-flex>
@@ -233,10 +233,11 @@
               <div class="text-xs-center">
                 <v-spacer></v-spacer>
 <!--                <v-btn color="orange" style="color: white !important;" >Đăng Tin</v-btn>-->
+                <v-btn color="orange" dark @click="review">Xác Nhận</v-btn>
 
                 <v-dialog v-model="dialog" width="1200px">
                   <template v-slot:activator="{ on }">
-                    <v-btn color="orange" dark v-on="on">Xác Nhận</v-btn>
+
                   </template>
                   <v-card>
                     <v-card-title>
@@ -405,6 +406,7 @@
         industries: [],
         tmpSkill: [],
         company:[],
+        companyStatus:'',
 
         salaryChoose: ['Thỏa Thuận', 'Từ', 'Đến', 'Trong Khoảng'],
         selectedSalary: 'Thỏa Thuận',
@@ -428,7 +430,7 @@
         skillRating: [
           {
           id: 1,
-          name: "Mới vào"
+          name: "Mới bắt đầu"
           },
           {
             id: 2,
@@ -444,7 +446,7 @@
           },
           {
             id: 5,
-            name: "Guru"
+            name: "Chuyên nghiệp"
           },
         ],
 
@@ -480,7 +482,7 @@
           jobId: '',
 
         },
-
+        tmp: '',
         editor: DecoupledEditor,
         editorConfig: {
           uiColor: '#9AB8F3',
@@ -495,7 +497,7 @@
         },
         rules: {
           noMinus: value => value >= 0 || 'Lương Không Được Nhỏ Hơn 0',
-          maxRecruit: value => value <= 20 || 'Số Lượng Tuyển Tối Đa 20 Người',
+          maxRecruit: value => value <= 100 || 'Số Lượng Tuyển Tối Đa 100 Người',
           minRecruit: value => value > 0 || 'Số Lượng Tuyển Tối Thiểu 1 Người',
           required: value => !!value || 'Không được để trống ô này.',
           counter: value => value.length <= 40 || 'Tối Đa 40 Kí Tự',
@@ -507,6 +509,85 @@
       }
     },
     methods: {
+      review(){
+        var check = true;
+        if(this.companyStatus === "onhold"){
+          check = false;
+          this.$notify({
+            group: 'foo',
+            type: 'warn',
+            title: 'Chú Ý',
+            text: 'Đợi duyệt công ty'
+          })
+        }else {
+          if (this.$refs.form.validate()) {
+            if (this.formData.salaryTo < this.formData.salaryFrom && this.formData.salaryFrom !== 0) {
+              let tmp = null;
+              tmp = this.formData.salaryFrom;
+              this.formData.salaryFrom = this.formData.salaryTo;
+              this.formData.salaryTo = tmp;
+            }
+            if (this.formData.jobDescription === '') {
+              this.$notify({
+                group: 'foo',
+                type: 'warn',
+                title: 'Chú ý',
+                text: 'Mô tả công việc không được để trống!'
+              })
+              return
+            }
+            if (this.formData.candidateBenefits === '') {
+              this.$notify({
+                group: 'foo',
+                type: 'warn',
+                title: 'Chú ý',
+                text: 'Quyền lợi ứng viên không được để trống!'
+              })
+              return
+            }
+            if (this.formData.additionalRequest === '') {
+              this.$notify({
+                group: 'foo',
+                type: 'warn',
+                title: 'Chú ý',
+                text: 'Yêu cầu ứng viên không được để trống!'
+              })
+              return
+            }
+
+            for(let i = 0; i < this.formData.listSkill.length; i++){
+              this.formData.listSkill[i].skillMasterId = this.formData.listSkill[i]['id'];
+              delete this.formData.listSkill[i].id;
+            }
+            if(this.formData.workingtype === 'Toàn Thời Gian') this.formData.workingtype = 'FULLTIME';
+            if(this.formData.workingtype === 'Bán Thời Gian') this.formData.workingtype = 'PARTTIME';
+            if(this.formData.workingtype === 'Thực Tập')  this.formData.workingtype = 'INTERN';
+
+
+
+
+
+          }else{
+            this.$notify({
+              group: 'foo',
+              type: 'warn',
+              title: 'Chú Ý',
+              text: 'Vui lòng điền đầy đủ thông tin!'
+            })
+            check = false;
+          }
+        }
+
+        if(check === true){
+          this.dialog = true;
+        }else {
+
+            this.dialog = false;
+
+        }
+
+
+      },
       testPost(){
         console.log(this.formData.listSkill);
       },
@@ -528,8 +609,16 @@
           this.formDataCompany.userId = this.userId2;
           Axios
             .post(Constants.URL + '/employercompany/getCompanyByUserId', this.formDataCompany)
-            .then(response => (
-              this.company = response.data.data))
+            .then(response => {
+              this.company = response.data.data;
+              this.tmp = response.data.data.employercompaniesById;
+              for (var i in this.tmp){
+                if(this.tmp[i].userId === this.userId2){
+                  this.companyStatus = this.tmp[i].status;
+                  console.log(this.companyStatus)
+                }
+              }
+            })
         }
         Axios
           .get(Constants.URL+'/industry')
@@ -586,107 +675,55 @@
       },
 
       async submitjob () {
-        this.formData.userId = this.userId2;
         await this.getCompany();
-        this.dialog = false;
-        if (this.$refs.form.validate()) {
-          if (this.formData.salaryTo < this.formData.salaryFrom && this.formData.salaryFrom !== 0) {
-            let tmp = null;
-            tmp = this.formData.salaryFrom;
-            this.formData.salaryFrom = this.formData.salaryTo;
-            this.formData.salaryTo = tmp;
+        this.formData.userId = this.userId2;
+        const url = Constants.URL+'/job/create';
+        const method = 'POST';
+        const data = this.formData;
+        console.log(data)
+        let config = {
+          headers: {
+            accessToken: localStorage.getItem('token2')
           }
-          if (this.formData.jobDescription === '') {
-            this.$notify({
-              group: 'foo',
-              type: 'warn',
-              title: 'Chú ý',
-              text: 'Mô tả công việc không được để trống!'
-            })
-            return
-          }
-          if (this.formData.candidateBenefits === '') {
-            this.$notify({
-              group: 'foo',
-              type: 'warn',
-              title: 'Chú ý',
-              text: 'Quyền lợi ứng viên không được để trống!'
-            })
-            return
-          }
-          if (this.formData.additionalRequest === '') {
-            this.$notify({
-              group: 'foo',
-              type: 'warn',
-              title: 'Chú ý',
-              text: 'Yêu cầu ứng viên không được để trống!'
-            })
-            return
-          }
-
-          for(let i = 0; i < this.formData.listSkill.length; i++){
-            this.formData.listSkill[i].skillMasterId = this.formData.listSkill[i]['id'];
-            delete this.formData.listSkill[i].id;
-          }
-          if(this.formData.workingtype === 'Toàn Thời Gian') this.formData.workingtype = 'FULLTIME';
-          if(this.formData.workingtype === 'Bán Thời Gian') this.formData.workingtype = 'PARTTIME';
-          if(this.formData.workingtype === 'Thực Tập')  this.formData.workingtype = 'INTERN';
-
-
-          const url = Constants.URL+'/job/create';
-          const method = 'POST';
-          const data = this.formData;
-          console.log(data)
-          let config = {
-            headers: {
-              accessToken: localStorage.getItem('token2')
-            }
-          }
-          await Axios({url,method, data, config})
-            .then(response => {
-               console.log(response)
-              if(response.data.success === true){
-                // this.$notify({
-                //   group: 'foo',
-                //   type: 'success',
-                //   title: 'Thành công',
-                //   text: 'Đăng tin tuyển dụng thành công!'
-                // })
-                Swal.fire({
-                  title: 'Đăng thành công',
-                  text: "Quản trị viên sẽ kiểm tra và phản hồi trong vòng 24h",
-                  type: 'success',
-                  confirmButtonColor: '#3085d6',
-                  confirmButtonText: 'Đồng ý'
-                }).then((result) => {
-                  this.$router.push('/goi-y-CV/'+response.data.data);
-                })
-
-              } else {
-                this.$notify({
-                  group: 'foo',
-                  type: 'error',
-                  title: 'Lỗi',
-                  text: 'Đăng tin tuyển dụng thất bại!'
-                })
-              }
-
-            })
-            .catch(error => {
-            })
-            .finally(() => {
-
-            })
-
-
-        }else{
-          this.$notify({
-            group: 'foo',
-            type: 'warn',
-            title: 'Chú Ý',
-            text: 'Vui lòng điền đầy đủ thông tin!'
-          })
         }
+        await Axios({url,method, data, config})
+          .then(response => {
+            console.log(response)
+            if(response.data.success === true){
+              // this.$notify({
+              //   group: 'foo',
+              //   type: 'success',
+              //   title: 'Thành công',
+              //   text: 'Đăng tin tuyển dụng thành công!'
+              // })
+              Swal.fire({
+                title: 'Đăng thành công',
+                text: "Quản trị viên sẽ kiểm tra và phản hồi trong vòng 24h",
+                type: 'success',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Đồng ý'
+              }).then((result) => {
+                this.$router.push('/goi-y-CV/'+response.data.data);
+              })
+
+            } else {
+              this.$notify({
+                group: 'foo',
+                type: 'error',
+                title: 'Lỗi',
+                text: 'Đăng tin tuyển dụng thất bại!'
+              })
+            }
+
+          })
+          .catch(error => {
+          })
+          .finally(() => {
+
+          })
+
+        this.dialog = false;
+
       },
       async getCompany(){
         this.formDataCompany.userId = this.userId2;
