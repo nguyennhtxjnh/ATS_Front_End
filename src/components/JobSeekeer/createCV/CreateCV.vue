@@ -1,11 +1,14 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <v-card style="background-color: #f5f5f5">
     <v-container>
+
       <!--      thông tin người dùng-->
       <v-card style="background-color: white">
         <!--        profile-->
         <v-container>
+          <v-form  ref="form">
           <v-layout row wrap>
+
             <v-flex md12 xs12>
               <h2>
                 <v-text-field
@@ -13,6 +16,7 @@
                   label="Tiêu đề CV"
                   placeholder="Tiêu đề CV"
                   solo
+                  name="title"
                 ></v-text-field>
               </h2>
             </v-flex><!-- end thông tin-->
@@ -39,6 +43,7 @@
                 <v-layout row>
                   <v-icon color="orange darken-2">mdi-account-circle-outline</v-icon>
                   <v-text-field
+                    name="Name"
                     :rules="[rules.required(info.lastName)]"
                     v-model="info.lastName"
                     label="Họ* "
@@ -48,8 +53,10 @@
                 <v-layout row>
                   <v-icon color="orange darken-2">mdi-email-search-outline</v-icon>
                   <v-text-field
-                    :rule="[ rules.cemail]"
+                    name="Email"
                     v-model="info.email"
+                    :rule="[rules.required, rules.cemail(info.email)]"
+
                     label="Email* "
                   ></v-text-field>
                 </v-layout>
@@ -57,6 +64,7 @@
                 <v-layout row>
                   <v-icon color="orange darken-2">mdi-phone</v-icon>
                   <v-text-field
+                    name="phone"
                     v-model="info.telephoneNumber"
                     :rules="[rules.telephone(info.telephoneNumber)]"
                     label="Số điện thoại* "
@@ -69,6 +77,7 @@
               <v-layout row>
                 <v-icon color="orange darken-2">mdi-account-circle-outline</v-icon>
                 <v-text-field
+                  name="Name"
                   v-model="info.firstName"
                   :rules="[rules.required(info.firstName)]"
                   label="Tên* "
@@ -84,7 +93,6 @@
                   item-value="id"
                   label="Ngành nghề*"
                   persistent-hint
-                  single-line
                 ></v-autocomplete>
 
               </v-layout>
@@ -105,6 +113,7 @@
                   <v-layout row>
                     <v-icon color="orange darken-2">mdi-map-marker</v-icon>
                     <v-text-field
+                      name="location"
                       v-model="info.address"
                       :rules="[() => info.address.length > 0 ||'Không được để trống']"
                       label="Địa chỉ *"
@@ -151,7 +160,7 @@
                       item-value="id"
                       label="Tỉnh/ Thành phố"
                       persistent-hint
-                      single-line
+                      :rules="[rules.required]"
                     ></v-autocomplete>
 
                   </v-layout>
@@ -222,6 +231,7 @@
             </v-flex>
 
           </v-layout><!--end row bự-->
+          </v-form>
         </v-container>
       </v-card>
       <!--        end profile-->
@@ -271,7 +281,6 @@
       <v-layout row wrap>
         <v-spacer/>
         <v-flex md2 xs12>
-          {{info}}
 <!--          <router-link to="/quan-li-CV" tag="button">-->
             <v-btn  color="orange" dark @click="create">Tạo CV</v-btn>
 <!--          </router-link>-->
@@ -279,6 +288,7 @@
         </v-flex>
         <v-spacer/>
       </v-layout>
+
     </v-container>
   </v-card>
 </template>
@@ -322,7 +332,7 @@
         industries: [],
         menu2: false,
         salaryChoose: ['Thỏa Thuận', 'Từ', 'Đến', 'Trong Khoảng'],
-        select: 'Trong Khoảng',
+        select: 'Thỏa Thuận',
         genders: [{id: "1", name: "Nữ"}, {id: "2", name: "Nam"}, {id: "3", name: "Khác"}],
         info: {
           title: '',
@@ -395,6 +405,78 @@
       },
       create() {
 
+        if (this.$refs.form.validate()) {
+          if (this.info.salaryTo < this.info.salaryFrom && this.info.salaryFrom !== 0) {
+            let tmp = null;
+            tmp = this.info.salaryFrom;
+            this.info.salaryFrom = this.info.salaryTo;
+            this.info.salaryTo = tmp;
+          }
+          function toDataURL(url, callback) {
+            var xhr = new XMLHttpRequest();
+            xhr.onload = function() {
+              var reader = new FileReader();
+              reader.onloadend = function() {
+                callback(reader.result);
+                var tmp = reader.result;
+                this.imageUrl = tmp;
+                console.log(this.imageUrl)
+
+              }
+              reader.readAsDataURL(xhr.response);
+
+
+            };
+            xhr.open('GET', url);
+            xhr.responseType = 'blob';
+            xhr.send();
+          }
+
+          toDataURL(this.imageUrl, function(dataUrl) {
+
+          })
+
+          this.info.img = this.imageUrl;
+          this.info.userId = this.userId1;
+          if (this.info.title.isEmpty){
+            for (indus in this.industries){
+              if(this.industries[indus].id =this.info.industryId){
+                this.info.title = this.industries[indus].name;
+              }
+
+            }
+
+          }
+
+          console.log(this.info);
+          axios.post( Constants.URL+'/cv/create',
+            this.info
+          ).then(response => {
+            console.log(response)
+            if(response.data.success === true){
+              Swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Đã lưu CV',
+                showConfirmButton: false,
+                timer: 1500
+              })
+              this.$router.push('/quan-li-CV');
+            }
+
+          })
+            .catch(function(){
+              console.log('FAILURE!!');
+            });
+
+        }else{
+          this.$notify({
+            group: 'foo',
+            type: 'warn',
+            title: 'Chú Ý',
+            text: 'Vui lòng điền đầy đủ thông tin!'
+          })
+        }
 //         let image = new Image()
 //
 //         image.onload = () => {
@@ -408,61 +490,6 @@
 //
 //         image.src = url
 // console.log(url);
-        function toDataURL(url, callback) {
-          var xhr = new XMLHttpRequest();
-          xhr.onload = function() {
-            var reader = new FileReader();
-            reader.onloadend = function() {
-              callback(reader.result);
-              var tmp = reader.result;
-              this.imageUrl = tmp;
-              console.log(this.imageUrl)
-
-            }
-            reader.readAsDataURL(xhr.response);
-
-
-          };
-          xhr.open('GET', url);
-          xhr.responseType = 'blob';
-          xhr.send();
-        }
-
-        toDataURL(this.imageUrl, function(dataUrl) {
-
-        })
-
-        this.info.img = this.imageUrl;
-        this.info.userId = this.userId1;
-        if (this.info.title.isEmpty){
-          for (indus in this.industries){
-            if(this.industries[indus].id =this.info.industryId){
-              this.info.title = this.industries[indus].name;
-            }
-
-          }
-
-        }
-
-        console.log(this.info);
-        axios.post( Constants.URL+'/cv/create',
-          this.info
-        ).then(response => {
-          console.log(response)
-          if(response.data.success === true){
-            Swal.fire({
-              position: 'top-end',
-              type: 'success',
-              title: 'Đã lưu CV',
-              showConfirmButton: false,
-              timer: 1500
-            })
-          }
-
-        })
-          .catch(function(){
-            console.log('FAILURE!!');
-          });
 
 
 
