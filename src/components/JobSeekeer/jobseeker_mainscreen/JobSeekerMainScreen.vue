@@ -319,6 +319,7 @@
         }
         sessionStorage.setItem("job", this.searchIndustry);
         sessionStorage.setItem("location", this.searchCity);
+        sessionStorage.setItem("check", true);
         this.$router.push('/tim-kiem');
       }
     },

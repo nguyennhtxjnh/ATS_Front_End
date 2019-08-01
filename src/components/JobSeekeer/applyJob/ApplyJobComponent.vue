@@ -29,7 +29,7 @@
                     <template v-for="cv in cvs">
                       <v-radio  v-bind:value="cv.id">
                         <template v-slot:label>
-                          <div><strong class="success--text">{{cv.title}}</strong>(<router-link v-bind:to="'/xem-CV/'+ cv.id"  tag="button">xem</router-link>)</div>
+                          <div><strong class="success--text">{{cv.title}}</strong>    (<router-link v-bind:to="'/xem-CV/'+ cv.id"  tag="button">xem</router-link>)</div>
                         </template>
                       </v-radio>
                     </template>
@@ -126,6 +126,7 @@
         applyCV() {
           this.userId = this.userId1;
           console.log(this.getCV +"-"+ this.JobID)
+          if(this.getCV !== null && this.getCV !== "" ){
           axios
             .post(Constants.URL+'/apply/create/'+this.getCV+'/'+this.JobID)
             .then(response => {if(response.data.success === true){
@@ -134,7 +135,14 @@
               this.btnSubmit = false;}
               }
 
-            )
+            )}else {
+            this.$notify({
+              group: 'foo',
+              type: 'error',
+              title: 'Thất bại',
+              text: 'Cần chọn một CV để nộp đơn !'
+            })
+          }
 
         },
         getList(){
@@ -164,32 +172,40 @@
 
             )
         },
+        getInit(){
+          this.userId = this.userId1;
+          console.log("useId"+this.userId+"-" + this.JobID)
+          if(this.userId != null && this.userId != ""){
+          axios
+            .get(Constants.URL+'/apply/check/'+this.userId+'/'+this.JobID)
+            .then(response => {
+                this.appled = response.data;
+                console.log("applied"+this.appled)
+              }
+
+            )
+
+          axios
+            .get(Constants.URL+'/jobseekerlikejob/check/'+this.userId+'/'+this.JobID)
+            .then(response => {
+
+                this.saved = response.data;
+                console.log("saved"+this.saved)
+              }
+            )
+          }
+        }
       },
 
   mounted()
   {
-
-    this.userId = this.userId1;
-    console.log("useId"+this.userId+"-" + this.JobID)
-    axios
-      .get(Constants.URL+'/apply/check/'+this.userId+'/'+this.JobID)
-      .then(response => {
-        this.appled = response.data;
-        console.log("applied"+this.appled)
-        }
-
-      )
-
-    axios
-      .get(Constants.URL+'/jobseekerlikejob/check/'+this.userId+'/'+this.JobID)
-      .then(response => {
-
-        this.saved = response.data;
-        console.log("saved"+this.saved)
-        }
-      )
-
+this.getInit();
   },
+      watch:{
+        userId1(){
+          this.getInit();
+        }
+      },
     computed: {
         ...mapGetters('AUTHENTICATION_STORE',{
           email : 'email1',

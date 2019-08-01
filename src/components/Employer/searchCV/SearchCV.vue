@@ -430,6 +430,7 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex';
   import axios from 'axios';
   import Constants from '@/stores/constant.js'
     export default {
@@ -456,12 +457,14 @@
       }),
       methods:{
         saveCV() {
-          console.log("save")
+
           this.userId = this.userId2;
-          Axios
+          axios
             .post(Constants.URL + '/userlifecv/create/' + this.userId + '/' + this.cvid)
             .then(response => {
+
               if (response.data.success === true) {
+                console.log("save")
                 this.checkSave = false;
                 this.$notify({
                   group: 'foo',
@@ -493,12 +496,12 @@
             this.jobid =  this.$route.params.jobid,
             this.userId = this.userId2;
 
-          // axios
-          //   .get(Constants.URL + '/userlifecv/check/' + this.userId + '/' + this.cvid)
-          //   .then(response => (
-          //     this.checkSave = response.data,
-          //       console.log(response)
-          //   ))
+          axios
+            .get(Constants.URL + '/userlifecv/check/' + this.userId + '/' + this.cvid)
+            .then(response => (
+              this.checkSave = response.data,
+                console.log(response)
+            ))
 
           axios
             .get(Constants.URL+'/cv/getOne/'+this.cvid+'/0')
@@ -616,30 +619,45 @@
             )
 
 
+        },
+        getComponent(){
+          for(var i = 18; i < 56 ; i++){
+            this.items.push(i);
+          }
+          axios
+            .get(Constants.URL+'/skillmaster/')
+            .then(response => {
+              console.log(response)
+              this.listSkill = response.data}
+            )
+
+          axios
+            .get(Constants.URL+'/city/getAllCity')
+            .then(response => (
+              this.cities = response.data.data))
+          axios
+            .get(Constants.URL+'/industry')
+            .then(response => (
+              this.industries = response.data))
         }
 
       },
       mounted() {
-          for(var i = 18; i < 56 ; i++){
-            this.items.push(i);
-          }
-        axios
-          .get(Constants.URL+'/skillmaster/')
-          .then(response => {
-            console.log(response)
-            this.listSkill = response.data}
-           )
-
-        axios
-          .get(Constants.URL+'/city/getAllCity')
-          .then(response => (
-            this.cities = response.data.data))
-        axios
-          .get(Constants.URL+'/industry')
-          .then(response => (
-            this.industries = response.data))
-
-      }
+        this.getComponent();
+      },
+      watch: {
+        userId2() {
+          this.getComponent();
+        }
+      },
+      computed: {
+        ...mapGetters('AUTHENTICATION_STORE', {
+          email: 'email2',
+          roleId: 'roleId2',
+          fullName: 'fullName2',
+          userId2: 'userId2'
+        }),
+      },
     }
 </script>
 

@@ -19,20 +19,32 @@
                 </v-flex>
                 <v-spacer/>
                 <v-flex md5>
-                  <h2 align-left>
+                  <h2 style="color: #ff5e2d" align-left>
                     {{job.title}}
                   </h2>
-                  <h3 align-lef>
+                  <h4 align-lef>
                     <template v-for="city in cities">
                       <v-flex v-if="city.id === job.cityId">
                         {{job.companyByCompanyId.nameCompany}} - {{city.fullName}}
                       </v-flex>
                     </template>
-                  </h3>
+                  </h4>
                   <v-flex align-left>
-                    <h4>  <v-btn icon>
-                      <v-icon color="orange darken-2" >mdi-coin</v-icon>
-                    </v-btn>{{job.salaryTo}} - {{job.salaryFrom}} triệu</h4>
+                    <span>
+
+                    <v-flex d-flex xs12 v-if="job.salaryTo === 0 && job.salaryFrom > 0">
+                      <span> <b>Mức lương: </b> từ {{job.salaryFrom}}đ trở lên</span>
+                    </v-flex>
+                    <v-flex d-flex xs12 v-if="job.salaryFrom === 0 && job.salaryTo > 0">
+                      <span> <b>Mức lương:</b> lên đến {{item.salaryTo}}đ</span>
+                    </v-flex>
+                    <v-flex d-flex xs12 v-if="job.salaryTo > 0 && job.salaryFrom > 0">
+                      <span> <b>Mức lương:</b> từ {{job.salaryFrom}}đ đến {{item.salaryTo}}đ</span>
+                    </v-flex>
+                    <v-flex d-flex xs12 v-if="job.salaryTo === 0 && job.salaryFrom === 0">
+                      <span><b>Mức lương:</b> thương lượng</span>
+                    </v-flex>
+                    </span>
                   </v-flex>
                 </v-flex>
                 <v-flex md3 class="pt-3 pr-2">

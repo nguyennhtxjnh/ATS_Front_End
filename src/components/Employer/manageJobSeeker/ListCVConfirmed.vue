@@ -1,7 +1,7 @@
 <template>
   <v-container>
 
-      <h2>Các ứng viên đã nộp đơn</h2>
+    <h2>Các ứng viên đã xác nhận</h2>
 
     <v-layout row wrap v-if="cvs.length === 0">
       <v-spacer/>
@@ -311,14 +311,11 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex';
-    import Constants from '@/stores/constant.js'
-    import Axios from 'axios';
-    import DetailComponent from "./DetailComponent";
-    import Swal from 'sweetalert2'
+  import axios from 'axios'
+  import Constants from '@/stores/constant.js'
+  import {mapGetters} from 'vuex';
     export default {
-      name: "DetailCVApplied",
-      components: {DetailComponent},
+        name: "ListCVConfirmed",
       data : function () {
         return{
           imageUrl: require('@/assets/avatar-default-icon.png'),
@@ -340,9 +337,9 @@
       }, methods: {
         reloadPage(){
           console.log(this.page);
-
-          Axios
-            .get(Constants.URL+'/apply/cv-applied/'+this.jobid)
+          if(this.userId2 != null && this.userId2 != ""){
+          axios
+            .get(Constants.URL+'/cv/list-comfirmed/'+this.userId2)
             .then(response => {
               this.cvs = response.data.content;
               this.lengthPage = response.data.totalPages;
@@ -350,12 +347,15 @@
                 var date = new Date(this.cvs[cv].createdDate);
                 this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
               }
-              this.cvs.sort(function(a, b){return b.id - a.id});
-              this.cvid = this.cvs[0].id;
-              if(this.cvid != null && this.cvid != ""){
-                this.getCVid(this.cvid)
+              if(this.cvs.length >0){
+                this.cvs.sort(function(a, b){return b.id - a.id});
+                this.cvid = this.cvs[0].id;
+                if(this.cvid != null && this.cvid != ""){
+                  this.getCVid(this.cvid)
+                }
               }
-            })
+
+            })}
 
         }
         ,
@@ -364,18 +364,18 @@
             this.jobid =  this.$route.params.jobid,
             this.userId = this.userId2;
 
-          Axios
+          axios
             .get(Constants.URL + '/userlifecv/check/' + this.userId + '/' + this.cvid)
             .then(response => (
               this.checkSave = response.data,
                 console.log(response)
             ))
-          Axios
+          axios
             .post(Constants.URL + '/apply/checkstatus/' + this.cvid + '/' + this.jobid)
             .then(response => (
               this.checkConfirm = parseInt(response.data.data)
             ))
-          Axios
+          axios
             .get(Constants.URL+'/cv/getOne/'+this.cvid+'/0')
             .then(response => {
                 this.info = response.data.data;
@@ -414,7 +414,7 @@
         saveCV() {
           console.log("save")
           this.userId = this.userId2;
-          Axios
+          axios
             .post(Constants.URL + '/userlifecv/create/' + this.userId + '/' + this.cvid)
             .then(response => {
               if (response.data.success === true) {
@@ -431,7 +431,7 @@
         },
         unsaveCV() {
           this.userId = this.userId2;
-          Axios
+          axios
             .post(Constants.URL + '/userlifecv/unlike/' + this.userId + '/' + this.cvid)
             .then(response => {
               if (response.data.success === true) {
@@ -455,7 +455,7 @@
             confirmButtonText: 'Đồng ý'
           }).then((result) => {
             if (result.value) {
-              Axios
+              axios
                 .get(Constants.URL + '/apply/confirm/' + this.jobid + '/' + this.cvid)
                 .then(response => {
                   if (response.data.success === true) {
@@ -481,30 +481,30 @@
             cancelButtonColor: '#d33',
             confirmButtonText: 'Đồng ý'
           }).then((result) => {
-              if (result.value) {
-                Axios
-                  .get(Constants.URL + '/apply/deny/' + this.jobid + '/' + this.cvid)
-                  .then(response => {
-                    if (response.data.success === true) {
-                      this.checkConfirm = 3;
-                      this.$notify({
-                        group: 'foo',
-                        type: 'success',
-                        title: 'Thành công',
-                        text: 'Bỏ qua thành công'
-                      })
-                    }
-                  })
+            if (result.value) {
+              axios
+                .get(Constants.URL + '/apply/deny/' + this.jobid + '/' + this.cvid)
+                .then(response => {
+                  if (response.data.success === true) {
+                    this.checkConfirm = 3;
+                    this.$notify({
+                      group: 'foo',
+                      type: 'success',
+                      title: 'Thành công',
+                      text: 'Bỏ qua thành công'
+                    })
+                  }
+                })
 
-              }})
+            }})
 
         },
 
 
         getComponent() {
-
-          Axios
-            .get(Constants.URL+'/apply/cv-applied/'+this.jobid)
+          if(this.userId2 != null && this.userId2 != ""){
+          axios
+            .get(Constants.URL+'/cv/list-comfirmed/'+this.userId2)
             .then(response => {
               this.cvs = response.data.content;
               for(var cv in this.cvs){
@@ -512,12 +512,13 @@
                 // var tmp = date.getDay()
                 this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
               }
+
               this.cvs.sort(function(a, b){return b.id - a.id});
               this.cvid = this.cvs[0].id;
               if(this.cvid != null && this.cvid != ""){
                 this.getCVid(this.cvid)
               }
-            })
+            })}
         }
       }
       ,  mounted() {
@@ -536,9 +537,7 @@
           fullName: 'fullName2',
           userId2: 'userId2'
         }),
-      },
-
-    }
+      },}
 </script>
 
 <style scoped>

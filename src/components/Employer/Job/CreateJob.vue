@@ -690,12 +690,7 @@
           .then(response => {
             console.log(response)
             if(response.data.success === true){
-              // this.$notify({
-              //   group: 'foo',
-              //   type: 'success',
-              //   title: 'Thành công',
-              //   text: 'Đăng tin tuyển dụng thành công!'
-              // })
+
               Swal.fire({
                 title: 'Đăng thành công',
                 text: "Quản trị viên sẽ kiểm tra và phản hồi trong vòng 24h",

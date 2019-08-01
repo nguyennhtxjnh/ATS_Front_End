@@ -78,10 +78,10 @@
       <v-layout row wrap>
         <v-spacer/>
         <v-flex md8 xs12 v-if="cvs.length !== 0" >
-          <v-pagination
-            v-model="page"
-            :length="15"
-          ></v-pagination>
+<!--          <v-pagination-->
+<!--            v-model="page"-->
+<!--            :length="15"-->
+<!--          ></v-pagination>-->
         </v-flex>
         <v-spacer/>
       </v-layout>

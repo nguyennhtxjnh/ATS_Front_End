@@ -182,15 +182,12 @@
   export default {
     name: "WorkExperienceComponent",
     props: {
-      workexperiences:  {
-        type: Array,
-        default: []
-      },
+      workexperiences:  Array,
     },
     data: () => ( {
       position:'',
       editB: false,
-      btnSubmit: true,
+      btnSubmit: false,
       dialog1: false,
       date: new Date().toISOString().substr(0, 10),
       date1: new Date().toISOString().substr(0, 10),
@@ -291,19 +288,19 @@
         console.log('edit')
       }
     },
-    mounted() {
-      console.log(this.workexperiences);
-      if(this.workexperiences.length > 0){
-        this.btnSubmit = true;
-        for(var edu in this.workexperiences){
-          var stime = new Date(this.workexperiences[edu].startTime);
-          this.workexperiences[edu].startTime = stime.toISOString().substr(0, 10);
-          var etime = new Date(this.workexperiences[edu].endtime);
-          this.workexperiences[edu].endtime = etime.toISOString().substr(0, 10);
-        }
-        console.log(this.workexperiences);
-      }
-    }
+    // mounted() {
+      // console.log(this.workexperiences);
+      // if(this.workexperiences.length > 0){
+      //   this.btnSubmit = true;
+      //   for(var edu in this.workexperiences){
+      //     var stime = new Date(this.workexperiences[edu].startTime);
+      //     this.workexperiences[edu].startTime = stime.toISOString().substr(0, 10);
+      //     var etime = new Date(this.workexperiences[edu].endtime);
+      //     this.workexperiences[edu].endtime = etime.toISOString().substr(0, 10);
+      //   }
+      //   console.log(this.workexperiences);
+    //   }
+    // }
 
   }
 </script>
