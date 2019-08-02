@@ -94,7 +94,7 @@
           <v-container class=" mb-3" fluid grid-list-md style=" border: 1px solid red; border-radius: 5px;">
             <v-layout row wrap>
               <v-flex xs4 class="align-center justify-center" >
-                <p class="text-xs-center"><b>Logo Công Ty</b></p>
+<!--                <p class="text-xs-center"><b>Logo Công Ty</b></p>-->
                 <v-img src="https://www.seekpng.com/png/detail/25-257121_icon-big-image-png-camera-icon.png"  contain aspect-ratio="2"  v-if="!companyDetail.logoImg"/>
                 <v-img contain :src="companyDetail.logoImg" aspect-ratio="2" v-if="companyDetail.logoImg"></v-img>
               </v-flex>
@@ -116,12 +116,49 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-
+          <v-btn
+            flat="flat"
+            color="success"
+            @click="addCompanyId(companyDetail.id)"
+            @click.stop="dialogBan = true">
+            <span>Ban</span>
+          </v-btn>
           <v-btn
             color="green darken-1"
             flat="flat"
             @click="dialog = false">
             Đóng
+          </v-btn>
+
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <!--    ban-->
+    <v-dialog
+      v-model="dialogBan"
+      max-width="500px">
+      <v-card>
+        <v-card-title class="headline orange"><b style="color: white">Ban công ty</b></v-card-title>
+
+        <v-divider></v-divider>
+        <v-card-text>
+          <v-flex xs12 class="justify-center align-center"> <p style="text-align: center">Bạn muốn cấm công ty này?</p> </v-flex>
+        </v-card-text>
+
+        <v-card-actions class="align-center justify-center">
+
+          <v-btn
+            color="green darken-1"
+            flat="flat"
+            @click="dialogBan = false">
+            Đóng
+          </v-btn>
+
+          <v-btn
+            color="error"
+            @click="changeStatus('deny')"
+          >
+            Từ chối
           </v-btn>
 
         </v-card-actions>

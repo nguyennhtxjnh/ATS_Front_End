@@ -68,19 +68,19 @@
                 <v-icon>mdi-eye-outline</v-icon>
               </v-btn>
 
-              <v-btn
-                outline flat fab small color="success"
-                @click="addJobId(item.id)"
-                @click.stop="dialogStatusApproved = true">
-                <v-icon>mdi-check</v-icon>
-              </v-btn>
+<!--              <v-btn-->
+<!--                outline flat fab small color="success"-->
+<!--                @click="addJobId(item.id)"-->
+<!--                @click.stop="dialogStatusApproved = true">-->
+<!--                <v-icon>mdi-check</v-icon>-->
+<!--              </v-btn>-->
 
-              <v-btn
-                outline flat fab small color="error"
-                @click="addJobId(item.id)"
-                @click.stop="dialogStatusDeny = true">
-                <v-icon>mdi-window-close</v-icon>
-              </v-btn>
+<!--              <v-btn-->
+<!--                outline flat fab small color="error"-->
+<!--                @click="addJobId(item.id)"-->
+<!--                @click.stop="dialogStatusDeny = true">-->
+<!--                <v-icon>mdi-window-close</v-icon>-->
+<!--              </v-btn>-->
 
             </td>
           </template>
@@ -149,7 +149,7 @@
           <!--        tab-->
           <template  >
             <v-tabs
-              color="cyan"
+              color="warning"
               dark
               next-icon="mdi-arrow-right-bold-box-outline"
               prev-icon="mdi-arrow-left-bold-box-outline"
@@ -293,7 +293,23 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
+          <v-btn
+            flat="flat"
+              color="success"
+            @click="addJobId(jobFull.id)"
+            @click.stop="dialogStatusApproved = true">
+            Duyệt
+<!--            <v-icon>mdi-check</v-icon>-->
+          </v-btn>
 
+          <v-btn
+            flat="flat"
+              color="error"
+            @click="addJobId(jobFull.id)"
+            @click.stop="dialogStatusDeny = true">
+            Từ chối duyệt
+<!--            <v-icon>mdi-window-close</v-icon>-->
+          </v-btn>
           <v-btn
             color="green darken-1"
             flat="flat"
@@ -448,6 +464,7 @@
     methods: {
       addJobId(id){
         this.formJobStatusData.id = id;
+
       },
       changeStatus(status){
         this.formJobStatusData.status = status;
@@ -475,6 +492,7 @@
             this.getAllJob();
             this.dialogStatusApproved = false;
             this.dialogStatusDeny = false;
+            this.dialog = false;
           })
           .catch(error => {
             console.log(error)

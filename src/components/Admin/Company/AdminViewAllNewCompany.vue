@@ -70,19 +70,19 @@
                 <v-icon>mdi-eye-outline</v-icon>
               </v-btn>
 
-              <v-btn
-                outline flat fab small color="success"
-                @click="addCompanyId(item.id)"
-                @click.stop="dialogStatusApproved = true">
-                <v-icon>mdi-check</v-icon>
-              </v-btn>
+<!--              <v-btn-->
+<!--                outline flat fab small color="success"-->
+<!--                @click="addCompanyId(item.id)"-->
+<!--                @click.stop="dialogStatusApproved = true">-->
+<!--                <v-icon>mdi-check</v-icon>-->
+<!--              </v-btn>-->
 
-              <v-btn
-                outline flat fab small color="error"
-                @click="addCompanyId(item.id)"
-                @click.stop="dialogStatusDeny = true">
-                <v-icon>mdi-window-close</v-icon>
-              </v-btn>
+<!--              <v-btn-->
+<!--                outline flat fab small color="error"-->
+<!--                @click="addCompanyId(item.id)"-->
+<!--                @click.stop="dialogStatusDeny = true">-->
+<!--                <v-icon>mdi-window-close</v-icon>-->
+<!--              </v-btn>-->
 
             </td>
           </template>
@@ -126,6 +126,21 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
+
+          <v-btn
+            flat="flat"
+            color="success"
+            @click="addCompanyId(companyDetail.id)"
+            @click.stop="dialogStatusApproved = true">
+            <span>Duyệt</span>
+          </v-btn>
+
+          <v-btn
+            flat="flat" color="error"
+            @click="addCompanyId(companyDetail.id)"
+            @click.stop="dialogStatusDeny = true">
+            <span>Từ chối duyệt</span>
+          </v-btn>
 
           <v-btn
             color="green darken-1"
@@ -177,7 +192,7 @@
 
         <v-divider></v-divider>
         <v-card-text>
-          <v-flex xs12 class="justify-center align-center"> <p style="text-align: center">Từ chối duyệt công ty này?</p> </v-flex>
+          <v-flex xs12 class="justify-center align-center"> <p style="text-align: center">Bạn muốn từ chối duyệt công ty này?</p> </v-flex>
         </v-card-text>
 
         <v-card-actions class="align-center justify-center">
@@ -199,6 +214,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
 
   </v-container>
 </template>
@@ -253,6 +269,7 @@
     methods: {
       addCompanyId(id){
         this.formJobStatusData.id = id;
+
       },
       changeStatus(status){
         this.formJobStatusData.status = status;
@@ -280,6 +297,7 @@
             this.getAllCompany();
             this.dialogStatusApproved = false;
             this.dialogStatusDeny = false;
+            this.dialog = false;
           })
           .catch(error => {
             console.log(error)
