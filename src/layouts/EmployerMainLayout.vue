@@ -10,9 +10,7 @@
         </v-toolbar-title>
         <v-toolbar-title @click="$router.push('/trang-chu-tuyen-dung')" class="hoverCSSTitle pr-5 mr-5" >Nhà Tuyển Dụng</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn style="height: 100%" flat  class="white black--text" @click="$router.push('/tuyen-dung-dich-vu')">
-          Dịch vụ
-        </v-btn>
+
         <v-btn style="height: 100%" flat  class="white black--text" @click="$router.push('/quan-li-ung-vien')" v-if="roleId === 2">
           Ứng viên
         </v-btn>
@@ -208,10 +206,7 @@
           }
         ],
         notificationsSmall: [
-          {
-            icon: 'mdi-account',
-            title: 'Dịch vụ',
-          },
+
           {
             icon: 'mdi-account',
             title: 'Quản lí ứng viên',
@@ -381,9 +376,6 @@
         }
         if (notification.title === 'Quản lí tin tuyển dụng'){
           this.$router.push('/quan-li-cong-viec');
-        }
-        if (notification.title === 'Dịch vụ'){
-          this.$router.push('');
         }
         if (notification.title === 'Đăng Xuất') {
           this.$store.dispatch('AUTHENTICATION_STORE/LOGOUT2')

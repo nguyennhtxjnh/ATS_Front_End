@@ -153,21 +153,21 @@
               <v-tabs-slider color="yellow"></v-tabs-slider>
               <v-tab
                 v-for="item in items"
-                :key="item"
+                :key="item.id"
               >
-                {{ item }}
+                {{ item.name }}
               </v-tab>
 
               <v-tabs-items >
                 <v-tab-item
                   v-for="item in items"
-                  :key="item"
+                  :key="item.id"
                 >
                   <v-card flat>
                     <!--card content-->
 
                     <!--                  Thông Tin-->
-                    <v-card-text v-if="item === 'Thông Tin'">
+                    <v-card-text v-if="item.name === 'Thông Tin'">
                       <v-container fluid fill-height>
                         <v-layout align-center justify-center >
                           <v-flex d-flex md12>
@@ -236,7 +236,7 @@
                     <!--                  End Thông Tin-->
 
                     <!--                  Công Ty-->
-                    <v-card-text v-if="item === 'Công Ty'">
+                    <v-card-text v-if="item.name === 'Công Ty'">
                       <v-container fluid fill-height>
                         <v-layout align-center justify-center >
                           <v-flex d-flex md12>
@@ -305,6 +305,7 @@
 
 <script>
   import Axios from 'axios'
+  import Constants from '@/stores/constant.js'
 
   export default {
     name: 'AdminDashBoard',
@@ -315,7 +316,7 @@
         loading: false,
         dialog: false,
         items: [
-          'Thông Tin', 'Công Ty',
+          {id: 1, name: 'Thông Tin' } ,  {id: 2, name: 'Công Ty' }
         ],
         headers: [
           {text: 'Tiêu đề công việc', value: 'title',},
@@ -375,7 +376,7 @@
     methods: {
        async viewInfo(id){
         this.loading = true;
-         await Axios.get(`http://localhost:1122/job/getJobDetail?id=${id}`)
+         await Axios.get(Constants.URL+`/job/getJobDetail?id=${id}`)
           .then(response => {
             this.jobFull = response.data.data;
             this.jobFull.createdDate = this.moment(this.jobFull.createdDate).format('DD-MM-YYYY');
@@ -389,7 +390,7 @@
       getAllJob() {
 
         // if (this.search) {
-          Axios.get('http://localhost:1122/job/getAllJob?search=' + this.search + '&status=')
+          Axios.get(Constants.URL+'/job/getAllJob?search=' + this.search + '&status=')
             .then(response => {
               this.Job = response.data.data.content;
               // this.pagination.totalItems =  this.Job.length

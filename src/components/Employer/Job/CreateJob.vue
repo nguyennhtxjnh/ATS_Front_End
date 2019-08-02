@@ -1,6 +1,20 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <v-container fluid fill-height>
-    <v-layout align-center justify-center>
+    <v-layout row wrap v-if="checkCompanyExisted === false  ">
+      <v-spacer/>
+      <v-flex md4 xs4>
+        <h2> Vui lòng thêm công ty để được đăng tin </h2>
+      </v-flex>
+      <v-spacer/>
+    </v-layout>
+    <v-layout row wrap v-if="checkCompany === false && checkCompanyExisted === true">
+      <v-spacer/>
+      <v-flex md4 xs4>
+          <h2> Vui lòng chờ admin xét duyệt công ty </h2>
+      </v-flex>
+      <v-spacer/>
+    </v-layout>
+    <v-layout align-center justify-center v-if="checkCompany === true">
 
       <v-flex xs12 sm12 md10>
         <v-card style="border-style: solid; border-color: #ccc; border-width: 1px;" class="elevation-0 border_all">
@@ -407,6 +421,8 @@
         tmpSkill: [],
         company:[],
         companyStatus:'',
+        checkCompany:'',
+        checkCompanyExisted:'',
 
         salaryChoose: ['Thỏa Thuận', 'Từ', 'Đến', 'Trong Khoảng'],
         selectedSalary: 'Thỏa Thuận',
@@ -512,6 +528,7 @@
       review(){
         var check = true;
         if(this.companyStatus === "onhold"){
+          this.checkCompany = false;
           check = false;
           this.$notify({
             group: 'foo',
@@ -610,14 +627,26 @@
           Axios
             .post(Constants.URL + '/employercompany/getCompanyByUserId', this.formDataCompany)
             .then(response => {
-              this.company = response.data.data;
-              this.tmp = response.data.data.employercompaniesById;
-              for (var i in this.tmp){
-                if(this.tmp[i].userId === this.userId2){
-                  this.companyStatus = this.tmp[i].status;
-                  console.log(this.companyStatus)
+              if(response.data.success === true){
+                this.company = response.data.data;
+                this.tmp = response.data.data.employercompaniesById;
+                for (var i in this.tmp){
+                  if(this.tmp[i].userId === this.userId2){
+                    this.companyStatus = this.tmp[i].status;
+                    console.log(this.companyStatus)
+                  }
                 }
+                if(this.companyStatus === "onhold"){
+                  this.checkCompany = false;
+                  this.checkCompanyExisted = true;
+                }else {
+                  this.checkCompany = true;
+                }
+              }else {
+                this.checkCompanyExisted = false;
+                this.checkCompany = false;
               }
+
             })
         }
         Axios

@@ -41,7 +41,7 @@
               <v-flex md12 xs12 sm6>
                 <!--                họ-->
                 <v-layout row>
-                  <v-icon color="orange darken-2">mdi-account-circle-outline</v-icon>
+                  <v-icon color="orange darken-2">mdi-account-check-outline</v-icon>
                   <v-text-field
                     name="Name"
                     :rules="[rules.required(info.lastName)]"
@@ -75,7 +75,7 @@
             <v-flex md4 xs12>
               <!--              tên-->
               <v-layout row>
-                <v-icon color="orange darken-2">mdi-account-circle-outline</v-icon>
+                <v-icon color="orange darken-2">mdi-account-check-outline</v-icon>
                 <v-text-field
                   name="Name"
                   v-model="info.firstName"
@@ -85,7 +85,7 @@
               </v-layout>
               <!--              nghề nghiệp-->
               <v-layout row>
-                <v-icon color="orange darken-2">mdi-account-circle-outline</v-icon>
+                <v-icon color="orange darken-2" class="">mdi-robot-industrial</v-icon>
                 <v-autocomplete
                   v-model="info.industryId"
                   :items="industries"
@@ -152,7 +152,7 @@
 
                   <!--               thành phố   -->
                   <v-layout row>
-                    <v-icon color="orange darken-2">mdi-account-circle-outline</v-icon>
+                    <v-icon color="orange darken-2" >mdi-city</v-icon>
                     <v-autocomplete
                       v-model="info.cityId"
                       :items="cities"
@@ -363,6 +363,36 @@
           skillincvsById: [],
 
         },
+       infoFilter: {
+         title: "CV Test",
+         telephoneNumber: "0379969719",
+         userId: '',
+         img: '',
+         email: 'test@gmail.com',
+         firstName: 'Nguyễn Huỳnh',
+         lastName: 'Thảo Nguyên',
+         gender: 1,
+         dob: new Date().toISOString().substr(0, 10),
+         cityId: '1',
+         address: '537  Nguyễn Duy Trinh, Quận 2, thành phố Hồ Chí Minh',
+         industryId: 1,
+         description: "Gắn bó lâu dài với công ty. Đoàn kết, cố gắng hết sức hoàn thành công việc được giao",
+         yearExperience: '2',
+         salaryFrom: '3000',
+         salaryTo: '2000',
+         status: '',
+         createdDate: new Date().toISOString().substr(0, 10),
+         lastModify: '',
+         isActive: '',
+         certificationsById: [],
+         educationsById: [],
+         projectorproductworkedsById: [],
+         socialactivitiesById: [],
+         workexperiencesById: [],
+         skillincvsById: [],
+
+       }
+       ,
        rules: {
           noMinus: value => value >= 0 || 'Lương Không Được Nhỏ Hơn 0',
           required: value => !!value || 'Không được để trống ô này.',
@@ -455,7 +485,6 @@
             console.log(response)
             if(response.data.success === true){
               Swal.fire({
-                position: 'top-end',
                 type: 'success',
                 title: 'Đã lưu CV',
                 showConfirmButton: false,

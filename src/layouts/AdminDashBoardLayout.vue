@@ -15,8 +15,8 @@
           <!--Job-->
           <v-subheader class="textCustom"><h3>Công Việc</h3></v-subheader>
           <v-list-tile
-              v-for="(item, i) in menuJob"
-              :key="i"
+              v-for="item in menuJob"
+              :key="item.id"
               :to="item.path"
               active-class="activeCSS"
               :class="item.path === $route.path ? 'activeCSS' : ''"
@@ -31,8 +31,8 @@
           <!--Company-->
           <v-subheader class="textCustom"><h3>Công ty</h3></v-subheader>
             <v-list-tile
-              v-for="(item, i) in menuCompany"
-              :key="i"
+              v-for="item in menuCompany"
+              :key="item.id"
               :to="item.path"
               active-class="activeCSS"
               :class="item.path === $route.path ? 'activeCSS' : ''"
@@ -47,8 +47,8 @@
           <!--Account-->
           <v-subheader class="textCustom"><h3>Quản lý người dùng</h3></v-subheader>
             <v-list-tile
-              v-for="(item, i) in menuUser"
-              :key="i"
+              v-for="item in menuUser"
+              :key="item.id"
               :to="item.path"
               active-class="activeCSS"
               :class="item.path === $route.path ? 'activeCSS' : ''"
@@ -63,9 +63,8 @@
           <!--Service-->
           <v-subheader class="textCustom"><h3>Dịch vụ</h3></v-subheader>
             <v-list-tile
-
-              v-for="(item, i) in menuService"
-              :key="i"
+              v-for="item in menuService"
+              :key="item.id"
               :to="item.path"
               active-class="activeCSS"
               :class="item.path === $route.path ? 'activeCSS' : ''"
@@ -124,11 +123,13 @@
         drawer: null,
         menuJob: [
           {
+            id: 1,
             name: "Tất cả công việc",
             icon: "mdi-domain",
             path: "/admin"
           },
           {
+            id: 2,
             name: "Duyệt công việc mới tạo",
             icon: "mdi-domain",
             path: "/admin-view-all-new-job"
@@ -136,11 +137,13 @@
           ],
         menuCompany: [
           {
+            id: 3,
             name: "Tất cả công ty",
             icon: "mdi-domain",
             path: "/admin-view-all-company"
           },
           {
+            id: 4,
             name: "Duyệt công ty mới tạo",
             icon: "mdi-domain",
             path: "/admin-view-all-new-company"
@@ -149,6 +152,7 @@
         ],
         menuUser: [
           {
+            id: 5,
             name: "Tất cả người dùng",
             icon: "mdi-domain",
             path: "/admin-view-all-account"
@@ -156,6 +160,7 @@
         ],
         menuService: [
           {
+            id: 6,
             name: "Tất cả dịch vụ",
             icon: "mdi-domain",
             path: "/admin-all-service"
