@@ -459,7 +459,7 @@
                 .get(Constants.URL + '/apply/confirm/' + this.jobid + '/' + this.cvid)
                 .then(response => {
                   if (response.data.success === true) {
-                    this.checkConfirm = "2";
+                    this.checkConfirm = 2;
                     this.$notify({
                       group: 'foo',
                       type: 'success',

@@ -61,21 +61,21 @@
             </v-list-tile>
           <v-divider></v-divider>
           <!--Service-->
-          <v-subheader class="textCustom"><h3>Dịch vụ</h3></v-subheader>
-            <v-list-tile
-              v-for="item in menuService"
-              :key="item.id"
-              :to="item.path"
-              active-class="activeCSS"
-              :class="item.path === $route.path ? 'activeCSS' : ''"
-            >
-              <v-list-tile-action>
-                <v-icon>{{item.icon}}</v-icon>
-              </v-list-tile-action>
-              {{item.name}}
+<!--          <v-subheader class="textCustom"><h3>Dịch vụ</h3></v-subheader>-->
+<!--            <v-list-tile-->
+<!--              v-for="item in menuService"-->
+<!--              :key="item.id"-->
+<!--              :to="item.path"-->
+<!--              active-class="activeCSS"-->
+<!--              :class="item.path === $route.path ? 'activeCSS' : ''"-->
+<!--            >-->
+<!--              <v-list-tile-action>-->
+<!--                <v-icon>{{item.icon}}</v-icon>-->
+<!--              </v-list-tile-action>-->
+<!--              {{item.name}}-->
 
-            </v-list-tile>
-          <v-divider></v-divider>
+<!--            </v-list-tile>-->
+<!--          <v-divider></v-divider>-->
           <!-- Logout-->
           <v-subheader class="textCustom"><h3>Tài khoản</h3></v-subheader>
             <v-list-tile @click="logout">
@@ -158,14 +158,14 @@
             path: "/admin-view-all-account"
           },
         ],
-        menuService: [
-          {
-            id: 6,
-            name: "Tất cả dịch vụ",
-            icon: "mdi-domain",
-            path: "/admin-all-service"
-          },
-        ]
+        // menuService: [
+        //   {
+        //     id: 6,
+        //     name: "Tất cả dịch vụ",
+        //     icon: "mdi-domain",
+        //     path: "/admin-all-service"
+        //   },
+        // ]
       }
     },
     methods: {

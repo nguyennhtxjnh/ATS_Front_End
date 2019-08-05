@@ -9,6 +9,17 @@
           >
 
             <v-tab
+              v-if="roleId === 3"
+              fixed
+              v-for="tab in menu1"
+              :key="tab.id"
+            >
+              {{ tab.name}}
+
+            </v-tab>
+
+            <v-tab
+              v-if="roleId === 2"
               fixed
               v-for="tab in menu"
               :key="tab.id"
@@ -40,7 +51,7 @@
                 </v-flex>
 
               </v-card>
-              <v-card flat v-if="i.id === '2'">
+              <v-card flat v-if="i.id === '2' && roleId === 2 ">
                 <EmployerCompanyApply></EmployerCompanyApply>
               </v-card>
 
@@ -76,6 +87,9 @@
         companyId:'',
         tab: null,
         tmp:'',
+        menu1:[
+          {name:'Quản lý công ty', id:'1'},
+        ],
         menu: [
           {name:'Quản lý công ty', id:'1'},
           {name:'Duyệt nhà tuyển dụng', id:'2'}
@@ -85,7 +99,8 @@
     methods : {
 
        getCompany(){
-        console.log(this.formCompany.userId)
+        console.log(this.formCompany.userId);
+         console.log(this.roleId)
 
          if(this.userId2 != null && this.userId2 != ""){
         const url = Constants.URL+'/employercompany/getCompanyByUserId'

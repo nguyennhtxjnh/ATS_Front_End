@@ -15,18 +15,14 @@
       <v-flex md12 class="pr-0 mr-0">
         <v-layout row wrap>
           <v-flex md4 xs12 class="mr-2">
-            <!--                                  <v-text-field-->
-            <!--                                    label="Nhập chức danh, vị trí, kỹ năng..."-->
-            <!--                                    v-model="searchValue"-->
-            <!--                                    single-line-->
-            <!--                                  ></v-text-field>-->
-            <v-combobox
+
+            <v-text-field
               single-line
               label="Tên công việc, vị trí bạn muốn ứng tuyển..."
               :items="searchAPI.all"
               :search-input.sync="searchValue"
               v-model="searchValue"
-            ></v-combobox>
+            ></v-text-field>
           </v-flex>
 
           <v-flex md3 xs12 class="mr-2">
@@ -58,12 +54,11 @@
 
     <!--        Search Result-->
     <v-layout row wrap v-if="checkJob === false" class="white">
-      <v-spacer/>
-      <v-flex md2 xs2>
-        <!--        <img :src="require('@/assets/empty-product.png')" sizes="auto" >-->
-        <span> Không có dữ liệu</span>
-      </v-flex>
-      <v-spacer/>
+
+          <v-spacer/>
+          <img :src="require('@/assets/empty-product.png')" height="240px">
+          <v-spacer/>
+
     </v-layout>
     <v-layout row wrap class="mt-2" v-if="checkJob">
       <v-spacer/>
@@ -73,7 +68,7 @@
           :loading="loading"
           :pagination.sync="pagination"
           :total-items="pagination.totalItems"
-          :no-data-text="'Không có dữ liệu'"
+          :no-data-text="'Hiện không có công việc nào theo tiêu chí này. '"
           :no-results-text="'Không tìm thấy dữ liệu tương ứng'"
           :must-sort="true"
           hide-actions
@@ -150,8 +145,8 @@
           </template>
         </v-data-table>
         <div class="text-xs-center pt-2">
-<!--          <v-pagination v-model="pagination.page"-->
-<!--                        :length="Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)"></v-pagination>-->
+          <v-pagination v-model="pagination.page"
+                        :length="Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)"></v-pagination>
         </div>
       </v-flex>
       <v-spacer/>

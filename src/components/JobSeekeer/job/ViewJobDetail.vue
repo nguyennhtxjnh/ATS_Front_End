@@ -132,13 +132,39 @@
                                                     readonly
                                                     color="none"
                                       ></v-text-field>
-                                      <!--                                  <v-text-field class="not-active"-->
-                                      <!--                                                label="Ngôn Ngữ Trình Bày"-->
-                                      <!--                                                value="Bất kỳ"-->
-                                      <!--                                                prepend-icon="mdi-calendar-clock"-->
-                                      <!--                                                readonly-->
-                                      <!--                                                color="none"-->
-                                      <!--                                  ></v-text-field>-->
+                                      <v-flex v-if="jobFull.workingtype === 'FULLTIME'">
+                                        <v-text-field class="not-active"
+                                                      label="Hình thức công việc"
+                                                      prepend-icon="mdi-account-star"
+                                                      readonly
+                                                      color="none"
+                                                      value="Toàn thời gian"
+                                        >
+                                        </v-text-field>
+                                      </v-flex>
+                                      <v-flex v-if="jobFull.workingtype === 'PARTTIME'">
+                                        <v-text-field class="not-active"
+                                                      label="Hình thức công việc"
+                                                      prepend-icon="mdi-account-star"
+                                                      readonly
+                                                      color="none"
+                                                      value="Bán thời gian"
+                                        >
+                                        </v-text-field>
+                                      </v-flex>
+
+                                      <v-flex v-if="jobFull.workingtype === 'INTERN'">
+                                        <v-text-field class="not-active"
+                                                      label="Hình thức công việc"
+                                                      prepend-icon="mdi-account-star"
+                                                      readonly
+                                                      color="none"
+                                                      value="Thực tập"
+                                        >
+                                        </v-text-field>
+                                      </v-flex>
+
+
                                     </div>
                                   </v-card-text>
                                 </v-card>

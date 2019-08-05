@@ -55,6 +55,9 @@
               <v-chip color="success" v-if="item.status === 'approved'">
                 <span style="color: white !important;">Đã duyệt</span>
               </v-chip>
+              <v-chip color="error" v-if="item.status === 'ban'">
+                <span style="color: white !important;">Đã cấm</span>
+              </v-chip>
               <v-chip color="grey" v-if="item.status === 'deny'">
                 <span style="color: white !important;">Từ chối duyệt</span>
               </v-chip>
@@ -156,9 +159,9 @@
 
           <v-btn
             color="error"
-            @click="changeStatus('deny')"
+            @click="changeStatus('ban')"
           >
-            Từ chối
+            Cấm
           </v-btn>
 
         </v-card-actions>
@@ -170,6 +173,7 @@
 
 <script>
   import Axios from 'axios'
+  import Constants from '@/stores/constant.js'
 
   export default {
     name: 'AdminViewAllCompany',
@@ -177,6 +181,7 @@
       return {
         search: '',
         Company: [],
+        dialogBan: false,
         loading: false,
         dialog: false,
         headers: [
@@ -207,10 +212,48 @@
             status: '',
             telephoneNumber: ''
         },
+        formJobStatusData:{
+          id: '',
+          status: '',
+        },
 
       }
     },
     methods: {
+      addCompanyId(id){
+        this.formJobStatusData.id = id;
+      },
+      changeStatus(status){
+        this.formJobStatusData.status = status;
+        const url = Constants.URL+'/company/changeCompanyStatus'
+        const method = 'POST'
+        const data = this.formJobStatusData
+        console.log(data)
+        Axios({url, method, data})
+          .then(response => {
+            if(data.status === 'ban'){
+              this.$notify({
+                group: 'foo',
+                type: 'success',
+                title: 'Thành công',
+                text: 'Cấm công ty thành công!'
+              })
+            } else {
+              // this.$notify({
+              //   group: 'foo',
+              //   type: 'success',
+              //   title: 'Thành công',
+              //   text: 'Từ chối duyệt công ty thành công!'
+              // })
+            }
+            this.getAllCompany();
+            this.dialogBan = false;
+            this.dialog = false;
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      },
        viewInfo(id){
         for (let i = 0; i < this.Company.length; i++){
           if(id === this.Company[i].id){
@@ -220,7 +263,7 @@
       },
       getAllCompany() {
         this.loading = true;
-        Axios.get('http://localhost:1122/company/getCompanyAdmin?search=' + this.search + '&status=')
+        Axios.get(Constants.URL+'/company/getCompanyAdmin?search=' + this.search + '&status=')
           .then(response => {
             this.Company = response.data.data.content;
             console.log(this.Company)

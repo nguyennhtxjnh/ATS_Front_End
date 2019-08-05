@@ -8,12 +8,12 @@
         <v-divider class="pb-3"></v-divider>
         <v-layout row wrap v-if="info.length === 0">
           <v-spacer/>
-          <img :src="require('@/assets/empty-product.png')" >
+          <img :src="require('@/assets/empty-product.png')" height="240px">
           <v-spacer/>
         </v-layout>
       <v-layout wrap md12 xs12>
         <template v-for="job in info">
-          <v-container md7 xs12 style="background-color: white" class="ma-3 pa-2" @click="$router.push('/thong-tin-cong-viec/'+ job.id)">
+          <v-container md7 xs12 style="background-color: white" class="ma-3 pa-2" @click="viewJobDetail(job.id)">
             <v-layout row wrap>
               <v-flex md2 xs3 class="pa-2">
                 <v-img  :src="job.companyLogoImg"
@@ -22,19 +22,30 @@
               </v-flex>
               <v-spacer/>
               <v-flex md5>
-                <h2 align-left>
+                <h2 style="color: #ff5e2d" align-left @click="viewJobDetail(job.id)">
                   {{job.title}}
                 </h2>
                 <h3 align-lef>
-
-                      {{job.companyName}} - {{job.cityName}}
-
+                  {{job.companyName}} - {{job.cityName}}
                 </h3>
                 <v-flex align-left>
-                  <h4>  <v-btn icon>
-                    <v-icon color="orange darken-2" >mdi-coin</v-icon>
-                  </v-btn>{{job.salaryTo}} - {{job.salaryFrom}} triệu</h4>
+                    <span>
+
+                    <v-flex d-flex xs12 v-if="job.salaryTo === 0 && job.salaryFrom > 0">
+                      <span> <b>Mức lương: </b> từ {{job.salaryFrom}}đ trở lên</span>
+                    </v-flex>
+                    <v-flex d-flex xs12 v-if="job.salaryFrom === 0 && job.salaryTo > 0">
+                      <span> <b>Mức lương:</b> lên đến {{item.salaryTo}}đ</span>
+                    </v-flex>
+                    <v-flex d-flex xs12 v-if="job.salaryTo > 0 && job.salaryFrom > 0">
+                      <span> <b>Mức lương:</b> từ {{job.salaryFrom}}đ đến {{item.salaryTo}}đ</span>
+                    </v-flex>
+                    <v-flex d-flex xs12 v-if="job.salaryTo === 0 && job.salaryFrom === 0">
+                      <span><b>Mức lương:</b> thương lượng</span>
+                    </v-flex>
+                    </span>
                 </v-flex>
+
               </v-flex>
               <v-flex md3 class="pt-5">
 <!--                <v-btn style="height: auto"-->
@@ -75,15 +86,28 @@
         }
       },
       methods: {
+        viewJobDetail(id){
+          let route = this.$router.resolve({path: '/thong-tin-cong-viec/'+id});
+          window.open(route.href, '_blank');
+        },
         getComponent(){
           this.userId = this.userId1;
           Axios
             .get(Constants.URL+'/city/getAllCity')
             .then(response => (
               this.cities = response.data.data))
-          Axios
-            .get(Constants.URL+'/job/suggest?cvId='+this.cvid)
-            .then(response => (this.info = response.data.data.content))
+          console.log(this.userId)
+          if(this.userId != null && this.userId != ""){
+            Axios
+              .get(Constants.URL+'/job/suggestJobByUserId?userId='+this.userId)
+              .then(response => {
+                if(response.data.success === true){
+                  this.info = response.data.data.content;
+                  console.log(this.info)
+                }
+               })
+          }
+
 
         }
       },

@@ -95,7 +95,7 @@
 
               this.$store.dispatch('AUTHENTICATION_STORE/INIT1')
                 .then(() => {
-                  this.$router.push('/viec-lam-nguoi-tim-viec')
+                  this.$router.push('/')
                   this.loading = false;
                 })
                 .catch((error) => {

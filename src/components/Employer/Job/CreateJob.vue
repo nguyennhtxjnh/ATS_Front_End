@@ -1,6 +1,6 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <v-container fluid fill-height>
-    <v-layout row wrap v-if="checkCompanyExisted === false  ">
+    <v-layout row wrap v-if="checkCompanyExisted === false">
       <v-spacer/>
       <v-flex md4 xs4>
         <h2> Vui lòng thêm công ty để được đăng tin </h2>
@@ -628,6 +628,7 @@
             .post(Constants.URL + '/employercompany/getCompanyByUserId', this.formDataCompany)
             .then(response => {
               if(response.data.success === true){
+                console.log(response)
                 this.company = response.data.data;
                 this.tmp = response.data.data.employercompaniesById;
                 for (var i in this.tmp){

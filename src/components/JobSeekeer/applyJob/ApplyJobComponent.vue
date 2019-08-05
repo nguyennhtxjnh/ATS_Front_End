@@ -29,19 +29,19 @@
                     <template v-for="cv in cvs">
                       <v-radio  v-bind:value="cv.id">
                         <template v-slot:label>
-                          <div><strong class="success--text">{{cv.title}}</strong>    (<router-link v-bind:to="'/xem-CV/'+ cv.id"  tag="button">xem</router-link>)</div>
+                          <div><strong class="success--text">{{cv.title}}</strong>    (<span @click="viewDetail(cv.id)">xem</span>)</div>
                         </template>
                       </v-radio>
                     </template>
 
                   </v-radio-group>
                 </v-flex>
-                <v-flex md12 xs12 v-if="cvs.length === 0">
-                  <router-link to="/tao-CV" tag="button">
-                    <v-btn color="warning"  dark >
+                <v-flex md12 xs12 >
+
+                    <v-btn color="warning" @click="createCV" dark >
                       Tạo CV mới
                     </v-btn>
-                  </router-link>
+
                 </v-flex>
               </v-layout>
             </v-container>
@@ -58,8 +58,8 @@
     </v-flex>
 
     <v-flex xs12 v-if="roleId === 1">
-      <v-btn  block color="gray" @click="rejectSave" v-if="saved === true"><v-icon dark>favorite</v-icon>Đã Lưu Việc Làm</v-btn>
-      <v-btn  block color="error" outline @click="saveJob" v-if="saved === false"><v-icon dark>favorite</v-icon> Lưu Việc Làm</v-btn>
+      <v-btn  block color="gray" @click="rejectSave" v-if="saved === false"><v-icon dark>favorite</v-icon>Đã Lưu Việc Làm</v-btn>
+      <v-btn  block color="error" outline @click="saveJob" v-if="saved === true"><v-icon dark>favorite</v-icon> Lưu Việc Làm</v-btn>
     </v-flex>
 
 
@@ -85,6 +85,14 @@
 
       }),
       methods: {
+        viewDetail(id){
+          let route = this.$router.resolve({path: '/xem-CV/'+id});
+          window.open(route.href, '_blank');
+        },
+        createCV(){
+          let route = this.$router.resolve({path: '/tao-CV'});
+          window.open(route.href, '_blank');
+        },
         saveJob(){
           this.userId = this.userId1;
           console.log(this.userId +"-"+ this.JobID)
@@ -92,7 +100,7 @@
             .post(Constants.URL+'/jobseekerlikejob/create/'+this.userId+'/'+this.JobID)
             .then(response => {
               if(response.data.success === true){
-                this.saved = true;
+                this.saved = false;
                 this.$notify({
                   group: 'foo',
                   type: 'success',
@@ -111,7 +119,7 @@
             .post(Constants.URL+'/jobseekerlikejob/uncheck/'+this.userId+'/'+this.JobID)
             .then(response => {
                 if(response.data.success === true){
-                  this.saved = false;
+                  this.saved = true;
                   this.$notify({
                     group: 'foo',
                     type: 'success',

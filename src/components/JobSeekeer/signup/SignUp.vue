@@ -40,8 +40,8 @@
                   </v-flex>
                   <v-flex md6 xs12>
                     <v-text-field class="ma-2" prepend-icon="lock" name="Password" label="Nhập Lại Mật Khẩu"
-                                  v-model="repassword" type="password" maxlength="25" hint="Từ 8 đến 25 kí tự" persistent-hint
-                                  :rules="[rules.required, rules.counter1, rules.min]"></v-text-field>
+                                  v-model="repassword" type="password" persistent-hint
+                                  ></v-text-field>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -103,7 +103,7 @@
             .then(() => {
               this.$store.dispatch('AUTHENTICATION_STORE/INIT1')
                 .then(() => {
-                  this.$router.push('/tim-kiem')
+                  this.$router.push('/')
                 })
                 .catch((error) => {
                   this.$router.push('/dang-nhap');

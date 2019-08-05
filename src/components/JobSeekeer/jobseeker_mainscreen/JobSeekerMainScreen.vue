@@ -31,13 +31,13 @@
 <!--                    v-model="searchValue"-->
 <!--                    single-line-->
 <!--                  ></v-text-field>-->
-                  <v-combobox
+                  <v-text-field
                     single-line
                     label="Tên công việc, vị trí bạn muốn ứng tuyển..."
                     :items="searchAPI.all"
                     :search-input.sync="searchValue"
                     v-model="searchValue"
-                  ></v-combobox>
+                  ></v-text-field>
                 </v-flex>
 
                 <v-flex md3 xs12 class="mr-2">

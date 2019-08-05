@@ -47,11 +47,11 @@
                       <v-flex md12 xs12>
                         <v-layout row wrap>
                           <v-flex lg3 md3 sm6 xs12  style="float: left">
-                            <router-link v-bind:to="'/xem-CV/'+ cv.id"  tag="button">
-                              <v-btn small  >
+
+                              <v-btn small @click="viewDetail(cv.id)" >
                                 <v-icon>remove_red_eye</v-icon>
                                 xem CV</v-btn>
-                            </router-link>
+
                           </v-flex>
                           <v-flex lg3 md3 sm6 xs12  style="float: left">
                             <router-link v-bind:to="'/cap-nhat-CV/'+ cv.id" tag="button">
@@ -115,6 +115,10 @@
         cvs: '',
         cv:'',
       }),methods :{
+        viewDetail(id){
+          let route = this.$router.resolve({path: '/xem-CV/'+id});
+          window.open(route.href, '_blank');
+        },
 
         removeCV(cv, position) {
 
@@ -166,7 +170,7 @@
                 group: 'foo',
                 type: 'success',
                 title: 'Thành Công',
-                text: 'Đăng Tin Thành Công!'
+                text: 'Chọn CV chính Thành Công!'
               })
             }
           })

@@ -28,8 +28,8 @@
                   </v-flex>
                   <v-flex  xs12>
                     <v-text-field class="ma-2" prepend-icon="lock" name="Password" label="Nhập Lại Mật Khẩu"
-                                  v-model="repassword" type="password" maxlength="25" hint="Từ 8 đến 25 kí tự" persistent-hint
-                                  :rules="[rules.required, rules.counter, rules.min]"></v-text-field>
+                                  v-model="repassword" type="password"  persistent-hint
+                                  ></v-text-field>
                   </v-flex>
 
                   <v-flex  xs12 >
