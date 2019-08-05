@@ -10,8 +10,6 @@
             <h1 style="font-size: 60px" align="center">Đăng tin tuyển dụng & tìm hồ sơ ứng viên hiệu quả</h1>
           </v-card-title>
         </v-container>
-
-
           <v-spacer></v-spacer>
 
 
@@ -31,18 +29,38 @@
               >
                 <v-tab
                   v-for="service in services"
-                  :key="service"
+                  :key="service.id"
                   ripple
                 >
-                  Item {{ service.id}}
+                  {{ service.name }}
 
                 </v-tab>
                 <v-tab-item
                   v-for="service in services"
-                  :key="service"
+                  :key="service.id"
                 >
                   <v-card flat>
-                    <v-card-text>{{ service.name }}</v-card-text>
+                    <v-card-text>
+                      <v-layout row wrap>
+                        <v-flex md3 xs3>
+                            <v-flex md4 xs4>
+                              <img :src="service.imgServices" height="200px"/>
+                            </v-flex>
+                            <v-flex md5 xs4>
+
+                            </v-flex>
+                        </v-flex>
+                        <v-spacer/>
+                        <v-flex md6 xs7 class="pt-3">
+                          <h1 style="color: #ff5e2d">{{service.money}}</h1>
+                          <v-flex v-html="service.detail"></v-flex>
+
+                        </v-flex>
+                        <v-spacer/>
+                      </v-layout>
+
+
+                    </v-card-text>
                   </v-card>
                 </v-tab-item>
               </v-tabs>
@@ -121,7 +139,7 @@
             </v-flex>
             <v-flex md4 xs13>
 
-              <v-btn color="primary" ><h4>Tìm ứng viên</h4></v-btn>
+              <v-btn color="primary" @click="$router.push('/quan-li-ung-vien')" ><h4>Tìm ứng viên</h4></v-btn>
             </v-flex>
           </v-layout>
         </v-container>
@@ -135,8 +153,18 @@
       data : ()=>{ return {
         images : {'main' : require('@/assets/empmain1.jpg')},
         active: null,
-        services : [ { id: "1", name: "Foo" }, { id: "2", name: "Bar" }, { id: "3", name: "Baka" }, { id: "4", name: "Pig" }, ],
-        text: 'Lorem ipsum dolor sit amet'
+        services : [ { id: "1",name:"ĐĂNG TUYỂN", imgServices: require('@/assets/s1.png') , money:"2,203,000Đ",
+          detail: "    <span>✔ Đảm bảo hài lòng 100%</span><br/>\n" +
+            "                          <span>✔ Đăng tuyển nhanh chóng và nhận hồ sơ ngay lập tức</span><br/>\n" +
+            "                          <span>✔ Quản lý hồ sơ trực tuyến của bạn dễ dàng</span>"},
+          { id: "2", name: "TÌM HỒ SƠ", imgServices: require('@/assets/s2.png'), money:"1,923,000Đ",
+            detail: "    <span>✔ 30 ngày truy cập không giới hạn hệ thống dữ liệu chuyên nghiệp</span><br/>\n" +
+              "                          <span>✔ Tìm ứng viên hiệu quả và nhanh chóng</span><br/>\n" +
+              "                          <span>✔ Chủ động tìm kiếm ứng viên ngay hôm nay</span>"},
+          { id: "3", name: "QUẢNG BÁ THƯƠNG HIỆU", imgServices: require('@/assets/s3.png'), money:"30,821,000Đ",
+          detail: "    <span>✔ Chúng tôi nhận được hơn 7 triệu lượt truy cập mỗi tháng từ các ứng viên và chuyên gia giỏi nhất tại Việt Nam</span><br/>\n" +
+      "                          <span>✔Đặt Logo và Banner tại trang chủ sẽ là vị trí chiến lược để thu hút nhân tài.</span><br/>" },],
+
       }
     },
 

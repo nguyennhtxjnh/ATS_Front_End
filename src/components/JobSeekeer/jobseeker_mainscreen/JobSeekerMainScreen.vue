@@ -86,13 +86,13 @@
               <v-layout row wrap>
                 <v-spacer/>
                 <template v-for="company in companys">
-                  <v-flex md2 xs12 class="pa-3 ma-1" style="background-color: white" :key="company">
+                  <v-flex md2 xs12 class="pa-3 ma-1" style="background-color: white" :key="company.id">
                     <v-flex md12 xs12>
-                      <v-img  :src="images.main"
+                      <v-img  :src="company.logoImg"
                               height="100%"></v-img>
                     </v-flex>
                     <v-flex md12 xs12 class="text-lg-center">
-                      <h3 >Company name</h3>
+                      <h3 >{{company.nameCompany}}</h3>
                     </v-flex>
                   </v-flex>
                 </template>
@@ -276,6 +276,12 @@
     methods: {
 
       getComponent(){
+        Axios
+          .get(Constants.URL+'/company/list-5')
+          .then(response => {
+            this.companys = response.data
+            console.log(this.companys)
+          })
         Axios
           .get(Constants.URL+'/city/getAllCity')
           .then(response => (

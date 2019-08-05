@@ -3,7 +3,7 @@
     <v-container>
       <v-card class="pa-3" style="background-color: white">
         <v-card-title>
-          <h2 style="color: #ff5e2d ">Các việc làm được gợi ý</h2>
+          <h2 style="color: #ff5e2d ">Các việc làm tương tự </h2>
         </v-card-title>
         <v-divider class="pb-3"></v-divider>
         <v-layout row wrap v-if="info.length === 0">
@@ -48,9 +48,12 @@
 
               </v-flex>
               <v-flex md3 class="pt-5">
-
+<!--                <v-btn style="height: auto"-->
+<!--                       dark-->
+<!--                       icon @click="remove(index)">-->
+<!--                  <v-icon color="orange darken-2">mdi-delete</v-icon></v-btn>-->
               </v-flex>
-      </v-layout>
+            </v-layout>
           </v-container>
         </template>
 
@@ -65,12 +68,14 @@
   import Constants from '@/stores/constant.js'
   import {mapGetters} from 'vuex';
     export default {
-        name: "ListSuggestJob",
+        name: "ListSuggestJobSimilar",
       data  : function () {
         return {
           info: '',
           cities: [],
           cvid: this.$route.params.cvid,
+          jobid: this.$route.params.jobid
+
 
         }
       },
@@ -93,10 +98,10 @@
             .get(Constants.URL+'/city/getAllCity')
             .then(response => (
               this.cities = response.data.data))
-          console.log(this.userId)
-          if(this.userId != null && this.userId != ""){
+
+          if(this.jobid != null && this.jobid != ""){
             Axios
-              .get(Constants.URL+'/job/suggestJobByUserId?userId='+this.userId)
+              .get(Constants.URL+'/job/suggestJobByJobId?jobId='+this.jobid)
               .then(response => {
                 if(response.data.success === true){
                   this.info = response.data.data.content;

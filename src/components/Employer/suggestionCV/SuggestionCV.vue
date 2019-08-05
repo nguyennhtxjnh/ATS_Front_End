@@ -11,7 +11,9 @@
           <v-card-text>
             <template v-for="cv in cvs">
 
-              <v-layout row wrap @click="getCVid(cv.id)">
+              <v-layout row wrap  @click="getCVid" v-bind:id="`comEl`+cv.id" class="pa-2">
+                <v-flex @click="getCVDetail(cv.id)">
+                  <v-layout row wrap >
                 <v-flex md2 xs3>
                   <v-avatar size="50px" align="center">
                     <v-img v-bind:src="cv.img"></v-img>
@@ -44,6 +46,7 @@
 
                 </v-flex>
               </v-layout>
+                </v-flex></v-layout>
               <v-divider class="mt-2 mb-2" v-if=""></v-divider>
 
             </template>
@@ -79,23 +82,7 @@
               <v-icon class="mr-1">favorite</v-icon>
               Đã Lưu Ứng viên
             </v-btn>
-<!--            <v-btn color="primary" outline v-if="checkConfirm === 1" @click="confirmCV">-->
-<!--              <v-icon class="mr-1">thumb_up</v-icon>-->
-<!--              Xác nhận-->
-<!--            </v-btn>-->
-<!--            <v-btn color="grey" outline dark v-if="checkConfirm === 2">-->
-<!--              <v-icon class="mr-1">thumb_up</v-icon>-->
-<!--              Đã xác nhận-->
-<!--            </v-btn>-->
-<!--            <v-btn color="grey" outline v-if="checkConfirm === 1" dark @click="denyCV"-->
-<!--            >-->
-<!--              <v-icon class="mr-1">thumb_down</v-icon>-->
-<!--              Bỏ qua-->
-<!--            </v-btn>-->
-<!--            <v-btn color="grey" outline v-if="checkConfirm === 3" dark>-->
-<!--              <v-icon class="mr-1">thumb_down</v-icon>-->
-<!--              Đã bỏ qua-->
-<!--            </v-btn>-->
+
           </v-card-title>
           <v-card-text>
             <v-layout row wrap>
@@ -356,55 +343,50 @@
             this.cvs.sort(function(a, b){return b.id - a.id});
             this.cvid = this.cvs[0].id;
             if(this.cvid != null && this.cvid != ""){
-              this.getCVid(this.cvid);
+              this.getCVDetail(this.cvid);
             }
           })
 
       },
       onScroll (e) {
         this.offsetTop = e.target.scrollTop
-      },
-      getCVid(id){
-        this.cvid = id,
-          this.jobid =  this.$route.params.jobid,
-          this.userId = this.userId2;
-
+      }
+    , getCVDetail(id){
+      this.cvid = id;
+      this.jobid =  this.$route.params.jobid,
+        this.userId = this.userId2;
+      if(this.cvid != null && this.cvid != "") {
         Axios
           .get(Constants.URL + '/userlifecv/check/' + this.userId + '/' + this.cvid)
           .then(response => (
             this.checkSave = response.data,
               console.log(response)
           ))
+
         Axios
-          .post(Constants.URL + '/apply/checkstatus/' + this.cvid + '/' + this.jobid)
-          .then(response => (
-            this.checkConfirm = parseInt(response.data.data)
-          ))
-        Axios
-          .get(Constants.URL+'/cv/getOne/'+this.cvid+'/0')
+          .get(Constants.URL + '/cv/getOne/' + this.cvid + '/0')
           .then(response => {
               this.info = response.data.data;
-              if(this.info.img === null || this.info.img === ""){
+              if (this.info.img === null || this.info.img === "") {
                 this.imageUrl = require('@/assets/avatar-default-icon.png')
-              }
-              else {
+              } else {
                 this.imageUrl = this.info.img;
               }
               var dob = new Date(this.info.dob);
               this.info.dob = dob.toISOString().substr(0, 10);
-              for(var edu in this.info.educationsById){
+              for (var edu in this.info.educationsById) {
                 var stime = new Date(this.info.educationsById[edu].startTime);
                 this.info.educationsById[edu].startTime = stime.toISOString().substr(0, 10);
                 var etime = new Date(this.info.educationsById[edu].endtime);
                 this.info.educationsById[edu].endtime = etime.toISOString().substr(0, 10);
               }
-              for( var edu in this.info.workexperiencesById){
+              for (var edu in this.info.workexperiencesById) {
                 var stime = new Date(this.info.workexperiencesById[edu].startTime);
                 this.info.workexperiencesById[edu].startTime = stime.toISOString().substr(0, 10);
                 var etime = new Date(this.info.workexperiencesById[edu].endTime);
                 this.info.workexperiencesById[edu].endTime = etime.toISOString().substr(0, 10);
               }
-              for( var edu in this.info.projectorproductworkedsById){
+              for (var edu in this.info.projectorproductworkedsById) {
                 var stime = new Date(this.info.projectorproductworkedsById[edu].startTime);
                 this.info.projectorproductworkedsById[edu].startTime = stime.toISOString().substr(0, 10);
                 var etime = new Date(this.info.projectorproductworkedsById[edu].endTime);
@@ -412,9 +394,31 @@
               }
 
             }
-
           )
-      },
+      }},
+    getCVid(id){
+      let curTar = undefined;
+      if(typeof id === "object"){
+        curTar = id.currentTarget;
+        let child = curTar.parentElement.children;
+        for(let i=0;i<child.length;i++){
+          child[i].style.backgroundColor = '';
+        }
+      }else{
+        curTar = document.getElementById("comEl"+id);
+
+
+      }
+      if(!!curTar){
+        curTar.style.backgroundColor = "#e1f5fe";
+      }
+      if(this.isActive){
+        this.isActive = false;
+      }else{
+        this.isActive = true;
+      }
+      console.log(['pkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk',this])
+    },
 
       saveCV() {
         console.log("save")
@@ -503,7 +507,7 @@
             this.cvid = this.cvs[0].id;
             if(this.cvid != null && this.cvid != ""){
 
-            this.getCVid(this.cvid);
+            this.getCVDetail(this.cvid);
 
             }
           })

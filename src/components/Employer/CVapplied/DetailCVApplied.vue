@@ -13,8 +13,9 @@
         <v-card>
           <v-card-text>
             <template v-for="cv in cvs">
-
-              <v-layout row wrap @click="getCVid(cv.id)">
+              <v-layout row wrap  @click="getCVid" v-bind:id="`comEl`+cv.id" class="pa-2">
+                <v-flex @click="getCVDetail(cv.id)">
+                  <v-layout row wrap >
                 <v-flex md2 xs3>
                   <v-avatar size="50px" align="center">
                     <v-img v-bind:src="cv.img"></v-img>
@@ -48,7 +49,7 @@
                 </v-flex>
               </v-layout>
               <v-divider class="mt-2 mb-2" v-if=""></v-divider>
-
+                </v-flex></v-layout>
             </template>
             <v-layout row wrap>
               <v-spacer/>
@@ -103,9 +104,9 @@
               <v-spacer/>
               <v-flex md9 xs12>
                 <v-layout row wrap>
-                  <!--                    <v-flex md4 xs4>-->
-                  <!--                      <img :src="imageUrl" id="imageAvatar" height="150" width="150" />-->
-                  <!--                    </v-flex>-->
+                                      <v-flex md4 xs4>
+                                        <img :src="imageUrl" id="imageAvatar" height="150" width="150" />
+                                      </v-flex>
                   <v-flex md8 xs8 class="mb-4">
                     <h3>{{info.lastName}} {{info.firstName}}</h3>
                     <table>
@@ -342,10 +343,10 @@
           console.log(this.page);
 
           Axios
-            .get(Constants.URL+'/apply/cv-applied/'+this.jobid)
+            .get(Constants.URL+'/apply/cv-applied/'+this.jobid +'&page='+ this.page)
             .then(response => {
               this.cvs = response.data.content;
-              this.lengthPage = response.data.totalPages;
+              this.lengthPage = response.data.totalPages - 1;
               for(var cv in this.cvs){
                 var date = new Date(this.cvs[cv].createdDate);
                 this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
@@ -353,63 +354,85 @@
               this.cvs.sort(function(a, b){return b.id - a.id});
               this.cvid = this.cvs[0].id;
               if(this.cvid != null && this.cvid != ""){
-                this.getCVid(this.cvid)
+                this.getCVDetail(this.cvid)
               }
             })
 
         }
-        ,
-        getCVid(id){
-          this.cvid = id,
-            this.jobid =  this.$route.params.jobid,
+        ,   getCVDetail(id){
+          this.cvid = id;
+          this.jobid =  this.$route.params.jobid,
             this.userId = this.userId2;
+          if(this.cvid != null && this.cvid != "") {
+            Axios
+              .get(Constants.URL + '/userlifecv/check/' + this.userId + '/' + this.cvid)
+              .then(response => (
+                this.checkSave = response.data,
+                  console.log(response)
+              ))
+            Axios
+              .post(Constants.URL + '/apply/checkstatus/' + this.cvid + '/' + this.jobid)
+              .then(response => (
+                this.checkConfirm = parseInt(response.data.data)
+              ))
 
-          Axios
-            .get(Constants.URL + '/userlifecv/check/' + this.userId + '/' + this.cvid)
-            .then(response => (
-              this.checkSave = response.data,
-                console.log(response)
-            ))
-          Axios
-            .post(Constants.URL + '/apply/checkstatus/' + this.cvid + '/' + this.jobid)
-            .then(response => (
-              this.checkConfirm = parseInt(response.data.data)
-            ))
-          Axios
-            .get(Constants.URL+'/cv/getOne/'+this.cvid+'/0')
-            .then(response => {
-                this.info = response.data.data;
-                if(this.info.img === null || this.info.img === ""){
-                  this.imageUrl = require('@/assets/avatar-default-icon.png')
-                }
-                else {
-                  this.imageUrl = this.info.img;
-                }
-                var dob = new Date(this.info.dob);
-                this.info.dob = dob.toISOString().substr(0, 10);
-                for(var edu in this.info.educationsById){
-                  var stime = new Date(this.info.educationsById[edu].startTime);
-                  this.info.educationsById[edu].startTime = stime.toISOString().substr(0, 10);
-                  var etime = new Date(this.info.educationsById[edu].endtime);
-                  this.info.educationsById[edu].endtime = etime.toISOString().substr(0, 10);
-                }
-                for( var edu in this.info.workexperiencesById){
-                  var stime = new Date(this.info.workexperiencesById[edu].startTime);
-                  this.info.workexperiencesById[edu].startTime = stime.toISOString().substr(0, 10);
-                  var etime = new Date(this.info.workexperiencesById[edu].endTime);
-                  this.info.workexperiencesById[edu].endTime = etime.toISOString().substr(0, 10);
-                }
-                for( var edu in this.info.projectorproductworkedsById){
-                  var stime = new Date(this.info.projectorproductworkedsById[edu].startTime);
-                  this.info.projectorproductworkedsById[edu].startTime = stime.toISOString().substr(0, 10);
-                  var etime = new Date(this.info.projectorproductworkedsById[edu].endTime);
-                  this.info.projectorproductworkedsById[edu].endTime = etime.toISOString().substr(0, 10);
-                }
+            Axios
+              .get(Constants.URL + '/cv/getOne/' + this.cvid + '/0')
+              .then(response => {
+                  this.info = response.data.data;
+                  if (this.info.img === null || this.info.img === "") {
+                    this.imageUrl = require('@/assets/avatar-default-icon.png')
+                  } else {
+                    this.imageUrl = this.info.img;
+                  }
+                  var dob = new Date(this.info.dob);
+                  this.info.dob = dob.toISOString().substr(0, 10);
+                  for (var edu in this.info.educationsById) {
+                    var stime = new Date(this.info.educationsById[edu].startTime);
+                    this.info.educationsById[edu].startTime = stime.toISOString().substr(0, 10);
+                    var etime = new Date(this.info.educationsById[edu].endtime);
+                    this.info.educationsById[edu].endtime = etime.toISOString().substr(0, 10);
+                  }
+                  for (var edu in this.info.workexperiencesById) {
+                    var stime = new Date(this.info.workexperiencesById[edu].startTime);
+                    this.info.workexperiencesById[edu].startTime = stime.toISOString().substr(0, 10);
+                    var etime = new Date(this.info.workexperiencesById[edu].endTime);
+                    this.info.workexperiencesById[edu].endTime = etime.toISOString().substr(0, 10);
+                  }
+                  for (var edu in this.info.projectorproductworkedsById) {
+                    var stime = new Date(this.info.projectorproductworkedsById[edu].startTime);
+                    this.info.projectorproductworkedsById[edu].startTime = stime.toISOString().substr(0, 10);
+                    var etime = new Date(this.info.projectorproductworkedsById[edu].endTime);
+                    this.info.projectorproductworkedsById[edu].endTime = etime.toISOString().substr(0, 10);
+                  }
 
-              }
+                }
+              )
+          }},
+        getCVid(id){
+          let curTar = undefined;
+          if(typeof id === "object"){
+            curTar = id.currentTarget;
+            let child = curTar.parentElement.children;
+            for(let i=0;i<child.length;i++){
+              child[i].style.backgroundColor = '';
+            }
+          }else{
+            curTar = document.getElementById("comEl"+id);
 
-            )
+
+          }
+          if(!!curTar){
+            curTar.style.backgroundColor = "#e1f5fe";
+          }
+          if(this.isActive){
+            this.isActive = false;
+          }else{
+            this.isActive = true;
+          }
+          console.log(['pkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk',this])
         },
+
 
         saveCV() {
           console.log("save")
@@ -507,6 +530,7 @@
             .get(Constants.URL+'/apply/cv-applied/'+this.jobid)
             .then(response => {
               this.cvs = response.data.content;
+              this.lengthPage = response.data.totalPages -1;
               for(var cv in this.cvs){
                 var date = new Date(this.cvs[cv].createdDate);
                 // var tmp = date.getDay()
@@ -515,7 +539,7 @@
               this.cvs.sort(function(a, b){return b.id - a.id});
               this.cvid = this.cvs[0].id;
               if(this.cvid != null && this.cvid != ""){
-                this.getCVid(this.cvid)
+                this.getCVDetail(this.cvid)
               }
             })
         }

@@ -140,7 +140,16 @@
             .then(response => {if(response.data.success === true){
               this.appled = true;
               this.dialog2 = false;
-              this.btnSubmit = false;}
+              this.btnSubmit = false;
+                this.$notify({
+                  group: 'foo',
+                  type: 'success',
+                  title: 'Thành công',
+                  text: 'Nộp đơn thành công!'
+                })
+              this.$router.push('/viec-lam-tuong-tu/'+this.JobID)
+
+            }
               }
 
             )}else {

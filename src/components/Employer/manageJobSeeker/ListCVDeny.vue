@@ -16,39 +16,39 @@
               <v-layout row wrap  @click="getCVid" v-bind:id="`comEl`+cv.id" class="pa-2">
                 <v-flex @click="getCVDetail(cv.id)">
                   <v-layout row wrap >
-                <v-flex md2 xs3>
-                  <v-avatar size="50px" align="center">
-                    <v-img v-bind:src="cv.img"></v-img>
-                  </v-avatar>
-                </v-flex>
-                <v-flex md10 xs8>
-                  <v-layout row wrap>
-                    <v-flex md9 xs8>
-                      <h4>{{cv.lastName}} {{cv.firstName}}</h4>
+                    <v-flex md2 xs3>
+                      <v-avatar size="50px" align="center">
+                        <v-img v-bind:src="cv.img"></v-img>
+                      </v-avatar>
+                    </v-flex>
+                    <v-flex md10 xs8>
+                      <v-layout row wrap>
+                        <v-flex md9 xs8>
+                          <h4>{{cv.lastName}} {{cv.firstName}}</h4>
 
-                      <v-layout row wrap>
-                        <span> <v-icon class="">mdi-map-marker</v-icon>Địa điểm: {{cv.cityByCityId.fullName}}</span>
+                          <v-layout row wrap>
+                            <span> <v-icon class="">mdi-map-marker</v-icon>Địa điểm: {{cv.cityByCityId.fullName}}</span>
+                          </v-layout>
+                          <v-layout row wrap>
+                            <span> <v-icon class="">mdi-calendar-blank</v-icon>Thời gian làm việc thực tế {{cv.yearExperience}} năm</span>
+                          </v-layout>
+                        </v-flex>
+                        <v-spacer/>
+                        <v-flex md3 xs4>
+                          <span> <i> {{cv.createdDate}}</i></span>
+                        </v-flex>
                       </v-layout>
-                      <v-layout row wrap>
-                        <span> <v-icon class="">mdi-calendar-blank</v-icon>Thời gian làm việc thực tế {{cv.yearExperience}} năm</span>
-                      </v-layout>
-                    </v-flex>
-                    <v-spacer/>
-                    <v-flex md3 xs4>
-                      <span> <i> {{cv.createdDate}}</i></span>
-                    </v-flex>
-                  </v-layout>
-                  <v-layout row wrap class="mt-3">
-                    <v-flex md10 xs4 class="pa-1">
-                      <v-icon class="">mdi-star</v-icon>
-                      <span>Mục tiêu: {{cv.description}}
+                      <v-layout row wrap class="mt-3">
+                        <v-flex md10 xs4 class="pa-1">
+                          <v-icon class="">mdi-star</v-icon>
+                          <span>Mục tiêu: {{cv.description}}
                 </span>
+                        </v-flex>
+                      </v-layout>
+
                     </v-flex>
                   </v-layout>
-
-                </v-flex>
-              </v-layout>
-              <v-divider class="mt-2 mb-2" v-if=""></v-divider>
+                  <v-divider class="mt-2 mb-2" v-if=""></v-divider>
                 </v-flex></v-layout>
             </template>
             <v-layout row wrap>
@@ -104,9 +104,9 @@
               <v-spacer/>
               <v-flex md9 xs12>
                 <v-layout row wrap>
-                                      <v-flex md4 xs4>
-                                        <img :src="imageUrl" id="imageAvatar" height="150" width="150" />
-                                      </v-flex>
+                  <v-flex md4 xs4>
+                    <img :src="imageUrl" id="imageAvatar" height="150" width="150" />
+                  </v-flex>
                   <v-flex md8 xs8 class="mb-4">
                     <h3>{{info.lastName}} {{info.firstName}}</h3>
                     <table>
@@ -310,13 +310,12 @@
     </v-layout>
   </v-container>
 </template>
-
 <script>
   import axios from 'axios'
   import Constants from '@/stores/constant.js'
   import {mapGetters} from 'vuex';
     export default {
-        name: "ListCVConfirmed",
+        name: "ListCVDeny",
       data : function () {
         return{
           imageUrl: require('@/assets/avatar-default-icon.png'),
@@ -327,7 +326,6 @@
           ,
           lengthPage:1,
           page:1,
-          offsetTop: 0,
           info: '',
           userId: '',
           checkSave: '',
@@ -339,23 +337,24 @@
         reloadPage(){
           console.log(this.page);
           if(this.userId2 != null && this.userId2 != ""){
-          axios
-            .get(Constants.URL+'/cv/list-comfirmed/'+this.userId2 + '&page=' + (this.page-1))
-            .then(response => {
-              this.cvs = response.data.content;
-              for(var cv in this.cvs){
-                var date = new Date(this.cvs[cv].createdDate);
-                this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
-              }
-              if(this.cvs.length >0){
-                this.cvs.sort(function(a, b){return b.id - a.id});
-                this.cvid = this.cvs[0].id;
-                if(this.cvid != null && this.cvid != ""){
-                  this.getCVDetail(this.cvid)
+            axios
+              .get(Constants.URL+'/cv/list-denied/'+this.userId2+'&page='+ (this.page - 1))
+              .then(response => {
+                this.cvs = response.data.content;
+                this.lengthPage = response.data.totalPages;
+                for(var cv in this.cvs){
+                  var date = new Date(this.cvs[cv].createdDate);
+                  this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
                 }
-              }
+                if(this.cvs.length >0){
+                  this.cvs.sort(function(a, b){return b.id - a.id});
+                  this.cvid = this.cvs[0].id;
+                  if(this.cvid != null && this.cvid != ""){
+                    this.getCVDetail(this.cvid)
+                  }
+                }
 
-            })}
+              })}
 
         }
         , getCVDetail(id){
@@ -520,23 +519,23 @@
 
         getComponent() {
           if(this.userId2 != null && this.userId2 != ""){
-          axios
-            .get(Constants.URL+'/cv/list-comfirmed/'+this.userId2)
-            .then(response => {
-              this.cvs = response.data.content;
-              this.lengthPage = response.data.totalPages ;
-              for(var cv in this.cvs){
-                var date = new Date(this.cvs[cv].createdDate);
-                // var tmp = date.getDay()
-                this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
-              }
+            axios
+              .get(Constants.URL+'/cv/list-denied/'+this.userId2)
+              .then(response => {
+                this.cvs = response.data.content;
+                this.lengthPage = response.data.totalPages;
+                for(var cv in this.cvs){
+                  var date = new Date(this.cvs[cv].createdDate);
+                  // var tmp = date.getDay()
+                  this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
+                }
 
-              this.cvs.sort(function(a, b){return b.id - a.id});
-              this.cvid = this.cvs[0].id;
-              if(this.cvid != null && this.cvid != ""){
-                this.getCVDetail(this.cvid)
-              }
-            })}
+                this.cvs.sort(function(a, b){return b.id - a.id});
+                this.cvid = this.cvs[0].id;
+                if(this.cvid != null && this.cvid != ""){
+                  this.getCVDetail(this.cvid)
+                }
+              })}
         }
       }
       ,  mounted() {

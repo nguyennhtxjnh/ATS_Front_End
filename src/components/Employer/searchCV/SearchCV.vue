@@ -542,9 +542,7 @@
 
                 }
               )
-          }}
-
-        ,
+          }},
         getCVid(id){
           let curTar = undefined;
           if(typeof id === "object"){
@@ -553,7 +551,6 @@
             for(let i=0;i<child.length;i++){
               child[i].style.backgroundColor = '';
             }
-            debugger;
           }else{
             curTar = document.getElementById("comEl"+id);
 
@@ -568,11 +565,7 @@
             this.isActive = true;
           }
           console.log(['pkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk',this])
-
-
-          }
-
-        ,
+          },
         reloadPage(){
           console.log(this.page);
 
@@ -580,12 +573,11 @@
           console.log("indus: "+this.industryId);
           console.log("city: "+this.cityId);
           axios
-            .get(Constants.URL+'/cv/search?listskill='+this.lskill+'&city='+ this.cityId +'&industry='+this.industryId)
+            .get(Constants.URL+'/cv/search?listskill='+this.lskill+'&city='+ this.cityId +'&industry='+this.industryId +'&page=' + (this.page - 1))
             .then(response => {
                 console.log(response)
                 this.cvs = response.data.content;
-                this.lengthPage = response.data.totalPages;
-
+              this.lengthPage = response.data.totalPages ;
                 for(var cv in this.cvs){
                   var date = new Date(this.cvs[cv].createdDate);
                   // var tmp = date.getDay()
@@ -595,7 +587,7 @@
               this.cvid = this.cvs[0].id;
                 this.lskill = [];
               if(this.cvid != null && this.cvid != ""){
-              this.getCVid(this.cvid)
+              this.getCVDetail(this.cvid)
               }
               }
             )
@@ -636,8 +628,7 @@
             .then(response => {
               console.log(response)
               this.cvs = response.data.content;
-              this.lengthPage = response.data.totalPages;
-
+                  this.lengthPage = response.data.totalPages ;
               console.log(this.cvs[0].id)
                 for(var cv in this.cvs){
                   var date = new Date(this.cvs[cv].createdDate);

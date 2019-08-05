@@ -12,7 +12,7 @@
           <template  v-for="job in info">
             <v-container md7 xs12 style="background-color: white" class="ma-3 pa-2" >
               <v-layout row wrap>
-                <v-flex md2 xs3 class="pa-2">
+                <v-flex md2 xs3 class="pa-2" >
                   <v-img  :src="job.companyByCompanyId.logoImg"
                           height="100%"></v-img>
 
@@ -83,6 +83,10 @@
       },
 
       methods: {
+        viewJobDetail(id){
+          let route = this.$router.resolve({path: '/thong-tin-cong-viec/'+id});
+          window.open(route.href, '_blank');
+        },
         remove(position){
           this.info.splice(position, 1);
           if (this.info.length === 0) {

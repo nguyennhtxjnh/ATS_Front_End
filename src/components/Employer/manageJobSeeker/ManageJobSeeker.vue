@@ -29,6 +29,9 @@
           <v-card flat v-if="i.id === '3'">
             <ListCVConfirmed></ListCVConfirmed>
           </v-card>
+          <v-card flat v-if="i.id === '4'">
+            <ListCVDeny></ListCVDeny>
+          </v-card>
 
         </v-tab-item>
       </v-tabs>
@@ -41,16 +44,17 @@
     import SearchCV from "../searchCV/SearchCV";
     import ListCVSaved from "../CVSaved/ListCVSaved";
     import ListCVConfirmed from "./ListCVConfirmed";
+    import ListCVDeny from "./ListCVDeny";
     export default {
         name: "ManageJobSeeker",
-      components: {ListCVConfirmed, ListCVSaved, SearchCV},
+      components: {ListCVDeny, ListCVConfirmed, ListCVSaved, SearchCV},
       data: function () {
         return{
           active: null,
           tab: null,
           menu: [
             {name:'Tìm kiếm Ứng Viên', id:'1'},   {name:'Ứng viên đang theo dõi', id:'2'},
-            {name:'Ứng viên đã xác nhận', id:'3'},
+            {name:'Ứng viên đã xác nhận', id:'3'},{name:'Ứng viên đã từ chối', id:'4'},
 
           ],
 

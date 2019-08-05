@@ -35,6 +35,8 @@ import AdminViewAllNewCompanyPage from '../views/Admin/AdminViewAllNewCompanyPag
 import EmployerCompanyApplyPage from '../views/Employer/EmployerCompanyApplyPage'
 import ListSuggestJobPage from "../views/Jobseeker/ListSuggestJobPage";
 import EmployerGetServicePage from '../views/Employer/EmployerGetServicePage'
+import ViewJobSimilar from "../views/Jobseeker/ViewJobSimilar";
+import CheckEmailEmloyeerPage from "../views/Employer/CheckEmailEmloyeerPage";
 
 
 
@@ -147,7 +149,17 @@ const router = new Router({
             path: '/viec-lam-nguoi-tim-viec',
             name: 'tab job',
             component: TabJobPage
-        }, {
+        }  , {
+          path: '/kiem-tra-email',
+        name: 'check email',
+        component: CheckEmailEmloyeerPage
+      },
+      {
+        path: '/viec-lam-tuong-tu/:jobid',
+        name: 'job similar',
+        component: ViewJobSimilar
+      }
+      ,{
             path: '/quan-li-cong-viec',
             name: 'manage job',
             component: ManageJobPage
