@@ -11,26 +11,26 @@
         <v-toolbar-title @click="$router.push('/trang-chu-tuyen-dung')" class="hoverCSSTitle pr-5 mr-5" >Nhà Tuyển Dụng</v-toolbar-title>
         <v-spacer></v-spacer>
 
-        <v-btn style="height: 100%" flat  class="white black--text" @click="$router.push('/quan-li-ung-vien')" v-if="roleId === 2 || roleId === 3">
+        <v-btn style="height: 100%" flat  class="white black--text" @click="$router.push('/quan-li-ung-vien')" v-if="roleId === 2 || roleId === 3 || roleId === 5">
           Ứng viên
         </v-btn>
-        <v-btn style="height: 100%" flat  class="white black--text" @click="$router.push('/quan-li-cong-viec')" v-if="roleId === 2 || roleId === 3">
+        <v-btn style="height: 100%" flat  class="white black--text" @click="$router.push('/quan-li-cong-viec')" v-if="roleId === 2 || roleId === 3 || roleId === 5">
           Quản lý Tin tuyển dụng
         </v-btn>
 <!--        <v-btn style="height: 100%" flat  class="white black&#45;&#45;text"  @click="checkUser"  v-if="roleId === 2 || roleId === 3">-->
 <!--          Đăng Tin Tuyển Dụng-->
 <!--        </v-btn>-->
 
-        <v-btn style="height: 100%" flat  class="white black--text " @click="$router.push('/tuyen-dung-dang-nhap')" v-if="roleId !== 2 && this.roleId !== 3">
+        <v-btn style="height: 100%" flat  class="white black--text " @click="$router.push('/tuyen-dung-dang-nhap')" v-if="roleId !== 2 && this.roleId !== 3 && this.roleId !== 5">
           Đăng Nhập
         </v-btn>
 <!--        <Span  v-if="roleId !== 2" class="white black&#45;&#45;text ">|</Span>-->
-        <v-btn style="height: 100%" flat  class="white black--text" @click="$router.push('/tuyen-dung-dang-ky')" v-if="roleId !== 2 && this.roleId !== 3">
+        <v-btn style="height: 100%" flat  class="white black--text" @click="$router.push('/tuyen-dung-dang-ky')" v-if="roleId !== 2 && this.roleId !== 3 && this.roleId !== 5">
           Đăng Ký
         </v-btn>
 
 
-        <v-menu  v-if="roleId === 2 || roleId === 3"
+        <v-menu  v-if="roleId === 2 || roleId === 3 || roleId === 5"
                  class="pt-3"
                  offset-y
                  style="height: 100%"
@@ -75,22 +75,8 @@
         </v-toolbar-title>
         <v-spacer></v-spacer>
 
-<!--        <v-btn style="height: 100%" class="pa-0" color="black" flat @click="$router.push('/tuyen-dung-dang-nhap')" v-if="roleId !== 2">-->
-<!--          <v-icon left color="black" class="pl-3">mdi-login</v-icon>-->
-<!--        </v-btn>-->
-<!--        <Span  v-if="roleId !== 2" style="color: black !important;">|</Span>-->
-<!--        <v-btn style="height: 100%" color="black" flat @click="$router.push('/tuyen-dung-dang-ky')" v-if="roleId !== 2">-->
-<!--          <v-icon left color="black" class="pl-3">mdi-pencil-plus</v-icon>-->
-<!--        </v-btn>-->
-<!--        <v-btn style="height: 100%" flat  class="white black&#45;&#45;text" @click="$router.push('/quan-li-ung-vien')" v-if="roleId === 2 || roleId === 3">-->
-<!--          Ứng viên-->
-<!--        </v-btn>-->
-<!--        <v-btn style="height: 100%" flat  class="white black&#45;&#45;text" @click="$router.push('/quan-li-cong-viec')" v-if="roleId === 2 || roleId === 3">-->
-<!--          Quản lý Tin tuyển dụng-->
-<!--        </v-btn>-->
-
         <v-menu
-          class="pt-1" v-if="roleId === 2 || roleId === 3"
+          class="pt-1" v-if="roleId === 2 || roleId === 3 || roleId === 5"
                  offset-y
                  style="height: 100%"
                  content-class="dropdown-menu"
@@ -359,11 +345,11 @@
           })
       },
       checkUser(){
-        if(this.roleId === 2 || roleId === 3){
+        if(this.roleId === 2 || roleId === 3 || roleId === 5){
           this.formDataCompany.userId = this.userId2;
           this.getCompany();
         }
-        if (this.roleId !== 2 && this.roleId !== 3){
+        if (this.roleId !== 2 && this.roleId !== 3 && this.roleId !== 5){
           this.$router.push('/tuyen-dung-dang-nhap');
         }
       },

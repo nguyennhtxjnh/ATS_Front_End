@@ -29,6 +29,12 @@
           <v-card flat v-if="i.id === '3'">
             <ListJobExpired></ListJobExpired>
           </v-card>
+          <v-card flat v-if="i.id === '4'">
+            <ListJobBan></ListJobBan>
+          </v-card>
+          <v-card flat v-if="i.id === '5'">
+            <ListJobWaitConfirm></ListJobWaitConfirm>
+          </v-card>
         </v-tab-item>
       </v-tabs>
 
@@ -41,16 +47,21 @@
     import ListJobPost from "./ListJobPost";
     import ListJobExpired from "./ListJobExpired";
     import CreateJob from "../Job/CreateJob";
+    import ListJobBan from "./ListJobBan";
+    import ListJobWaitConfirm from "./ListJobWaitConfirm";
     export default {
         name: "ManageJob",
-      components: {CreateJob, ListJobExpired, ListJobPost, SearchCV},
+      components: {ListJobWaitConfirm, ListJobBan, CreateJob, ListJobExpired, ListJobPost, SearchCV},
       data: function () {
         return{
-          active: '',
+          active: 1,
           tab: '',
           menu: [
             {name:'Đăng tin tuyển dụng', id:'1'},
-            {name:'Tin tuyển dụng đang đăng tuyển', id:'2'},{name:'Tin tuyển dụng hết hạn', id:'3'}
+            {name:'Tin đang đăng tuyển', id:'2'},
+            {name:'Tin hết hạn', id:'3'}
+            ,{name:'Tin bị từ chối', id:'4'}
+            ,{name:'Tin chờ xác thực', id:'5'}
           ],
           formDataCompany: {
             userId: '',

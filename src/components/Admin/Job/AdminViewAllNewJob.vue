@@ -374,7 +374,7 @@
 
           <v-btn
             color="error"
-            @click="changeStatus('deny')"
+            @click="changeStatus('ban')"
           >
             Từ chối
           </v-btn>

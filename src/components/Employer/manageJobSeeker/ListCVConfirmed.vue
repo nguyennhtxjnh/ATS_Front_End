@@ -48,13 +48,15 @@
 
                 </v-flex>
               </v-layout>
-              <v-divider class="mt-2 mb-2" v-if=""></v-divider>
                 </v-flex></v-layout>
+              <v-divider class="mt-2 mb-2" v-if=""></v-divider>
+
             </template>
             <v-layout row wrap>
               <v-spacer/>
               <v-flex md10>
                 <v-pagination
+                  v-if="lengthPage !== '' || lengthPage !== null"
                   v-model="page"
                   :page="page"
                   @input="reloadPage"
@@ -519,12 +521,17 @@
 
 
         getComponent() {
+
           if(this.userId2 != null && this.userId2 != ""){
           axios
             .get(Constants.URL+'/cv/list-comfirmed/'+this.userId2)
             .then(response => {
+              console.log("aaaaaaaaa"+ this.lengthPage)
               this.cvs = response.data.content;
-              this.lengthPage = response.data.totalPages ;
+              if(this.lengthPage === "" || this.lengthPage === null){
+                this.lengthPage = response.data.totalPages ;
+              }
+              console.log("bbbbbbbbbbb"+ this.lengthPage)
               for(var cv in this.cvs){
                 var date = new Date(this.cvs[cv].createdDate);
                 // var tmp = date.getDay()

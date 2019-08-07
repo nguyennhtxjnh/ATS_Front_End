@@ -155,7 +155,7 @@
           email : "",
           password  : "",
           fullname  : "",
-          roleId  : 2,
+          roleId  : 5,
           cityid : "",
           telephoneNumber: '',
           gender: "",
@@ -239,7 +239,8 @@
                     title: 'Thành Công',
                     text: 'Tạo Tài Khoản Thành Công!'
                   })
-                  await this.login(this.formData.email, this.formData.password);
+                  this.$router.push('/kiem-tra-email');
+                  // await this.login(this.formData.email, this.formData.password);
                 } else {
                   this.$notify({
                     group: 'foo',
@@ -270,6 +271,7 @@
               text: 'Mật Khẩu Không Trùng Khớp!'
             })
           }
+
         }
       },
       getInitData(){

@@ -31,7 +31,7 @@
               v-model="searchIndustry"
               item-text="name"
               item-value="name"
-              label="Tất cả các ngành nghề"
+              label="Ngành nghề"
             ></v-autocomplete>
           </v-flex>
 
@@ -41,7 +41,7 @@
               v-model="selectLocation"
               item-text="fullName"
               item-value="fullName"
-              label="Tất cả địa điểm"
+              label="Địa điểm"
             ></v-autocomplete>
           </v-flex>
           <v-flex md1 xs12>
@@ -75,9 +75,6 @@
           hide-headers
         >
 
-          <!--            <template #pageText="{pageStart, pageStop, itemsLength}">-->
-          <!--              {{pageStart}} - {{pageStop}} của tổng cộng {{itemsLength}}-->
-          <!--            </template>-->
 
           <template #items="{item}">
             <td class="pl-0">
@@ -87,7 +84,7 @@
                     <v-spacer/>
                     <v-flex md2 xs3 class="ml-4">
                       <v-img class="hoverClass" :src="item.companyLogoImg"
-                             @click="$router.push(`/thong-tin-cong-viec/${item.id}`)" contain aspect-ratio="1.6"></v-img>
+                             @click="viewJobDetail(item.id)" contain aspect-ratio="1.6"></v-img>
                     </v-flex>
 
 <v-spacer/>
@@ -97,7 +94,7 @@
 
                         <v-flex d-flex class="pa-0 mt-2" xs12>
                           <h2 class="hoverClass" style="color: red"
-                              @click="$router.push(`/thong-tin-cong-viec/${item.id}`)">{{item.title}}</h2>
+                              @click="viewJobDetail(item.id)">{{item.title}}</h2>
                         </v-flex>
                         <v-layout row wrap class="pa-0 ma-0">
                           <v-flex d-flex xs12>
@@ -207,15 +204,20 @@
       }
     },
     methods: {
+      viewJobDetail(id){
+        let route = this.$router.resolve({path: '/thong-tin-cong-viec/'+id});
+        window.open(route.href, '_blank');
+      },
       getComponent() {
 
-        this.searchValue = sessionStorage.getItem("skill");
-        this.searchIndustry = sessionStorage.getItem("job");
-        this.selectLocation = sessionStorage.getItem("location");
+
         this.checkSearch = sessionStorage.getItem("check");
 
 
         if(this.checkSearch === "true"){
+          this.searchValue = sessionStorage.getItem("skill");
+          this.searchIndustry = sessionStorage.getItem("job");
+          this.selectLocation = sessionStorage.getItem("location");
           console.log(this.checkSearch)
           this.searchClick();
           sessionStorage.setItem("check", false);

@@ -75,51 +75,51 @@
 
 
       </v-layout>
-      <v-layout row wrap>
-        <v-spacer/>
-        <i @click="showMore" v-if="check === false" style="color: #ff5e2d"><v-icon style="color: #ff5e2d">mdi-arrow-down</v-icon>Chọn tìm kiếm nâng cao</i>
-        <i @click="unShowMore" v-if="check === true" style="color: #ff5e2d"><v-icon style="color: #ff5e2d">mdi-arrow-up</v-icon>Ẩn tìm kiếm nâng cao</i>
-      </v-layout>
+<!--      <v-layout row wrap>-->
+<!--        <v-spacer/>-->
+<!--        <i @click="showMore" v-if="check === false" style="color: #ff5e2d"><v-icon style="color: #ff5e2d">mdi-arrow-down</v-icon>Chọn tìm kiếm nâng cao</i>-->
+<!--        <i @click="unShowMore" v-if="check === true" style="color: #ff5e2d"><v-icon style="color: #ff5e2d">mdi-arrow-up</v-icon>Ẩn tìm kiếm nâng cao</i>-->
+<!--      </v-layout>-->
 
-      <v-divider class="pb-3" v-if="check"></v-divider>
-      <v-layout row wrap v-if="check">
-        <v-flex md4 xs12 class="mr-2" >
-          <v-layout row wrap>
-            <v-icon style="color: #ff5e2d" class="mr-2">mdi-gender-male-female</v-icon>
-            <v-select
-              v-bind:items="genders"
-              v-model="gender"
-              :rules="[() => gender.length > 0 ||'Không được để trống']"
-              item-text="name"
-              item-value="id"
-              label="Giới tính"
-            ></v-select>
-          </v-layout>
-        </v-flex>
-        <v-flex md5 xs12 class="ml-2">
-          <v-layout row wrap>
-            <v-icon style="color: #ff5e2d"  class="mr-2">mdi-calendar-blank</v-icon>
-            <v-flex md3 class="pr-2">
-              <v-select
-                :items="items"
-                label="Từ tuổi"
-              ></v-select>
-            </v-flex>
-            <v-flex md3 class="pr-2">
-              <v-select
-                :items="items"
-                label="Đến tuổi"
-              ></v-select>
-            </v-flex>
-          </v-layout>
-          <v-layout row wrap>
+<!--      <v-divider class="pb-3" v-if="check"></v-divider>-->
+<!--      <v-layout row wrap v-if="check">-->
+<!--        <v-flex md4 xs12 class="mr-2" >-->
+<!--          <v-layout row wrap>-->
+<!--            <v-icon style="color: #ff5e2d" class="mr-2">mdi-gender-male-female</v-icon>-->
+<!--            <v-select-->
+<!--              v-bind:items="genders"-->
+<!--              v-model="gender"-->
+<!--              :rules="[() => gender.length > 0 ||'Không được để trống']"-->
+<!--              item-text="name"-->
+<!--              item-value="id"-->
+<!--              label="Giới tính"-->
+<!--            ></v-select>-->
+<!--          </v-layout>-->
+<!--        </v-flex>-->
+<!--        <v-flex md5 xs12 class="ml-2">-->
+<!--          <v-layout row wrap>-->
+<!--            <v-icon style="color: #ff5e2d"  class="mr-2">mdi-calendar-blank</v-icon>-->
+<!--            <v-flex md3 class="pr-2">-->
+<!--              <v-select-->
+<!--                :items="items"-->
+<!--                label="Từ tuổi"-->
+<!--              ></v-select>-->
+<!--            </v-flex>-->
+<!--            <v-flex md3 class="pr-2">-->
+<!--              <v-select-->
+<!--                :items="items"-->
+<!--                label="Đến tuổi"-->
+<!--              ></v-select>-->
+<!--            </v-flex>-->
+<!--          </v-layout>-->
+<!--          <v-layout row wrap>-->
 
-          </v-layout>
+<!--          </v-layout>-->
 
-        </v-flex>
+<!--        </v-flex>-->
 
 
-      </v-layout>
+<!--      </v-layout>-->
     </v-card>
     <v-layout row wrap class="pt-3">
       <v-flex md12 xs12>
@@ -577,7 +577,7 @@
             .then(response => {
                 console.log(response)
                 this.cvs = response.data.content;
-              this.lengthPage = response.data.totalPages ;
+              // this.lengthPage = response.data.totalPages ;
                 for(var cv in this.cvs){
                   var date = new Date(this.cvs[cv].createdDate);
                   // var tmp = date.getDay()
@@ -626,22 +626,27 @@
           axios
             .get(Constants.URL+'/cv/search?listskill='+this.lskill+'&city='+ this.cityId +'&industry='+this.industryId)
             .then(response => {
-              console.log(response)
+
+              setTimeout(() => {
+                window.scrollTo(0, 200);
+              }, 0);
               this.cvs = response.data.content;
-                  this.lengthPage = response.data.totalPages ;
+              this.lengthPage = response.data.totalPages ;
               console.log(this.cvs[0].id)
-                for(var cv in this.cvs){
-                  var date = new Date(this.cvs[cv].createdDate);
-                  // var tmp = date.getDay()
-                  this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
-                }
-                this.cvs.sort(function(a, b){return b.id - a.id});
-                this.cvid = this.cvs[0].id;
+              for(var cv in this.cvs){
+                var date = new Date(this.cvs[cv].createdDate);
+                // var tmp = date.getDay()
+                this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
+              }
+              this.cvs.sort(function(a, b){return b.id - a.id});
+              this.cvid = this.cvs[0].id;
               this.lskill = [];
-                if(this.cvid != null && this.cvid != ""){
-                  this.getCVDetail(this.cvid)
-                }
+              if(this.cvid != null && this.cvid != ""){
+                this.getCVDetail(this.cvid)
+              }
             }
+
+
             )
 
 

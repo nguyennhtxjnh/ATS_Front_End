@@ -1,7 +1,7 @@
 
 <template>
 
-  <v-card>
+  <v-flex>
     <!--    image top-->
     <v-img
       :src="images.main"
@@ -78,7 +78,7 @@
       <v-container align-center>
         <v-layout row wrap>
           <v-flex md12 xs12 >
-            <h1 align="center">Các công ty hàng đầu</h1>
+            <h1 align="center" style="color: #fe7013">Các nhà tuyển dụng mới</h1>
           </v-flex>
           <v-flex md12 xs12>
             <v-container>
@@ -199,43 +199,50 @@
 <!--    </v-card>-->
     <!--    8 công việc đăng gần nhất-->
     <v-card style="background-color:#efebeb">
-      <v-container md12 xs12 align-center>
-        <h1>Việc làm nổi bật hôm nay</h1>
+      <v-container>
+        <v-flex md12 xs12 >
+        <h1  style="color: #fe7013">Việc làm mới nhất</h1>
+        </v-flex>
+        <v-layout row wrap>
+          <v-spacer/>
+            <v-flex md12 xs12>
+              <v-layout row wrap>
+                <template v-for="job in info" >
 
-        <v-layout row wrap md8 xs12 align-center>
+                  <v-flex md5 xs12 style="background-color: white" class="ma-2 pa-1" :key="job.id" @click="viewJobDetail(job.id)">
 
-            <template v-for="job in info" >
-
-              <v-flex md5 xs12 style="background-color: white" class="ma-2 pa-1" :key="job.id" @click="$router.push(`/thong-tin-cong-viec/${job.id}`)">
-
-                <v-layout row wrap>
-                  <v-flex md4  xs4>
-                    <v-img  :src="job.companyLogoImg"
-                            height="100%"></v-img>
-                  </v-flex>
-                  <v-flex md1/>
-                  <v-flex md7 xs7 class="pt-2">
-                    <h2 align-left>
-                      {{job.title}}
-                    </h2>
-                    <v-flex align-left>
-                      <h4>{{job.companyName}}</h4>
-                      <!--                    <h4>  <v-btn icon>-->
-                      <!--                      <v-icon color="orange darken-2" >mdi-coin</v-icon>-->
-                      <!--                    </v-btn>{{job.salaryTo}} - {{job.salaryFrom}} triệu</h4>-->
-                    </v-flex>
-                    <span align-lef>
+                    <v-layout row wrap>
+                      <v-flex md4  xs4>
+                        <v-img  :src="job.companyLogoImg"
+                                height="90%"></v-img>
+                      </v-flex>
+                      <v-flex md1/>
+                      <v-flex md7 xs7 class="pt-2">
+                        <h2 align-left>
+                          {{job.title}}
+                        </h2>
+                        <v-flex align-left>
+                          <h4>{{job.companyName}}</h4>
+                          <!--                    <h4>  <v-btn icon>-->
+                          <!--                      <v-icon color="orange darken-2" >mdi-coin</v-icon>-->
+                          <!--                    </v-btn>{{job.salaryTo}} - {{job.salaryFrom}} triệu</h4>-->
+                        </v-flex>
+                        <span align-lef>
                    {{job.cityName}}
 
                   </span>
 
+                      </v-flex>
+
+                    </v-layout>
+
                   </v-flex>
 
-                </v-layout>
+                </template>
+              </v-layout>
 
-              </v-flex>
-
-            </template>
+            </v-flex>
+<v-spacer/>
 
 
 
@@ -243,7 +250,7 @@
       </v-container>
     </v-card>
 
-  </v-card>
+  </v-flex>
 
 
 
@@ -274,6 +281,10 @@
     },
 
     methods: {
+      viewJobDetail(id){
+        let route = this.$router.resolve({path: '/thong-tin-cong-viec/'+id});
+        window.open(route.href, '_blank');
+      },
 
       getComponent(){
         Axios

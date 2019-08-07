@@ -341,7 +341,7 @@
 
       getJobDetail(){
         this.loading = true;
-        Axios.get(Constants.URL+`/job/getJobDetail?id=${+this.id}`)
+        Axios.get(Constants.URL+`/job/getJobDetail?id=${+this.id}&userId=${+this.userId1}`)
           .then(response => {
             this.jobFull = response.data.data;
             this.jobFull.createdDate = this.moment(this.jobFull.createdDate).format('DD-MM-YYYY');
@@ -359,6 +359,11 @@
       this.$nextTick(() => {
         this.getJobDetail();
       })
+    },
+    watch: {
+      useId1() {
+        this.getJobDetail();
+      },
     },
     computed: {
       ...mapGetters('AUTHENTICATION_STORE',{

@@ -11,7 +11,7 @@
             <span class="pt-2 pl-3">Job Board</span>
           </v-layout>
         </v-toolbar-title>
-        <v-toolbar-title v-if="roleId === 1" @click="$router.push('/viec-lam-nguoi-tim-viec')"  class="black--text hoverCSSTitle" >
+        <v-toolbar-title v-if="roleId === 1" @click="$router.push('/')"  class="black--text hoverCSSTitle" >
           <v-layout row wrap class="pl-5">
             <v-img :src="require('@/assets/logoP.png')" style="width: 50px; height: 50px"></v-img>
             <span class="pt-2 pl-3">Job Board</span>
@@ -85,20 +85,6 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
 
-<!--      <v-btn style="height: 100%" color="black" flat @click="$router.push('/viec-lam-nguoi-tim-viec')">-->
-<!--       Quản lí Việc làm-->
-<!--      </v-btn>-->
-
-<!--      <v-btn style="height: 100%" color="black" flat @click="$router.push('/quan-li-CV')" v-if="roleId === 1">-->
-<!--        Quản lí CV-->
-<!--      </v-btn>-->
-<!--      <v-btn style="height: 100%" color="black" flat @click="$router.push('/dang-nhap')" v-if="roleId !== 1">-->
-<!--        Đăng Nhập-->
-<!--      </v-btn>-->
-<!--      <Span  v-if="roleId !== 1" style="color: white !important;">|</Span>-->
-<!--      <v-btn style="height: 100%" color="black" flat @click="$router.push('/dang-ky')" v-if="roleId !== 1">-->
-<!--        Đăng Ký-->
-<!--      </v-btn>-->
 
       <v-menu  v-if="roleId === 1"
                class="pt-3"

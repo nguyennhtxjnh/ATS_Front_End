@@ -1,7 +1,7 @@
 <template>
   <v-container>
 
-    <h2>Các ứng viên đã xác nhận</h2>
+    <h2>Các ứng viên đã từ chối</h2>
 
     <v-layout row wrap v-if="cvs.length === 0">
       <v-spacer/>
@@ -48,13 +48,15 @@
 
                     </v-flex>
                   </v-layout>
-                  <v-divider class="mt-2 mb-2" v-if=""></v-divider>
                 </v-flex></v-layout>
+                  <v-divider class="mt-2 mb-2" v-if=""></v-divider>
+
             </template>
             <v-layout row wrap>
               <v-spacer/>
               <v-flex md10>
                 <v-pagination
+                  v-if="lengthPage !== '' || lengthPage !== null"
                   v-model="page"
                   :page="page"
                   @input="reloadPage"
@@ -324,7 +326,7 @@
           genders: [{id: "1", name: "Nữ"}, {id: "2", name: "Nam"}, {id: "3", name: "Khác"}],
           sts: [{i: "1", name: "Đại học"}, {i: "2", name: "Cao Đẳng"}, {i: "3", name: "Trung cấp"}, {i: "4", name: "Trung học phổ thông"}]
           ,
-          lengthPage:1,
+          lengthPage:'',
           page:1,
           info: '',
           userId: '',
@@ -341,7 +343,6 @@
               .get(Constants.URL+'/cv/list-denied/'+this.userId2+'&page='+ (this.page - 1))
               .then(response => {
                 this.cvs = response.data.content;
-                this.lengthPage = response.data.totalPages;
                 for(var cv in this.cvs){
                   var date = new Date(this.cvs[cv].createdDate);
                   this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
@@ -523,7 +524,9 @@
               .get(Constants.URL+'/cv/list-denied/'+this.userId2)
               .then(response => {
                 this.cvs = response.data.content;
-                this.lengthPage = response.data.totalPages;
+                if(this.lengthPage === "" || this.lengthPage === null){
+               this.lengthPage = response.data.totalPages;
+                }
                 for(var cv in this.cvs){
                   var date = new Date(this.cvs[cv].createdDate);
                   // var tmp = date.getDay()

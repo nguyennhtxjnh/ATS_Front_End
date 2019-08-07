@@ -408,7 +408,7 @@
 
 
   export default {
-    name: 'CreateJob',
+    name: 'EditJob',
     data: function () {
       return {
         date: new Date().toISOString().substr(0, 10),

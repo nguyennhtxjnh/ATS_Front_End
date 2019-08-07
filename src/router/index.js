@@ -223,10 +223,16 @@ const router = new Router({
             component: ListSuggestJobPage
         }
 
-    ]
+    ],
+
+
 })
 
 router.beforeEach((to, from, next) => {
+  setTimeout(() => {
+    window.scrollTo(0, 0);
+  }, 100);
+  next();
 
     if (store.getters['AUTHENTICATION_STORE/isLoggedIn1']) {
         store.dispatch('AUTHENTICATION_STORE/INIT1')

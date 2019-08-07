@@ -146,7 +146,7 @@ export default {
 
             const token = response.data.data.accessToken
 
-            if (response.data.data.roleId === 2 || response.data.data.roleId === 3) {
+            if (response.data.data.roleId === 2 || response.data.data.roleId === 3  || response.data.data.roleId === 5) {
               localStorage.setItem('token2', token)
               commit('SUCCESS2', token)
             } else {

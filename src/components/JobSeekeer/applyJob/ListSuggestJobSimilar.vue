@@ -1,5 +1,5 @@
 <template>
-  <v-flex style="background-color: whitesmoke">
+  <v-flex style="background-color: whitesmoke" class="pt-2">
     <v-container>
       <v-card class="pa-3" style="background-color: white">
         <v-card-title>

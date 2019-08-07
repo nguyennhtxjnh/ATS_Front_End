@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="cusM">
 <!--    <img src="./assets/logo.png">-->
-    <router-view :key="$router.fullPath"/>
+    <router-view :key="$router.fullPath" />
 
     <notifications class="myCustom" group="foo"  position="top center" width="520"/>
 
@@ -11,6 +11,7 @@
 <script>
 export default {
   name: 'App'
+
 }
 </script>
 
