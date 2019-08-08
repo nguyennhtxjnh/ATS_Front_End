@@ -5,7 +5,7 @@
       <v-flex xs12 sm12 md10 >
         <!--header title-->
         <v-container class=" mb-3" fluid grid-list-md style="background-color: white">
-          <v-layout row wrap>
+          <v-layout row wrap v-if="jobFull">
             <v-flex d-flex xs12 sm6 md3 class="align-center pa-0">
               <v-img contain :src="imgUrl" aspect-ratio="2"></v-img>
             </v-flex>
@@ -234,7 +234,7 @@
                           >
                             <template #items="{item}">
                               <td class="hoverClass pl-0" >
-                                <v-flex xs12 @click="goToJob(item.id)">
+                                <v-flex xs12 @click="viewJobDetail(item.id)">
                                   <v-container fluid grid-list-md class="pa-0">
                                     <v-layout row wrap >
                                       <v-flex d-flex xs12 md7 >
@@ -330,35 +330,39 @@
       id: Number,
     },
     methods: {
-      goToJob(index){
-        this.$router.push(`/thong-tin-cong-viec/${index}`);
-        this.$router.go('/thong-tin-cong-viec/' + `${index}`);
-      },
-      getjob(){
+        viewJobDetail(id){
+            let route = this.$router.resolve({path: '/thong-tin-cong-viec/'+id});
 
-      },
-
-
+            window.open(route.href, '_blank');
+        },
       getJobDetail(){
         this.loading = true;
-        Axios.get(Constants.URL+`/job/getJobDetail?id=${+this.id}&userId=${+this.userId1}`)
-          .then(response => {
-            this.jobFull = response.data.data;
-            this.jobFull.createdDate = this.moment(this.jobFull.createdDate).format('DD-MM-YYYY');
-            this.jobFull.endDateForApply = this.moment(this.jobFull.endDateForApply).format('DD-MM-YYYY');
-            this.imgUrl = this.jobFull.company.logoImg;
-            console.log(this.jobFull);
-          })
-          .catch(console.error)
-          .finally(() => {
-            this.loading = false;
-          })
+          if(this.userId1 != null && this.userId1 != ""){
+        this.userId = this.userId1;
+          }
+        console.log("saaaaaaaaaaaaa" + this.userId)
+          if(this.userId != null && this.userId != ""){
+              Axios.get(Constants.URL+`/job/getJobDetail?id=${+this.id}&userId=${+this.userId}`)
+                  .then(response => {
+                      if(response.data.success === true){
+                          this.jobFull = response.data.data;
+                          this.jobFull.createdDate = this.moment(this.jobFull.createdDate).format('DD-MM-YYYY');
+                          this.jobFull.endDateForApply = this.moment(this.jobFull.endDateForApply).format('DD-MM-YYYY');
+                          this.imgUrl = this.jobFull.company.logoImg;
+                          console.log(this.jobFull);
+                      }
+
+                  })
+                  .catch(console.error)
+                  .finally(() => {
+                      this.loading = false;
+                  })
+          }
+
       },
     },
     mounted() {
-      this.$nextTick(() => {
         this.getJobDetail();
-      })
     },
     watch: {
       useId1() {
@@ -372,11 +376,6 @@
         fullName: 'fullName1',
         userId1: 'userId1'
       }),
-    },
-    watch: {
-      pagination() {
-        this.getjob();
-      }
     },
   }
 </script>

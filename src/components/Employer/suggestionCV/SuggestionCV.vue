@@ -1,5 +1,10 @@
 <template>
-  <v-container>
+  <v-container class="mt-2">
+<v-layout row wrap class=" ma-3">
+  <h1>Các ứng viên được gợi ý</h1>
+</v-layout>
+
+
     <v-layout row wrap v-if="cvs.length === 0">
       <v-spacer/>
       <img :src="require('@/assets/empty-product.png')" >

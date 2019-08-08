@@ -84,7 +84,7 @@
       },
       methods: {
         viewJobDetail(id){
-          let route = this.$router.resolve({path: '/thong-tin-cong-viec/'+id});
+          let route = this.$router.push({path: '/thong-tin-cong-viec/'+id});
           window.open(route.href, '_blank');
         },
         getComponent(){

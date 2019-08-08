@@ -66,7 +66,6 @@
         <v-data-table
           :items="job"
           :loading="loading"
-          :pagination.sync="pagination"
           :total-items="pagination.totalItems"
           :no-data-text="'Hiện không có công việc nào theo tiêu chí này. '"
           :no-results-text="'Không tìm thấy dữ liệu tương ứng'"
@@ -142,8 +141,10 @@
           </template>
         </v-data-table>
         <div class="text-xs-center pt-2">
-          <v-pagination v-model="pagination.page"
-                        :length="Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)"></v-pagination>
+          <v-pagination v-model="page"
+                        :page="page"
+                        @input="reloadPage"
+                        :length="pagination.totalItems"></v-pagination>
         </div>
       </v-flex>
       <v-spacer/>
@@ -168,6 +169,7 @@
           'Vuetify'
         ],
         checkJob: false,
+          lengthPage:'',
 
         cbCompany: ['ABC', '123', 'CT'],
         images: {'main': require('@/assets/jsmain1.jpg')},
@@ -178,7 +180,7 @@
         icon: 'mdi-coin',
         select: [],
         favorite: true,
-
+        page: 0,
         loading: false,
         headers: [
           {text: 'Mã phòng ban', value: ''},
@@ -204,8 +206,53 @@
       }
     },
     methods: {
+        reloadPage(){
+            if (this.searchValue === null || this.searchValue === "null") {
+                this.searchValue = ""
+            }
+            if (this.searchIndustry === null || this.searchIndustry === "null") {
+                this.searchIndustry = ""
+            }
+            if (this.selectLocation === null || this.selectLocation === "null") {
+                this.selectLocation = ""
+            }
+            if (this.searchIndustry === "Tất cả ngành nghề") {
+                this.searchIndustry = ""
+            }
+            if (this.selectLocation === "Tất cả địa điểm") {
+                this.selectLocation = ""
+            }
+            console.log(this.searchValue + ", " + this.searchIndustry + ", " + this.selectLocation +this.page);
+
+            this.loading = true;
+             Axios.get(Constants.URL + '/job/search?search=' + this.searchValue + '&city=' + this.selectLocation + '&industry=' + this.searchIndustry  +'&page='+ (this.page - 1))
+                .then(response => {
+                    if(response.data.success === true) {
+                        sessionStorage.setItem("skill", '');
+                        sessionStorage.setItem("job", '');
+                        sessionStorage.setItem("location", '');
+                        if (response.data.data != null) {
+                            this.checkJob = true;
+                            this.job = response.data.data.content;
+                            this.pagination.totalItems = response.data.data.totalPages;
+                            console.log(response)
+                        } else {
+                            this.job = '';
+                            this.checkJob = false;
+                        }
+                    }
+                })
+                .catch(console.error)
+                .finally(() => {
+                    this.loading = false;
+                })
+
+
+
+
+        },
       viewJobDetail(id){
-        let route = this.$router.resolve({path: '/thong-tin-cong-viec/'+id});
+        let route = this.$router.push({path: '/thong-tin-cong-viec/'+id});
         window.open(route.href, '_blank');
       },
       getComponent() {
@@ -262,24 +309,27 @@
         this.loading = true;
         await Axios.get(Constants.URL + '/job/search?search=' + this.searchValue + '&city=' + this.selectLocation + '&industry=' + this.searchIndustry)
           .then(response => {
-            sessionStorage.setItem("skill", '');
-            sessionStorage.setItem("job", '');
-            sessionStorage.setItem("location", '');
-            if (response.data.data != null) {
-              this.checkJob = true;
-              this.job = response.data.data.content;
-              this.pagination.totalItems = this.job.length
-              console.log(response)
-            } else {
-              this.job = '';
-              this.checkJob = false;
-            }
+              if(response.data.success === true) {
+                  sessionStorage.setItem("skill", '');
+                  sessionStorage.setItem("job", '');
+                  sessionStorage.setItem("location", '');
+                  if (response.data.data != null) {
+                      this.checkJob = true;
+                      this.job = response.data.data.content;
+                      this.pagination.totalItems = response.data.data.totalPages;
+                      console.log(response)
+                  } else {
+                      this.job = '';
+                      this.checkJob = false;
+                  }
+              }
+              })
+            .catch(console.error)
+            .finally(() => {
+                this.loading = false;
+            })
 
-          })
-          .catch(console.error)
-          .finally(() => {
-            this.loading = false;
-          })
+
 
 
       },

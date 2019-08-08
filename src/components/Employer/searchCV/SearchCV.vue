@@ -3,7 +3,7 @@
   <v-container>
     <v-card class="pa-5">
       <v-layout row wrap >
-        <v-flex md4 xs12 class="mr-3 pr-2" >
+        <v-flex md4  xs12 class="mr-3 mr-2" >
           <v-layout row>
             <v-icon color="orange darken-2"  class="mr-2">mdi-widgets</v-icon>
             <v-autocomplete
@@ -41,7 +41,7 @@
           </v-layout>
         </v-flex>
 
-        <v-flex md3 xs12 class="mr-3" >
+        <v-flex md3 xs12 class="mr-3 pa-2" >
           <v-layout row>
             <v-icon color="orange darken-2" class="mr-2">mdi-robot-industrial</v-icon>
             <v-autocomplete
@@ -56,7 +56,7 @@
 
         </v-flex>
 
-        <v-flex md3 xs12 class="mr-3">
+        <v-flex md3 xs12 class="mr-3 pa-2">
           <v-layout row>
             <v-icon color="orange darken-2" class="mr-2">mdi-map-marker</v-icon>
             <v-autocomplete
@@ -69,7 +69,7 @@
             ></v-autocomplete>
           </v-layout>
         </v-flex>
-        <v-flex md1 xs12 >
+        <v-flex md1 xs12 class="mr-3 pa-2" >
           <v-btn color="warning" @click="search" ><h4>Tìm kiếm</h4></v-btn>
         </v-flex>
 
@@ -466,6 +466,7 @@
         saveCV() {
 
           this.userId = this.userId2;
+          console.log(this.userId + '/' + this.cvid);
           axios
             .post(Constants.URL + '/userlifecv/create/' + this.userId + '/' + this.cvid)
             .then(response => {
@@ -568,6 +569,12 @@
           },
         reloadPage(){
           console.log(this.page);
+            if (this.industryId === "Tất cả ngành nghề") {
+                this.industryId = ""
+            }
+            if (this.cityId === "Tất cả địa điểm") {
+                this.cityId = ""
+            }
 
           console.log(this.lskill +"/"+this.cityId+"/"+this.industryId);
           console.log("indus: "+this.industryId);
@@ -621,6 +628,12 @@
 
           }
           console.log(this.lskill +"/"+this.cityId+"/"+this.industryId);
+            if (this.industryId === "Tất cả ngành nghề") {
+                this.industryId = ""
+            }
+            if (this.cityId === "Tất cả địa điểm") {
+                this.cityId = ""
+            }
           console.log("indus: "+this.industryId);
           console.log("city: "+this.cityId);
           axios
@@ -628,7 +641,7 @@
             .then(response => {
 
               setTimeout(() => {
-                window.scrollTo(0, 200);
+                window.scrollTo(0, 260);
               }, 0);
               this.cvs = response.data.content;
               this.lengthPage = response.data.totalPages ;

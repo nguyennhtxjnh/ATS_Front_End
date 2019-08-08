@@ -327,7 +327,7 @@
           sts: [{i: "1", name: "Đại học"}, {i: "2", name: "Cao Đẳng"}, {i: "3", name: "Trung cấp"}, {i: "4", name: "Trung học phổ thông"}]
           ,
           lengthPage:'',
-          page:1,
+          page:'',
           info: '',
           userId: '',
           checkSave: '',
@@ -532,12 +532,14 @@
                   // var tmp = date.getDay()
                   this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
                 }
-
+            if(this.cvs.length > 0){
                 this.cvs.sort(function(a, b){return b.id - a.id});
                 this.cvid = this.cvs[0].id;
                 if(this.cvid != null && this.cvid != ""){
-                  this.getCVDetail(this.cvid)
+                    this.getCVDetail(this.cvid)
                 }
+            }
+
               })}
         }
       }

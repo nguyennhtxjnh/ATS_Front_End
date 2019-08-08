@@ -55,7 +55,7 @@
                                       :rules="[rules.required]"></v-text-field>
                       </v-flex>
                       <v-spacer/>
-                      <v-flex md6 xs12>
+                      <v-flex md6 xs12 class="pr-2">
                           <v-autocomplete
                             prepend-icon="mdi-map-marker"
                             v-model="formData.cityId"
@@ -243,150 +243,155 @@
 
             </v-card-text>
 
-            <v-card-actions class=" mb-4">
-              <div class="text-xs-center">
-                <v-spacer></v-spacer>
-<!--                <v-btn color="orange" style="color: white !important;" >Đăng Tin</v-btn>-->
-                <v-btn color="orange" dark @click="review">Xác Nhận</v-btn>
+            <v-card-actions class=" ma-5">
+              <v-layout row wrap>
+                <v-spacer/>
+                <div class="text-xs-center">
+                  <v-spacer></v-spacer>
+                  <!--                <v-btn color="orange" style="color: white !important;" >Đăng Tin</v-btn>-->
+                  <v-btn color="orange" dark @click="review">Xác Nhận</v-btn>
 
-                <v-dialog v-model="dialog" width="1200px">
-                  <template v-slot:activator="{ on }">
+                  <v-dialog v-model="dialog" width="1200px">
+                    <template v-slot:activator="{ on }">
 
-                  </template>
-                  <v-card>
-                    <v-card-title>
-                      <span class="headline">Thông Tin Tuyển Dụng</span>
-                    </v-card-title>
-                    <v-card-text>
+                    </template>
+                    <v-card>
+                      <v-card-title>
+                        <span class="headline">Thông Tin Tuyển Dụng</span>
+                      </v-card-title>
+                      <v-card-text>
 
-                      <v-container fluid fill-height >
-                        <v-layout align-center justify-center >
-                          <v-flex xs12 sm12 md10 >
-                            <!--header title-->
-                            <v-container class=" mb-3" fluid grid-list-md style="background-color: white">
-                              <v-layout row wrap>
-                                <v-flex d-flex xs12 sm6 md3 class="align-center pa-0">
-                                  <v-img contain :src="company.logoImg" aspect-ratio="2"></v-img>
-                                </v-flex>
-                                <v-flex d-flex xs12 sm6 md6>
+                        <v-container fluid fill-height >
+                          <v-layout align-center justify-center >
+                            <v-flex xs12 sm12 md10 >
+                              <!--header title-->
+                              <v-container class=" mb-3" fluid grid-list-md style="background-color: white">
+                                <v-layout row wrap>
+                                  <v-flex d-flex xs12 sm6 md3 class="align-center pa-0">
+                                    <v-img contain :src="company.logoImg" aspect-ratio="2"></v-img>
+                                  </v-flex>
+                                  <v-flex d-flex xs12 sm6 md6>
 
-                                  <v-layout row wrap class="pa-0 ma-0" >
+                                    <v-layout row wrap class="pa-0 ma-0" >
 
-                                    <v-flex d-flex class="pa-0 ma-0" md12>
-                                      <h1>{{formData.title}}</h1>
-                                    </v-flex>
-                                    <v-flex d-flex class="pa-0 ma-0" md12>
-                                      <v-layout row wrap class="pa-0 ma-0">
-                                        <v-flex d-flex xs12>
-                                          <span> <b>Công ty:</b> {{company.nameCompany}}</span>
-                                        </v-flex>
-                                        <v-flex d-flex xs12 v-if="formData.salaryTo === 0 && formData.salaryFrom > 0">
-                                          <span> <b>Mức lương: </b> từ {{formData.salaryFrom}}đ trở lên</span>
-                                        </v-flex>
-                                        <v-flex d-flex xs12 v-if="formData.salaryFrom === 0 && formData.salaryTo > 0">
-                                          <span> <b>Mức lương:</b> lên đến {{formData.salaryTo}}đ</span>
-                                        </v-flex>
-                                        <v-flex d-flex xs12 v-if="formData.salaryTo > 0 && formData.salaryFrom > 0">
-                                          <span> <b>Mức lương:</b> từ {{formData.salaryFrom}}đ đến {{formData.salaryTo}}đ</span>
-                                        </v-flex>
-                                        <v-flex d-flex xs12 v-if="formData.salaryTo === 0 && formData.salaryFrom === 0">
-                                          <span><b>Mức lương:</b> thương lượng</span>
-                                        </v-flex>
-                                        <v-flex d-flex xs12>
-                                          <!--                      <span>View will stay here</span> -->
-<!--                                          <span><b>Khu vực:</b> {{jobFull.city.fullName}} <v-divider vertical class="ml-2 mr-2"></v-divider>-->
-<!--                       <span> <b>Ngày hết hạn nộp:</b> {{formData.endDateForApply}}</span>-->
-                                        </v-flex>
-                                        <v-flex d-flex xs12 fill-height>
+                                      <v-flex d-flex class="pa-0 ma-0" md12>
+                                        <h1>{{formData.title}}</h1>
+                                      </v-flex>
+                                      <v-flex d-flex class="pa-0 ma-0" md12>
+                                        <v-layout row wrap class="pa-0 ma-0">
+                                          <v-flex d-flex xs12>
+                                            <span> <b>Công ty:</b> {{company.nameCompany}}</span>
+                                          </v-flex>
+                                          <v-flex d-flex xs12 v-if="formData.salaryTo === 0 && formData.salaryFrom > 0">
+                                            <span> <b>Mức lương: </b> từ {{formData.salaryFrom}}đ trở lên</span>
+                                          </v-flex>
+                                          <v-flex d-flex xs12 v-if="formData.salaryFrom === 0 && formData.salaryTo > 0">
+                                            <span> <b>Mức lương:</b> lên đến {{formData.salaryTo}}đ</span>
+                                          </v-flex>
+                                          <v-flex d-flex xs12 v-if="formData.salaryTo > 0 && formData.salaryFrom > 0">
+                                            <span> <b>Mức lương:</b> từ {{formData.salaryFrom}}đ đến {{formData.salaryTo}}đ</span>
+                                          </v-flex>
+                                          <v-flex d-flex xs12 v-if="formData.salaryTo === 0 && formData.salaryFrom === 0">
+                                            <span><b>Mức lương:</b> thương lượng</span>
+                                          </v-flex>
+                                          <v-flex d-flex xs12>
+                                            <!--                      <span>View will stay here</span> -->
+                                            <!--                                          <span><b>Khu vực:</b> {{jobFull.city.fullName}} <v-divider vertical class="ml-2 mr-2"></v-divider>-->
+                                            <!--                       <span> <b>Ngày hết hạn nộp:</b> {{formData.endDateForApply}}</span>-->
+                                          </v-flex>
+                                          <v-flex d-flex xs12 fill-height>
 
-                                        </v-flex>
-                                      </v-layout>
+                                          </v-flex>
+                                        </v-layout>
 
-                                    </v-flex>
-                                  </v-layout>
+                                      </v-flex>
+                                    </v-layout>
 
-                                </v-flex>
-<!--                                <v-layout xs12 sm6 md3 child-flex text-xs-center>-->
-<!--                                  <v-flex md12  class="align-center">-->
-<!--                                    <ApplyJobComponent :JobID="jobFull.id"></ApplyJobComponent>-->
+                                  </v-flex>
+                                  <!--                                <v-layout xs12 sm6 md3 child-flex text-xs-center>-->
+                                  <!--                                  <v-flex md12  class="align-center">-->
+                                  <!--                                    <ApplyJobComponent :JobID="jobFull.id"></ApplyJobComponent>-->
 
-<!--                                  </v-flex>-->
-<!--                                </v-layout>-->
-                              </v-layout>
-                            </v-container>
-                            <!--end header title-->
+                                  <!--                                  </v-flex>-->
+                                  <!--                                </v-layout>-->
+                                </v-layout>
+                              </v-container>
+                              <!--end header title-->
 
 
-                            <!--        tab-->
-                            <template  >
-                              <v-tabs
-                                next-icon="mdi-arrow-right-bold-box-outline"
-                                prev-icon="mdi-arrow-left-bold-box-outline"
-                                show-arrows
-                              >
-                                <v-tabs-slider color="yellow"></v-tabs-slider>
-                                <v-tab
-                                  v-for="item in items"
-                                  :key="item"
+                              <!--        tab-->
+                              <template  >
+                                <v-tabs
+                                  next-icon="mdi-arrow-right-bold-box-outline"
+                                  prev-icon="mdi-arrow-left-bold-box-outline"
+                                  show-arrows
                                 >
-                                  {{ item }}
-                                </v-tab>
-
-                                <v-tabs-items >
-                                  <v-tab-item
+                                  <v-tabs-slider color="yellow"></v-tabs-slider>
+                                  <v-tab
                                     v-for="item in items"
                                     :key="item"
                                   >
-                                    <v-card flat>
-                                      <!--card content-->
+                                    {{ item }}
+                                  </v-tab>
 
-                                      <!--                  Thông Tin-->
-                                      <v-card-text v-if="item === 'Thông Tin'">
-                                        <v-container fluid fill-height>
-                                          <v-layout align-center justify-center >
-                                            <v-flex d-flex md12>
+                                  <v-tabs-items >
+                                    <v-tab-item
+                                      v-for="item in items"
+                                      :key="item"
+                                    >
+                                      <v-card flat>
+                                        <!--card content-->
 
-                                              <v-flex md8 sm12>
-                                                <h4>Thông tin công việc</h4>
-                                                <v-flex md12 v-html="formData.jobDescription" class="pb-3">
-                                                </v-flex>
-                                                <h4>Yêu cầu công việc</h4>
-                                                <v-flex md12 v-html="formData.additionalRequest" class="pb-3">
-                                                </v-flex>
-                                                <h4>Quyền lợi ứng viên</h4>
-                                                <v-flex md12 v-html="formData.candidateBenefits" class="pb-3">
+                                        <!--                  Thông Tin-->
+                                        <v-card-text v-if="item === 'Thông Tin'">
+                                          <v-container fluid fill-height>
+                                            <v-layout align-center justify-center >
+                                              <v-flex d-flex md12>
+
+                                                <v-flex md8 sm12>
+                                                  <h4>Thông tin công việc</h4>
+                                                  <v-flex md12 v-html="formData.jobDescription" class="pb-3">
+                                                  </v-flex>
+                                                  <h4>Yêu cầu công việc</h4>
+                                                  <v-flex md12 v-html="formData.additionalRequest" class="pb-3">
+                                                  </v-flex>
+                                                  <h4>Quyền lợi ứng viên</h4>
+                                                  <v-flex md12 v-html="formData.candidateBenefits" class="pb-3">
+                                                  </v-flex>
                                                 </v-flex>
                                               </v-flex>
-                                            </v-flex>
-                                          </v-layout>
-                                        </v-container>
-                                      </v-card-text>
-                                      <!--                  End Thông Tin-->
+                                            </v-layout>
+                                          </v-container>
+                                        </v-card-text>
+                                        <!--                  End Thông Tin-->
 
-                                      <!--end card content-->
-                                    </v-card>
-                                  </v-tab-item>
-                                </v-tabs-items>
-                              </v-tabs>
-                            </template>
+                                        <!--end card content-->
+                                      </v-card>
+                                    </v-tab-item>
+                                  </v-tabs-items>
+                                </v-tabs>
+                              </template>
 
-                            <!--     end tab-->
+                              <!--     end tab-->
 
-                          </v-flex>
-                        </v-layout>
-                      </v-container>
+                            </v-flex>
+                          </v-layout>
+                        </v-container>
 
-                    </v-card-text>
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn color="green darken-1" flat="flat" @click="dialog = false">Quay Lại</v-btn>
-                      <v-btn color="green darken-1" flat="flat" @click="submitjob">Đăng Tin</v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
+                      </v-card-text>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="green darken-1" flat="flat" @click="dialog = false">Quay Lại</v-btn>
+                        <v-btn color="green darken-1" flat="flat" @click="submitjob">Đăng Tin</v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
 
 
-              </div>
+                </div>
+                <v-spacer/>
+              </v-layout>
+
             </v-card-actions>
           </v-form>
         </v-card>
