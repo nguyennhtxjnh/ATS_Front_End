@@ -403,6 +403,7 @@
     name: 'EditJob',
     data: function () {
       return {
+        jobid: this.$route.params.jobid,
         date: new Date().toISOString().substr(0, 10),
         menu2: false,
         dialog: false,
@@ -514,6 +515,7 @@
       }
     },
     methods: {
+
       review(){
         var check = true;
         if(this.companyStatus === "onhold"){
@@ -639,6 +641,18 @@
 
             })
         }
+        if(this.jobid != null && this.jobid != ""){
+          Axios
+            .get(Constants.URL+'/job/getJobDetailToUpdate?id='+ this.jobid)
+            .then(response => {
+              if(response.data.success === true){
+                this.formData = response.data.data
+              }
+
+              }
+             )
+        }
+
         Axios
           .get(Constants.URL+'/industry')
           .then(response => (
@@ -696,7 +710,7 @@
       async submitjob () {
         await this.getCompany();
         this.formData.userId = this.userId2;
-        const url = Constants.URL+'/job/create';
+        const url = Constants.URL+'/job/update';
         const method = 'POST';
         const data = this.formData;
         console.log(data)

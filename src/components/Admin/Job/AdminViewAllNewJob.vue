@@ -448,7 +448,7 @@
       },
       async viewInfo(id){
         this.loading = true;
-        await Axios.get(Constants.URL+`/job/getJobDetailToUpdate?id=${id}`)
+        await Axios.get(Constants.URL+`/job/getJobDetailAdmin?id=${id}`)
           .then(response => {
             this.jobFull = response.data.data;
             console.log(this.jobFull)

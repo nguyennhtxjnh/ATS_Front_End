@@ -38,6 +38,7 @@ import EmployerGetServicePage from '../views/Employer/EmployerGetServicePage'
 import ViewJobSimilar from "../views/Jobseeker/ViewJobSimilar";
 import CheckEmailEmloyeerPage from "../views/Employer/CheckEmailEmloyeerPage";
 import EditJobPage from "../views/Employer/EditJobPage";
+import CheckEmailSuccessPage from "../views/Employer/CheckEmailSuccessPage";
 
 
 Vue.use(Router)
@@ -154,7 +155,15 @@ const router = new Router({
       path: '/viec-lam-nguoi-tim-viec',
       name: 'tab job',
       component: TabJobPage
-    }, {
+    },
+    {
+      path: '/kiem-tra-thanh-cong/:token',
+      name: 'check mail success',
+      component: CheckEmailSuccessPage
+
+    }
+    ,
+    {
       path: '/kiem-tra-email',
       name: 'check email',
       component: CheckEmailEmloyeerPage

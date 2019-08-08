@@ -10,6 +10,7 @@
           <v-layout row wrap>
 
             <v-flex md12 xs12>
+              <v-btn @click="autoFill">Auto Fill</v-btn>
               <h2>
                 <v-text-field
                   v-model="info.title"
@@ -410,6 +411,9 @@
 
 
     methods: {
+      autoFill(){
+        this.info = this.infoFilter;
+      },
       pickFile() {
         this.$refs.image.click()
       },
@@ -506,28 +510,7 @@
             text: 'Vui lòng điền đầy đủ thông tin!'
           })
         }
-//         let image = new Image()
-//
-//         image.onload = () => {
-//           let canvas = document.createElement('canvas');
-//           canvas.width = this.naturalWidth
-//           canvas.height = this.naturalHeight
-//           canvas.getContext('2d').drawImage(this, 0, 0)
-//           callback(canvas.toDataUrl('image/png').replace(/^data:image\/(png|jpg);base64,/, ''))
-//           callback(canvas.toDataURL('image/png'))
-//         }
-//
-//         image.src = url
-// console.log(url);
 
-
-
-
-        // let formData = new FormData();
-        // formData.append('file', this.imageFile);
-        // console.log(formData)
-        // this.info.img = formData;
-        // console.log(this.info);
 
       },down(){
         if(this.btnDown === false){
