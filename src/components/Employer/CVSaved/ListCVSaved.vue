@@ -53,7 +53,7 @@
             </template>
             <v-layout row wrap>
               <v-spacer/>
-              <v-flex md10>
+
                 <v-pagination
                   v-model="page"
                   :page="page"
@@ -62,7 +62,7 @@
                   prev-icon="mdi-menu-left"
                   next-icon="mdi-menu-right"
                 ></v-pagination>
-              </v-flex>
+
               <v-spacer/>
             </v-layout>
           </v-card-text>
@@ -456,9 +456,9 @@
             Axios
               .get(Constants.URL+'/userlifecv/list/'+this.userId)
               .then(response => {
-                console.log(this.response)
-                this.cvs = response.data.data;
-             //   this.lengthPage = response.data.totalPages ;
+                console.log(response)
+                this.cvs = response.data.content;
+                  this.lengthPage = response.data.totalPages;
                 for(var cv in this.cvs){
                   var date = new Date(this.cvs[cv].createdDate);
                   // var tmp = date.getDay()
