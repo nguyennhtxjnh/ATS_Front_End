@@ -27,6 +27,7 @@
             <v-card-text>
               <v-container fluid fill-height>
                 <v-layout fill-height wrap>
+                  <v-btn @click="autoFill">auto fill</v-btn>
 
                   <v-flex md12 xs12>
                     <v-text-field class="ma-2" prepend-icon="mdi-account-badge" name="title" label="Chức Danh Tuyển Dụng" type="text"
@@ -527,6 +528,18 @@
       }
     },
     methods: {
+      autoFill(){
+
+         this.formData.title= "Agile Coach",
+          this.formData.address=  "25 Nguyễn Duy Trinh",
+          this.formData.salaryFrom =  0,
+          this.formData.salaryTo =  0,
+          this.formData.yearExperience= 1,
+          this.formData.jobDescription= "<p>YOU WILL BE IMPRESSED BY<br>• Salary review twice/year, annual performance-based bonus&nbsp;<br>• Premium health care package, annual health check-up<br>• Free parking + transportation allowance + sport, club program sponsorship&nbsp;<br>• Valuable employee engaging activities&nbsp;<br>• Work from Mon – Fri, 26 paid leaves<br>-------------------------<br>• Tech team: &gt;40 members&nbsp;<br>• Latest technology: Elasticsearch, PYTHON, etc<br><br><br>YOU WILL BE INCHARGE OF<br>• Manage LIVE web sites running on LEMP (Linux-Nginx-MySQL/MariaDB-PHP), load balancing/failover cluster, Elasticsearch/Graph and more. Ensure system performance and security. Responsible for web and DB deployment and rollback.<br>• Technical advice and support to internal/external customers.</p>",
+          this.formData.additionalRequest= "<p>- Bachelor degree in IT or equivalent.<br>- 2 years experience in medium/large scale web systems running LEMP (Linux-Nginx-MySQL-PHP).<br>- Good research skill, proof of concept, champion new technology to current systems<br>- Experience with complex online web systems at the administrator level. Experience with web farm configuration, load balancing/failover cluster, deployment (CI/CD with containers by Jenkins, Docker, Ansible/Chef/Puppet, test automation by Selenium/Katalon, etc.)<br>- Experience with the monitor, log, backup system like Nagios/Grafana/Prometheus, Fluentd/Logstash, Beat, Bacula, etc.<br>- Plus are experience in database design (MySQL, Elasticsearch), data report (SQL, Elasticsearch, Kibana), the data warehouse (MS SQL Server, SSIS, SSAS, Python, etc.), data mining/machine learning/deep learning.</p>",
+          this.formData.candidateBenefits= "<p><br>Premium Health Care Package of Bao Viet Insurance, Annual Health Checkup</p><p>&nbsp;</p><p>Up to 26 paid leave per year</p><p>&nbsp;</p><p>Exciting team activities: Teambuilding, Company trip, Thanksgiving day, Annual party…</p>    "
+
+      },
       review(){
         var check = true;
         if(this.companyStatus === "onhold"){
@@ -665,6 +678,9 @@
               this.cityAPI = response.data.data.city
               this.skillChoose = response.data.data.skillname
               this.industryAPI = response.data.data.industry
+
+              this.industryAPI.splice(0, 1);
+              this.cityAPI.splice(0, 1);
             } else {
               this.$notify({
                 group: 'foo',

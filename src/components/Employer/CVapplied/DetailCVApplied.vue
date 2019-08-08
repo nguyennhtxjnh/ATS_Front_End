@@ -328,7 +328,7 @@
           genders: [{id: "1", name: "Nữ"}, {id: "2", name: "Nam"}, {id: "3", name: "Khác"}],
           sts: [{i: "1", name: "Đại học"}, {i: "2", name: "Cao Đẳng"}, {i: "3", name: "Trung cấp"}, {i: "4", name: "Trung học phổ thông"}]
           ,
-          lengthPage:1,
+          lengthPage:'',
           page:1,
           offsetTop: 0,
           info: '',
@@ -370,6 +370,7 @@
                 this.checkSave = response.data,
                   console.log(response)
               ))
+            console.log(this.cvid + '/' + this.jobid)
             Axios
               .post(Constants.URL + '/apply/checkstatus/' + this.cvid + '/' + this.jobid)
               .then(response => (
@@ -530,7 +531,7 @@
             .get(Constants.URL+'/apply/cv-applied/'+this.jobid)
             .then(response => {
               this.cvs = response.data.content;
-              this.lengthPage = response.data.totalPages -1;
+              this.lengthPage = response.data.totalPages ;
               for(var cv in this.cvs){
                 var date = new Date(this.cvs[cv].createdDate);
                 // var tmp = date.getDay()

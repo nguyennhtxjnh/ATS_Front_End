@@ -88,10 +88,10 @@
                   </v-flex>
 
                   <v-flex xs12 >
-                    <v-text-field class="ma-2" prepend-icon="mdi-account-badge" name="Name" label="Chức Danh Cụ Thể"
-                                  type="text"
-                                  v-model="formData.vacancyName"
-                                  :rules="[rules.required]"></v-text-field>
+<!--                    <v-text-field class="ma-2" prepend-icon="mdi-account-badge" name="Name" label="Chức Danh Cụ Thể"-->
+<!--                                  type="text"-->
+<!--                                  v-model="formData.vacancyName"-->
+<!--                                  :rules="[rules.required]"></v-text-field>-->
                   </v-flex>
 
                   <v-flex xs12>

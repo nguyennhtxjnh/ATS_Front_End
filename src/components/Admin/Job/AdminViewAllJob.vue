@@ -54,7 +54,7 @@
               <v-chip color="success" v-if="item.status === 'approved'">
                 <span style="color: white !important;">Đã duyệt</span>
               </v-chip>
-              <v-chip color="grey" v-if="item.status === 'deny'">
+              <v-chip color="grey" v-if="item.status === 'ban'">
                 <span style="color: white !important;">Từ chối duyệt</span>
               </v-chip>
 

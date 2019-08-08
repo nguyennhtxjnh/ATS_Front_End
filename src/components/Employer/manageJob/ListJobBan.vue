@@ -10,6 +10,7 @@
         <template v-for="job in info">
           <v-container md7 xs12 style="background-color: white" class="ma-3 pa-2" >
             <v-layout row wrap>
+              <v-spacer/>
               <v-flex md2 xs3 class="pa-2">
                 <v-img  :src="job.companyLogoImg"
                         height="100%"></v-img>
@@ -44,19 +45,19 @@
                     </span>
                 </v-flex>
               </v-flex>
-              <v-flex md3 class="pt-3 pr-2">
+<!--              <v-flex md3 class="pt-3 pr-2">-->
 
-                <v-btn style="height: auto"
-                       color="warning" outline class="pa-2" block @click="$router.push('/goi-y-CV')">
-                  Gợi ý ứng viên
-                </v-btn>
-                <v-btn style="height: auto"
-                       color="warning" outline class="pa-2" block @click="$router.push('/xem-CV-ung-tuyen/'+job.id)">
-                  Ứng viên đã ứng tuyển
-                </v-btn>
+<!--                <v-btn style="height: auto"-->
+<!--                       color="warning" outline class="pa-2" block @click="$router.push('/goi-y-CV')">-->
+<!--                  Gợi ý ứng viên-->
+<!--                </v-btn>-->
+<!--                <v-btn style="height: auto"-->
+<!--                       color="warning" outline class="pa-2" block @click="$router.push('/xem-CV-ung-tuyen/'+job.id)">-->
+<!--                  Ứng viên đã ứng tuyển-->
+<!--                </v-btn>-->
 
 
-              </v-flex>
+<!--              </v-flex>-->
             </v-layout>
           </v-container>
         </template>
