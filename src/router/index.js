@@ -39,6 +39,7 @@ import ViewJobSimilar from "../views/Jobseeker/ViewJobSimilar";
 import CheckEmailEmloyeerPage from "../views/Employer/CheckEmailEmloyeerPage";
 import EditJobPage from "../views/Employer/EditJobPage";
 import CheckEmailSuccessPage from "../views/Employer/CheckEmailSuccessPage";
+import CheckEmailJSPage from "../views/Jobseeker/CheckEmailJSPage";
 
 
 Vue.use(Router)
@@ -178,7 +179,7 @@ const router = new Router({
     {
       path: '/kiem-tra-email-nguoi-tim-viec',
       name: 'check email',
-      component: CheckEmailEmloyeerPage
+      component: CheckEmailJSPage
     },
     {
       path: '/viec-lam-tuong-tu/:jobid',
