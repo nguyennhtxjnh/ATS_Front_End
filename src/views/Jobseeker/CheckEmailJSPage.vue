@@ -9,7 +9,7 @@
     import CheckEmail from "../../components/Employer/signup/CheckEmail";
     import DashBoardLayout from "../../layouts/DashBoardLayout";
     export default {
-        name: "CheckEmailEmloyeerPage",
+        name: "CheckEmailJSPage",
       components: {DashBoardLayout, CheckEmail, EmployerMainLayout}
     }
 </script>

@@ -38,7 +38,7 @@
   import Axios from 'axios'
   import Constants from '@/stores/constant.js'
     export default {
-        name: "CheckEmailSuccess",
+        name: "CheckEmailSuccessJS",
       data: () => ( {
         token: '',
         check:'',
