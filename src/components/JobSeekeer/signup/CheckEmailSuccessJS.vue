@@ -1,10 +1,10 @@
 <template>
-    <v-container class="mt-5">
+    <v-container class="ma-5">
       <v-layout row wrap>
-      <v-spacer/>
+
       <v-flex md6 xs6>
 <v-flex v-if="check === true">
-  <h1> Bạn đã xác nhận thành công</h1>
+  <span> Bạn đã xác nhận thành công</span>
   <span> Hãy <router-link to="/dang-nhap"> Đăng nhập</router-link> với tài khoản vừa được kích hoạt </span>
 
 </v-flex>
@@ -19,7 +19,6 @@
 
       </v-flex>
 
-      <v-spacer/>
 
     </v-layout>
       <v-layout row wrap>
