@@ -169,6 +169,18 @@ const router = new Router({
       component: CheckEmailEmloyeerPage
     },
     {
+      path: '/kiem-tra-thanh-cong-mail/:token',
+      name: 'check mail success',
+      component: CheckEmailSuccessPage
+
+    }
+    ,
+    {
+      path: '/kiem-tra-email-nguoi-tim-viec',
+      name: 'check email',
+      component: CheckEmailEmloyeerPage
+    },
+    {
       path: '/viec-lam-tuong-tu/:jobid',
       name: 'job similar',
       component: ViewJobSimilar

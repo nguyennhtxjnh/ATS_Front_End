@@ -73,6 +73,9 @@
               <v-chip color="error" v-if="item.status === 'ban'">
                 <span style="color: white !important;">Đã bị khóa</span>
               </v-chip>
+              <v-chip color="error" v-if="item.status === 'active ban'">
+                <span style="color: white !important;">Đã bị khóa</span>
+              </v-chip>
             </td>
 
 

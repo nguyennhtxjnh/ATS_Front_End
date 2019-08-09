@@ -3,9 +3,10 @@
       <v-layout row wrap>
       <v-spacer/>
       <v-flex md6 xs6>
-<v-flex v-if="msg === 'Bạn đã kích hoạt thành công tài khoản'">
-  <h1> {{msg}}</h1>
- <router-link to="/tuyen-dung-dang-nhap"> Đăng nhập</router-link>
+<v-flex v-if="check === 'true'">
+  <h1> Bạn đã xác nhận thành công</h1>
+  <span> Hãy <router-link to="/tuyen-dung-dang-nhap"> Đăng nhập</router-link> với tài khoản vừa được kích hoạt </span>
+
 </v-flex>
 
 
@@ -36,7 +37,7 @@
         name: "CheckEmailSuccess",
       data: () => ( {
         token: '',
-        msg:'',
+        check:'',
       }),
       methods:{
           getComponent(){
@@ -45,7 +46,7 @@
               Axios
                 .get(Constants.URL+'/user/confirmUser?token='+ this.token)
                 .then(response => {
-                      this.msg = response.data
+                      this.check = response
 
                   }
                 )
