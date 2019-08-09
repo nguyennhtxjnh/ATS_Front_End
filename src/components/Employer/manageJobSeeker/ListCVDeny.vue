@@ -60,6 +60,7 @@
                   v-model="page"
                   :page="page"
                   @input="reloadPage"
+                  :total-visible="lengthPage"
                   :length="lengthPage"
                   prev-icon="mdi-menu-left"
                   next-icon="mdi-menu-right"

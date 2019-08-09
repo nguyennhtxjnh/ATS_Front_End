@@ -9,6 +9,7 @@
             <v-autocomplete
               v-model="tmpSkill"
               :items="listSkill"
+              filled
               chips
               color="blue-grey lighten-2"
               label="Kỹ năng"
@@ -190,6 +191,7 @@
                           :page="page"
                           @input="reloadPage"
                           :length="lengthPage"
+                          :total-visible="lengthPage"
                           prev-icon="mdi-menu-left"
                           next-icon="mdi-menu-right"
                         ></v-pagination>
@@ -503,6 +505,7 @@
           this.cvid = id;
           this.jobid =  this.$route.params.jobid,
             this.userId = this.userId2;
+          if(this.userId != null && this.userId != "") {
           if(this.cvid != null && this.cvid != "") {
             axios
               .get(Constants.URL + '/userlifecv/check/' + this.userId + '/' + this.cvid)
@@ -542,7 +545,7 @@
                   }
 
                 }
-              )
+              )}
           }},
         getCVid(id){
           let curTar = undefined;

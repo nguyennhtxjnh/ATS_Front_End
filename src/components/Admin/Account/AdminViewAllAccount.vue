@@ -142,6 +142,7 @@
 
 <script>
   import Axios from 'axios'
+  import Constants from '@/stores/constant.js'
 
   export default {
     name: 'AdminViewAllAccount',
@@ -208,7 +209,7 @@
         if(this.statusChangeSelect === "Đang hoạt động") this.statusChangeSelect = "new";
         if(this.statusChangeSelect === "Đã bị khóa") this.statusChangeSelect = "ban";
         this.formAccountStatusData.status = this.statusChangeSelect;
-        const url = 'http://localhost:1122/user/changeUserStatus'
+        const url = Constants.URL+'/user/changeUserStatus'
         const method = 'POST'
         const data = this.formAccountStatusData
         console.log(data)
@@ -246,7 +247,7 @@
         if(this.statusSelect === "Đang hoạt động") this.tempSearch = "active";
         if(this.statusSelect === "Đã bị khóa") this.tempSearch = "ban";
         if(this.statusSelect === "Chưa kích hoạt") this.tempSearch = "new";
-        Axios.get('http://localhost:1122/user/getAllUser?search=' + this.search + '&status=' + this.tempSearch)
+        Axios.get(Constants.URL+'/user/getAllUser?search=' + this.search + '&status=' + this.tempSearch)
           .then(response => {
             if(response.data.data !== null){
               this.Account = response.data.data.content;

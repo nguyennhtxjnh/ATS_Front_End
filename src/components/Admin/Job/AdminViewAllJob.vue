@@ -89,7 +89,7 @@
 <!--    detailView-->
     <v-dialog v-if="jobFull != null && jobFull != ''"
               v-model="dialog"
-              max-width="1200px">
+              max-width="1200px" class="diag" retain-focus>
       <v-card>
         <v-card-title class="headline"><b>Thông tin công việc</b></v-card-title>
 
@@ -335,6 +335,10 @@
     },
     methods: {
        async viewInfo(id){
+         // setTimeout(() => {
+         //   window.scrollTo(0, 0);
+         // }, 100);
+        // document.getElementsByClassName("diag").
         this.loading = true;
          await Axios.get(Constants.URL+`/job/getJobDetailAdmin?id=${id}`)
           .then(response => {
