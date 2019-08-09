@@ -64,7 +64,10 @@
             <td  class="text-xs">{{item.fullName}}</td>
             <td  class="text-xs">{{moment(item.createdDate).format('DD-MM-YYYY')}}</td>
             <td  class="text-xs-left">
-              <v-chip color="success" v-if="item.status === 'new'">
+              <v-chip color="grey" v-if="item.status === 'new'">
+                <span style="color: white !important;">Chưa kích hoạt</span>
+              </v-chip>
+              <v-chip color="success" v-if="item.status === 'active'">
                 <span style="color: white !important;">Đang hoạt động</span>
               </v-chip>
               <v-chip color="error" v-if="item.status === 'ban'">
@@ -161,6 +164,10 @@
             id: 2,
             name: "Đã bị khóa"
           },
+          {
+            id: 3,
+            name: "Chưa kích hoạt"
+          },
         ],
         statusChange: [
           {
@@ -197,6 +204,7 @@
         this.formAccountStatusData.id = id;
       },
       changeStatus(){
+
         if(this.statusChangeSelect === "Đang hoạt động") this.statusChangeSelect = "new";
         if(this.statusChangeSelect === "Đã bị khóa") this.statusChangeSelect = "ban";
         this.formAccountStatusData.status = this.statusChangeSelect;
@@ -235,8 +243,9 @@
 
       getAllAccount() {
         if(this.statusSelect === "Tất cả trạng thái") this.tempSearch = "";
-        if(this.statusSelect === "Đang hoạt động") this.tempSearch = "new";
+        if(this.statusSelect === "Đang hoạt động") this.tempSearch = "active";
         if(this.statusSelect === "Đã bị khóa") this.tempSearch = "ban";
+        if(this.statusSelect === "Chưa kích hoạt") this.tempSearch = "new";
         Axios.get('http://localhost:1122/user/getAllUser?search=' + this.search + '&status=' + this.tempSearch)
           .then(response => {
             if(response.data.data !== null){
