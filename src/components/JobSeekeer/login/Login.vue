@@ -10,13 +10,13 @@
 
           </v-toolbar>
           <v-layout row wrap class="mt-4 pa-0 justify-center align-center">
-              <g-signin-button id="customBtn" class="customGPlusSignIn"
-                :params="googleSignInParams"
-                @success="onSignInSuccess"
-                @error="onSignInError">
-                <span class="icon"></span>
-                <span class="buttonText pl-2">Login With Google</span>
-              </g-signin-button>
+<!--              <g-signin-button id="customBtn" class="customGPlusSignIn"-->
+<!--                :params="googleSignInParams"-->
+<!--                @success="onSignInSuccess"-->
+<!--                @error="onSignInError">-->
+<!--                <span class="icon"></span>-->
+<!--                <span class="buttonText pl-2">Login With Google</span>-->
+<!--              </g-signin-button>-->
           </v-layout>
 
           <v-form @submit.prevent="login" ref="form">

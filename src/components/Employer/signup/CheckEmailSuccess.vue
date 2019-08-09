@@ -4,12 +4,12 @@
 
       <v-flex md6 xs6>
 <v-flex v-if="check === true">
-  <span> Bạn đã xác nhận thành công</span>
+  <span> Bạn đã xác nhận thành công</span><br/>
   <span> Hãy <router-link to="/tuyen-dung-dang-nhap"> Đăng nhập</router-link> với tài khoản vừa được kích hoạt </span>
 
 </v-flex>
         <v-flex v-if="check === false">
-          <h1> Token của bạn đã hết hạn hoặc bị hỏng</h1>
+          <span> Token của bạn đã hết hạn hoặc bị hỏng</span><br/>
           <span> Hãy <router-link to="/tuyen-dung-dang-ky"> đăng kí</router-link> lại một tài khoản mới </span>
         </v-flex>
 
@@ -67,5 +67,8 @@
 </script>
 
 <style scoped>
-
+  span {
+    font-size: 25px;
+    color: coral;
+  }
 </style>
