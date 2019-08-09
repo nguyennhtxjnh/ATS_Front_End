@@ -121,7 +121,7 @@
           <v-spacer></v-spacer>
           <v-btn
             flat="flat"
-            color="success"
+            color="error"
             @click="addCompanyId(companyDetail.id)"
             @click.stop="dialogBan = true">
             <span>Ban</span>

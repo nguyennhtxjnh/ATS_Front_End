@@ -658,6 +658,16 @@
                 }else {
                   this.checkCompany = true;
                 }
+                if(this.companyStatus === "approved"){
+                  if(this.company.status === "new"){
+                    this.companyStatus = "new";
+                    this.checkCompany = false;
+                    this.checkCompanyExisted = true;
+                  }
+
+                }else {
+                  this.checkCompany = true;
+                }
               }else {
                 this.checkCompanyExisted = false;
                 this.checkCompany = false;
