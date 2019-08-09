@@ -425,6 +425,7 @@
             if (response.data.success == true) {
               this.CityAPI = response.data.data.city;
               this.CompanyAPI = response.data.data.company;
+              this.CityAPI.splice(0, 1);
             } else {
               this.$notify({
                 group: 'foo',

@@ -159,7 +159,7 @@
               <v-tabs-slider color="yellow"></v-tabs-slider>
               <v-tab
                 v-for="item in items"
-                :key="item"
+                :key="item.id"
               >
                 {{ item.name }}
               </v-tab>

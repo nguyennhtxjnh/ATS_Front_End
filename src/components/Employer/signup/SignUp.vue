@@ -284,6 +284,8 @@
               console.log(response)
               this.LevelAPI = response.data.data.level;
               this.CityAPI = response.data.data.city;
+
+              this.CityAPI.splice(0, 1);
               this.CompanyAPI.push({
                 id : -1,
                 nameCompany : "Khác"
