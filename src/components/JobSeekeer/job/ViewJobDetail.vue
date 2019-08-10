@@ -313,7 +313,7 @@
     components: {ApplyJobComponent},
     data: function () {
       return {
-        userId:'',
+        userId:this.$route.params.userId,
         imgUrl:require('@/assets/jsmain1.jpg'),
         tab: null,
         saved:false,
@@ -331,15 +331,15 @@
     },
     methods: {
         viewJobDetail(id){
-            let route = this.$router.resolve({path: '/thong-tin-cong-viec/'+id});
 
-            window.open(route.href, '_blank');
+          const {href} = this.$router.resolve({name: 'jobseekerviewjob', params: {id: id, userId: this.userId}})
+          window.open(href, '_blank')
         },
       getJobDetail(){
         this.loading = true;
-          if(this.userId1 != null && this.userId1 != ""){
-        this.userId = this.userId1;
-          }
+        //   if(this.userId1 != null && this.userId1 != ""){
+        // this.userId = this.userId1;
+        //   }
         console.log("saaaaaaaaaaaaa" + this.userId)
           if(this.userId != null && this.userId != ""){
               Axios.get(Constants.URL+`/job/getJobDetail?id=${+this.id}&userId=${+this.userId}`)

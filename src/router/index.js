@@ -40,6 +40,8 @@ import CheckEmailEmloyeerPage from "../views/Employer/CheckEmailEmloyeerPage";
 import EditJobPage from "../views/Employer/EditJobPage";
 import CheckEmailSuccessPage from "../views/Employer/CheckEmailSuccessPage";
 import CheckEmailJSPage from "../views/Jobseeker/CheckEmailJSPage";
+import CheckEmailSuccessJSPage from "../views/Jobseeker/CheckEmailSuccessJSPage";
+import ViewListJobOfCompanyPage from "../views/Jobseeker/ViewListJobOfCompanyPage";
 
 
 Vue.use(Router)
@@ -137,9 +139,14 @@ const router = new Router({
       component: EmployerCreateCompanyPage
     },
     {
-      path: '/thong-tin-cong-viec/:id',
-      name: 'job seeker view job',
+      path: '/thong-tin-cong-viec/:id/:userId',
+      name: 'jobseekerviewjob',
       component: JobSeekerViewJobDetailPage
+    },
+    {
+      path: '/cong-viec-cua-cong-ty/:companyid',
+      name: 'jobofcompany',
+      component: ViewListJobOfCompanyPage
     },
     {
       path: '/dang-tin-tuyen-dung-thanh-cong',
@@ -171,14 +178,14 @@ const router = new Router({
     },
     {
       path: '/kiem-tra-thanh-cong-mail/:token',
-      name: 'check mail success',
-      component: CheckEmailSuccessPage
+      name: 'check js mail success',
+      component: CheckEmailSuccessJSPage
 
     }
     ,
     {
       path: '/kiem-tra-email-nguoi-tim-viec',
-      name: 'check email',
+      name: 'check email js',
       component: CheckEmailJSPage
     },
     {

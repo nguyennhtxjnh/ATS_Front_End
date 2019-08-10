@@ -3,7 +3,7 @@
     <v-container>
       <v-card class="pa-3" style="background-color: white">
         <v-card-title>
-          <h2 style="color: #ff5e2d ">Các việc làm tương tự </h2>
+          <h2 style="color: #ff5e2d ">Các việc của công ty </h2>
         </v-card-title>
         <v-divider class="pb-3"></v-divider>
         <v-layout row wrap v-if="info.length === 0">
@@ -68,13 +68,13 @@
   import Constants from '@/stores/constant.js'
   import {mapGetters} from 'vuex';
     export default {
-        name: "ListSuggestJobSimilar",
+        name: "ListJobOfCompany",
       data  : function () {
         return {
           info: '',
           cities: [],
           cvid: this.$route.params.cvid,
-          jobid: this.$route.params.jobid
+          companyid: this.$route.params.companyid
 
 
         }
@@ -105,9 +105,9 @@
             .then(response => (
               this.cities = response.data.data))
 
-          if(this.jobid != null && this.jobid != ""){
+          if(this.companyid != null && this.companyid != ""){
             Axios
-              .get(Constants.URL+'/job/suggestJobByJobId?jobId='+this.jobid)
+              .get(Constants.URL+'/job//getJobByCompanyId?companyId='+this.companyid)
               .then(response => {
                 if(response.data.success === true){
                   this.info = response.data.data.content;

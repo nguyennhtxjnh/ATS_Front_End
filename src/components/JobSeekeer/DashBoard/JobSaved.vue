@@ -94,8 +94,14 @@
       },
       methods: {
         viewJobDetail(id){
-          let route = this.$router.push({path: '/thong-tin-cong-viec/'+id});
-          window.open(route.href, '_blank');
+          if(this.userId1 != null && this.userId1 != ""){
+            this.userId = this.userId1
+          }
+          else {
+            this.userId = 0;
+          }
+          const {href} = this.$router.resolve({name: 'jobseekerviewjob', params: {id: id, userId: this.userId}})
+          window.open(href, '_blank')
         },
         remove(position, jobid){
           if(position > -1){

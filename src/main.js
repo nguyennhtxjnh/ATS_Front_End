@@ -25,6 +25,7 @@ Vue.use(CKEditor);
 Vue.use(GSignInButton);
 Vue.use(VueSweetalert2);
 
+
 /* eslint-disable no-new */
 new Vue({
   router,

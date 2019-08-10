@@ -95,7 +95,7 @@
 <!--    detailView-->
     <v-dialog v-if="jobFull != null && jobFull != ''"
               v-model="dialog"
-              max-width="1200px" class="diag" retain-focus>
+              max-width="1200px" >
       <v-card>
         <v-card-title class="headline"><b>Thông tin công việc</b></v-card-title>
 

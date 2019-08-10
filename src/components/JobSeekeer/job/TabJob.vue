@@ -42,11 +42,10 @@
     import ManageCV from "../manageCV/ManageCV";
     import JobSaved from "../DashBoard/JobSaved";
     import ApplyManager from "../DashBoard/ApplyManager";
-    import SuggestJob from "../suggestJob/SuggestJob";
     import ListSuggestJob from "../suggestJob/ListSuggestJob";
     export default {
         name: "TabJob",
-      components: {ListSuggestJob, SuggestJob, ApplyManager, JobSaved, ManageCV, SearchJobResult},
+      components: {ListSuggestJob, ApplyManager, JobSaved, ManageCV, SearchJobResult},
       data: function () {
         return{
           active: null,

@@ -86,7 +86,7 @@
               <v-layout row wrap>
                 <v-spacer/>
                 <template v-for="company in companys">
-                  <v-flex md2 xs12 class="pa-3 ma-1" style="background-color: white" :key="company.id">
+                  <v-flex md2 xs12 class="pa-3 ma-1" style="background-color: white" :key="company.id" @click="viewJobOfCompany(company.id)">
                     <v-flex md12 xs12>
                       <v-img  :src="company.logoImg"
                               height="100%"></v-img>
@@ -213,8 +213,10 @@
 
                     <v-layout row wrap>
                       <v-flex md4  xs4>
+<!--                        <router-link :to="{name: 'jobseekerviewjob', params: {id: job.id}}" target= '_blank' >-->
                         <v-img  :src="job.companyLogoImg"
                                 height="90%"></v-img>
+<!--                        </router-link>-->
                       </v-flex>
                       <v-flex md1/>
                       <v-flex md7 xs7 class="pt-2">
@@ -259,6 +261,7 @@
 <script>
   import Axios from 'axios'
   import Constants from '@/stores/constant.js'
+  import {mapGetters} from 'vuex';
   export default {
     name: "JobSeekerMainScreen",
     data : ()=>{ return {
@@ -277,13 +280,32 @@
       searchIndustry: '',
       searchCity: '',
       searchAPI: [],
+      userId:'',
     }
     },
 
     methods: {
       viewJobDetail(id){
-        let route = this.$router.push({path: '/thong-tin-cong-viec/'+id});
-        window.open(route.href, '_blank');
+
+        if(this.userId1 != null && this.userId1 != ""){
+          this.userId = this.userId1
+        }
+        else {
+          this.userId = 0;
+        }
+        const {href} = this.$router.resolve({name: 'jobseekerviewjob', params: {id: id, userId: this.userId}})
+        window.open(href, '_blank')
+      },
+      viewJobOfCompany(id){
+
+        // if(this.userId1 != null && this.userId1 != ""){
+        //   this.userId = this.userId1
+        // }
+        // else {
+        //   this.userId = 0;
+        // }
+        const {href} = this.$router.resolve({name: 'jobofcompany', params: {companyid: id}})
+        window.open(href, '_blank')
       },
 
       getComponent(){
@@ -345,7 +367,20 @@
       this.$nextTick(() => {
         this.getComponent();
       })
-    }
+    },
+    watch:{
+      userId1(){
+        this.getComponent();
+      }
+    },
+    computed: {
+      ...mapGetters('AUTHENTICATION_STORE',{
+        email : 'email1',
+        roleId: 'roleId1',
+        fullName: 'fullName1',
+        userId1: 'userId1'
+      }),
+    },
   }
 </script>
 
