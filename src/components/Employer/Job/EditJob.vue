@@ -647,6 +647,9 @@
             .then(response => {
               if(response.data.success === true){
                 this.formData = response.data.data
+                if(this.formData.workingtype === 'FULLTIME') this.formData.workingtype = 'Toàn Thời Gian';
+                if(this.formData.workingtype === 'PARTTIME') this.formData.workingtype = 'Bán Thời Gian';
+                if(this.formData.workingtype === 'INTERN')  this.formData.workingtype = 'Thực Tập';
               }
 
               }
@@ -726,7 +729,7 @@
 
               Swal.fire({
                 title: 'Đăng thành công',
-                text: "Quản trị viên sẽ kiểm tra và phản hồi trong vòng 24h",
+                text: "Quản trị viên sẽ kiểm tra và phản hồi ",
                 type: 'success',
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'Đồng ý'

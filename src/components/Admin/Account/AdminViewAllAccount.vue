@@ -209,7 +209,7 @@
       },
       changeStatus(){
 
-        if(this.statusChangeSelect === "Đang hoạt động") this.statusChangeSelect = "new";
+        if(this.statusChangeSelect === "Đang hoạt động") this.statusChangeSelect = "active";
         if(this.statusChangeSelect === "Đã bị khóa") this.statusChangeSelect = "ban";
         this.formAccountStatusData.status = this.statusChangeSelect;
         const url = Constants.URL+'/user/changeUserStatus'

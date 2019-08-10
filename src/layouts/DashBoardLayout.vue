@@ -18,7 +18,9 @@
           </v-layout>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-
+        <v-btn style="height: 100%" color="black" flat @click="$router.push('/thong-tin')" >
+          Quản lí tài khoản
+        </v-btn>
         <v-btn style="height: 100%" color="black" flat @click="$router.push('/tim-kiem')" >
           Tìm việc
         </v-btn>
@@ -27,7 +29,7 @@
         </v-btn>
 
         <v-btn style="height: 100%" color="black" flat @click="$router.push('/quan-li-CV')" v-if="roleId === 1">
-          Quản lí CV
+          Quản lí Hồ Sơ
         </v-btn>
         <v-btn style="height: 100%" color="black" flat @click="$router.push('/dang-nhap')" v-if="roleId !== 1">
           Đăng Nhập

@@ -6,24 +6,28 @@
 
 <!--        User Card-->
         <template>
-          <v-layout align-center justify-center mt-2>
+          <v-layout align-center justify-center>
             <v-flex md10>
+              <v-img :src="require('@/assets/br.jpg')"  height="100px" >
+                <v-layout
+                  column
+                  fill-height class="pt-3"
+                >
+                  <v-card-title primary-title class="justify-center text-md-center">
+                    <div >
+                      <h3 class="headline" style="color: white">{{userDetail.fullname}}</h3>
+                    </div>
+                  </v-card-title>
+                </v-layout>
+              </v-img>
               <v-card class="pa-3 ">
-                <v-card-title primary-title class="justify-center text-md-center">
-                  <div>
-                    <h3 class="headline mb-0">User Name Here</h3>
-                    <p>Sinh viên</p>
-                    <p>Mới tốt nghiệp</p>
-                    <p>Công ty gần đây</p>
-                    <p>Bằng cấp mới nhất</p>
-                  </div>
-                </v-card-title>
 
-                <v-card-actions class="justify-center">
-                  <v-btn flat color="orange" class="v-btn--outline">Cập Nhật Hồ Sơ</v-btn>
-                </v-card-actions>
+
+                <v-card-text class="justify-center text-md-center">
+                  <span> {{userDetail.email}}</span><br/>
+                  <span> {{userDetail.telephoneNumber}}</span>
+                </v-card-text>
               </v-card>
-              
             </v-flex>
           </v-layout>
         </template>
@@ -53,14 +57,9 @@
               <JobAnnouncement></JobAnnouncement>
             </v-card>
             <v-card flat v-if="i.id === '2'">
-              <ManageCV></ManageCV>
+              <Profile></Profile>
             </v-card>
-            <v-card flat v-if="i.id === '3'">
-              <JobSaved></JobSaved>
-            </v-card>
-            <v-card flat v-if="i.id === '4'">
-              <ApplyManager></ApplyManager>
-            </v-card>
+
           </v-tab-item>
         </v-tabs>
       </v-flex>
@@ -75,23 +74,59 @@
   import ApplyManager from "./ApplyManager";
   import JobSaved from "./JobSaved";
   import JobAnnouncement from "./JobAnnouncement";
+  import Profile from "./Profile";
+  import axios from 'axios'
+  import {mapGetters} from 'vuex';
+  import Constants from '@/stores/constant.js'
   export default {
     name: 'DashBoard',
-    components: {JobAnnouncement, JobSaved, ApplyManager, ManageCV},
+    components: {Profile, JobAnnouncement, JobSaved, ApplyManager, ManageCV},
     data: function () {
       return{
+        userId:'',
         active: null,
         isActive: true,
+        userDetail:'',
 
         tab: null,
         menu: [
-          {name:'Thông Báo Việc Làm', id:'1'},   {name:'Quản Lý Hồ Sơ', id:'2'},
-          {name:'Việc làm đã lưu', id:'3'},{name:'Việc làm đã ứng tuyển', id:'4'}
+          {name:'Thông Báo Việc Làm', id:'1'},   {name:'Cập nhật thông tin cá nhân', id:'2'}
         ],
+      }
+    },
+    methods:{
+      getComponent(){
+        if(this.userId1 != null && this.userId1 != ""){
+          this.userId = this.userId1;
+          axios
+            .post(Constants.URL+'/user/findUserByUserId?id='+this.userId)
+            .then(response => {
+                if(response.data.success === true){
+                  this.userDetail = response.data.data;
+                }
 
+              }
+            )
+        }
 
       }
-    }
+    },
+    mounted(){
+      this.getComponent();
+    },
+    watch:{
+      userId1(){
+        this.getComponent();
+      }
+    },
+    computed: {
+      ...mapGetters('AUTHENTICATION_STORE',{
+        email : 'email1',
+        roleId: 'roleId1',
+        fullName: 'fullName1',
+        userId1: 'userId1'
+      }),
+    },
   }
 </script>
 

@@ -3,7 +3,7 @@
     <v-container>
       <v-card class="pa-3" style="background-color: white">
         <v-card-title>
-          <h2 style="color: #ff5e2d ">Các việc của công ty </h2>
+          <h2 style="color: #ff5e2d ">Các việc của nhà tuyển dụng </h2>
         </v-card-title>
         <v-divider class="pb-3"></v-divider>
         <v-layout row wrap v-if="info.length === 0">

@@ -46,7 +46,7 @@
                     v-model="searchIndustry"
                     item-text="name"
                     item-value="name"
-                    label="Tất cả các ngành nghề"
+                    label="Ngành nghề"
                   ></v-autocomplete>
                 </v-flex>
 
@@ -56,7 +56,7 @@
                     v-model="searchCity"
                     item-text="fullName"
                     item-value="fullName"
-                    label="Tất cả địa điểm"
+                    label="Địa điểm"
                   ></v-autocomplete>
                 </v-flex>
                 <v-flex md1 xs12 >

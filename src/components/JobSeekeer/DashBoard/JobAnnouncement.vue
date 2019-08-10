@@ -3,12 +3,13 @@
     <div fluid >
       <v-layout >
         <!-- Nhà Tuyển Dụng Xem Hồ Sơ-->
+        <v-spacer/>
 
         <v-flex md4 sm12 class="ma-2">
           <v-card sm12 style="height: 100%;">
             <v-card-title primary-title class="justify-center text-md-center">
               <div>
-                <p  class="orange--text display-3 font-weight-light">0</p>
+                <p  class="orange--text display-3 font-weight-light">{{countCV}}</p>
                 <h3 class="headline mb-0">NHÀ TUYỂN DỤNG XEM HỒ SƠ</h3>
               </div>
             </v-card-title>
@@ -22,20 +23,20 @@
         <!-- End Nhà Tuyển Dụng Xem Hồ Sơ-->
         <!--      THÔNG BÁO VIỆC LÀM-->
 
-        <v-flex md4 sm12 class="ma-2">
-          <v-card sm12 style="height: 100%;">
-            <v-card-title primary-title class="justify-center text-md-center">
-              <div>
-                <p  class="green--text display-3 font-weight-light">0</p>
-                <h3 class="headline mb-0">THÔNG BÁO VIỆC LÀM</h3>
-              </div>
-            </v-card-title>
+<!--        <v-flex md4 sm12 class="ma-2">-->
+<!--          <v-card sm12 style="height: 100%;">-->
+<!--            <v-card-title primary-title class="justify-center text-md-center">-->
+<!--              <div>-->
+<!--                <p  class="green&#45;&#45;text display-3 font-weight-light">0</p>-->
+<!--                <h3 class="headline mb-0">THÔNG BÁO VIỆC LÀM</h3>-->
+<!--              </div>-->
+<!--            </v-card-title>-->
 
-            <v-card-actions class="justify-center">
-              <a class="black--text hoverCSSa">Quản lý thông báo việc làm</a>
-            </v-card-actions>
-          </v-card>
-        </v-flex>
+<!--            <v-card-actions class="justify-center">-->
+<!--              <a class="black&#45;&#45;text hoverCSSa">Quản lý thông báo việc làm</a>-->
+<!--            </v-card-actions>-->
+<!--          </v-card>-->
+<!--        </v-flex>-->
 
         <!--      End   THÔNG BÁO VIỆC LÀM-->
         <!--            VIỆC LÀM CỦA TÔI-->
@@ -55,7 +56,7 @@
             </v-card-actions>
           </v-card>
         </v-flex>
-
+<v-spacer/>
         <!--            END VIỆC LÀM CỦA TÔI-->
       </v-layout>
     </div>
@@ -101,12 +102,47 @@
 </template>
 
 <script>
+  import Axios from 'axios'
+  import Constants from '@/stores/constant.js'
+  import {mapGetters} from 'vuex';
     export default {
         name: "JobAnnouncement",
       data: function () {
         return{
-
+          countCV: '',
+          userId:'',
         }}
+      ,
+      methods:{
+          getComponent(){
+            if(this.userId1 != null && this.userId1){
+              this.userId = this.userId1;
+              Axios
+                .get(Constants.URL + '/countcv/' + this.userId)
+                .then(response => (
+                  this.countCV = response.data
+
+                ))
+            }
+            }
+
+      },
+      mounted(){
+        this.getComponent();
+      },
+      watch:{
+        userId1(){
+          this.getComponent();
+        }
+      },
+      computed: {
+        ...mapGetters('AUTHENTICATION_STORE',{
+          email : 'email1',
+          roleId: 'roleId1',
+          fullName: 'fullName1',
+          userId1: 'userId1'
+        }),
+      },
     }
 </script>
 
