@@ -6,6 +6,7 @@
         v-model="active"
         slider-color="yellow"
         grow
+        @change="forceRerender"
       >
 
         <v-tab
@@ -24,7 +25,7 @@
             <SearchCV></SearchCV>
           </v-card>
           <v-card flat v-if="i.id === '2'">
-            <ListCVSaved></ListCVSaved>
+            <ListCVSaved :key="componentKey"></ListCVSaved>
           </v-card>
           <v-card flat v-if="i.id === '3'">
             <ListCVConfirmed></ListCVConfirmed>
@@ -50,6 +51,7 @@
       components: {ListCVDeny, ListCVConfirmed, ListCVSaved, SearchCV},
       data: function () {
         return{
+            componentKey: 0,
           active: null,
           tab: null,
           menu: [
@@ -60,7 +62,12 @@
 
 
         }
-      }
+      },
+        methods:{
+        forceRerender(){
+this.componentKey += 1;
+        }
+        }
     }
 </script>
 

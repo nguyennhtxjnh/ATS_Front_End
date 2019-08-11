@@ -199,13 +199,13 @@
 <!--    </v-card>-->
     <!--    8 công việc đăng gần nhất-->
     <v-card style="background-color:#efebeb">
-      <v-container>
+      <v-container align-center >
         <v-flex md12 xs12 >
         <h1  style="color: #fe7013" align="center">Việc Làm Mới Nhất</h1>
         </v-flex>
         <v-layout row wrap>
           <v-spacer/>
-            <v-flex md12 xs12>
+            <v-flex lg10 md12 xs12 class="" style="padding-left: 150px">
               <v-layout row wrap align="center">
                 <template v-for="job in info" >
 

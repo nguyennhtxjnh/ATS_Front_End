@@ -15,10 +15,11 @@
             </v-card-title>
 
             <v-card-actions class="justify-center">
-              <a class="black--text hoverCSSa" >Kiểm tra nhà tuyển dụng xem hồ sơ</a>
+<!--              <a class="black&#45;&#45;text hoverCSSa" >Kiểm tra nhà tuyển dụng xem hồ sơ</a>-->
             </v-card-actions>
           </v-card>
         </v-flex>
+        <v-spacer/>
 
         <!-- End Nhà Tuyển Dụng Xem Hồ Sơ-->
         <!--      THÔNG BÁO VIỆC LÀM-->
@@ -50,12 +51,12 @@
               </div>
             </v-card-title>
             <v-card-actions class="justify-center align-center" >
-              <v-flex md4 class="text-md-center"><v-btn color="success" small fab >{{not}}</v-btn><br/>
-                <a class="black--text hoverCSSa">Đang xử lý</a></v-flex>
+              <v-flex md4 class="text-md-center"><v-btn color="success" small fab >{{not}}</v-btn><br/><br/>
+                <span class="black--text hoverCSSa">Đang xử lý</span></v-flex>
               <v-flex md4 class="text-md-center">
-                <v-btn color="warning" small fab >{{accept}}</v-btn><br/>
-              <a class="black--text hoverCSSa">Đã xem</a></v-flex>
-              <v-flex md4 class="text-md-center"><v-btn color="error" small fab >{{deny}}</v-btn><br/><a class="black--text hoverCSSa">Đã đóng</a></v-flex>
+                <v-btn color="warning" small fab >{{accept}}</v-btn><br/><br/>
+              <span class="black--text hoverCSSa">Đã xem</span></v-flex>
+              <v-flex md4 class="text-md-center"><v-btn color="error" small fab >{{deny}}</v-btn><br/><br/> <span class="black--text hoverCSSa">Đã đóng</span></v-flex>
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -165,5 +166,8 @@
 </script>
 
 <style scoped>
+  span{
+    font-size: 15px;
+  }
 
 </style>
