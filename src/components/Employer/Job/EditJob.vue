@@ -182,26 +182,24 @@
                       :items="skillChoose"
                       v-model="selectedSkill"
                       item-text="skillName"
-                      item-value="id"
+                      item-value="skillMasterId"
                       label="Kĩ Năng"
                       :rules="[rules.required]"
                       multiple
                       counter="3"
+                      return-object
                       @input="addSkill"
                     ></v-autocomplete>
-                    {{selectedSkill}}
 
                   </v-flex>
-{{selectedSkill.skillMasterId}}<br/>
-choose {{skillChoose}}<br/>
-result  {{formData.listSkill}}
+
                   <template v-for="skill in formData.listSkill">
                     <v-flex class="pa-2" md6 xs12>
                       <v-autocomplete
                         :items="skillChoose"
                         v-model="skill.skillMasterId"
                         item-text="skillName"
-                        item-value="id"
+                        item-value="skillMasterId"
                         label="Kĩ Năng"
                         :rules="[rules.required]"
                         readonly
@@ -209,8 +207,8 @@ result  {{formData.listSkill}}
                       ></v-autocomplete>
 
 <!--                      <template v-for="item in skillChoose" >-->
-<!--                        <v-flex v-if="skill.skillMasterId === item.id">-->
-<!--                          {{item.skillName}}-->
+<!--                        <v-flex v-if="skill === item.id">-->
+<!--                          <h2>{{item.skillName}}</h2>-->
 <!--                        </v-flex>-->
 <!--                      </template>-->
                     </v-flex>
@@ -419,6 +417,7 @@ result  {{formData.listSkill}}
         companyStatus:'',
         checkCompany:'',
         checkCompanyExisted:'',
+          checkGet:false,
 
         salaryChoose: ['Thỏa Thuận', 'Từ', 'Đến', 'Trong Khoảng'],
         selectedSalary: 'Thỏa Thuận',
@@ -432,6 +431,7 @@ result  {{formData.listSkill}}
         workingtype: ['Toàn Thời Gian', 'Bán Thời Gian', 'Thực Tập'],
         skillChoose: [],
         selectedSkill:[],
+          skillAdd:{  'skillMasterId': '', 'skillTypeId': '', 'skillName': '','skillLevel':''},
         items: [
           'Thông Tin'
         ]
@@ -484,7 +484,7 @@ result  {{formData.listSkill}}
           candidateBenefits: '',
           workingtype: '',
           numbeOfRecruitment: '',
-          listSkill:[]
+          listSkill:[],
         },
 
         formDataSkill:{
@@ -566,10 +566,10 @@ result  {{formData.listSkill}}
               return
             }
 
-            for(let i = 0; i < this.formData.listSkill.length; i++){
-              this.formData.listSkill[i].skillMasterId = this.formData.listSkill[i]['id'];
-              delete this.formData.listSkill[i].id;
-            }
+            // for(let i = 0; i < this.formData.listSkill.length; i++){
+            //  this.formData.listSkill[i].skillMasterId = this.formData.listSkill[i]['id'];
+            //   delete this.formData.listSkill[i].id;
+            // }
             if(this.formData.workingtype === 'Toàn Thời Gian') this.formData.workingtype = 'FULLTIME';
             if(this.formData.workingtype === 'Bán Thời Gian') this.formData.workingtype = 'PARTTIME';
             if(this.formData.workingtype === 'Thực Tập')  this.formData.workingtype = 'INTERN';
@@ -644,22 +644,43 @@ result  {{formData.listSkill}}
 
             })
         }
-        if(this.jobid != null && this.jobid != ""){
-          Axios
-            .get(Constants.URL+'/job/getJobDetailToUpdate?id='+ this.jobid)
-            .then(response => {
-              if(response.data.success === true){
-                this.formData = response.data.data;
-             //   this.selectedSkill = response.data.data.listSkill;
 
-                if(this.formData.workingtype === 'FULLTIME') this.formData.workingtype = 'Toàn Thời Gian';
-                if(this.formData.workingtype === 'PARTTIME') this.formData.workingtype = 'Bán Thời Gian';
-                if(this.formData.workingtype === 'INTERN')  this.formData.workingtype = 'Thực Tập';
-              }
+            if(this.jobid != null && this.jobid != ""){
+                Axios
+                    .get(Constants.URL+'/job/getJobDetailToUpdate?id='+ this.jobid)
+                    .then(response => {
+                            if(response.data.success === true){
+                                this.formData = response.data.data;
+                                //   this.selectedSkill = response.data.data.listSkill;
 
-              }
-             )
+                                for (var i in this.formData.listSkill){
+                                    //   console.log(this.formData.listSkill[i].skillMasterId)
+                                    for(var j in this.selectedSkill){
+                                        if(this.selectedSkill[j] == this.formData.listSkill[i].skillMasterId){
+                                          this.checkGet = true;
+                                        }else {
+                                            this.checkGet = false;
+                                        }
+                                    }
+                                    if(this.checkGet === false){
+                                        this.skillAdd.skillMasterId = this.formData.listSkill[i].skillMasterId
+                                        this.skillAdd.skillLevel =this.formData.listSkill[i].skillLevel
+                                        this.selectedSkill.push(Object.assign({}, this.skillAdd));
+                                    }
+
+
+                                }
+                                this.formData.listSkill = this.selectedSkill;
+                                if(this.formData.workingtype === 'FULLTIME') this.formData.workingtype = 'Toàn Thời Gian';
+                                if(this.formData.workingtype === 'PARTTIME') this.formData.workingtype = 'Bán Thời Gian';
+                                if(this.formData.workingtype === 'INTERN')  this.formData.workingtype = 'Thực Tập';
+                            }
+
+                        }
+                    )
+
         }
+
 
         Axios
           .get(Constants.URL+'/industry')
@@ -674,6 +695,10 @@ result  {{formData.listSkill}}
               this.cityAPI = response.data.data.city
               this.skillChoose = response.data.data.skillname
               this.industryAPI = response.data.data.industry
+                for(let i = 0; i < this.skillChoose.length; i++){
+                    this.skillChoose[i].skillMasterId = this.skillChoose[i]['id'];
+                    delete this.skillChoose[i].id;
+                }
             } else {
               this.$notify({
                 group: 'foo',
@@ -702,8 +727,7 @@ result  {{formData.listSkill}}
         if(val.length > 3){
           val.length = 3;
         } else {
-        //  this.formData.listSkill = val;
-
+            this.formData.listSkill = val;
         }
 
 
@@ -803,7 +827,7 @@ result  {{formData.listSkill}}
         //   this.formData = JSON.parse(sessionStorage.getItem("jobInfoReturn"));
         //   this.formDataSkill = JSON.parse(sessionStorage.getItem("jobSkillReturn"));
         // }
-        this.getInitData()
+     //   this.getInitData()
       })
     },
     watch:{
