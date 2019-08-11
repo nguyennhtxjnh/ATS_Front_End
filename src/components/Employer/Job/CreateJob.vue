@@ -196,7 +196,7 @@
                       :items="skillChoose"
                       v-model="selectedSkill.skillMasterId"
                       item-text="skillName"
-                      item-value="id"
+                      item-value="skillMasterId"
                       label="Kĩ Năng"
                       :rules="[rules.required]"
                       multiple
@@ -213,9 +213,9 @@
                     <v-flex class="pa-2" md6 xs12>
                       <v-autocomplete
                         :items="skillChoose"
-                        v-model="skill.id"
+                        v-model="skill.skillMasterId"
                         item-text="skillName"
-                        item-value="id"
+                        item-value="skillMasterId"
                         label="Kĩ Năng"
                         :rules="[rules.required]"
                         readonly
@@ -587,10 +587,10 @@
               return
             }
 
-            for(let i = 0; i < this.formData.listSkill.length; i++){
-              this.formData.listSkill[i].skillMasterId = this.formData.listSkill[i]['id'];
-              delete this.formData.listSkill[i].id;
-            }
+            // for(let i = 0; i < this.formData.listSkill.length; i++){
+            //   this.formData.listSkill[i].skillMasterId = this.formData.listSkill[i]['id'];
+            //   delete this.formData.listSkill[i].id;
+            // }
             if(this.formData.workingtype === 'Toàn Thời Gian') this.formData.workingtype = 'FULLTIME';
             if(this.formData.workingtype === 'Bán Thời Gian') this.formData.workingtype = 'PARTTIME';
             if(this.formData.workingtype === 'Thực Tập')  this.formData.workingtype = 'INTERN';
@@ -689,6 +689,10 @@
               this.skillChoose = response.data.data.skillname
               this.industryAPI = response.data.data.industry
 
+                for(let i = 0; i < this.skillChoose.length; i++){
+                    this.skillChoose[i].skillMasterId = this.skillChoose[i]['id'];
+                    delete this.skillChoose[i].id;
+                }
               this.industryAPI.splice(0, 1);
               this.cityAPI.splice(0, 1);
             } else {
