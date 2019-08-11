@@ -204,6 +204,9 @@
       }
 
     },
+      created() {
+          console.log(this.educationsById)
+      },
     data: ()=>{
         return {
           position: '',
@@ -212,7 +215,7 @@
           menu2: false,
           editB: false,
           checkbox1: false,
-          btnsubmit: true,
+          btnsubmit: false,
           education: {
             schoolName: '',
             major: '',
@@ -310,7 +313,9 @@
         }
 
         console.log('edit')
-      }
+      },
+
+
     },
     mounted() {
       if(this.educationsById.length >0){

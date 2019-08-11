@@ -109,7 +109,10 @@
     export default {
         name: "SocialActivitiesComponent",
       props: {
-        socialactivities: Array,
+        socialactivities:  {
+            type: Array,
+            default: []
+        },
       },
       data: () => ( {
         position:'',
@@ -173,7 +176,7 @@
               alert("Hãy nhập thông tin cần thiết.");
             }
 
-          
+
         }, remove(position){
           this.socialactivities.splice(position, 1 );
           if(this.socialactivities.length === 0){
@@ -193,7 +196,16 @@
 
           console.log('edit')
         }
-      }
+      },
+        mounted () {
+
+
+            if(this.socialactivities.length > 0){
+                this.btnSubmit = true;
+            }
+
+
+        }
     }
 </script>
 

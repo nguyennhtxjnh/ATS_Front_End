@@ -246,20 +246,20 @@
             </v-container>
           </v-card>
           <!-- học vấn-->
-          <EducationComponent v-if="info.educationsById.length != 0" :educationsById="info.educationsById"></EducationComponent>
+          <EducationComponent :key="componentKey1"  :educationsById="info.educationsById"></EducationComponent>
           <!--Kinh nghiệm-->
-          <WorkExperienceComponent :workexperiences="info.workexperiencesById"></WorkExperienceComponent>
+          <WorkExperienceComponent  :key="componentKey2" :workexperiences="info.workexperiencesById"></WorkExperienceComponent>
           <!--Kỹ năng-->
-          <!--          <SkillInCVComponent :skillincvs="info.skillincvs"></SkillInCVComponent>-->
+                    <SkillInCVComponent :key="componentKey3"  :skillincvsById="info.skillincvsById"></SkillInCVComponent>
 
           <!--dự án-->
-          <ProjectorProductWorkedComponent
+          <ProjectorProductWorkedComponent :key="componentKey4"
             :projectorproductworkeds="info.projectorproductworkedsById"></ProjectorProductWorkedComponent>
 
           <!-- Chứng chỉ-->
-          <CertificationComponent :certifications="info.certificationsById"></CertificationComponent>
+          <CertificationComponent :key="componentKey5"  :certifications="info.certificationsById"></CertificationComponent>
           <!--Hoạt động xã hội-->
-          <SocialActivitiesComponent :socialactivities="info.socialactivitiesById"></SocialActivitiesComponent>
+          <SocialActivitiesComponent  :key="componentKey6" :socialactivities="info.socialactivitiesById"></SocialActivitiesComponent>
         </v-flex>
         <v-spacer/>
         <v-flex md4 xs12 class="pl-2">
@@ -301,6 +301,12 @@
     },
     data : function () {
       return{
+          componentKey1: 0,
+          componentKey2: 2,
+          componentKey3: 3,
+          componentKey4: 4,
+          componentKey5: 5,
+          componentKey6: 6,
         cvid: this.$route.params.cvid,
         base64: '',
         imageA:'',
@@ -343,6 +349,7 @@
           projectorproductworkedsById: [],
           socialactivitiesById: [],
           workexperiencesById: [],
+            skillincvsById:[]
 
         },
         rules: {
@@ -363,6 +370,14 @@
 
 
     methods: {
+        forceRerender() {
+            this.componentKey1 += 1;
+            this.componentKey2 += 1;
+            this.componentKey3 += 1;
+            this.componentKey4 += 1;
+            this.componentKey5 += 1;
+            this.componentKey6 += 1;
+        },
       pickFile() {
         this.$refs.image.click()
       },
@@ -480,6 +495,7 @@
         .get(Constants.URL+'/cv/getOne/'+this.cvid+'/0')
         .then(response => {
             this.info = response.data.data;
+            this.forceRerender();
             console.log(this.info);
             if(this.info.img !== null){
               this.imageUrl = this.info.img;

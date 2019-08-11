@@ -1,6 +1,6 @@
 <template>
   <v-flex class="pt-2">
-    <v-flex xs12 sm12 md12 >
+    <v-flex xs12 sm12 md12>
 
       <v-tabs
         v-model="active"
@@ -21,7 +21,7 @@
           v-for="i in menu"
           :key="i.id"
         >
-          <v-card flat v-if="i.id === '1'" >
+          <v-card flat v-if="i.id === '1'">
             <SearchCV></SearchCV>
           </v-card>
           <v-card flat v-if="i.id === '2'">
@@ -46,27 +46,28 @@
     import ListCVSaved from "../CVSaved/ListCVSaved";
     import ListCVConfirmed from "./ListCVConfirmed";
     import ListCVDeny from "./ListCVDeny";
+
     export default {
         name: "ManageJobSeeker",
-      components: {ListCVDeny, ListCVConfirmed, ListCVSaved, SearchCV},
-      data: function () {
-        return{
-            componentKey: 0,
-          active: null,
-          tab: null,
-          menu: [
-            {name:'Tìm kiếm Ứng Viên', id:'1'},   {name:'Ứng viên đã lưu', id:'2'},
-            {name:'Ứng viên đã xác nhận', id:'3'},{name:'Ứng viên đã từ chối', id:'4'},
+        components: {ListCVDeny, ListCVConfirmed, ListCVSaved, SearchCV},
+        data: function () {
+            return {
+                componentKey: 0,
+                active: null,
+                tab: null,
+                menu: [
+                    {name: 'Tìm kiếm Ứng Viên', id: '1'}, {name: 'Ứng viên đã lưu', id: '2'},
+                    {name: 'Ứng viên đã xác nhận', id: '3'}, {name: 'Ứng viên đã từ chối', id: '4'},
 
-          ],
+                ],
 
 
-        }
-      },
-        methods:{
-        forceRerender(){
-this.componentKey += 1;
-        }
+            }
+        },
+        methods: {
+            forceRerender() {
+                this.componentKey += 1;
+            }
         }
     }
 </script>

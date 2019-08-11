@@ -182,7 +182,10 @@
   export default {
     name: "WorkExperienceComponent",
     props: {
-      workexperiences: Array,
+      workexperiences:  {
+          type: Array,
+          default: []
+      },
     },
     data: () => ( {
       position:'',
@@ -280,7 +283,19 @@
         }
         console.log('edit')
       }
-    }
+    },
+      mounted() {
+          if(this.workexperiences.length >0){
+              this.btnSubmit = true;
+              for(var edu in this.workexperiences){
+                  var stime = new Date(this.workexperiences[edu].startTime);
+                  this.workexperiences[edu].startTime = stime.toISOString().substr(0, 10);
+                  var etime = new Date(this.workexperiences[edu].endTime);
+                  this.workexperiences[edu].endTime = etime.toISOString().substr(0, 10);
+              }
+              console.log(this.workexperiences);
+          }
+      }
 
   }
 </script>

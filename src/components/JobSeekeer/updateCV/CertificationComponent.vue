@@ -90,7 +90,10 @@
   export default {
     name: "CertificationComponent",
     props: {
-      certifications: Array,
+      certifications:  {
+          type: Array,
+          default: []
+      },
     },
     data: () => ( {
       btnSubmit: false,
@@ -128,7 +131,15 @@
         }
         console.log('edit')
       }
-    }
+    },  mounted () {
+
+
+          if(this.certifications.length > 0){
+              this.btnSubmit = true;
+          }
+
+
+      }
   }
 </script>
 

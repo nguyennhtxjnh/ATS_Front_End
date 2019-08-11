@@ -189,7 +189,10 @@
   export default {
     name: "ProjectorProductWorkedComponent",
     props: {
-      projectorproductworkeds: Array,
+      projectorproductworkeds:  {
+          type: Array,
+          default: []
+      },
     },
     data: () => ( {
       position:'',
@@ -289,7 +292,18 @@
         console.log('edit')
       }
     },
-
+      mounted() {
+          if(this.projectorproductworkeds.length >0){
+              this.btnSubmit = true;
+              for(var edu in this.projectorproductworkeds){
+                  var stime = new Date(this.projectorproductworkeds[edu].startTime);
+                  this.projectorproductworkeds[edu].startTime = stime.toISOString().substr(0, 10);
+                  var etime = new Date(this.projectorproductworkeds[edu].endTime);
+                  this.projectorproductworkeds[edu].endTime = etime.toISOString().substr(0, 10);
+              }
+              console.log(this.projectorproductworkeds);
+          }
+      }
 
   }
 </script>
