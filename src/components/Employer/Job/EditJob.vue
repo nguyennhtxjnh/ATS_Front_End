@@ -350,6 +350,55 @@
                                                   <v-flex md12 v-html="formData.candidateBenefits" class="pb-3">
                                                   </v-flex>
                                                 </v-flex>
+                                                <v-flex md4 sm12>
+                                                  <v-card flat>
+                                                    <v-card-text >
+                                                      <div style="border: 1px solid rgba(0,185,242,.5);" class="pa-3">
+
+                                                        <v-autocomplete
+                                                          class="ma-2"
+                                                          v-model="formData.joblevelId"
+                                                          prepend-icon="mdi-account"
+                                                          :items="jobLevelAPI"
+                                                          item-text="jobLevelName"
+                                                          item-value="id"
+                                                          label="Cấp Bậc"
+                                                          readonly
+                                                          :rules="[rules.required]"
+                                                        ></v-autocomplete>
+                                                        <v-text-field class="not-active"
+                                                                      label="Địa chỉ làm việc"
+                                                                      v-model="formData.address"
+                                                                      prepend-icon="mdi-map-marker"
+                                                                      readonly
+                                                                      color="none"
+                                                        ></v-text-field>
+                                                        <v-autocomplete
+                                                          prepend-icon="mdi-account-star"
+                                                          :items="skillChoose"
+                                                          v-model="selectedSkill"
+                                                          item-text="skillName"
+                                                          item-value="skillMasterId"
+                                                          label="Kĩ Năng"
+                                                          :rules="[rules.required]"
+                                                          multiple
+                                                          counter="3"
+                                                          return-object
+                                                          @input="addSkill"
+                                                        ></v-autocomplete>
+
+                                                        <!--                                  <v-text-field class="not-active"-->
+                                                        <!--                                                label="Ngôn Ngữ Trình Bày"-->
+                                                        <!--                                                value="Bất kỳ"-->
+                                                        <!--                                                prepend-icon="mdi-calendar-clock"-->
+                                                        <!--                                                readonly-->
+                                                        <!--                                                color="none"-->
+                                                        <!--                                  ></v-text-field>-->
+                                                      </div>
+                                                    </v-card-text>
+                                                  </v-card>
+
+                                                </v-flex>
                                               </v-flex>
                                             </v-layout>
                                           </v-container>

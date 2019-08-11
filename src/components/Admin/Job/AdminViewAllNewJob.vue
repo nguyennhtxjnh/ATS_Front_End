@@ -89,8 +89,8 @@
           <v-container class=" mb-3" fluid grid-list-md style=" border: 1px solid red; border-radius: 5px;">
             <v-layout row wrap>
               <v-flex d-flex xs12 sm6 md3 class="align-center pa-0">
-                <v-img src="https://www.seekpng.com/png/detail/25-257121_icon-big-image-png-camera-icon.png"  contain aspect-ratio="2"  v-if="!jobFull.companyByCompanyId.logoImg"/>
-                <v-img contain :src="jobFull.companyByCompanyId.logoImg" aspect-ratio="2" v-if="jobFull.companyByCompanyId.logoImg"></v-img>
+                <v-img src="https://www.seekpng.com/png/detail/25-257121_icon-big-image-png-camera-icon.png"  contain aspect-ratio="2"  v-if="!jobFull.company.logoImg"/>
+                <v-img contain :src="jobFull.company.logoImg" aspect-ratio="2" v-if="jobFull.company.logoImg"></v-img>
               </v-flex>
               <v-flex d-flex xs12 sm6 md6>
 
@@ -102,7 +102,7 @@
                   <v-flex d-flex class="pa-0 ma-0" md12>
                     <v-layout row wrap class="pa-0 ma-0">
                       <v-flex d-flex xs12>
-                        <span> <b>Công ty:</b> {{jobFull.companyByCompanyId.nameCompany}}</span>
+                        <span> <b>Công ty:</b> {{jobFull.company.nameCompany}}</span>
                       </v-flex>
                       <v-flex d-flex xs12 v-if="jobFull.salaryTo === 0 && jobFull.salaryFrom > 0">
                         <span> <b>Mức lương: </b> từ {{jobFull.salaryFrom}}đ trở lên</span>
@@ -118,7 +118,7 @@
                       </v-flex>
                       <v-flex d-flex xs12>
                         <!--                      <span>View will stay here</span> -->
-                        <span><b>Khu vực:</b> {{jobFull.companyByCompanyId.cityByCityId.fullName}} <v-divider vertical class="ml-2 mr-2"></v-divider>
+                        <span><b>Khu vực:</b> {{jobFull.company.cityByCityId.fullName}} <v-divider vertical class="ml-2 mr-2"></v-divider>
                         <b>Ngày hết hạn nộp:</b> {{jobFull.endDateForApply}}</span>
                       </v-flex>
                       <v-flex d-flex xs12 fill-height>
@@ -234,7 +234,7 @@
 
                             <v-flex md8 sm12>
                               <h4>Thông tin công ty</h4>
-                              <v-flex md12 v-html="jobFull.companyByCompanyId.description">
+                              <v-flex md12 v-html="jobFull.company.description">
 
                               </v-flex>
                             </v-flex>
@@ -245,14 +245,14 @@
                                   <div style="border: 1px solid rgba(0,185,242,.5);" class="pa-3">
                                     <v-text-field class="not-active"
                                                   label="Địa điểm"
-                                                  v-model="jobFull.companyByCompanyId.address"
+                                                  v-model="jobFull.company.address"
                                                   prepend-icon="mdi-map-marker"
                                                   readonly
                                                   color="none"
                                     ></v-text-field>
                                     <v-text-field class="not-active"
                                                   label="Số điện thoại liên hệ"
-                                                  v-model="jobFull.companyByCompanyId.telephoneNumber"
+                                                  v-model="jobFull.company.telephoneNumber"
                                                   prepend-icon="mdi-phone"
                                                   readonly
                                                   color="none"

@@ -630,13 +630,14 @@
 
 
           }
-          console.log(this.lskill +"/"+this.cityId+"/"+this.industryId);
+
             if (this.industryId === "Tất cả ngành nghề") {
                 this.industryId = ""
             }
             if (this.cityId === "Tất cả địa điểm") {
                 this.cityId = ""
             }
+            console.log(this.lskill +"/"+this.cityId+"/"+this.industryId);
           console.log("indus: "+this.industryId);
           console.log("city: "+this.cityId);
           axios
