@@ -78,7 +78,7 @@
       <v-container align-center>
         <v-layout row wrap>
           <v-flex md12 xs12 >
-            <h1 align="center" style="color: #fe7013">Các nhà tuyển dụng mới</h1>
+            <h1 align="center" style="color: #fe7013">Các Nhà Tuyển Dụng Hàng Đầu</h1>
           </v-flex>
           <v-flex md12 xs12>
             <v-container>
@@ -201,12 +201,12 @@
     <v-card style="background-color:#efebeb">
       <v-container>
         <v-flex md12 xs12 >
-        <h1  style="color: #fe7013">Việc làm mới nhất</h1>
+        <h1  style="color: #fe7013" align="center">Việc Làm Mới Nhất</h1>
         </v-flex>
         <v-layout row wrap>
           <v-spacer/>
             <v-flex md12 xs12>
-              <v-layout row wrap>
+              <v-layout row wrap align="center">
                 <template v-for="job in info" >
 
                   <v-flex md5 xs12 style="background-color: white" class="ma-2 pa-1" :key="job.id" @click="viewJobDetail(job.id)">
