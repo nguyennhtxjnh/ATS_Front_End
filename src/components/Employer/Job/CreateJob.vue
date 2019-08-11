@@ -720,7 +720,6 @@
           val.length = 3;
         } else {
           this.formData.listSkill = val;
-
         }
 
 
