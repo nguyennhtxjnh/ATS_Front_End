@@ -45,14 +45,17 @@
           <v-card sm12 style="height: 100%;">
             <v-card-title primary-title class="justify-center text-md-center">
               <div>
-                <p  class="cyan--text display-3 font-weight-light">0</p>
+                <p  class="cyan--text display-3 font-weight-light">{{all}}</p>
                 <h3 class="headline mb-0">VIỆC LÀM CỦA TÔI</h3>
               </div>
             </v-card-title>
             <v-card-actions class="justify-center align-center" >
-              <v-flex md4 class="text-md-center"><v-btn color="success" small fab >0</v-btn><v-divider></v-divider><a class="black--text hoverCSSa">Đang xử lý</a></v-flex>
-              <v-flex md4 class="text-md-center"><v-btn color="warning" small fab >0</v-btn><v-divider></v-divider><a class="black--text hoverCSSa">Đã xem</a></v-flex>
-              <v-flex md4 class="text-md-center"><v-btn color="error" small fab >0</v-btn><v-divider></v-divider><a class="black--text hoverCSSa">Đã đóng</a></v-flex>
+              <v-flex md4 class="text-md-center"><v-btn color="success" small fab >{{not}}</v-btn><br/>
+                <a class="black--text hoverCSSa">Đang xử lý</a></v-flex>
+              <v-flex md4 class="text-md-center">
+                <v-btn color="warning" small fab >{{accept}}</v-btn><br/>
+              <a class="black--text hoverCSSa">Đã xem</a></v-flex>
+              <v-flex md4 class="text-md-center"><v-btn color="error" small fab >{{deny}}</v-btn><br/><a class="black--text hoverCSSa">Đã đóng</a></v-flex>
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -111,6 +114,10 @@
         return{
           countCV: '',
           userId:'',
+          all:'',
+          not:'',
+          deny:'',
+          accept:''
         }}
       ,
       methods:{
@@ -123,6 +130,17 @@
                   this.countCV = response.data
 
                 ))
+              Axios
+                .get(Constants.URL + '/apply/getAllAplly/' + this.userId)
+                .then(response => {
+                    this.all = response.data.data.all;
+                    this.not = response.data.data.not;
+                    this.deny = response.data.data.deny;
+                    this.accept = response.data.data.accept;
+                }
+
+
+                )
             }
             }
 

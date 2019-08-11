@@ -18,7 +18,7 @@
           </v-layout>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn style="height: 100%" color="black" flat @click="$router.push('/thong-tin')" >
+        <v-btn style="height: 100%" color="black" flat @click="$router.push('/thong-tin')" v-if="roleId === 1" >
           Quản lí tài khoản
         </v-btn>
         <v-btn style="height: 100%" color="black" flat @click="$router.push('/tim-kiem')" >

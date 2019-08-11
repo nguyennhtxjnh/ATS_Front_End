@@ -447,7 +447,7 @@
           })
       },
       async viewInfo(id){
-        document.getElementsByClassName('v-dialog--active')[0].scrollTop = 0
+     //   document.getElementsByClassName('v-dialog--active')[0].scrollTop = 0
         this.loading = true;
         await Axios.get(Constants.URL+`/job/getJobDetailAdmin?id=${id}`)
           .then(response => {

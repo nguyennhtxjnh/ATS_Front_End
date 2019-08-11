@@ -190,16 +190,17 @@
                       return-object
                       @input="addSkill"
                     ></v-autocomplete>
+                    {{selectedSkill}}
 
                   </v-flex>
 
 
-
-                  <template v-for="(skill,index) in formData.listSkill">
+{{formData.listSkill}}
+                  <template v-for="skill in formData.listSkill">
                     <v-flex class="pa-2" md6 xs12>
                       <v-autocomplete
                         :items="skillChoose"
-                        v-model="skill.id"
+                        v-model="skill.skillMasterId"
                         item-text="skillName"
                         item-value="id"
                         label="Kĩ Năng"
@@ -207,6 +208,12 @@
                         readonly
                         outline
                       ></v-autocomplete>
+
+<!--                      <template v-for="item in skillChoose" >-->
+<!--                        <v-flex v-if="skill.skillMasterId === item.id">-->
+<!--                          {{item.skillName}}-->
+<!--                        </v-flex>-->
+<!--                      </template>-->
                     </v-flex>
                     <v-flex class="pa-2" md6 xs12>
                       <v-autocomplete
@@ -426,6 +433,7 @@
         workingtype: ['Toàn Thời Gian', 'Bán Thời Gian', 'Thực Tập'],
         skillChoose: [],
         selectedSkill: {
+          id:'',
           skillMasterId: '',
           skillLevel: ''
         },
@@ -646,7 +654,9 @@
             .get(Constants.URL+'/job/getJobDetailToUpdate?id='+ this.jobid)
             .then(response => {
               if(response.data.success === true){
-                this.formData = response.data.data
+                this.formData = response.data.data;
+                this.selectedSkill = response.data.data.listSkill;
+
                 if(this.formData.workingtype === 'FULLTIME') this.formData.workingtype = 'Toàn Thời Gian';
                 if(this.formData.workingtype === 'PARTTIME') this.formData.workingtype = 'Bán Thời Gian';
                 if(this.formData.workingtype === 'INTERN')  this.formData.workingtype = 'Thực Tập';
