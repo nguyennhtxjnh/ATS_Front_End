@@ -48,8 +48,9 @@
 
                     </v-flex>
                   </v-layout>
-                  <v-divider class="mt-2 mb-2" v-if=""></v-divider>
+
                 </v-flex></v-layout>
+              <v-divider class="mt-2 mb-2" v-if=""></v-divider>
             </template>
             <v-layout row wrap>
               <v-spacer/>
@@ -319,7 +320,7 @@
           checkSave: '',
 
           jobid: this.$route.params.jobid,
-          cvs:'',
+          cvs:[],
         }
       }, methods: {
         reloadPage(){
@@ -458,9 +459,9 @@
               .get(Constants.URL+'/userlifecv/list/'+this.userId)
               .then(response => {
                 console.log(response)
-                this.cvs = response.data.content;
+                this.cvs = response.data.data.content;
                 this.page = 1;
-                  this.lengthPage = response.data.totalPages;
+                  this.lengthPage = response.data.data.totalPages;
                 for(var cv in this.cvs){
                   var date = new Date(this.cvs[cv].createdDate);
                   // var tmp = date.getDay()

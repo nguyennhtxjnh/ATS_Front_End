@@ -7,7 +7,7 @@
           <v-flex  xs12>
             <v-text-field class="ma-2" prepend-icon="person" name="Name" label="Họ Và Tên*" type="text"
                           v-model="userDetail.fullname" maxlength="25"
-                          :rules="[rules.required, rules.counter]"></v-text-field>
+                          :rules="[rules.required]"></v-text-field>
           </v-flex>
 
           <v-flex  xs12>
@@ -29,6 +29,7 @@
             ></v-autocomplete>
           </v-flex>
 
+
           <v-flex xs12>
             <v-autocomplete class="ma-2"
                             :rules="[rules.required]"
@@ -42,6 +43,7 @@
                             persistent-hint
 
             ></v-autocomplete>
+
           </v-flex>
 
           <v-flex  xs12>

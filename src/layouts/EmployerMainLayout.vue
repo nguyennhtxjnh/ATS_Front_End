@@ -10,6 +10,9 @@
         </v-toolbar-title>
         <v-toolbar-title @click="$router.push('/trang-chu-tuyen-dung')" class="hoverCSSTitle pr-5 mr-5" >Nhà Tuyển Dụng</v-toolbar-title>
         <v-spacer></v-spacer>
+        <v-btn style="height: 100%" flat  class="white black--text" @click="$router.push('/tuyen-dung-thong-tin')" v-if="roleId === 2 || roleId === 3 || roleId === 5">
+          Quản lí tài khoản
+        </v-btn>
 
         <v-btn style="height: 100%" flat  class="white black--text" @click="$router.push('/quan-li-ung-vien')" v-if="roleId === 2 || roleId === 3 || roleId === 5">
           Ứng viên

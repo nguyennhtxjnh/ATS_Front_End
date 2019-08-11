@@ -1,4 +1,4 @@
-<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
+ <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <v-container>
 
     <v-layout align-center  v-if="checkCompany === true">
@@ -180,22 +180,21 @@
                     <v-autocomplete
                       prepend-icon="mdi-account-star"
                       :items="skillChoose"
-                      v-model="selectedSkill.skillMasterId"
+                      v-model="selectedSkill"
                       item-text="skillName"
                       item-value="id"
                       label="Kĩ Năng"
                       :rules="[rules.required]"
                       multiple
                       counter="3"
-                      return-object
                       @input="addSkill"
                     ></v-autocomplete>
                     {{selectedSkill}}
 
                   </v-flex>
-
-
-{{formData.listSkill}}
+{{selectedSkill.skillMasterId}}<br/>
+choose {{skillChoose}}<br/>
+result  {{formData.listSkill}}
                   <template v-for="skill in formData.listSkill">
                     <v-flex class="pa-2" md6 xs12>
                       <v-autocomplete
@@ -432,11 +431,7 @@
         industryAPI: [],
         workingtype: ['Toàn Thời Gian', 'Bán Thời Gian', 'Thực Tập'],
         skillChoose: [],
-        selectedSkill: {
-          id:'',
-          skillMasterId: '',
-          skillLevel: ''
-        },
+        selectedSkill:[],
         items: [
           'Thông Tin'
         ]
@@ -655,7 +650,7 @@
             .then(response => {
               if(response.data.success === true){
                 this.formData = response.data.data;
-                this.selectedSkill = response.data.data.listSkill;
+             //   this.selectedSkill = response.data.data.listSkill;
 
                 if(this.formData.workingtype === 'FULLTIME') this.formData.workingtype = 'Toàn Thời Gian';
                 if(this.formData.workingtype === 'PARTTIME') this.formData.workingtype = 'Bán Thời Gian';
@@ -707,7 +702,7 @@
         if(val.length > 3){
           val.length = 3;
         } else {
-          this.formData.listSkill = val;
+        //  this.formData.listSkill = val;
 
         }
 

@@ -187,7 +187,7 @@
                               style="border-style: solid; border-color: #ccc; border-width: 1px; height: 250px"
                     ></ckeditor>
                   </v-flex>
-
+{{formData}}
                   <!--                  ki nang-->
                   <v-flex class="pa-2"  xs12>
 

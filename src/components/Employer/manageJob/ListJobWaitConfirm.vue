@@ -84,8 +84,8 @@
 
       methods: {
         viewJobDetail(id){
-          let route = this.$router.push({path: '/cap-nhat-viec-lam/'+id});
-          window.open(route.href, '_blank');
+            const {href} = this.$router.resolve({name: 'editjob', params: {jobid: id}})
+          window.open(href, '_blank');
         },
         remove(position){
           this.info.splice(position, 1);

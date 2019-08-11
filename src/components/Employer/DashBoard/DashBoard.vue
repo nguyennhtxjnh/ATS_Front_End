@@ -6,39 +6,28 @@
 
         <!--        User Card-->
         <template>
-          <v-layout align-center justify-center mt-2>
+          <v-layout align-center justify-center>
             <v-flex md10>
+              <v-img :src="require('@/assets/br.jpg')" height="100px">
+                <v-layout
+                  column
+                  fill-height class="pt-3"
+                >
+                  <v-card-title primary-title class="justify-center text-md-center">
+                    <div>
+                      <h3 class="headline" style="color: white">{{userDetail.fullname}}</h3>
+                    </div>
+                  </v-card-title>
+                </v-layout>
+              </v-img>
               <v-card class="pa-3 ">
-                <v-card-title primary-title class="justify-center text-md-center">
-                  <div>
-                    <h3 class="headline mb-0">User Name Here</h3>
-                    <p>Sinh viên</p>
-                    <p>Mới tốt nghiệp</p>
-                    <p>Công ty gần đây</p>
-                    <p>Bằng cấp mới nhất</p>
-                  </div>
-                </v-card-title>
 
-                <v-card-actions class="justify-center">
-                  <v-btn flat color="orange" class="v-btn--outline">Cập Nhật Hồ Sơ</v-btn>
-                </v-card-actions>
+
+                <v-card-text class="justify-center text-md-center">
+                  <span> {{userDetail.email}}</span><br/>
+                  <span> {{userDetail.telephoneNumber}}</span>
+                </v-card-text>
               </v-card>
-<!--              <v-card class="pa-3 mt-2">-->
-<!--                <v-layout row wrap>-->
-<!--                  <v-flex md12 sm12 xs12>-->
-<!--                    <v-switch v-model="isActive" class="pl-3">-->
-<!--                      <template v-slot:label>-->
-<!--                        <div v-if="isActive"> Trạng thái tìm việc<strong class="primary&#45;&#45;text"> BẬT</strong></div>-->
-<!--                        <div v-if="!isActive"> Trạng thái tìm việc <strong class="primary&#45;&#45;text"> TẮT</strong></div>-->
-<!--                      </template>-->
-<!--                    </v-switch>-->
-<!--                  </v-flex>-->
-<!--                  <v-flex md12 sm12 xs12>-->
-<!--                    <span>Bật tìm việc để nhận được nhiều cơ hội việc làm tốt nhất</span>-->
-<!--                  </v-flex>-->
-
-<!--                </v-layout>-->
-<!--              </v-card>-->
             </v-flex>
           </v-layout>
         </template>
@@ -69,7 +58,7 @@
 
             </v-card>
             <v-card flat v-if="i.id === '2'">
-              <ListRecruitment></ListRecruitment>
+              <EmpProfile></EmpProfile>
             </v-card>
 
           </v-tab-item>
@@ -83,41 +72,82 @@
 
 <script>
 
-  import Overview from "./Overview";
-  import ListRecruitment from "./ListRecruitment";
-  export default {
-    name: 'DashBoard',
-    components: {ListRecruitment, Overview},
-    data: function () {
-      return{
-        active: null,
-        isActive: true,
+    import Overview from "./Overview";
+    import ListRecruitment from "./ListRecruitment";
+    import Profile from "../../JobSeekeer/DashBoard/Profile";
+    import ProfileEmployer from "./ProfileEmployer";
+    import axios from 'axios'
+    import {mapGetters} from 'vuex';
+    import Constants from '@/stores/constant.js'
+    import EmpProfile from "./EmpProfile";
 
-        tab: null,
-        menu: [
-          {name:'Thống kê', id:'1'},   {name:'Danh sách tin tuyển dụng', id:'2'},
-        ],
-        tabSub:[
+    export default {
+        name: 'DashBoard',
+        components: {EmpProfile, ProfileEmployer, Profile, ListRecruitment, Overview},
+        data: function () {
+            return {
+                userId: '',
+                active: null,
+                isActive: true,
+                userDetail: '',
+                tab: null,
+                menu: [
+                    {name: 'Thống kê', id: '1'}, {name: 'Cập nhật tài khoản', id: '2'},
+                ],
+                tabSub: [
 
-          {name:'Tin đang hiển thị', id:'1'},   {name:'Tin hết hạn / chưa hiển thị', id:'2'},
+                    {name: 'Tin đang hiển thị', id: '1'}, {name: 'Tin hết hạn / chưa hiển thị', id: '2'},
 
-        ]
+                ]
+            }
 
+        }, methods: {
+            getComponent() {
+                if (this.userId1 != null && this.userId1 != "") {
+                    this.userId = this.userId1;
+                    axios
+                        .post(Constants.URL + '/user/findUserByUserId?id=' + this.userId)
+                        .then(response => {
+                                if (response.data.success === true) {
+                                    this.userDetail = response.data.data;
+                                }
 
-      }
+                            }
+                        )
+                }
+
+            }
+        },
+        mounted() {
+            this.getComponent();
+        },
+        watch: {
+            userId1() {
+                this.getComponent();
+            }
+        },
+        computed: {
+            ...mapGetters('AUTHENTICATION_STORE', {
+                email: 'email2',
+                roleId: 'roleId2',
+                fullName: 'fullName2',
+                userId1: 'userId2'
+            }),
+        },
     }
-  }
 </script>
 
 <style scoped>
   p {
     margin-bottom: 5px;
   }
-  .hoverCSSa:hover{
+
+  .hoverCSSa:hover {
     color: orange !important;
     cursor: pointer;
   }
-  .v-divider{
+
+  .v-divider {
     display: table-row-group !important;
   }
 </style>

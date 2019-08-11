@@ -20,53 +20,58 @@
             <v-flex md12 xs12 >
               <h1 align="center" >Lựa Chọn Dịch Vụ Phù Hợp</h1>
             </v-flex>
-            <v-flex md12 xs12>
+            <v-layout row wrap>
+              <v-spacer/>
+              <v-flex lg8 md12 xs12>
 
-              <v-tabs
-                fixed-tabs
-                v-model="active"
-                slider-color="yellow"
-              >
-                <v-tab
-                  v-for="service in services"
-                  :key="service.id"
-                  ripple
+                <v-tabs
+                  fixed-tabs
+                  v-model="active"
+                  slider-color="yellow"
                 >
-                  {{ service.name }}
+                  <v-tab
+                    v-for="service in services"
+                    :key="service.id"
+                    ripple
+                  >
+                    {{ service.name }}
 
-                </v-tab>
-                <v-tab-item
-                  v-for="service in services"
-                  :key="service.id"
-                >
-                  <v-card flat>
-                    <v-card-text>
-                      <v-layout row wrap>
-                        <v-flex md3 xs3>
+                  </v-tab>
+                  <v-tab-item
+                    v-for="service in services"
+                    :key="service.id"
+                  >
+                    <v-card flat>
+                      <v-card-text>
+                        <v-layout row wrap>
+                          <v-flex md3 xs3>
                             <v-flex md4 xs4>
                               <img :src="service.imgServices" height="200px"/>
                             </v-flex>
                             <v-flex md5 xs4>
 
                             </v-flex>
-                        </v-flex>
-                        <v-spacer/>
-                        <v-flex md6 xs7 class="pt-3">
-                          <h1 style="color: #ff5e2d">{{service.money}}</h1>
-                          <v-flex v-html="service.detail"></v-flex>
+                          </v-flex>
+                          <v-spacer/>
+                          <v-flex md6 xs7 class="pt-3">
+<!--                            <h1 style="color: #ff5e2d">{{service.money}}</h1>-->
+                            <v-flex v-html="service.detail"></v-flex>
 
-                        </v-flex>
-                        <v-spacer/>
-                      </v-layout>
-
-
-                    </v-card-text>
-                  </v-card>
-                </v-tab-item>
-              </v-tabs>
+                          </v-flex>
+                          <v-spacer/>
+                        </v-layout>
 
 
-            </v-flex>
+                      </v-card-text>
+                    </v-card>
+                  </v-tab-item>
+                </v-tabs>
+
+
+              </v-flex>
+              <v-spacer/>
+            </v-layout>
+
           </v-layout>
         </v-container>
       </v-card>

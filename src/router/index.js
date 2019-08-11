@@ -116,7 +116,7 @@ const router = new Router({
     },
     {
       path: '/cap-nhat-viec-lam/:jobid',
-      name: 'edit job',
+      name: 'editjob',
       component: EditJobPage
     },
     {
