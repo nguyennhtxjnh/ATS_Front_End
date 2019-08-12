@@ -62,9 +62,10 @@
               </v-flex>
               <v-flex md3 class="pt-5">
                 <h4>Trạng thái:
-                <i v-if="job.appliesById.status === 1">đang xử lý</i>
-                  <i v-if="job.appliesById.status === 2">đã xem</i>
-                  <i v-if="job.appliesById.status === 3">đã bị từ chối</i>
+
+                <i v-if="job.appliesById[0].status === '1'">đang xử lý</i>
+                  <i v-if="job.appliesById[0].status === '2'">đã xem</i>
+                  <i v-if="job.appliesById[0].status === '3'">đã bị từ chối</i>
                 </h4>
               </v-flex>
             </v-layout>

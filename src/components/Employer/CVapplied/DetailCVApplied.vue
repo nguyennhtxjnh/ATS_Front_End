@@ -531,8 +531,8 @@
           Axios
             .get(Constants.URL+'/apply/cv-applied/'+this.jobid)
             .then(response => {
-              this.cvs = response.data.content;
-              this.lengthPage = response.data.totalPages ;
+              this.cvs = response.data.data.content;
+              this.lengthPage = response.data.data.totalPages ;
               for(var cv in this.cvs){
                 var date = new Date(this.cvs[cv].lastModify);
                 // var tmp = date.getDay()

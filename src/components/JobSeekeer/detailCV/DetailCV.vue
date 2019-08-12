@@ -121,6 +121,34 @@
                   </v-flex>
                 </v-layout>
               </v-flex>
+
+              <v-flex md12 xs12 class="mb-4">
+                <v-layout row wrap>
+                  <v-flex md12 xs12 >
+                    <h1 style="float: left">Kĩ năng</h1>
+                  </v-flex>
+
+                  <v-flex md12 xs12>
+                    <v-divider></v-divider>
+                    <v-flex v-for="skill in info.skillincvsById" :key="skill.id">
+                      <v-layout row wrap class="pa-2">
+                        <v-flex md4 xs7>
+
+                            <template v-for="i in listskill">
+                                  <span v-if="i.id === skill.skillMasterId"> Kĩ năng: {{i.skillName}} </span>
+                            </template><br/>
+                          <template v-for="i in skillRating">
+                            <span v-if="i.id === skill.skillLevel"> Cấp độ: {{i.name}} </span>
+                          </template>
+
+                        </v-flex>
+                        <v-flex md3 xs4>
+                        </v-flex>
+                      </v-layout>
+                    </v-flex>
+                  </v-flex>
+                </v-layout>
+              </v-flex>
               <v-flex md12 xs12 class="mb-4">
                 <v-layout row wrap>
                   <v-flex md12 xs12 >
@@ -227,13 +255,37 @@
         name: "DetailCV",
       data : function () {
         return{
-          imageUrl: require('@/assets/avatar-default-icon.png'),
+            skillRating: [
+                {
+                    id: 1,
+                    name: "Mới bắt đầu"
+                },
+                {
+                    id: 2,
+                    name: "Cơ bản"
+                },
+                {
+                    id: 3,
+                    name: "Trung cấp"
+                },
+                {
+                    id: 4,
+                    name: "Cao cấp"
+                },
+                {
+                    id: 5,
+                    name: "Chuyên nghiệp"
+                },
+            ],
+
+            imageUrl: require('@/assets/avatar-default-icon.png'),
           cvid: this.$route.params.cvid,
           name:'',
           genders: [{id: "1", name: "Nữ"}, {id: "2", name: "Nam"}, {id: "3", name: "Khác"}],
           sts: [{i: "1", name: "Đại học"}, {i: "2", name: "Cao Đẳng"}, {i: "3", name: "Trung cấp"}, {i: "4", name: "Trung học phổ thông"}]
           ,
             info: '',
+            listskill:'',
 
         }
       }
@@ -278,7 +330,10 @@
           }
 
           )
-
+            axios
+                .get(Constants.URL + '/skillmaster/')
+                .then(response => (
+                    this.listskill = response.data))
 
 
       }

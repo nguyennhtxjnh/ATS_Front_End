@@ -448,8 +448,10 @@
           })
         Axios
           .get(Constants.URL+'/industry')
-          .then(response => (
-            this.industries = response.data))
+          .then(response => {
+            this.industries = response.data;
+              this.industries.splice(0, 1);
+          })
 
       },
       scrollToTop() {
