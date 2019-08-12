@@ -119,6 +119,7 @@
                       <v-flex d-flex xs12>
                         <!--                      <span>View will stay here</span> -->
                         <span><b>Khu vực:</b> {{jobFull.company.cityByCityId.fullName}} <v-divider vertical class="ml-2 mr-2"></v-divider>
+
                         <b>Ngày hết hạn nộp:</b> {{jobFull.endDateForApply}}</span>
                       </v-flex>
                       <v-flex d-flex xs12 fill-height>
@@ -454,7 +455,10 @@
             this.jobFull = response.data.data;
             console.log(this.jobFull)
             this.jobFull.createdDate = this.moment(this.jobFull.createdDate).format('DD-MM-YYYY');
-            this.jobFull.endDateForApply = this.moment(this.jobFull.endDateForApply).format('DD-MM-YYYY');
+
+              this.jobFull.endDateForApply = "Chờ duyệt";
+         
+
           })
           .catch(console.error)
           .finally(() => {

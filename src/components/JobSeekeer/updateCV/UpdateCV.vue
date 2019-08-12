@@ -251,7 +251,6 @@
           <WorkExperienceComponent  :key="componentKey2" :workexperiences="info.workexperiencesById"></WorkExperienceComponent>
           <!--Kỹ năng-->
                     <SkillInCVComponent :key="componentKey3"  :skillincvsById="info.skillincvsById"></SkillInCVComponent>
-{{info}}
           <!--dự án-->
           <ProjectorProductWorkedComponent :key="componentKey4"
             :projectorproductworkeds="info.projectorproductworkedsById"></ProjectorProductWorkedComponent>
@@ -321,7 +320,7 @@
         industries: [],
         menu2: false,
         salaryChoose: ['Thỏa Thuận', 'Từ', 'Đến', 'Trong Khoảng'],
-        select: 'Trong Khoảng',
+        select: 'Thỏa Thuận',
         genders: [{id: "1", name: "Nữ"}, {id: "2", name: "Nam"}, {id: "3", name: "Khác"}],
         info: {
           title: '',
@@ -403,19 +402,6 @@
       },
       update() {
 
-//         let image = new Image()
-//
-//         image.onload = () => {
-//           let canvas = document.createElement('canvas');
-//           canvas.width = this.naturalWidth
-//           canvas.height = this.naturalHeight
-//           canvas.getContext('2d').drawImage(this, 0, 0)
-//           callback(canvas.toDataUrl('image/png').replace(/^data:image\/(png|jpg);base64,/, ''))
-//           callback(canvas.toDataURL('image/png'))
-//         }
-//
-//         image.src = url
-// console.log(url);
         function toDataURL(url, callback) {
           var xhr = new XMLHttpRequest();
           xhr.onload = function() {
@@ -439,17 +425,28 @@
         toDataURL(this.imageUrl, function(dataUrl) {
 
         })
+        if (this.info.salaryTo < this.info.salaryFrom && this.info.salaryFrom !== 0) {
+          let tmp = null;
+          tmp = this.info.salaryFrom;
+          this.info.salaryFrom = this.info.salaryTo;
+          this.info.salaryTo = tmp;
+        }
 
         this.info.img = this.imageUrl;
         console.log(this.info);
         axios.post( Constants.URL+'/cv/edit',
           this.info
-        ).then(function(){
-          console.log('SUCCESS!!');
+        ).then(response => {
+         if(response.data.success === true){
+           this.$notify({
+             group: 'foo',
+             type: 'success',
+             title: 'Thành công',
+             text: 'Update thành công!'
+           })
+           this.$router.push('/quan-li-CV')
+         }
         })
-          .catch(function(){
-            console.log('FAILURE!!');
-          });
 
 
 
@@ -475,21 +472,7 @@
     },
     mounted() {
 
-      // axios.get('http://localhost:1122/test/get', { responseType:"blob" })
-      //   .then(response => {
-      //
-      //     console.log( btoa(response.data));
-      //     var reader = new window.FileReader();
-      //     reader.readAsDataURL(response.data);
-      //     reader.onload = function() {
-      //
-      //       var imageDataUrl = reader.result;
-      //
-      //       document.getElementById('imageAvatar').src=imageDataUrl;
-      //
-      //       // Object.assign(this.imageUrl, 'data:image/jpeg;base64,' + btoa(imageDataUrl));
-      //     }
-      //   });
+
       console.log(this.cvid)
       axios
         .get(Constants.URL+'/cv/getOne/'+this.cvid+'/0')
@@ -504,6 +487,21 @@
             // var tmp = date.getDate() +"/" + (date.getMonth()+1)+"/"+date.getFullYear();
             // this.cvs[cv].createdDate = tmp;
             this.info.dob = date.toISOString().substr(0, 10);
+          if(this.info.salaryTo === null && this.info.salaryFrom === null){
+            this.select = 'Thỏa Thuận'
+          }
+            if(this.info.salaryTo === 0 && this.info.salaryFrom === 0){
+              this.select = 'Thỏa Thuận'
+            }
+          if(this.info.salaryTo === 0 && this.info.salaryFrom > 0){
+            this.select = 'Đến'
+          }
+          if(this.info.salaryTo > 0 && this.info.salaryFrom === 0){
+            this.select = 'Từ'
+          }
+          if(this.info.salaryTo > 0 && this.info.salaryFrom > 0){
+            this.select = 'Trong Khoảng'
+          }
           }
 
         )

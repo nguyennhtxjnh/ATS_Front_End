@@ -61,7 +61,7 @@
                 </v-flex>
               </v-flex>
               <v-flex md3 class="pt-5">
-                <h4>Trạng thái: <i></i></h4>
+                <h4>Trạng thái: <i>đã xem</i></h4>
               </v-flex>
             </v-layout>
           </v-container>
