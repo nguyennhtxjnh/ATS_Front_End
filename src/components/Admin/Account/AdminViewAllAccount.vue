@@ -7,7 +7,7 @@
         <v-container fluid class="pt-0">
         <v-layout row wrap align-right>
           <v-flex xs7>
-            <h2 class="textCustom">Tất cả tài khoản</h2>
+            <h2 class="textCustom">Tất cả người dùng</h2>
           </v-flex>
           <v-spacer></v-spacer>
           <v-flex xs3>
