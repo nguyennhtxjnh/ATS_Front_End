@@ -61,7 +61,11 @@
                 </v-flex>
               </v-flex>
               <v-flex md3 class="pt-5">
-                <h4>Trạng thái: <i>đã xem</i></h4>
+                <h4>Trạng thái:
+                <i v-if="job.appliesById.status === 1">đang xử lý</i>
+                  <i v-if="job.appliesById.status === 2">đã xem</i>
+                  <i v-if="job.appliesById.status === 3">đã bị từ chối</i>
+                </h4>
               </v-flex>
             </v-layout>
           </v-container>
