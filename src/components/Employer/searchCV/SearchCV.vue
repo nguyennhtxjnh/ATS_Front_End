@@ -161,11 +161,12 @@
                               </v-layout>
                               <v-layout row wrap>
                                 <span> <v-icon class="">mdi-calendar-blank</v-icon>Thời gian làm việc thực tế {{cv.yearExperience}} năm</span>
+                                <span> Ngày cập nhật gần nhất: <i> {{cv.lastModify}}</i></span>
                               </v-layout>
                             </v-flex>
                             <v-spacer/>
                             <v-flex md3 xs4>
-                              <span> <i> {{cv.createdDate}}</i></span>
+<!--                              <span> <i> {{cv.createdDate}}</i></span>-->
                             </v-flex>
                           </v-layout>
                           <v-layout row wrap class="mt-3">
@@ -589,9 +590,9 @@
                 this.cvs = response.data.content;
               // this.lengthPage = response.data.totalPages ;
                 for(var cv in this.cvs){
-                  var date = new Date(this.cvs[cv].createdDate);
+                  var date = new Date(this.cvs[cv].lastModify);
                   // var tmp = date.getDay()
-                  this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
+                  this.cvs[cv].lastModify = date.toISOString().substr(0, 10);
                 }
                 this.cvs.sort(function(a, b){return b.id - a.id});
               this.cvid = this.cvs[0].id;
@@ -651,9 +652,9 @@
               this.lengthPage = response.data.totalPages ;
               console.log(this.cvs[0].id)
               for(var cv in this.cvs){
-                var date = new Date(this.cvs[cv].createdDate);
+                var date = new Date(this.cvs[cv].lastModify);
                 // var tmp = date.getDay()
-                this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
+                this.cvs[cv].lastModify = date.toISOString().substr(0, 10);
               }
               this.cvs.sort(function(a, b){return b.id - a.id});
               this.cvid = this.cvs[0].id;
