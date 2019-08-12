@@ -251,7 +251,7 @@
           <WorkExperienceComponent  :key="componentKey2" :workexperiences="info.workexperiencesById"></WorkExperienceComponent>
           <!--Kỹ năng-->
                     <SkillInCVComponent :key="componentKey3"  :skillincvsById="info.skillincvsById"></SkillInCVComponent>
-
+{{info}}
           <!--dự án-->
           <ProjectorProductWorkedComponent :key="componentKey4"
             :projectorproductworkeds="info.projectorproductworkedsById"></ProjectorProductWorkedComponent>
@@ -442,7 +442,7 @@
 
         this.info.img = this.imageUrl;
         console.log(this.info);
-        axios.post( Constants.URL+'/cv/create',
+        axios.post( Constants.URL+'/cv/edit',
           this.info
         ).then(function(){
           console.log('SUCCESS!!');

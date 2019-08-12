@@ -72,9 +72,8 @@
                     <v-layout row wrap>
                       <v-flex md12 xs12>
                         <template v-for="skill in selectedSkill">
-                          {{skillincv}}<br/>
-                           skill {{skill}}
-                          <v-flex v-if="skill.id === skillincv.id">
+
+                          <v-flex v-if="skill.id === skillincv.skillMasterId">
                             <h2 style="float: left">{{skill.skillName}}</h2>
                           </v-flex>
 
