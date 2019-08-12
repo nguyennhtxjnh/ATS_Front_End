@@ -4,7 +4,7 @@ export default {
   namespaced: true,
   state: {
     status: '',
-    url: 'http://localhost:1122',
+    url: 'http://10.253.143.13:1122',
     token1: localStorage.getItem('token1') || '',
     userId1: '',
     email1: '',
@@ -116,7 +116,7 @@ export default {
     LOGIN1 ({commit}, user) {
       return new Promise((resolve, reject) => {
         commit('REQUEST')
-        axios({url: 'http://localhost:1122/user/login', data: user, method: 'POST'})
+        axios({url: 'http://10.253.143.13:1122/user/login', data: user, method: 'POST'})
           .then(response => {
 
             const token = response.data.data.accessToken
@@ -141,7 +141,7 @@ export default {
     LOGIN2 ({commit}, user) {
       return new Promise((resolve, reject) => {
         commit('REQUEST')
-        axios({url: 'http://localhost:1122/user/login', data: user, method: 'POST'})
+        axios({url: 'http://10.253.143.13:1122/user/login', data: user, method: 'POST'})
           .then(response => {
 
             const token = response.data.data.accessToken
@@ -166,7 +166,7 @@ export default {
     LOGIN3 ({commit}, user) {
       return new Promise((resolve, reject) => {
         commit('REQUEST')
-        axios({url: 'http://localhost:1122/user/login', data: user, method: 'POST'})
+        axios({url: 'http://10.253.143.13:1122/user/login', data: user, method: 'POST'})
           .then(response => {
             const token = response.data.data.accessToken
             if (response.data.data.roleId === 4) {
@@ -189,7 +189,7 @@ export default {
     LOGINGOOGLE ({commit}, user) {
       return new Promise((resolve, reject) => {
         commit('REQUEST')
-        axios({url: 'http://localhost:1122/user/loginGoogle', data: user, method: 'POST'})
+        axios({url: 'http://10.253.143.13:1122/user/loginGoogle', data: user, method: 'POST'})
           .then(response => {
             const token = response.data.data.accessToken
             console.log(response)
@@ -254,7 +254,7 @@ export default {
             accessToken: token
           }
         }
-        axios.post('http://localhost:1122/user/checkLogin',null,config)
+        axios.post('http://10.253.143.13:1122/user/checkLogin',null,config)
           .then(response => {
             const email = response.data.data.email
             const roleId = response.data.data.roleId
@@ -302,7 +302,7 @@ export default {
             accessToken: token
           }
         }
-        axios.post('http://localhost:1122/user/checkLogin',null,config)
+        axios.post('http://10.253.143.13:1122/user/checkLogin',null,config)
           .then(response => {
             // console.log(response)
             const email = response.data.data.email
@@ -332,7 +332,7 @@ export default {
             accessToken: token
           }
         }
-        axios.post('http://localhost:1122/user/checkLogin',null,config)
+        axios.post('http://10.253.143.13:1122/user/checkLogin',null,config)
           .then(response => {
             // console.log(response)
             const email = response.data.data.email
