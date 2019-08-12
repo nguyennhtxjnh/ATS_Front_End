@@ -23,9 +23,9 @@
                           <v-flex md5 xs6>
                             <h2 style="color: #fe7013" >{{cv.title}}</h2>
                           </v-flex>
-                          <v-flex md5 xs6 class="pr-2">
-                            <span style="float: right; "> {{cv.lastModify}}</span>
-                          </v-flex>
+<!--                          <v-flex md5 xs6 class="pr-2">-->
+<!--                            <span style="float: right; "> {{}}</span>-->
+<!--                          </v-flex>-->
                         </v-layout></v-flex>
                       <!--              link cv-->
                       <v-flex md12 xs12 sm12 >
@@ -82,7 +82,7 @@
                     <v-flex md2 xs2>
                       <span>
 <!--                        <v-icon class="">mdi-calendar-clock</v-icon>-->
-                      <i>  {{cv.createdDate}}</i>
+                      <i>  {{cv.lastModify}}</i>
                       </span>
                     </v-flex>
                   </v-layout>
@@ -131,7 +131,7 @@
                 group: 'foo',
                 type: 'success',
                 title: 'Thành Công',
-                text: 'Đặt làm CV chính Thành Công!'
+                text: 'Xóa CV Thành Công!'
               })
             }
           })
@@ -196,10 +196,11 @@
             .then(response => {
                 this.cvs = response.data.data;
                 for(var cv in this.cvs){
-                  var date = new Date(this.cvs[cv].createdDate);
+                  var date = new Date(this.cvs[cv].lastModify);
                   // var tmp = date.getDay()
 
-                  this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
+                  this.cvs[cv].lastModify = date.toISOString().substr(0, 10);
+
                 }
                 this.cvs.sort(function(a, b){return b.id - a.id});
               }

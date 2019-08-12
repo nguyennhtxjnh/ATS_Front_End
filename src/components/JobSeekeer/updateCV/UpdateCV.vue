@@ -431,6 +431,10 @@
           this.info.salaryFrom = this.info.salaryTo;
           this.info.salaryTo = tmp;
         }
+        if( this.select === 'Thỏa Thuận'){
+          this.info.salaryFrom = 0;
+          this.info.salaryTo = 0;
+        }
 
         this.info.img = this.imageUrl;
         console.log(this.info);
@@ -490,9 +494,9 @@
           if(this.info.salaryTo === null && this.info.salaryFrom === null){
             this.select = 'Thỏa Thuận'
           }
-            if(this.info.salaryTo === 0 && this.info.salaryFrom === 0){
-              this.select = 'Thỏa Thuận'
-            }
+          if(this.info.salaryTo === 0 && this.info.salaryFrom === 0){
+            this.select = 'Thỏa Thuận'
+          }
           if(this.info.salaryTo === 0 && this.info.salaryFrom > 0){
             this.select = 'Đến'
           }
@@ -507,12 +511,17 @@
         )
       axios
         .get(Constants.URL+'/city/getAllCity')
-        .then(response => (
-          this.cities = response.data.data))
+        .then(response => {
+          this.cities = response.data.data
+          this.industries.splice(0, 1);})
       axios
         .get(Constants.URL+'/industry')
-        .then(response => (
-          this.industries = response.data))
+        .then(response => {
+            this.industries = response.data
+            this.industries.splice(0, 1);
+
+          }
+          )
 
     }
   }

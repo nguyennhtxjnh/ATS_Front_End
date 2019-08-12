@@ -701,7 +701,21 @@
                             if(response.data.success === true){
                                 this.formData = response.data.data;
                                 //   this.selectedSkill = response.data.data.listSkill;
-
+                              if(this.formData.salaryTo === null && this.formData.salaryFrom === null){
+                                this.selectedSalary = 'Thỏa Thuận'
+                              }
+                              if(this.formData.salaryTo === 0 && this.formData.salaryFrom === 0){
+                                this.selectedSalary = 'Thỏa Thuận'
+                              }
+                              if(this.formData.salaryTo === 0 && this.formData.salaryFrom > 0){
+                                this.selectedSalary = 'Đến'
+                              }
+                              if(this.formData.salaryTo > 0 && this.formData.salaryFrom === 0){
+                                this.selectedSalary = 'Từ'
+                              }
+                              if(this.formData.salaryTo > 0 && this.formData.salaryFrom > 0){
+                                this.selectedSalary = 'Trong Khoảng'
+                              }
                                 for (var i in this.formData.listSkill){
                                     //   console.log(this.formData.listSkill[i].skillMasterId)
                                     for(var j in this.selectedSkill){
@@ -789,6 +803,10 @@
       },
 
       async submitjob () {
+        if( this.selectedSalary === 'Thỏa Thuận'){
+          this.formData.salaryFrom = 0;
+          this.formData.salaryTo = 0;
+        }
         await this.getCompany();
         this.formData.userId = this.userId2;
         const url = Constants.URL+'/job/update';
