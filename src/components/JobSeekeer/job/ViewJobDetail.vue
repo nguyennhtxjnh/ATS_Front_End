@@ -316,7 +316,7 @@
         userId:this.$route.params.userId,
         imgUrl:require('@/assets/jsmain1.jpg'),
         tab: null,
-        saved:false,
+        saved:'',
         loading: false,
         pagination: {},
         items: [
