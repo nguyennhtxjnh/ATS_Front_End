@@ -63,6 +63,9 @@
               <v-chip color="grey" v-if="item.status === 'new ban'">
                 <span style="color: white !important;">Từ chối duyệt</span>
               </v-chip>
+              <v-chip color="grey" v-if="item.status === 'expired'">
+                <span style="color: white !important;"> Hết hạn</span>
+              </v-chip>
 
             </td>
 
@@ -364,6 +367,16 @@
             .then(response => {
               this.Job = response.data.data.content;
               // this.pagination.totalItems =  this.Job.length
+              for(var i in this.Job){
+              //  this.Job[i].createdDate = this.moment(this.Job[i].createdDate).format('DD-MM-YYYY');
+                var date = Date.now();
+                //this.Job[i].endDateForApply = this.moment(this.Job[i].endDateForApply).format('DD-MM-YYYY');
+             //   var stime = new Date(this.Job[i].endDateForApply);
+               console.log("date now"+ date+ "hết hạn" + this.Job[i].endDateForApply)
+                if(date > this.Job[i].endDateForApply && this.Job[i].endDateForApply !== null){
+                  this.Job[i].status = 'expired'
+                }
+              }
             })
             .catch(err => console.log(err.response.data))
             .finally(() => this.loading = false);

@@ -513,7 +513,7 @@
         .get(Constants.URL+'/city/getAllCity')
         .then(response => {
           this.cities = response.data.data
-          this.industries.splice(0, 1);})
+          this.cities.splice(0, 1);})
       axios
         .get(Constants.URL+'/industry')
         .then(response => {
