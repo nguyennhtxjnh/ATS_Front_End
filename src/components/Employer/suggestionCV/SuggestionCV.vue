@@ -508,13 +508,16 @@
               // var tmp = date.getDay()
               this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
             }
-            this.cvs.sort(function(a, b){return b.id - a.id});
-            this.cvid = this.cvs[0].id;
-            if(this.cvid != null && this.cvid != ""){
+            if(this.cvs.length > 0){
+              this.cvs.sort(function(a, b){return b.id - a.id});
+              this.cvid = this.cvs[0].id;
+              if(this.cvid != null && this.cvid != ""){
 
-            this.getCVDetail(this.cvid);
+                this.getCVDetail(this.cvid);
 
+              }
             }
+
           })
       }
     }
