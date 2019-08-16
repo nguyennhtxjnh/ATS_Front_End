@@ -56,7 +56,7 @@
                 active: null,
                 tab: null,
                 menu: [
-                    {name: 'Tìm kiếm Ứng Viên', id: '1'}, {name: 'Ứng viên đã lưu', id: '2'},
+                    {name: 'Tìm kiếm Ứng Viên', id: '1'}, {name: 'Ứng viên đã Yêu thích', id: '2'},
                     {name: 'Ứng viên đã xác nhận', id: '3'}, {name: 'Ứng viên đã từ chối', id: '4'},
 
                 ],

@@ -76,11 +76,11 @@
             <v-btn color="error" outline v-if="checkSave === true" @click="saveCV"
             >
               <v-icon class="mr-1">favorite</v-icon>
-              Lưu Ứng viên
+              Yêu thích Ứng viên
             </v-btn>
             <v-btn color="grey" @click="unsaveCV" outline dark v-if="checkSave === false">
               <v-icon class="mr-1">favorite</v-icon>
-              Đã Lưu Ứng viên
+              Đã Yêu thích Ứng viên
             </v-btn>
             <v-btn color="primary" outline v-if="checkConfirm === 1" @click="confirmCV">
               <v-icon class="mr-1">thumb_up</v-icon>
@@ -448,7 +448,7 @@
                   group: 'foo',
                   type: 'success',
                   title: 'Thành công',
-                  text: 'Lưu thành công'
+                  text: 'Yêu thích thành công'
                 })
               }
             })
@@ -465,7 +465,7 @@
                   group: 'foo',
                   type: 'success',
                   title: 'Thành công',
-                  text: 'Bỏ Lưu thành công'
+                  text: 'Bỏ Yêu thích thành công'
                 })
               }
             })

@@ -8,7 +8,7 @@
       </v-layout>
       <v-layout wrap md12 xs12 v-if="info.length !== 0">
         <template v-for="(job, index) in info">
-          <v-container md7 xs12 style="background-color: white" class="ma-3 pa-2" >
+          <v-flex md12 xs12 style="background-color: white" class="pt-2" >
             <v-layout row wrap>
               <v-flex md2 xs3 class="pa-2 " @click="viewJobDetail(job.id)">
                 <v-img  :src="job.companyByCompanyId.logoImg"
@@ -16,7 +16,7 @@
 
               </v-flex>
               <v-spacer/>
-              <v-flex md5>
+              <v-flex md6>
                 <h2 style="color: #ff5e2d" align-left @click="viewJobDetail(job.id)">
                   {{job.title}}
                 </h2>
@@ -60,16 +60,34 @@
                     </span>
                 </v-flex>
               </v-flex>
-              <v-flex md3 class="pt-5">
-                <h4>Trạng thái:
+              <v-flex md3 class="pt-1">
+                <v-layout column wrap>
+                  <v-flex md12>
+                    <b> Ngày nộp đơn: </b> <i>{{new Date(job.appliesById[0].dayApply).toISOString().substr(0, 10)}}</i>
 
-                <i v-if="job.appliesById[0].status === '1'">đang xử lý</i>
-                  <i v-if="job.appliesById[0].status === '2'">đã xem</i>
-                  <i v-if="job.appliesById[0].status === '3'">đã bị từ chối</i>
-                </h4>
+                  </v-flex>
+                  <v-flex md12>
+                    <h4>Trạng thái:
+
+                      <i style="color: green" v-if="job.appliesById[0].status === '1'">đang xử lý</i>
+                      <i style="color: blue"  v-if="job.appliesById[0].status === '2'">đã xem</i>
+                      <i style="color: red"  v-if="job.appliesById[0].status === '3'">đã bị từ chối</i>
+                    </h4>
+                  </v-flex>
+                  <v-flex md12 class="pt-3">
+
+                      <v-btn class="md6" color="blue" outline v-if="job.appliesById[0].status === '2'" @click="viewFeedback(job.id)"> Nhận xét</v-btn>
+
+
+                  </v-flex>
+                </v-layout>
+
               </v-flex>
+
             </v-layout>
-          </v-container>
+            <v-divider></v-divider>
+          </v-flex>
+
         </template>
 
       </v-layout>
@@ -106,6 +124,16 @@
           const {href} = this.$router.resolve({name: 'jobseekerviewjob', params: {id: id, userId: this.userId}})
           window.open(href, '_blank')
         },
+        viewFeedback(id){
+          if(this.userId1 != null && this.userId1 != ""){
+            this.userId = this.userId1
+          }
+          else {
+            this.userId = 0;
+          }
+          const {href} = this.$router.resolve({name: 'feedback', params: {jobid: id, userid: this.userId}})
+          window.open(href, '_blank')
+        },
         getInit(){
           this.userId = this.userId1;
           console.log(this.userId)
@@ -114,7 +142,8 @@
               .get(Constants.URL+'/apply/list-applied/'+this.userId)
               .then(response => {
                 this.info = response.data.data
-              console.log(this.info)})
+              console.log(this.info)
+              })
           }
           Axios
             .get(Constants.URL+'/city/getAllCity')

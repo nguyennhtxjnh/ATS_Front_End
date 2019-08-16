@@ -42,6 +42,9 @@ import CheckEmailSuccessPage from "../views/Employer/CheckEmailSuccessPage";
 import CheckEmailJSPage from "../views/Jobseeker/CheckEmailJSPage";
 import CheckEmailSuccessJSPage from "../views/Jobseeker/CheckEmailSuccessJSPage";
 import ViewListJobOfCompanyPage from "../views/Jobseeker/ViewListJobOfCompanyPage";
+import FeedbackCompany from "../components/JobSeekeer/Feedback/FeedbackCompany";
+import FeedbackCompanyPage from "../views/Jobseeker/FeedbackCompanyPage";
+import AdminViewAllFeedback from "../views/Admin/AdminViewAllFeedback";
 
 
 Vue.use(Router)
@@ -86,6 +89,11 @@ const router = new Router({
       path: '/quan-li-CV',
       name: 'manageCV',
       component: JobSeekerManageCVPage
+    },
+    {
+      path: '/nhan-xet/:jobid/:userid',
+      name: 'feedback',
+      component: FeedbackCompanyPage
     },
     {
       path: '/xem-CV/:cvid',
@@ -246,6 +254,10 @@ const router = new Router({
       path: '/admin-view-all-new-company',
       name: 'admin view all new company',
       component: AdminViewAllNewCompanyPage
+    }, {
+      path: '/admin-view-all-feedback',
+      name: 'admin view all feedback',
+      component: AdminViewAllFeedback
     },
     {
       path: '/admin-view-all-account',

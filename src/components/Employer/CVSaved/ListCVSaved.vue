@@ -1,7 +1,7 @@
 <template>
   <v-container>
 
-    <h2>Các ứng viên đã lưu</h2>
+    <h2>Các ứng viên đã Yêu thích</h2>
 
     <v-layout row wrap v-if="cvs.length === 0">
       <v-spacer/>
@@ -78,11 +78,11 @@
             <v-btn color="error" outline v-if="checkSave === true" @click="saveCV"
             >
               <v-icon class="mr-1">favorite</v-icon>
-              Lưu Ứng viên
+              Yêu thích Ứng viên
             </v-btn>
             <v-btn color="grey" @click="unsaveCV" outline dark v-if="checkSave === false">
               <v-icon class="mr-1">favorite</v-icon>
-              Đã Lưu Ứng viên
+              Đã Yêu thích Ứng viên
             </v-btn>
 
           </v-card-title>
@@ -426,7 +426,7 @@
                   group: 'foo',
                   type: 'success',
                   title: 'Thành công',
-                  text: 'Lưu thành công'
+                  text: 'Yêu thích thành công'
                 })
               }
             })
@@ -443,7 +443,7 @@
                   group: 'foo',
                   type: 'success',
                   title: 'Thành công',
-                  text: 'Bỏ Lưu thành công'
+                  text: 'Bỏ Yêu thích thành công'
                 })
                   if(this.userId != null && this.userId != ""){
                       Axios

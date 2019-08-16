@@ -52,7 +52,7 @@
           tab: null,
           menu: [
             {name:'Việc làm phù hợp', id:'1'},
-            {name:'Việc làm đã lưu', id:'2'},{name:'Việc làm đã ứng tuyển', id:'3'}
+            {name:'Việc làm đã Yêu thích', id:'2'},{name:'Việc làm đã ứng tuyển', id:'3'}
           ],
 
 

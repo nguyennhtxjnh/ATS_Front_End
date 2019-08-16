@@ -201,7 +201,7 @@
         checkSearch: '',
 
         textBtnFav: {
-          text: 'Lưu Việc Làm'
+          text: 'Yêu thích Việc Làm'
         },
       }
     },
@@ -292,7 +292,7 @@
       },
       favoriteBtn() {
         this.favorite = !this.favorite;
-        this.textBtnFav.text = this.favorite ? 'Lưu Việc Làm' : 'Đã Lưu';
+        this.textBtnFav.text = this.favorite ? 'Yêu thích Việc Làm' : 'Đã Yêu thích';
       },
       async searchClick() {
         if (this.searchValue === null || this.searchValue === "null") {

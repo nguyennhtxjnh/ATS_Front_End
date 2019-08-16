@@ -115,7 +115,7 @@
                       group: 'foo',
                       type: 'success',
                       title: 'Thành công',
-                      text: 'Bỏ lưu thành công'
+                      text: 'Bỏ Yêu thích thành công'
                     })
                   }
 

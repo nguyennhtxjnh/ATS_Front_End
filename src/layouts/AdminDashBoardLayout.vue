@@ -77,6 +77,20 @@
 <!--            </v-list-tile>-->
 <!--          <v-divider></v-divider>-->
           <!-- Logout-->
+          <v-subheader class="textCustom"><h3>Quản lý phản hồi</h3></v-subheader>
+          <v-list-tile
+            v-for="item in menuFeedback"
+            :key="item.id"
+            :to="item.path"
+            active-class="activeCSS"
+            :class="item.path === $route.path ? 'activeCSS' : ''"
+          >
+            <v-list-tile-action>
+              <v-icon>{{item.icon}}</v-icon>
+            </v-list-tile-action>
+            {{item.name}}
+
+          </v-list-tile>
           <v-subheader class="textCustom"><h3>Tài khoản</h3></v-subheader>
             <v-list-tile @click="logout">
               <v-list-tile-action>
@@ -156,8 +170,15 @@
             name: "Tất cả người dùng",
             icon: "mdi-domain",
             path: "/admin-view-all-account"
-          },
-        ],
+          }],
+          menuFeedback: [
+        {
+          id: 6,
+          name: "Tất cả phản hồi",
+          icon: "mdi-domain",
+          path: "/admin-view-all-feedback"
+        }],
+
         // menuService: [
         //   {
         //     id: 6,
