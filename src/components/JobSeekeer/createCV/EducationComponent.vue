@@ -23,7 +23,7 @@
 
             </template>
 
-
+            <v-form ref="form">
             <v-card>
               <v-card-text>
                 <v-container>
@@ -130,6 +130,7 @@
                 <v-spacer/>
               </v-card-actions>
             </v-card>
+            </v-form>
           </v-dialog>
         </v-flex>
         <!--        kết thúc dialog-->
@@ -239,6 +240,7 @@
     methods: {
       update() {
 
+        if (this.$refs.form.validate()) {
 
         if (this.newEducation.schoolName != "") {
           var check = false;
@@ -285,6 +287,8 @@
          else {
           alert("Hãy nhập thông tin cần thiết.");
         }
+          this.$refs.form.reset();
+        }
       },
       remove(position) {
         this.educationsById.splice(position, 1);
@@ -301,7 +305,7 @@
         if (this.educationsById.length === 0) {
           this.btnsubmit = false;
         }
-
+        this.$refs.form.reset()
         console.log('edit')
       }
     },

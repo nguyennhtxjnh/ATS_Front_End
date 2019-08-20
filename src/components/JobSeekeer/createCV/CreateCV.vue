@@ -494,7 +494,7 @@
                 showConfirmButton: false,
                 timer: 1500
               })
-              
+
               this.$router.push('/quan-li-CV');
             }
 
