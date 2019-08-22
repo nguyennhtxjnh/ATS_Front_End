@@ -1,22 +1,22 @@
 <template>
-  <v-flex style="background-color: whitesmoke">
+  <v-flex style="background-color: #868686">
   <v-container>
     <v-layout row wrap>
       <v-spacer/>
-      <v-flex md10 xs12>
+      <v-flex md8 xs12>
         <v-card class="pa-5">
           <v-layout row wrap>
             <v-spacer/>
-            <v-flex md9 xs12>
+            <v-flex md11 xs12>
               <v-layout row wrap>
-                <v-flex md4 xs4>
+                <v-flex md3 xs4>
                   <img :src="imageUrl" id="imageAvatar" height="150" width="150" />
                 </v-flex>
-                <v-flex md6 xs6 class="mb-4">
+                <v-flex md9 xs6 class="mb-4">
                   <h1 >{{info.lastName}} {{info.firstName}}</h1>
                   <table>
                     <tr>
-                      <td class="pr-5"> <b>Ngày sinh: </b></td>
+                      <td class="pr-3"> <b>Ngày sinh:</b></td>
                       <td><span>{{info.dob}}
           </span></td>
                     </tr>
@@ -71,11 +71,18 @@
                     <v-divider></v-divider>
                     <v-flex v-for="education in info.educationsById" :key="education.schoolName">
                       <v-layout row wrap class="pa-2">
+
+                        <v-flex md4 xs4>
+                    <span>
+                      {{education.startTime}} - {{education.endtime}}
+                    </span>
+                        </v-flex>
+                        <v-spacer/>
                         <v-flex md5 xs7>
 
                           <v-flex v-for="st in sts" :key="st.i">
                             <template v-if="st.i === education.schoolType">
-                              <span>Trường:{{st.name}} {{education.schoolName}}</span><br/>
+                              <span>Trường: {{st.name}} {{education.schoolName}}</span><br/>
                             </template>
                           </v-flex>
                           <v-flex v-if="education.major">
@@ -84,12 +91,7 @@
 
                           <span>{{education.description}}</span>
                         </v-flex>
-                                          <v-spacer/>
-                        <v-flex md3 xs4>
-                    <span>
-                      {{education.startTime}} - {{education.endtime}}
-                    </span>
-                        </v-flex>
+
                       </v-layout>
                     </v-flex>
                   </v-flex>
@@ -105,17 +107,19 @@
                     <v-divider></v-divider>
                     <v-flex v-for="workexperience in info.workexperiencesById" :key="workexperience.companyName">
                       <v-layout row wrap class="pa-2">
-                        <v-flex md4 xs7>
-                          <span>Công ty:{{workexperience.companyName}} </span><br/>
-                          <span> {{workexperience.vacancyName}}</span> <br/>
-                          <span>{{workexperience.description}}</span>
-                        </v-flex>
-                                          <v-spacer/>
-                        <v-flex md3 xs4>
+
+                        <v-flex md4 xs4>
                     <span>
                       {{workexperience.startTime}} - {{workexperience.endTime}}
                     </span>
                         </v-flex>
+                        <v-spacer/>
+                        <v-flex md5 xs7>
+                          <span>Công ty: {{workexperience.companyName}} </span><br/>
+<!--                          <span> {{workexperience.vacancyName}}</span> <br/>-->
+                          <span>{{workexperience.description}}</span>
+                        </v-flex>
+
                       </v-layout>
                     </v-flex>
                   </v-flex>
@@ -137,54 +141,14 @@
                             <template v-for="i in listskill">
                                   <span v-if="i.id === skill.skillMasterId"> Kĩ năng: {{i.skillName}} </span>
                             </template><br/>
+
+
+                        </v-flex>
+                        <v-spacer/>
+                        <v-flex md5 xs4>
                           <template v-for="i in skillRating">
                             <span v-if="i.id === skill.skillLevel"> Cấp độ: {{i.name}} </span>
                           </template>
-
-                        </v-flex>
-                        <v-flex md3 xs4>
-                        </v-flex>
-                      </v-layout>
-                    </v-flex>
-                  </v-flex>
-                </v-layout>
-              </v-flex>
-              <v-flex md12 xs12 class="mb-4">
-                <v-layout row wrap>
-                  <v-flex md12 xs12 >
-                    <h1 style="float: left">Hoạt động</h1>
-                  </v-flex>
-
-                  <v-flex md12 xs12>
-                    <v-divider></v-divider>
-                    <v-flex v-for="social in info.socialactivitiesById" :key="social.name">
-                      <v-layout row wrap class="pa-2">
-                        <v-flex md4 xs7>
-                          <span>{{social.name}} </span><br/>
-                          <span>{{social.description}}</span>
-                        </v-flex>
-                        <v-flex md3 xs4>
-                        </v-flex>
-                      </v-layout>
-                    </v-flex>
-                  </v-flex>
-                </v-layout>
-              </v-flex>
-              <v-flex md12 xs12 class="mb-4">
-                <v-layout row wrap>
-                  <v-flex md12 xs12 >
-                    <h1 style="float: left">Chứng chỉ</h1>
-                  </v-flex>
-
-                  <v-flex md12 xs12>
-                    <v-divider></v-divider>
-                    <v-flex v-for="certi in info.certificationsById" :key="certi.certificationNamee">
-                      <v-layout row wrap class="pa-2">
-                        <v-flex md4 xs7>
-                          <span>{{certi.certificationName}} </span><br/>
-                        </v-flex>
-                        <v-spacer/>
-                        <v-flex md3 xs4>
                         </v-flex>
                       </v-layout>
                     </v-flex>
@@ -201,8 +165,14 @@
                     <v-divider></v-divider>
                     <v-flex v-for="product in info.projectorproductworkedsById" :key="product.productName">
                       <v-layout row wrap class="pa-2">
-                        <v-flex md4 xs7>
-                          <h3>{{product.productName}} </h3><br/>
+
+                        <v-flex md4 xs4>
+                          <span>{{product.startTime}} - {{product.endTime}}</span>
+                        </v-flex>
+                        <v-spacer/>
+                        <v-flex md5 xs7>
+
+                          <span>Dự án: {{product.projetName}} </span><br/>
                           <table>
                             <tr>
                               <td>Kỹ năng: </td>
@@ -222,15 +192,55 @@
                             </tr>
                           </table>
                         </v-flex>
-                        <v-spacer/>
+
+                      </v-layout>
+                    </v-flex>
+                  </v-flex>
+                </v-layout>
+              </v-flex>
+              <v-flex md12 xs12 class="mb-4">
+                <v-layout row wrap>
+                  <v-flex md12 xs12 >
+                    <h1 style="float: left">Hoạt động</h1>
+                  </v-flex>
+
+                  <v-flex md12 xs12>
+                    <v-divider></v-divider>
+                    <v-flex v-for="social in info.socialactivitiesById" :key="social.name">
+                      <v-layout row wrap class="pa-2">
+                        <v-flex md4 xs7>
+                          <span>Hoạt động xã hôi: {{social.name}} </span><br/>
+                          <span v-if="social.description">Mô tả:  {{social.description}}</span>
+                        </v-flex>
                         <v-flex md3 xs4>
-                          <span>{{product.startTime}} - {{product.endTime}}</span>
                         </v-flex>
                       </v-layout>
                     </v-flex>
                   </v-flex>
                 </v-layout>
               </v-flex>
+              <v-flex md12 xs12 class="mb-4">
+                <v-layout row wrap>
+                  <v-flex md12 xs12 >
+                    <h1 style="float: left">Chứng chỉ</h1>
+                  </v-flex>
+
+                  <v-flex md12 xs12>
+                    <v-divider></v-divider>
+                    <v-flex v-for="certi in info.certificationsById" :key="certi.certificationNamee">
+                      <v-layout row wrap class="pa-2">
+                        <v-flex md4 xs7>
+                          <span>Chứng chỉ: {{certi.certificationName}} </span><br/>
+                        </v-flex>
+                        <v-spacer/>
+                        <v-flex md3 xs4>
+                        </v-flex>
+                      </v-layout>
+                    </v-flex>
+                  </v-flex>
+                </v-layout>
+              </v-flex>
+
 
 
 
@@ -326,6 +336,7 @@
                 var etime = new Date(this.info.projectorproductworkedsById[edu].endTime);
                 this.info.projectorproductworkedsById[edu].endTime = etime.toISOString().substr(0, 10);
               }
+
 
           }
 
