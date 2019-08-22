@@ -11,7 +11,7 @@
         <v-layout wrap md12 xs12>
           <template  v-for="job in info">
             <v-container md7 xs12 style="background-color: white" class="ma-3 pa-2" >
-              <v-layout row wrap @click="viewJobDetail(job.id)">
+              <v-layout row wrap >
 
                   <v-flex md2 xs3 class="pa-2" >
                     <v-img  :src="job.companyLogoImg"
@@ -47,7 +47,8 @@
                     </span>
                   </v-flex>
                 </v-flex>
-                <v-flex md3 class="pt-3 pr-2">
+                <v-flex md3 class="pt-4 pr-5">
+                  <v-btn color="warning" outline block @click="viewJobDetail(job.id)"> Chỉnh sửa</v-btn>
 <!--                    <v-btn style="height: auto"-->
 <!--                           color="warning" outline class="pa-2" block @click="$router.push('/goi-y-CV/'+job.id)">-->
 <!--                      Gợi ý ứng viên-->

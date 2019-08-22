@@ -205,7 +205,7 @@
         </v-flex>
         <v-layout row wrap>
           <v-spacer/>
-            <v-flex lg10 md12 xs12 class="" style="padding-left: 150px">
+            <v-flex lg12 md12 xs12 class="" style="padding-left: 150px">
               <v-layout row wrap align="center">
                 <template v-for="job in info" >
 
