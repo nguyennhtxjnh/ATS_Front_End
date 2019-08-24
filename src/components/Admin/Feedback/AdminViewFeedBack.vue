@@ -190,7 +190,7 @@
           {text: 'Tên việc làm', value: 'jobName', sortable: false},
           {text: 'Ngày tạo', value: 'createdDate',},
           {text: 'Nội dung', value: 'description',},
-          {text: 'Thao tác', sortable: false},
+          {text: 'Phản hồi', sortable: false},
         ],
         pagination: {
           sortBy: 'companyName',

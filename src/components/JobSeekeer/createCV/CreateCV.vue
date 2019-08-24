@@ -456,7 +456,7 @@
 
           }
           for( var edu in this.info.workexperiencesById){
-            
+
             if(this.info.workexperiencesById[edu].endTime != " hiện tại"){
 
               this.info.workexperiencesById[edu].endTime = null;
