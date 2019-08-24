@@ -29,6 +29,7 @@
                       </v-flex>
                     </template>
                   </h4>
+
                   <v-flex align-left>
                     <span>
 
@@ -45,6 +46,13 @@
                       <span><b>Mức lương:</b> thương lượng</span>
                     </v-flex>
                     </span>
+                  </v-flex>
+                  <v-flex align-lef>
+                    <template v-for="name in list" v-if="list.length > 0">
+                      <v-flex v-if="name.jobId === job.id">
+                        <span><b>Người đăng tuyển: </b><i>{{name.fullName}}</i></span>
+                      </v-flex>
+                    </template>
                   </v-flex>
                 </v-flex>
                 <v-flex md3 class="pt-3 pr-2">
@@ -78,7 +86,7 @@
           info:[],
           job:'',
           cities:[],
-
+          list:[],
         }
       },
 
@@ -105,8 +113,10 @@
             Axios
               .get(Constants.URL+'/job/list-valid/'+this.userId)
               .then(response => (this.info = response.data.data))
+            Axios
+              .get(Constants.URL+'/job/list/'+this.userId)
+              .then(response => (this.list = response.data.data))
           }
-
         }
       },
       mounted(){
