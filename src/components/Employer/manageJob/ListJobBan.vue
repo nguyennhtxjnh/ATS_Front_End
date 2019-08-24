@@ -97,10 +97,12 @@
           .get(Constants.URL+'/city/getAllCity')
           .then(response => (
             this.cities = response.data.data))
+
         if(this.userId != null && this.userId !="" ){
         Axios
           .get(Constants.URL+'/job/getJobByEmployerId?employerId='+this.userId+'&status=ban')
           .then(response => (this.info = response.data.data.content))}
+
       },
       remove(position){
         this.info.splice(position, 1);

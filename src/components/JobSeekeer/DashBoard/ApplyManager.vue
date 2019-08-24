@@ -75,8 +75,12 @@
                     </h4>
                   </v-flex>
                   <v-flex md12 class="pt-3">
+                    <v-flex v-for="i in listFB">
+                      <v-btn class="md6" color="blue" outline v-if="job.appliesById[0].status === '2' && job.id !== i" @click="viewFeedback(job.id)"> Nhận xét</v-btn>
+                      <v-btn class="md6" disabled outline v-if="job.id === i" > Đã nhận xét</v-btn>
+                    </v-flex>
 
-                      <v-btn class="md6" color="blue" outline v-if="job.appliesById[0].status === '2'" @click="viewFeedback(job.id)"> Nhận xét</v-btn>
+
 
 
                   </v-flex>
@@ -106,6 +110,7 @@
         name: "ApplyManager",
       data :()=>{
         return{
+          listFB:[],
           images : {'main' : require('@/assets/jsmain1.jpg')},
           info:'',
           cities:[],
@@ -138,6 +143,10 @@
           this.userId = this.userId1;
           console.log(this.userId)
           if(this.userId != null && this.userId != ""){
+            Axios
+              .get(Constants.URL+'/feedback/checkFeedBack?userId='+this.userId1)
+              .then(response => (
+                this.listFB = response.data.data))
             Axios
               .get(Constants.URL+'/apply/list-applied/'+this.userId)
               .then(response => {
