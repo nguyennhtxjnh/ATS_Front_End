@@ -319,22 +319,45 @@
               var dob = new Date(this.info.dob);
               this.info.dob = dob.toISOString().substr(0, 10);
               for(var edu in this.info.educationsById){
-                var stime = new Date(this.info.educationsById[edu].startTime);
-                this.info.educationsById[edu].startTime = stime.toISOString().substr(0, 10);
-                var etime = new Date(this.info.educationsById[edu].endtime);
-                this.info.educationsById[edu].endtime = etime.toISOString().substr(0, 10);
+
+                if(this.info.educationsById[edu].startTime != null){
+                  var stime = new Date(this.info.educationsById[edu].startTime);
+                  this.info.educationsById[edu].startTime = stime.toISOString().substr(0, 10);
+
+                }
+                if(this.info.educationsById[edu].endtime != null){
+                  var stime = new Date(this.info.educationsById[edu].endtime);
+                  this.info.educationsById[edu].endtime = stime.toISOString().substr(0, 10);
+
+                }
+
+
               }
               for( var edu in this.info.workexperiencesById){
-                var stime = new Date(this.info.workexperiencesById[edu].startTime);
-                this.info.workexperiencesById[edu].startTime = stime.toISOString().substr(0, 10);
-                var etime = new Date(this.info.workexperiencesById[edu].endTime);
-                this.info.workexperiencesById[edu].endTime = etime.toISOString().substr(0, 10);
+                if(this.info.workexperiencesById[edu].startTime != null){
+                  var stime = new Date(this.info.workexperiencesById[edu].startTime);
+                  this.info.workexperiencesById[edu].startTime = stime.toISOString().substr(0, 10);
+
+                }
+                if(this.info.workexperiencesById[edu].endTime != null){
+                  var etime = new Date(this.info.workexperiencesById[edu].endTime);
+                  this.info.workexperiencesById[edu].endTime = etime.toISOString().substr(0, 10);
+
+                }
+
               }
               for( var edu in this.info.projectorproductworkedsById){
-                var stime = new Date(this.info.projectorproductworkedsById[edu].startTime);
-                this.info.projectorproductworkedsById[edu].startTime = stime.toISOString().substr(0, 10);
-                var etime = new Date(this.info.projectorproductworkedsById[edu].endTime);
-                this.info.projectorproductworkedsById[edu].endTime = etime.toISOString().substr(0, 10);
+                if(this.info.projectorproductworkedsById[edu].startTime!= null){
+                  var stime = new Date(this.info.projectorproductworkedsById[edu].startTime);
+                  this.info.projectorproductworkedsById[edu].startTime = stime.toISOString().substr(0, 10);
+
+                }
+                if(this.info.projectorproductworkedsById[edu].endTime != null){
+                  var etime = new Date(this.info.projectorproductworkedsById[edu].endTime);
+                  this.info.projectorproductworkedsById[edu].endTime = etime.toISOString().substr(0, 10);
+
+                }
+
               }
 
 
