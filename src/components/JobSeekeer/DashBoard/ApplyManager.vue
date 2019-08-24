@@ -75,7 +75,7 @@
                     </h4>
                   </v-flex>
                   <v-flex md12 class="pt-3">
-                    <v-flex v-for="i in listFB">
+                    <v-flex v-for="i in listFB" :key="i">
                       <v-btn class="md6" color="blue" outline v-if="job.appliesById[0].status === '2' && job.id !== i" @click="viewFeedback(job.id)"> Nhận xét</v-btn>
                       <v-btn class="md6" disabled outline v-if="job.id === i" > Đã nhận xét</v-btn>
                     </v-flex>
