@@ -401,6 +401,31 @@
 
       },
       update() {
+        for(var edu in this.info.educationsById){
+
+          if(this.info.educationsById[edu].endtime === " hiện tại"){
+
+            this.info.educationsById[edu].endtime = null;
+          }
+
+        }
+        for( var edu in this.info.workexperiencesById){
+
+          if(this.info.workexperiencesById[edu].endTime != " hiện tại"){
+
+            this.info.workexperiencesById[edu].endTime = null;
+
+          }
+
+        }
+        for( var edu in this.info.projectorproductworkedsById){
+          if(this.info.projectorproductworkedsById[edu].endTime != " hiện tại"){
+            this.info.projectorproductworkedsById[edu].endTime = null;
+
+          }
+
+        }
+
 
         function toDataURL(url, callback) {
           var xhr = new XMLHttpRequest();

@@ -305,7 +305,7 @@
         if (this.educationsById.length === 0) {
           this.btnsubmit = false;
         }
-        this.$refs.form.reset()
+
         console.log('edit')
       }
     },
