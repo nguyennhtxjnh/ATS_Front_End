@@ -16,12 +16,12 @@
                   <h1 >{{info.lastName}} {{info.firstName}}</h1>
                   <table>
                     <tr>
-                      <td class="pr-3"> <b>Ngày sinh:</b></td>
+                      <td class="pr-3 pb-2"> <b>Ngày sinh:</b></td>
                       <td><span>{{info.dob}}
           </span></td>
                     </tr>
                     <tr>
-                      <td> <b>Giới tính:</b></td>
+                      <td class="pb-2"> <b>Giới tính:</b></td>
                       <td>
                         <v-flex v-for="gd in genders" :key="gd.id">
                           <template v-if="info.gender === gd.id">
@@ -31,17 +31,17 @@
                       </td>
                     </tr>
                     <tr>
-                      <td> <b>Địa chỉ:</b></td>
+                      <td class="pb-2"> <b>Địa chỉ:</b></td>
                       <td><span>{{info.address}}
           </span></td>
                     </tr>
                     <tr>
-                      <td> <b>Điện thọai:</b></td>
+                      <td class="pb-2"> <b>Điện thọai:</b></td>
                       <td><span>{{info.telephoneNumber}}
           </span></td>
                     </tr>
                     <tr>
-                      <td> <b>Email:</b></td>
+                      <td class="pb-2"> <b>Email:</b></td>
                       <td><span>{{info.email}}
           </span></td>
                     </tr>
@@ -82,7 +82,7 @@
 
                           <v-flex v-for="st in sts" :key="st.i">
                             <template v-if="st.i === education.schoolType">
-                              <span>Trường: {{st.name}} {{education.schoolName}}</span><br/>
+                              <b>Trường: {{st.name}} {{education.schoolName}}</b><br/>
                             </template>
                           </v-flex>
                           <v-flex v-if="education.major">
@@ -115,7 +115,7 @@
                         </v-flex>
                         <v-spacer/>
                         <v-flex md5 xs7>
-                          <span>Công ty: {{workexperience.companyName}} </span><br/>
+                          <b>Công ty: {{workexperience.companyName}} </b><br/>
 <!--                          <span> {{workexperience.vacancyName}}</span> <br/>-->
                           <span>{{workexperience.description}}</span>
                         </v-flex>
@@ -139,7 +139,7 @@
                         <v-flex md4 xs7>
 
                             <template v-for="i in listskill">
-                                  <span v-if="i.id === skill.skillMasterId"> Kĩ năng: {{i.skillName}} </span>
+                                  <b v-if="i.id === skill.skillMasterId"> Kĩ năng: {{i.skillName}} </b>
                             </template><br/>
 
 
@@ -172,7 +172,7 @@
                         <v-spacer/>
                         <v-flex md5 xs7>
 
-                          <span>Dự án: {{product.projetName}} </span><br/>
+                          <b>Dự án: {{product.projetName}} </b><br/>
                           <table>
                             <tr>
                               <td>Kỹ năng: </td>
@@ -209,7 +209,7 @@
                     <v-flex v-for="social in info.socialactivitiesById" :key="social.name">
                       <v-layout row wrap class="pa-2">
                         <v-flex md4 xs7>
-                          <span>Hoạt động xã hôi: {{social.name}} </span><br/>
+                          <b>Hoạt động xã hôi: {{social.name}} </b><br/>
                           <span v-if="social.description">Mô tả:  {{social.description}}</span>
                         </v-flex>
                         <v-flex md3 xs4>
@@ -230,7 +230,7 @@
                     <v-flex v-for="certi in info.certificationsById" :key="certi.certificationNamee">
                       <v-layout row wrap class="pa-2">
                         <v-flex md4 xs7>
-                          <span>Chứng chỉ: {{certi.certificationName}} </span><br/>
+                          <b>Chứng chỉ: {{certi.certificationName}} </b><br/>
                         </v-flex>
                         <v-spacer/>
                         <v-flex md3 xs4>

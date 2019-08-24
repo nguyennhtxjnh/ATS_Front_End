@@ -50,7 +50,7 @@
                   <v-flex align-lef>
                     <template v-for="name in list" v-if="list.length > 0">
                       <v-flex v-if="name.jobId === job.id">
-                        <span><b>Người đăng tuyển: </b><i>{{name.fullName}}</i></span>
+                        <span><b>Người đăng tuyển: </b><i style="color: blue">{{name.fullName}}</i></span>
                       </v-flex>
                     </template>
                   </v-flex>
