@@ -54,11 +54,17 @@
               <!--              <v-btn outline flat fab small @click="viewInfo(item.id)" color="grey">-->
               <!--                <v-icon>mdi-eye-outline</v-icon>-->
               <!--              </v-btn>-->
-              <v-btn
-                outline flat fab small color="grey"
+              <v-btn v-if="item.isReply === 0"
+                outline flat fab small color="blue"
                 @click="viewInfo(item.userId, item.jobId)"
                 @click.stop="dialog = true">
-                <v-icon class="">mdi-email-check-outline</v-icon>
+                <v-icon  >mdi-email-check-outline</v-icon>
+              </v-btn>
+              <v-btn v-if="item.isReply === 1"
+                     outline flat fab small color="grey"
+              disabled
+              >
+                <v-icon  >mdi-email-check-outline</v-icon>
               </v-btn>
 
             </td>
@@ -240,6 +246,7 @@
       },
       reply(){
         if (this.$refs.form.validate()) {
+          // console.log('/email/reply?userId=' + this.replyy.userId + '&jobId=' + this.replyy.jobId + '&contain=' + this.replyy.description);
           Axios.get(Constants.URL + '/email/reply?userId=' + this.replyy.userId + '&jobId=' + this.replyy.jobId + '&contain=' + this.replyy.description)
             .then(response => {
               // this.feedback = response.data.data.content;
@@ -253,10 +260,18 @@
               this.dialog = false;
               this.$refs.form.reset()
               console.log(response)
+              Axios.get(Constants.URL + '/feedback/getAllFeedBack?search=' + this.search )
+                .then(response => {
+                  this.feedback = response.data.data.content;
+                  console.log(this.feedback)
+                })
+                .catch(err => console.log(err))
+                .finally(() => this.loading = false);
             })
             .catch(err => console.log(err))
 
         }
+
       },
       addCompanyId(id) {
         this.formJobStatusData.id = id;
@@ -302,6 +317,12 @@
           })
       },
       viewInfo(userid, jobid) {
+        for ( var i in this.feedback){
+          if(this.feedback[i].jobId === jobid){
+            this.feedback[i].isReply = 0;
+          }
+
+        }
        this.replyy.userId = userid;
        this.replyy.jobId = jobid;
       },
