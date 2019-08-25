@@ -709,6 +709,7 @@
                   }
                 }
                 if(this.companyStatus === "onhold"){
+
                   this.checkCompany = false;
                   this.checkCompanyExisted = true;
                 }else {
@@ -722,7 +723,7 @@
                   }
 
                 }else {
-                  this.checkCompany = true;
+                 // this.checkCompany = true;
                 }
               }else {
                 this.checkCompanyExisted = false;

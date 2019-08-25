@@ -588,23 +588,26 @@
           axios
             .get(Constants.URL+'/cv/list-comfirmed/'+this.userId2)
             .then(response => {
-              console.log("aaaaaaaaa"+ this.lengthPage)
+              console.log("aaaaaaaaa"+ this.userId2)
               this.cvs = response.data.content;
 
                 this.lengthPage = response.data.totalPages ;
 
               console.log("bbbbbbbbbbb"+ this.lengthPage)
-              for(var cv in this.cvs){
-                var date = new Date(this.cvs[cv].lastModify);
-                // var tmp = date.getDay()
-                this.cvs[cv].lastModify = date.toISOString().substr(0, 10);
+              if(this.cvs.length > 0){
+                for(var cv in this.cvs){
+                  var date = new Date(this.cvs[cv].lastModify);
+                  // var tmp = date.getDay()
+                  this.cvs[cv].lastModify = date.toISOString().substr(0, 10);
+                }
+
+                this.cvs.sort(function(a, b){return b.id - a.id});
+                this.cvid = this.cvs[0].id;
+                if(this.cvid != null && this.cvid != ""){
+                  this.getCVDetail(this.cvid)
+                }
               }
 
-              this.cvs.sort(function(a, b){return b.id - a.id});
-              this.cvid = this.cvs[0].id;
-              if(this.cvid != null && this.cvid != ""){
-                this.getCVDetail(this.cvid)
-              }
             })}
         }
       }

@@ -69,14 +69,14 @@
                           >
                             <template v-slot:activator="{ on }">
                               <v-text-field
-                                v-model="projectorproductworkeds.startTime"
+                                v-model="newProjectorProduct.startTime"
                                 label="Bắt đầu"
                                 prepend-icon="event"
                                 readonly
                                 v-on="on"
                               ></v-text-field>
                             </template>
-                            <v-date-picker v-model="projectorproductworkeds.startTime" @input="menu1 = false"></v-date-picker>
+                            <v-date-picker v-model="newProjectorProduct.startTime" @input="menu1 = false"></v-date-picker>
                           </v-menu>
                         </v-flex>
                         <v-flex md6 xs12 v-if="checkbox1 === false">
@@ -92,14 +92,14 @@
                           >
                             <template v-slot:activator="{ on }">
                               <v-text-field
-                                v-model="projectorproductworkeds.endTime"
+                                v-model="newProjectorProduct.endTime"
                                 label="Kết thúc"
                                 prepend-icon="event"
                                 readonly
                                 v-on="on"
                               ></v-text-field>
                             </template>
-                            <v-date-picker v-model="projectorproductworkeds.endTime" @input="menu2 = false"></v-date-picker>
+                            <v-date-picker v-model="newProjectorProduct.endTime" @input="menu2 = false"></v-date-picker>
                           </v-menu>
                         </v-flex>
                       </v-layout>
