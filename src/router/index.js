@@ -45,6 +45,8 @@ import ViewListJobOfCompanyPage from "../views/Jobseeker/ViewListJobOfCompanyPag
 import FeedbackCompany from "../components/JobSeekeer/Feedback/FeedbackCompany";
 import FeedbackCompanyPage from "../views/Jobseeker/FeedbackCompanyPage";
 import AdminViewAllFeedback from "../views/Admin/AdminViewAllFeedback";
+import AdminAllSkill from "../components/Admin/Skill/AdminAllSkill";
+import AdminViewAllSkill from "../views/Admin/AdminViewAllSkill";
 
 
 Vue.use(Router)
@@ -94,6 +96,11 @@ const router = new Router({
       path: '/nhan-xet/:jobid/:userid',
       name: 'feedback',
       component: FeedbackCompanyPage
+    },
+    {
+      path: '/them-ky-nang',
+      name: 'addskill',
+      component: AdminViewAllSkill
     },
     {
       path: '/xem-CV/:cvid',

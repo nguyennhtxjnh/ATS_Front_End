@@ -91,6 +91,22 @@
             {{item.name}}
 
           </v-list-tile>
+          <v-divider></v-divider>
+<!--          Skill-->
+          <v-subheader class="textCustom"><h3>Quản lý kỹ năng</h3></v-subheader>
+          <v-list-tile
+            v-for="item in menuSkill"
+            :key="item.id"
+            :to="item.path"
+            active-class="activeCSS"
+            :class="item.path === $route.path ? 'activeCSS' : ''"
+          >
+            <v-list-tile-action>
+              <v-icon>{{item.icon}}</v-icon>
+            </v-list-tile-action>
+            {{item.name}}
+
+          </v-list-tile>
           <v-subheader class="textCustom"><h3>Tài khoản</h3></v-subheader>
             <v-list-tile @click="logout">
               <v-list-tile-action>
@@ -177,7 +193,13 @@
           name: "Tất cả phản hồi",
           icon: "mdi-domain",
           path: "/admin-view-all-feedback"
-        }],
+        }], menuSkill: [
+          {
+            id: 7,
+            name: "Tất cả kỹ năng",
+            icon: "mdi-domain",
+            path: "/them-ky-nang"
+          }],
 
         // menuService: [
         //   {
