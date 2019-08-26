@@ -158,10 +158,10 @@
                 .then(response => {
                   this.cvs = response.data.data;
                   for(var cv in this.cvs){
-                    var date = new Date(this.cvs[cv].createdDate);
+                    var date = new Date(this.cvs[cv].lastModify);
                     // var tmp = date.getDay()
 
-                    this.cvs[cv].createdDate = date.toISOString().substr(0, 10);
+                    this.cvs[cv].lastModify = date.toISOString().substr(0, 10);
                   }
                   this.cvs.sort(function(a, b){return b.id - a.id});
                 }

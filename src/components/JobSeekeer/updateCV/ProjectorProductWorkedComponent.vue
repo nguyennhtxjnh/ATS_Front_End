@@ -104,7 +104,7 @@
                       </v-layout>
                     </v-flex>
                     <v-flex md12 xs12>
-                      <v-textarea
+                       <v-textarea
                         v-model="projectorproductworkeds.description"
                         label="Mô tả chi tiết"
                         placeholder="Mô tả chi tiết công việc, những gì đạt dduocj trong quá trình làm việc"

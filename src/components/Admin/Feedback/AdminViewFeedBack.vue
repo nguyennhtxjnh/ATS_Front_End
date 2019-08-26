@@ -257,16 +257,10 @@
                 text: 'Trả lời phản hồi thành công '
               })
               Object.assign(this.replyy, this.tmp);
-              this.dialog = false;
+              this.getAllFeedback();
               this.$refs.form.reset()
-              console.log(response)
-              Axios.get(Constants.URL + '/feedback/getAllFeedBack?search=' + this.search )
-                .then(response => {
-                  this.feedback = response.data.data.content;
-                  console.log(this.feedback)
-                })
-                .catch(err => console.log(err))
-                .finally(() => this.loading = false);
+              this.dialog = false;
+
             })
             .catch(err => console.log(err))
 
@@ -331,7 +325,7 @@
         Axios.get(Constants.URL + '/feedback/getAllFeedBack?search=' + this.search )
           .then(response => {
             this.feedback = response.data.data.content;
-            console.log(this.feedback)
+            console.log( this.feedback)
           })
           .catch(err => console.log(err))
           .finally(() => this.loading = false);

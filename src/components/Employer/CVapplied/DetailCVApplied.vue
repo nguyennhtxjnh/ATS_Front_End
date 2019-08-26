@@ -41,9 +41,9 @@
                   </v-layout>
                   <v-layout row wrap class="mt-3">
                     <v-flex md10 xs4 class="pa-1">
-                      <v-icon class="">mdi-star</v-icon>
-                      <span>Mục tiêu: {{cv.description}}
-                </span>
+<!--                      <v-icon class="">mdi-star</v-icon>-->
+<!--                      <span>Mục tiêu: {{cv.description}}-->
+<!--                </span>-->
                     </v-flex>
                   </v-layout>
 

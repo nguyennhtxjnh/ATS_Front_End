@@ -75,6 +75,9 @@
                     </h4>
                   </v-flex>
                   <v-flex md12 class="pt-3">
+                    <v-flex v-if="listFB.length === 0 ">
+                      <v-btn class="md6" color="blue" outline v-if="job.appliesById[0].status === '2' " @click="viewFeedback(job.id)"> Nhận xét</v-btn>
+                    </v-flex>
                     <v-flex v-for="i in listFB" :key="i">
                       <v-btn class="md6" color="blue" outline v-if="job.appliesById[0].status === '2' && job.id !== i" @click="viewFeedback(job.id)"> Nhận xét</v-btn>
                       <v-btn class="md6" disabled outline v-if="job.id === i" > Đã nhận xét</v-btn>
@@ -144,9 +147,12 @@
           console.log(this.userId)
           if(this.userId != null && this.userId != ""){
             Axios
-              .get(Constants.URL+'/feedback/checkFeedBack?userId='+this.userId1)
-              .then(response => (
-                this.listFB = response.data.data))
+              .get(Constants.URL+'/feedback/checkFeedBack?userId='+this.userId)
+              .then(response => {
+                  this.listFB = response.data.data;
+                  console.log("list"+ this.listFB)
+                }
+                )
             Axios
               .get(Constants.URL+'/apply/list-applied/'+this.userId)
               .then(response => {
