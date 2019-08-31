@@ -1,9 +1,17 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <v-container>
-    <v-layout row wrap v-if="checkCompanyExisted === false">
+
+
+    <v-layout row wrap v-if="checkCompany === false && checkCompanyExisted === false && checkDeny === true">
       <v-spacer/>
       <v-flex md4 xs4>
-        <h2> Vui lòng thêm công ty để được đăng tin </h2>
+        <h2> Công ty đã bị từ chối </h2>
+      </v-flex>
+      <v-spacer/>
+    </v-layout>  <v-layout row wrap v-if="checkCompanyExisted === false && checkCompany === false ">
+      <v-spacer/>
+      <v-flex md4 xs4>
+        <h2>  Vui lòng thêm công ty để được đăng tin </h2>
       </v-flex>
       <v-spacer/>
     </v-layout>
@@ -14,6 +22,15 @@
       </v-flex>
       <v-spacer/>
     </v-layout>
+
+    <v-layout row wrap v-if="checkCompany === false && checkCompanyExisted === false && checkCompanyDeny === true">
+      <v-spacer/>
+      <v-flex md4 xs4>
+        <h2> Bạn đã bị từ chối gia nhập công ty</h2>
+      </v-flex>
+      <v-spacer/>
+    </v-layout>
+
     <v-layout align-center  v-if="checkCompany === true">
 
       <v-flex xs12 sm12 md10>
@@ -498,6 +515,7 @@
           skillMasterId: '',
           skillLevel: ''
         },
+        checkDeny: false,
         items: [
           'Thông Tin'
         ]
@@ -524,6 +542,7 @@
             name: "Chuyên nghiệp"
           },
         ],
+        checkCompanyDeny : false,
 
         //
         // listSkill: [],
@@ -712,14 +731,25 @@
 
                   this.checkCompany = false;
                   this.checkCompanyExisted = true;
-                }else {
-                  this.checkCompany = true;
+                }
+                if(this.companyStatus === "deny"){
+                  this.checkCompanyDeny = true;
+                  this.checkCompany = false;
+                  this.checkCompanyExisted = false;
                 }
                 if(this.companyStatus === "approved"){
                   if(this.company.status === "new"){
                     this.companyStatus = "new";
                     this.checkCompany = false;
                     this.checkCompanyExisted = true;
+                  }
+                  if(this.company.status === "deny"){
+                    this.companyStatus = "deny";
+                    this.checkDeny = true;
+                    this.checkCompany = false;
+                    this.checkCompanyExisted = false;
+                  }else {
+                    this.checkCompany = true;
                   }
 
                 }else {

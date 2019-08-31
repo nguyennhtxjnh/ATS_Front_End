@@ -198,6 +198,15 @@
                 this.addSkill.skillName = "";
                 this.getAllSkill();
 
+              }else {
+                this.$notify({
+                  group: 'foo',
+                  type: 'fail',
+                  title: 'Thất bại',
+                  text: 'Kỹ năng đã tồn tại!'
+                })
+                this.addSkill.skillTypeId = "";
+                this.addSkill.skillName = "";
               }
 
             })
