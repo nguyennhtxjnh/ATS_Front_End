@@ -226,7 +226,7 @@
 
 
                   <template v-for="(skill,index) in formData.listSkill">
-                    <v-flex class="pa-2" md6 xs12>
+                    <v-flex class="pa-2" md4 xs12>
                       <v-autocomplete
                         :items="skillChoose"
                         v-model="skill.skillMasterId"
@@ -238,7 +238,7 @@
                         outline
                       ></v-autocomplete>
                     </v-flex>
-                    <v-flex class="pa-2" md6 xs12>
+                    <v-flex class="pa-2" md4 xs12>
                       <v-autocomplete
                         prepend-icon="mdi-star"
                         :items="skillRating"
@@ -249,9 +249,10 @@
                         :rules="[rules.required]"
                       ></v-autocomplete>
                     </v-flex>
-<!--                    <v-flex class="pa-1" md2 xs12>-->
+                    <v-flex class="pa-1" md2 xs12>
+                      <v-checkbox v-model="skill.require" :label="`bắt buộc`"></v-checkbox>
 <!--                      <v-btn color="error" @click="removeSkill(index)"><v-icon>mdi-trash-can-outline</v-icon></v-btn>-->
-<!--                    </v-flex>-->
+                    </v-flex>
                   </template>
 
 
@@ -421,13 +422,6 @@
                                                           @input="addSkill"
                                                         ></v-autocomplete>
 
-                                                        <!--                                  <v-text-field class="not-active"-->
-                                                        <!--                                                label="Ngôn Ngữ Trình Bày"-->
-                                                        <!--                                                value="Bất kỳ"-->
-                                                        <!--                                                prepend-icon="mdi-calendar-clock"-->
-                                                        <!--                                                readonly-->
-                                                        <!--                                                color="none"-->
-                                                        <!--                                  ></v-text-field>-->
                                                       </div>
                                                     </v-card-text>
                                                   </v-card>
@@ -456,6 +450,7 @@
                       <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="green darken-1" flat="flat" @click="dialog = false">Quay Lại</v-btn>
+
                         <v-btn color="green darken-1" flat="flat" @click="submitjob">Đăng Tin</v-btn>
                       </v-card-actions>
                     </v-card>
