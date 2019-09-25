@@ -484,7 +484,7 @@
         workingtype: ['Toàn Thời Gian', 'Bán Thời Gian', 'Thực Tập'],
         skillChoose: [],
         selectedSkill:[],
-          skillAdd:{  'skillMasterId': '', 'skillTypeId': '', 'skillName': '','skillLevel':''},
+          skillAdd:{  'skillMasterId': '', 'skillTypeId': '', 'skillName': '','skillLevel':'','require':''},
         items: [
           'Thông Tin'
         ]
@@ -732,15 +732,18 @@
                                     if(this.checkGet === false){
                                         this.skillAdd.skillMasterId = this.formData.listSkill[i].skillMasterId
                                         this.skillAdd.skillLevel =this.formData.listSkill[i].skillLevel
+                                        this.skillAdd.require = this.formData.listSkill[i].require
                                         this.selectedSkill.push(Object.assign({}, this.skillAdd));
                                     }
 
 
                                 }
+
                                 this.formData.listSkill = this.selectedSkill;
                                 if(this.formData.workingtype === 'FULLTIME') this.formData.workingtype = 'Toàn Thời Gian';
                                 if(this.formData.workingtype === 'PARTTIME') this.formData.workingtype = 'Bán Thời Gian';
                                 if(this.formData.workingtype === 'INTERN')  this.formData.workingtype = 'Thực Tập';
+                                console.log(this.formData)
                             }
 
                         }
@@ -834,7 +837,7 @@
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'Đồng ý'
               }).then((result) => {
-                this.$router.push('/quan-li-cong-viec');
+                this.$router.push('/goi-y-CV/'+ this.jobid);
               })
 
             } else {
