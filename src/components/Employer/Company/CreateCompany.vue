@@ -135,6 +135,13 @@
 
                     <!--Address -->
                     <v-flex md12 xs12>
+                      <v-text-field class="ma-2" prepend-icon="mdi-map-marker-radius" name="location" label="Mã số thuế"
+                                    type="text"
+                                    v-model="formData.taxNumber"
+                                    :rules="[rules.required]"></v-text-field>
+                    </v-flex>
+                    <!--Address -->
+                    <v-flex md12 xs12>
                       <v-text-field class="ma-2" prepend-icon="mdi-map-marker-radius" name="location" label="Địa Chỉ Công Ty"
                                     type="text"
                                     v-model="formData.address"
@@ -219,7 +226,7 @@
               userId: '',
               cityId: '',
           companyindustriesById:[],
-
+            taxNumber:'',
               nameCompany: '',
               address: '',
               telephoneNumber: '',
