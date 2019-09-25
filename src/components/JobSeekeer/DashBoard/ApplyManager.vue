@@ -70,7 +70,7 @@
                     <h4>Trạng thái:
 
                       <i style="color: green" v-if="job.appliesById[0].status === '1'">đang xử lý</i>
-                      <i style="color: blue"  v-if="job.appliesById[0].status === '2'">đã quam tâm</i>
+                      <i style="color: blue"  v-if="job.appliesById[0].status === '2'">đã quan tâm</i>
                       <i style="color: red"  v-if="job.appliesById[0].status === '3'">đã bị từ chối</i>
                     </h4>
                   </v-flex>

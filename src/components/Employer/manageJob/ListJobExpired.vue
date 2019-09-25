@@ -34,10 +34,10 @@
                       <span> <b>Mức lương: </b> từ {{job.salaryFrom}}đ trở lên</span>
                     </v-flex>
                     <v-flex d-flex xs12 v-if="job.salaryFrom === 0 && job.salaryTo > 0">
-                      <span> <b>Mức lương:</b> lên đến {{item.salaryTo}}đ</span>
+                      <span> <b>Mức lương:</b> lên đến {{job.salaryTo}}đ</span>
                     </v-flex>
                     <v-flex d-flex xs12 v-if="job.salaryTo > 0 && job.salaryFrom > 0">
-                      <span> <b>Mức lương:</b> từ {{job.salaryFrom}}đ đến {{item.salaryTo}}đ</span>
+                      <span> <b>Mức lương:</b> từ {{job.salaryFrom}}đ đến {{job.salaryTo}}đ</span>
                     </v-flex>
                     <v-flex d-flex xs12 v-if="job.salaryTo === 0 && job.salaryFrom === 0">
                       <span><b>Mức lương:</b> thương lượng</span>
@@ -48,7 +48,7 @@
               <v-flex md3 class="pt-3 pr-2">
 
                 <v-btn style="height: auto"
-                       color="warning" outline class="pa-2" block @click="$router.push('/goi-y-CV')">
+                       color="warning" outline class="pa-2" block @click="$router.push('/goi-y-CV/'+ job.id)">
                   Gợi ý ứng viên
                 </v-btn>
                 <v-btn style="height: auto"

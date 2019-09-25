@@ -194,7 +194,7 @@
                   </v-flex>
 
                   <template v-for="skill in formData.listSkill">
-                    <v-flex class="pa-2" md6 xs12>
+                    <v-flex class="pa-2" md4 xs12>
                       <v-autocomplete
                         :items="skillChoose"
                         v-model="skill.skillMasterId"
@@ -212,7 +212,7 @@
 <!--                        </v-flex>-->
 <!--                      </template>-->
                     </v-flex>
-                    <v-flex class="pa-2" md6 xs12>
+                    <v-flex class="pa-2" md4 xs12>
                       <v-autocomplete
                         prepend-icon="mdi-star"
                         :items="skillRating"
@@ -222,6 +222,10 @@
                         label="Đánh Giá"
                         :rules="[rules.required]"
                       ></v-autocomplete>
+                    </v-flex>
+                    <v-flex class="pa-1" md2 xs12>
+                      <v-checkbox v-model="skill.require" :label="`bắt buộc`"></v-checkbox>
+                      <!--                      <v-btn color="error" @click="removeSkill(index)"><v-icon>mdi-trash-can-outline</v-icon></v-btn>-->
                     </v-flex>
 <!--                    <v-flex class="pa-1" md2 xs12>-->
 <!--                      <v-btn color="error" @click="removeSkill(index)"><v-icon>mdi-trash-can-outline</v-icon></v-btn>-->
@@ -830,7 +834,7 @@
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'Đồng ý'
               }).then((result) => {
-                this.$router.push('/goi-y-CV/'+response.data.data);
+                this.$router.push('/quan-li-cong-viec');
               })
 
             } else {

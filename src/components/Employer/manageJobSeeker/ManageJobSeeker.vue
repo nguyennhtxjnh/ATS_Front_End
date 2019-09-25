@@ -22,7 +22,7 @@
           :key="i.id"
         >
           <v-card flat v-if="i.id === '1'">
-            <SearchCV></SearchCV>
+            <SearchCV :key="componentKey"></SearchCV>
           </v-card>
           <v-card flat v-if="i.id === '2'">
             <ListCVSaved :key="componentKey"></ListCVSaved>

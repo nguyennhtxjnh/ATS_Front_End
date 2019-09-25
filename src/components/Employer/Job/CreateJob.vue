@@ -737,15 +737,17 @@
                     this.companyStatus = "new";
                     this.checkCompany = false;
                     this.checkCompanyExisted = true;
-                  }
-                  if(this.company.status === "deny"){
-                    this.companyStatus = "deny";
-                    this.checkDeny = true;
-                    this.checkCompany = false;
-                    this.checkCompanyExisted = false;
                   }else {
-                    this.checkCompany = true;
+                      if(this.company.status === "deny"){
+                          this.companyStatus = "deny";
+                          this.checkDeny = true;
+                          this.checkCompany = false;
+                          this.checkCompanyExisted = false;
+                      }else {
+                          this.checkCompany = true;
+                      }
                   }
+
 
                 }else {
                  // this.checkCompany = true;
