@@ -34,7 +34,7 @@
             >
               <v-card flat v-if="i.id === '1'">
                <CreateCompany v-if="check === false"></CreateCompany>
-                <CompanyDetail v-if="check === true && companyStatus !== st " v-bind:company="company" ></CompanyDetail>
+                <CompanyDetail v-if="check === true && companyStatus !== st && deny === false" v-bind:company="company" ></CompanyDetail>
                 <v-flex v-if="companyStatus === st">
                   <v-card>
                     <v-card-title>
@@ -48,6 +48,18 @@
                   </v-layout>
                     </v-card-title>
                   </v-card>
+                </v-flex>
+                <v-flex v-if="deny">
+
+
+                      <v-layout row wrap class="pa-5">
+                        <v-spacer/>
+                        <v-flex md4 xs12>
+                          <h2 > Công ty bạn vừa tạo đã bị từ chối</h2>
+                        </v-flex>
+                        <v-spacer/>
+                      </v-layout>
+
                 </v-flex>
 
               </v-card>
@@ -77,12 +89,14 @@
     components: {CompanyDetail, CreateCompany, EmployerCompanyApply, EmployerMainLayout},
     data: function () {
       return{
+          company:{},
         check:false,
         formCompany:{
           userId:'',
         },
         companyStatus:'',
         st : "onhold",
+          deny:false,
         active: null,
         companyId:'',
         tab: null,
@@ -110,6 +124,10 @@
           .then(response => {
             if (response.data.success === true) {
               this.company = response.data.data;
+              console.log(this.company)
+                if(this.company.status == "deny"){
+                    this.deny = true;
+                }
               this.tmp = response.data.data.employercompaniesById;
               for (var i in this.tmp){
                 if(this.tmp[i].userId === this.userId2){
