@@ -598,6 +598,9 @@
       }
     },
     methods: {
+      reloadPage(){
+        window.location.reload()
+      },
       autoFill(){
 
          this.formData.title= "Agile Coach",
@@ -843,7 +846,7 @@
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'Đồng ý'
               }).then((result) => {
-                this.$router.push('/goi-y-CV/'+response.data.data);
+                this.$router.push('/tin-cho-xac-thuc')
               })
 
             } else {

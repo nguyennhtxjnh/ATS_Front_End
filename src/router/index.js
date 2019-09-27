@@ -47,6 +47,7 @@ import FeedbackCompanyPage from "../views/Jobseeker/FeedbackCompanyPage";
 import AdminViewAllFeedback from "../views/Admin/AdminViewAllFeedback";
 import AdminAllSkill from "../components/Admin/Skill/AdminAllSkill";
 import AdminViewAllSkill from "../views/Admin/AdminViewAllSkill";
+import JobWaiteToConfirm from "../views/Employer/JobWaiteToConfirm";
 
 
 Vue.use(Router)
@@ -213,6 +214,8 @@ const router = new Router({
       name: 'manage job',
       component: ManageJobPage
     },
+
+    ,
     {
       path: '/xem-CV-ung-tuyen/:jobid',
       name: 'view CV applied',
@@ -265,6 +268,11 @@ const router = new Router({
       path: '/admin-view-all-feedback',
       name: 'admin view all feedback',
       component: AdminViewAllFeedback
+    },
+    {
+      path: '/tin-cho-xac-thuc',
+      name: 'wait confirm',
+      component: JobWaiteToConfirm
     },
     {
       path: '/admin-view-all-account',

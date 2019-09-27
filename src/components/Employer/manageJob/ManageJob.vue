@@ -6,6 +6,7 @@
         v-model="active"
         slider-color="yellow"
         grow
+        @change="forceRerender"
       >
 
         <v-tab
@@ -21,7 +22,7 @@
           :key="i.id"
         >
           <v-card flat v-if="i.id === '1'" >
-            <CreateJob></CreateJob>
+            <CreateJob :key="componentKey"></CreateJob>
           </v-card>
           <v-card flat v-if="i.id === '2'">
             <ListJobPost></ListJobPost>
@@ -52,8 +53,10 @@
     export default {
         name: "ManageJob",
       components: {ListJobWaitConfirm, ListJobBan, CreateJob, ListJobExpired, ListJobPost, SearchCV},
+
       data: function () {
         return{
+          componentKey: 0,
           active: 1,
           tab: '',
           menu: [
@@ -71,8 +74,13 @@
         }
       },
       methods:{
-
+        forceRerender() {
+          this.componentKey += 1;
+        }
       },
+      mounted() {
+
+      }
 
     }
 </script>
